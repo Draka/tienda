@@ -38,7 +38,7 @@ exports.imageToS3 = (pathImg, urlImg, localImg, sizes, saveOriginal, cb) => {
       if (process.env.NODE_ENV === 'production') {
         return cb();
       }
-      const dir = `./public/${pathImg}`;
+      const dir = `./public/${config.s3.folder}/${pathImg}`;
       if (!fs.existsSync(dir)) {
         fs.mkdir(dir, { recursive: true }, cb);
       } else {
@@ -142,7 +142,7 @@ exports.imageToS3 = (pathImg, urlImg, localImg, sizes, saveOriginal, cb) => {
           // ajustes de s3
           const params = {
             Bucket: config.s3.bucket,
-            Key: `${pathImg}/${size.x}x${size.y}.jpg`, // ruta donde va a quedar
+            Key: `${config.s3.folder}/${pathImg}/${size.x}x${size.y}.jpg`, // ruta donde va a quedar
             Body: fileContent,
             ContentType: 'image/jpeg',
             CacheControl: 'private, max-age=31536000',
@@ -157,7 +157,7 @@ exports.imageToS3 = (pathImg, urlImg, localImg, sizes, saveOriginal, cb) => {
       } else {
         // save local
         async.each(sizes, (size, cb) => {
-          fs.copyFile(`./tmp/${size.x}x${size.y}_${nameTemp}.jpg`, `./public/${pathImg}/${size.x}x${size.y}.jpg`, cb);
+          fs.copyFile(`./tmp/${size.x}x${size.y}_${nameTemp}.jpg`, `./public/${config.s3.folder}/${pathImg}/${size.x}x${size.y}.jpg`, cb);
         }, cb);
       }
     }],
@@ -169,7 +169,7 @@ exports.imageToS3 = (pathImg, urlImg, localImg, sizes, saveOriginal, cb) => {
           // ajustes de s3
           const params = {
             Bucket: config.s3.bucket,
-            Key: `${pathImg}/${size.x}x${size.y}.webp`, // ruta donde va a quedar
+            Key: `${config.s3.folder}/${pathImg}/${size.x}x${size.y}.webp`, // ruta donde va a quedar
             Body: fileContent,
             ContentType: 'image/webp',
             CacheControl: 'private, max-age=31536000',
@@ -184,7 +184,7 @@ exports.imageToS3 = (pathImg, urlImg, localImg, sizes, saveOriginal, cb) => {
       } else {
         // save local
         async.each(sizes, (size, cb) => {
-          fs.copyFile(`./tmp/${size.x}x${size.y}_${nameTemp}.webp`, `./public/${pathImg}/${size.x}x${size.y}.webp`, cb);
+          fs.copyFile(`./tmp/${size.x}x${size.y}_${nameTemp}.webp`, `./public/${config.s3.folder}/${pathImg}/${size.x}x${size.y}.webp`, cb);
         }, cb);
       }
     }],
@@ -199,7 +199,7 @@ exports.imageToS3 = (pathImg, urlImg, localImg, sizes, saveOriginal, cb) => {
         // ajustes de s3
         const params = {
           Bucket: config.s3.bucket,
-          Key: `${pathImg}/original.jpg`, // ruta donde va a quedar
+          Key: `${config.s3.folder}/${pathImg}/original.jpg`, // ruta donde va a quedar
           Body: fileContent,
           ContentType: 'image/jpeg',
           CacheControl: 'private, max-age=31536000',
@@ -212,7 +212,7 @@ exports.imageToS3 = (pathImg, urlImg, localImg, sizes, saveOriginal, cb) => {
         s3.upload(params, cb);
       } else {
         // save local
-        fs.copyFile(`./tmp/original_${nameTemp}.jpg`, `./public/${pathImg}/original.jpg`, cb);
+        fs.copyFile(`./tmp/original_${nameTemp}.jpg`, `./public/${config.s3.folder}/${pathImg}/original.jpg`, cb);
       }
     }],
     // Borra las imagenes temporales

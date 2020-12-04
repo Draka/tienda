@@ -14,7 +14,8 @@ const enviroment = {
   s3: {
     accessKeyId: process.env.AWS_KEY || 'AKIATOVGUG4EOMZ52P5I',
     secretAccessKey: process.env.AWS_ACCESS || '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',
-    bucket: '',
+    bucket: process.env.AWS_BUCKET || '',
+    folder: process.env.AWS_FOLDER || 'local',
     sqs: process.env.AWS_SQS || 'https://sqs.us-east-1.amazonaws.com/237646395144/vendelomejor_correos',
   },
   log: process.env.LOG || 'dev',

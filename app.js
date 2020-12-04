@@ -114,6 +114,7 @@ app.use(jsMiddleware({
   debug: true,
 }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, `public/${config.s3.folder}`)));
 app.use(auth);
 
 require('./routes')(app);

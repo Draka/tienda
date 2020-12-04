@@ -64,7 +64,7 @@ module.exports = (req, res, next) => {
         return cb(listErrors(400, null, errors));
       }
 
-      const dir = `./public/ecommerce/users/${req.user._id}`;
+      const dir = `./public/${config.s3.folder}/ecommerce/users/${req.user._id}`;
       async.auto({
         makedirLocal: (cb) => {
           if (process.env.NODE_ENV === 'production') {
@@ -81,7 +81,7 @@ module.exports = (req, res, next) => {
             // ajustes de s3
             const params = {
               Bucket: config.s3.bucket,
-              Key: `users/${req.user._id}/bank`, // ruta donde va a quedar
+              Key: `${config.s3.folder}/users/${req.user._id}/bank`, // ruta donde va a quedar
               Body: req.files.file.data,
               ContentType: req.files.file.mimetype,
               CacheControl: 'private, max-age=31536000',
