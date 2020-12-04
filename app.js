@@ -55,8 +55,9 @@ global.redisMiddleware = cache;
 
 mongoose.Promise = require('bluebird');
 
-mongoose.set('debug', true);
-
+if (process.env.NODE_ENV !== 'production') {
+  mongoose.set('debug', true);
+}
 const dbOptions = {
   promiseLibrary: global.Promise,
   useCreateIndex: true,
