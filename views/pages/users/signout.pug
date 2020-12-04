@@ -1,0 +1,20 @@
+extends ../../layout
+
+block content
+  .container
+    include ../../fragments/breadcrumb
+
+  .container
+    h1 Sesión Finalizada
+    .row.justify-content-center
+      .col-xs-12.col-md-6
+        .oh.white.br-1.rd-0-2.mh-2
+          .p-1
+            .row
+              .col-xs-12
+                .msg.action
+                  | Tu sesión se ha cerrado con exito.
+          .p-1.white-500
+            .row
+              .col-xs-12
+                a(href="/iniciar-sesion") Iniciar Sesión

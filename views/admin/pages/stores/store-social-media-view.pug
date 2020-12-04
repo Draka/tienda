@@ -1,0 +1,13 @@
+extends ../../layout-view
+
+block view
+  table.small.table.table--lines
+    tbody
+      each social, key in socialMedia
+        tr
+          td.w-1
+            i.h2(class=social[4])
+          td.nowrap
+            | #{social[1]}
+          td.w-100
+            | #{(store.contacts.find(i=>i.slug==social[0])||{}).value}

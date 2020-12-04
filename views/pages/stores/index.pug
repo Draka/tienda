@@ -1,0 +1,90 @@
+extends ../../layout_store
+
+mixin img(product, size = ['196x196_jpg', '392x392_jpg'])
+  if (product.imagesSizes && product.imagesSizes.length)
+    img.lazy(data-src=_.first(product.imagesSizes)[size[0]] data-retina=_.first(product.imagesSizes)[size[1]] alt=product.name class=`w-100`)
+  else
+    img.lazy(data-src=`${config.url.static}images/imagen_no_disponible.svg` alt=product.name class=`w-100`)
+
+
+block content
+  .container.mt-3
+    .row.justify-content-center
+      .col-md-10
+        .br-1.p-3.mb-3.brt-10.rd-0-5.white
+          .row
+            .col-md-4.tc
+              img.h-192p.lazy.responsive(data-src=store.imageSizes['196x196_jpg'] data-retina=store.imageSizes['392x392_jpg'] alt=store.name)
+            .col-md-8
+              h1.mb-2 #{store.name}
+              .big #{store.slogan}
+              p #{store.description}
+              .hr
+              p !{store.vision}
+
+      .col-xs-12
+        if store.featuredCategories
+          each featured in store.featuredCategories
+            if products[featured.category._id].length
+              .flex.mt-2.mb-0-5
+                .title.b.t-primary.w-100
+                  | #{featured.category.name}
+                .small.nowrap
+                  a(href=`/${store.slug}/categorias/${featured.category.slugLong}`)
+                    | Ver más
+                    | #{' '}
+                    i.fas.fa-arrow-right
+              .white.br-1.rd-0-2.p-1
+                  .row
+                    .col-xs-12
+                      .list-products-inline.carousel.primary('data-category'=featured.category.slugLong 'data-limit'=featured.quantity 'data-list'=store.slug+'/page_home' data-load='0')
+                        .carousel-arrow.carousel-arrow-left
+                          .carousel-icon-left
+                            .out-screen Mover a la izquierda
+                            i.fas.fa-chevron-left
+
+                        .carousel-list
+                          ul
+                            each product,pos in products[featured.category._id]
+                              li
+                                .w-230p.w-170p-xs.w-170p-sm.br-1.white.h-100
+                                  .h-100.relative.p-1.pb-3.product(data-sku=product.sku data-product=JSON.stringify({
+                                      sku: product.sku,
+                                      name: product.name,
+                                      categoryText: product.categoryText,
+                                      brandText: product.brandText,
+                                      price: product.price,
+                                      store: store.slug
+                                    }) data-pos=pos+1)
+                                    a(href='/'+store.slug+'/productos/'+product.sku)
+                                      +img(product)
+                                    if product.brandText
+                                      .t-white-700.small.mb-1 #{product.brandText}
+                                    .t-primary.tc.b.small #{product.name}
+                                    .t-secondary.b.big #{formatMoney(product.price)}
+                                    .t-action.small.mb-4
+                                      if product.inventory
+                                        if product.stock == 0
+                                          | Agotado
+                                        else if product.stock < 10
+                                          | En stock, Pocas unidades
+                                        else
+                                          | En stock
+                                      else
+                                        | En stock
+
+                                    .absolute.w-100c2.ab-1
+                                      if product.inventory && product.stock == 0
+                                        a.btn.btn--secondary-200.w-100.ab-0(href='/'+store.slug+'/productos/'+product.sku) Ver
+                                      else
+                                        button.btn.btn--secondary.w-100.add
+                                          i.fas.fa-cart-plus
+                                          | #{' '}
+                                          | Agregar
+
+                        .carousel-arrow.carousel-arrow-right
+                          .carousel-icon-right
+                            .out-screen Mover a la derecha
+                            i.fas.fa-chevron-right
+
+  include ../../fragments/footer_store.pug

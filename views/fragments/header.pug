@@ -1,0 +1,122 @@
+header
+  .hide-xs
+    nav.navbar.primary.shadow.fixed.top
+      .container
+        a.logo(href='/')
+          img(src='/images/logo_f_negro.svg' alt='Tienda Logo')
+
+        .expand
+          if store
+            form.flex(class="search" action=`${config.url.site}${store.slug}/buscar`)
+              label.out-screen(for='query-d') Buscar
+              input#query-d.input--simple.w-100.rdtl-50.rdbl-50.ph-0-25.pw-1(type="text" name="q" placeholder='Buscar' required value=q)
+              button.btn.btn--secondary
+                i.fas.fa-search
+                span.out-screen #{__('Bucar productos')}
+
+        if !session
+          ul.flex
+            li
+              a.btn.btn--secondary(href='/registro') Registro
+            li
+              a(href='/iniciar-sesion') Iniciar Sesión
+        else
+          .relative
+            a.dropdown(aria-controls='menu-login')
+              span
+                i.fas.fa-user-circle.fa-fw
+                | #{' '}
+                span Hola, #{session.personalInfo.firstname}
+                | #{' '}
+              span.icon.ml-1
+                i.fas.fa-arrow-down.fa-fw
+            #menu-login.dropdown-list.right.shadow
+              ul.list-categories(role='menu')
+                if session && (session.admin || session.adminStore)
+                  li(role='menuitem')
+                    a.item(href='/administracion/tiendas')
+                      i.fas.fa-store
+                      | #{' '}Administar Tiendas
+                  li.hr
+                li(role='menuitem')
+                  a.item(href='/perfil')
+                    i.far.fa-address-card
+                    | #{' '}Perfil
+                li(role='menuitem')
+                  a.item(href='/pedidos')
+                    i.fas.fa-shopping-bag
+                    | #{' '}Pedidos
+                li.hr
+                li(role='menuitem')
+                  a.item(href='/cerrar-sesion')
+                    i.fas.fa-sign-out-alt
+                    | #{' '}Cerrar Sesión
+        ul.flex
+          li.w-4
+            a.link-shopping-cart.relative.w-4.justify-content-center(href='/carrito')
+              i.fas.fa-shopping-cart
+              span.badge.inside.num-shopping-cart.m-1.secondary
+              span.out-screen Ver carrito
+    if store
+      nav.navbar.white.shadow.mt-4
+        .container
+          a(href='/'+store.slug)
+            img.h-3(src=store.imageSizes['96x96_jpg'] alt=store.name)
+          ul
+            li.flex
+              a.nav-link.brand-logo(href='/'+store.slug)
+                div.not-wrap.b #{store.name}
+          .expand
+          .relative
+            a.dropdown(aria-controls='menu-categories')
+              span
+                i.fas.fa-list
+                | #{' '}
+                span Categorías
+              span.icon.ml-1
+                i.fas.fa-angle-down
+            #menu-categories.dropdown-list.right.shadow
+              ul.list-categories(role='menu')
+                each category in categories
+                  li(role='menuitem')
+                    a.item(href='/'+store.slug+'/categorias/'+category.slugLong) #{category.name}
+  .show-xs
+    nav.navbar.primary.shadow.fixed.top
+      ul.flex.w-100
+        li
+          a.sidenav-action.w-4.justify-content-center(href='#' data-target='#mobile-menu')
+            i.fas.fa-bars
+            span.out-screen Menú
+        li.expand
+          a.logo.justify-content-center(href='/')
+            img(src='/images/logo_f_negro.svg' alt='Tienda Logo')
+        li
+          a.link-shopping-cart.relative.w-4.justify-content-center(href='/carrito')
+            i.fas.fa-shopping-cart
+            span.badge.inside.num-shopping-cart.m-1.secondary
+            span.out-screen Ver carrito
+
+  nav#mobile-menu.sidenav
+    .sidenav-body
+      .white-500.w-100.flex.h-3
+        .w-100.title.tc.b Cuenta
+      .nologin.start-hide
+        ul.list(role='menu')
+          li(role='menuitem')
+            a(href='/iniciar-sesion') Iniciar Sesión
+          li(role='menuitem')
+            a(href='/registro') Registro
+
+      ul.list.login.start-hide(role='menu')
+        li(role='menuitem')
+          a(href='/perfil')
+            i.far.fa-address-card
+            | #{' '}Perfil
+        li(role='menuitem')
+          a(href='/pedidos')
+            i.fas.fa-shopping-bag
+            | #{' '}Pedidos
+        li(role='menuitem')
+          a(href='/cerrar-sesion')
+            i.fas.fa-sign-out-alt
+            | #{' '}Cerrar Sesión

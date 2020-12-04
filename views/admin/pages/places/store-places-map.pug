@@ -1,0 +1,11 @@
+extends ../../layout-edit
+
+block edit
+  if center
+    input#center(type="hidden" name="center" value=`${center.longitude},${center.latitude}`)
+    input#markers(type="hidden" name="markers" value=JSON.stringify(markers))
+    #map-markers.w-100.h-460p
+  else
+    .remark.info.flex.mb-0-5
+      i.fas.fa-info-circle.h4.mr-1.t-info
+      | No hay Sedes creadas.

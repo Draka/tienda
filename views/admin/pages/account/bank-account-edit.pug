@@ -1,0 +1,75 @@
+extends ../../layout
+
+block content
+  include ../../fragments/breadcrumb
+
+  .row
+    .col-xs-6
+      h1 Cuenta bancaria
+
+  .row
+    .col-md-8
+      .white.br-1.rd-0-2.p-3
+        .remark.info.flex.mb-0-5
+          i.fas.fa-info-circle.h4.mr-1.t-info
+          | Modificar este formulario anulará la aprobación que se tenga.
+        .msg.error#form-results
+        form.validate(
+          id='form'
+          action=`${config.url.api}users/bank-account`
+          method="post"
+          enctype="multipart/form-data"
+          data-page=`/administracion/informacion-personal`
+          data-error='#form-results')
+          input(type='hidden' name='redirect' value=`/administracion/cuenta-bancaria`)
+          .row
+            .col-xs-12
+              .form-group
+                .form-control.form-control--right
+                  input.input#password(type="password" name="password" placeholder=' ' required autocomplete='false')
+                  label(for='password') Contraseña
+                  .form-control__eye
+              .form-group
+                .form-control
+                  input.input#name(type='text' name='bank.name' placeholder=' ' required value=_.get(user,'bank.name'))
+                  label(for='name') Titular de la cuenta
+              .form-group
+                .form-control
+                  input.input#nameBank(type='text' name='bank.nameBank' placeholder=' ' required value=_.get(user,'bank.nameBank'))
+                  label(for='nameBank') Banco
+              .form-group
+                .form-control
+                  input.input#number(type='text' name='bank.number' placeholder=' ' required value=_.get(user,'bank.number'))
+                  label(for='number') Número de cuenta
+              .form-group
+                .form-control
+                  select#type.input(name='bank.type' required)
+                    option(value='Ahorros' selected=_.get(user,'bank.type')=='Ahorros') Ahorros
+                    option(value='Corriente' selected=_.get(user,'bank.type')=='Corriente') Corriente
+                  label.nowrap(for='type') Tipo
+              .form-group
+                .form-control
+                  select#idType.input(name='bank.idType' required)
+                    option(value='CC' selected=_.get(user,'bank.idType')=='CC') Cédula de Ciudadanía
+                    option(value='NIT' selected=_.get(user,'bank.idType')=='NIT') Nit
+                    option(value='CE' selected=_.get(user,'bank.idType')=='CE') Cédula de extranjeria
+                  label.nowrap(for='idType') Tipo de identificación
+              .form-group
+                .form-control
+                  input.input#id(type='text' name='bank.id' placeholder=' ' required value=_.get(user,'bank.id'))
+                  label(for='id') Número de identificación
+              .form-group
+                .form-control
+                  input.input#file(type='file' name='file' placeholder=' ' required accept='application/pdf, image/jpeg')
+                  label(for='file') Certificado de cuenta expedido por el banco
+              .remark.action.flex.mb-0-5
+                .h4.mr-1.t-action
+                  i.far.fa-file-pdf
+                  | #{' '}
+                  i.far.fa-file-image
+                | Suba un documento en pdf o jpg de máximo 10 megas de tamaño.
+          .row
+            .col-xs-12.tr
+              a.btn.btn--secondary.w-100-xs(href='/administracion/cuenta-bancaria') Cancelar
+              | #{' '}
+              button.btn.btn--primary.w-100-xs.mt-2-xs(type='submit') Editar cuenta bancaria

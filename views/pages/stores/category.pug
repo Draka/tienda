@@ -1,0 +1,78 @@
+extends ../../layout_store
+
+mixin img(name, image, size = ['196x196_jpg', '392x392_jpg'], cssClass)
+  if (image)
+    img.lazy(data-src=image[size[0]] data-retina=image[size[1]] alt=name class=cssClass?cssClass:'w-100')
+  else
+    img.lazy(data-src=`${config.url.static}images/imagen_no_disponible.svg` alt=name class=cssClass?cssClass:'w-100')
+
+block content
+
+  script(type='application/ld+json').
+    {
+      "@context": "https://schema.org/",
+      "@type": "BreadcrumbList",
+      "itemListElement": !{JSON.stringify(_.map(categoryIDs, (category, i)=>{return {"@type": "ListItem","position": i+1,"name": category.name,"item": `${config.url.site}${store.slug}/categorias/${category.slugLong}`}}))}
+    }
+
+  .container
+    .row
+      .col-xs-12
+        ul.breadcrumb
+          li.breadcrumb__item
+            a.item(href=`/${store.slug}`) Inicio
+          li.breadcrumb__item
+            a.item(href=`/${store.slug}/categorias`) Categorías
+          each category,index in categoryIDs
+            li.breadcrumb__item
+              a.item(href=`/${store.slug}/categorias/${category.slugLong}` class=index+1==categoryIDs.length?'breadcrumb--active':'') #{category.name}
+
+        if category
+          h1.tc #{category.name}
+        else
+          h1.tc Categorías
+        .justify-content-center.spacer.t-primary
+          each category in categoriesHeader
+            a.item(href=`/${store.slug}/categorias/${category.slugLong}`) #{category.name}
+      .col-xs-12.mt-1
+        .list-products-grid('data-category'=categories.slugLong 'data-limit'=42 'data-list'=store.slug+'/categorias/'+(categories.slugLong||'root'))
+          ul.row-xp.flex-wrap.justify-content-center
+            each product,pos in products
+              li
+                .w-230p.w-170p-xs.w-170p-sm.br-1.white.h-100
+                  .h-100.relative.p-1.pb-3.product(data-sku=product.sku data-product=JSON.stringify({
+                      sku: product.sku,
+                      name: product.name,
+                      categoryText: product.categoryText,
+                      brandText: product.brandText,
+                      price: product.price,
+                      store: store.slug
+                    }) data-pos=pos+1)
+                    a(href='/'+store.slug+'/productos/'+product.sku)
+                      +img(product.name, _.first(product.imagesSizes), ['196x196_jpg', '392x392_jpg'])
+                    if product.brandText
+                      .t-white-700.small.mb-1 #{product.brandText}
+                    .t-primary.tc.b.small #{product.name}
+                    .t-secondary.b.big #{formatMoney(product.price)}
+                    .t-action.small.mb-4
+                      if product.inventory
+                        if product.stock == 0
+                          | Agotado
+                        else if product.stock < 10
+                          | En stock, Pocas unidades
+                        else
+                          | En stock
+                      else
+                        | En stock
+
+                    .absolute.w-100c2.ab-1
+                      if product.inventory && product.stock == 0
+                        a.btn.btn--secondary-0-500.w-100.ab-0(href='/'+store.slug+'/productos/'+product.sku) Ver
+                      else
+                        button.btn.btn--secondary.w-100.add
+                          i.fas.fa-cart-plus
+                          | #{' '}
+                          | Agregar
+          nav.mt-3
+
+  include ../../fragments/footer_store.pug

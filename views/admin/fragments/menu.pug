@@ -1,0 +1,92 @@
+nav
+  .expandable
+    .expandable__header
+      .expandable__icon
+        i.fas.fa-angle-down.fa-fw
+      .expandable__title Cuenta
+    ul.expandable__body.navigation
+      li.navigation__item(class=menu=='informacion-personal'?'navigation--active':'')
+        a.item(href='/administracion/informacion-personal') Información Personal
+      li.navigation__item(class=menu=='contrasena'?'navigation--active':'')
+        a.item(href='/administracion/contrasena') Contraseña
+      li.navigation__item(class=menu=='correo'?'navigation--active':'')
+        a.item(href='/administracion/correo') Correo
+      li.navigation__item(class=menu=='cuenta-bancaria'?'navigation--active':'')
+        a.item(href='/administracion/cuenta-bancaria') Cuenta bancaria
+
+  if session && session.admin
+    .expandable
+      .expandable__header
+        .expandable__icon
+          i.fas.fa-angle-down.fa-fw
+        .expandable__title Administración
+      ul.expandable__body.navigation
+        li.navigation__item(class=menu=='super-tiendas'?'navigation--active':'')
+          a.item(href=`/administracion/super/tiendas`) Aprobar Tiendas
+
+  .expandable
+    .expandable__header
+      .expandable__icon
+        i.fas.fa-angle-down.fa-fw
+      .expandable__title Tienda
+    ul.expandable__body.navigation
+      li.navigation__item(class=menu=='tienda-nueva'?'navigation--active':'')
+        a.item(href=`/administracion/tiendas/nuevo`) Nueva
+      li.navigation__item(class=menu=='tiendas'?'navigation--active':'')
+        a.item(href=`/administracion/tiendas`) Lista
+      if _.get(user, 'options.storeSelect')
+        li.navigation__item(class=menu=='tienda'?'navigation--active':'')
+          a.item(href=`/administracion/tiendas/${session.options.storeSelect}`) Configuración
+        li.navigation__item(class=menu=='tienda-logo'?'navigation--active':'')
+          a.item(href=`/administracion/tiendas/${session.options.storeSelect}/logo`) Logo
+        li.navigation__item(class=menu=='tienda-redes-sociales'?'navigation--active':'')
+          a.item(href=`/administracion/tiendas/${session.options.storeSelect}/redes-sociales`) Redes Sociales
+        li.navigation__item(class=menu=='tienda-zonas-de-coberturas'?'navigation--active':'')
+          a.item(href=`/administracion/tiendas/${session.options.storeSelect}/zonas-de-coberturas`) Zonas de Coberturas
+
+  if _.get(session, 'options.storeSelect')
+    .expandable
+      .expandable__header
+        .expandable__icon
+          i.fas.fa-angle-down.fa-fw
+        .expandable__title Sedes
+      ul.expandable__body.navigation
+        li.navigation__item(class=menu=='tienda-sedes'?'navigation--active':'')
+          a.item(href=`/administracion/tiendas/${session.options.storeSelect}/sedes`) Lista
+        li.navigation__item(class=menu=='tienda-mapa'?'navigation--active':'')
+          a.item(href=`/administracion/tiendas/${session.options.storeSelect}/mapa`) Mapa
+
+    .expandable
+      .expandable__header
+        .expandable__icon
+          i.fas.fa-angle-down.fa-fw
+        .expandable__title Categorías
+      ul.expandable__body.navigation
+        li.navigation__item(class=menu=='tienda-categorias-nuevo'?'navigation--active':'')
+          a.item(href=`/administracion/tiendas/${session.options.storeSelect}/categorias/nuevo`) Nueva
+        li.navigation__item(class=menu=='tienda-categorias'?'navigation--active':'')
+          a.item(href=`/administracion/tiendas/${session.options.storeSelect}/categorias`) Lista
+
+    .expandable
+      .expandable__header
+        .expandable__icon
+          i.fas.fa-angle-down.fa-fw
+        .expandable__title Productos
+      ul.expandable__body.navigation
+        li.navigation__item(class=menu=='tienda-productos-nuevo'?'navigation--active':'')
+          a.item(href=`/administracion/tiendas/${session.options.storeSelect}/productos/nuevo`) Nuevo
+        li.navigation__item(class=menu=='tienda-productos'?'navigation--active':'')
+          a.item(href=`/administracion/tiendas/${session.options.storeSelect}/productos`) Lista
+
+    .expandable
+      .expandable__header
+        .expandable__icon
+          i.fas.fa-angle-down.fa-fw
+        .expandable__title Pedidos
+      ul.expandable__body.navigation
+        li.navigation__item(class=menu=='tienda-sedes'?'navigation--active':'')
+          a.item(href=`/administracion/tiendas/${session.options.storeSelect}/pedidos`) Lista
+        li.navigation__item(class=menu=='tienda-sedes'?'navigation--active':'')
+          a.item(href=`/administracion/tiendas/${session.options.storeSelect}/reclamos`) Reclamos
+        li.navigation__item(class=menu=='tienda-sedes'?'navigation--active':'')
+          a.item(href=`/administracion/tiendas/${session.options.storeSelect}/desembolsos`) Desembolsos

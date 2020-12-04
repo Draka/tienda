@@ -1,0 +1,28 @@
+extends ../../layout
+
+block content
+  include ../../fragments/breadcrumb
+
+  .row
+    .col-xs-6
+      h1 Correo
+
+  .row
+    .col-md-8
+      .white.br-1.rd-0-2.p-3
+        .msg.error#form-results
+        form.validate-rest(id="updateProfileForm" action=`${config.url.api}users/email` method="put" data-page=`/administracion/correo-cambiado` data-error="#form-results")
+          .row
+            .col-xs-12
+              .form-group
+                .form-control.form-control--right
+                  input.input#password(type="password" name="password" placeholder=' ' required)
+                  label(for='password') Contraseña
+                  .form-control__eye
+              .form-group
+                .form-control.form-control--right
+                  input.input#email(type="email" name="email" placeholder=' ' required value=_.get(user,'email'))
+                  label(for='email') Correo
+          .row
+            .col-xs-12.tr
+              button.btn.btn--primary.w-100-xs.mt-2-xs(type="submit") Editar correo

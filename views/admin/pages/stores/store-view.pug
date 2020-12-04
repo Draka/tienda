@@ -1,0 +1,33 @@
+extends ../../layout-view
+
+block view
+  table.small.table.table--lines
+    tbody
+      tr
+        th.nowrap.ellipsis Publicado
+        td.w-100
+          +boolean(store.publish)
+      tr
+        th.nowrap.ellipsis Aprobado
+        td.w-100 
+          +boolean(store.approve)
+      tr
+        th.nowrap.ellipsis Nombre
+        td.w-100 #{store.name}
+      tr
+        th.nowrap.ellipsis URL
+        td.w-100 #{config.url.site}#{store.slug}
+      tr
+        th.nowrap.ellipsis Slogan
+        td.w-100 #{store.slogan}
+      tr
+        th.nowrap.ellipsis Descripción
+        td.w-100 #{store.description}
+      tr
+        th.nowrap.ellipsis Visión
+        td.w-100
+          .h-230p.scroll.shadow.p-1 !{store.vision}
+      tr
+        th.nowrap.ellipsis Descripción Larga
+        td.w-100
+          .h-230p.scroll !{store.descriptionLong}

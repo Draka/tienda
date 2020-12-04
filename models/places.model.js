@@ -1,0 +1,61 @@
+const schema = new mongoose.Schema({
+  storeID: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: `${config.dbPrefix}stores`,
+    index: true,
+    required: true,
+  },
+  active: {
+    type: Boolean,
+    index: true,
+    default: false,
+  },
+  name: {
+    type: String,
+    trim: true,
+    required: true,
+  },
+  slug: {
+    type: String,
+    trim: true,
+    index: true,
+  },
+  address: {
+    type: String,
+    trim: true,
+  },
+  location: {
+    type: {
+      type: String,
+      enum: ['Point'],
+      required: true,
+    },
+    coordinates: {
+      type: [Number],
+      required: true,
+    },
+  },
+  schedule: {
+    monday: [String],
+    thuesday: [String],
+    wednesday: [String],
+    thurday: [String],
+    friday: [String],
+    saturday: [String],
+    sunday: [String],
+    holiday: [String],
+  },
+}, { timestamps: true });
+
+function preUpdate(result, next) {
+  client.del(`__place__${result._id}`);
+  if (_.get(result, 'name')) {
+    result.slug = _.kebabCase(_.deburr(_.get(result, 'name')));
+  }
+  next();
+}
+schema.post('validate', preUpdate);
+schema.index({ storeID: 1, slug: 1 }, { unique: true });
+const Model = mongoose.model(`${config.dbPrefix}places`, schema);
+
+module.exports = Model;

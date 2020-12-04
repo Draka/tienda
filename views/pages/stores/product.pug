@@ -1,0 +1,256 @@
+extends ../../layout_store
+
+mixin product(product)
+  h2.t-primary #{product.name}
+  .mt-1.small
+    if (product.brandText)
+      span.product-brand.t-secondary #{product.brandText}
+      span.mw-1.h-100 |
+    span.product-sku
+      b SKU:
+      | &nbsp;#{product.sku}
+  .tr.social
+    a.mr-1(href=`https://www.facebook.com/sharer.php?u=${config.url.site}${originalUrl}` _target='_blank' title='Compartir en facebook' rel="noopener")
+      i.fab.fa-facebook
+    a(href=`https://twitter.com/share?text=${product.name}&amp;url=${config.url.site}${originalUrl}` _target='_blank' title='Compartir en twitter' rel="noopener")
+      i.fab.fa-twitter
+  .hr.mh-1
+
+  .flex
+    .small.t-primary.mr-5
+      | PRECIO:
+    .social.t-secondary
+      | #{formatMoney(product.price)}
+      .message
+  .quantity.flex.hide.mt-1
+    .box-controls.flex
+      button.primary.small.mr-0-5.minus
+        i.fas.fa-minus
+        span.out-screen Disminuir cantidad
+      .value.w-img-48.mr-0-5.tc.b.br-1.rd-0-2.h-100(id='value_'+product.sku)
+        | 0
+      button.primary.small.mr-0-5.plus
+        i.fas.fa-plus
+        span.out-screen Aumentar cantidad
+    button.primary.small.add AÑADIR AL CARRITO
+  if (_.get(product, 'digital.streaming'))
+    .remark.info.mh-1 Producto de transmisión por internet
+  .product-description.mt-2.mb-2
+    | !{product.shortDescription.replace("\n",'<br>')}
+
+  if product.upc || product.features.length
+    .small.t-primary
+      | CARACTERISTÍCAS:
+    .hr.mb-0-5
+    if (product.upc)
+      .mt-0-25.product-upc
+        b #{__('UPC')}:
+        | &nbsp;#{product.upc}
+    if (_.get(product, 'digital.streaming'))
+      .mt-0-25.product-meta La URL del producto digital será mostrada luego de ser comprado.
+    if product.features
+      each feature in product.features
+        .mt-0-25.product-meta
+          strong #{feature.name}:
+          | &nbsp;#{feature.value}
+
+mixin img(name, image, size = ['196x196_jpg', '392x392_jpg'], cssClass)
+  if (image)
+    img.lazy(data-src=image[size[0]] data-retina=image[size[1]] alt=name class=cssClass?cssClass:'w-100')
+  else
+    img.lazy(data-src=`${config.url.static}images/imagen_no_disponible.svg` alt=name class=cssClass?cssClass:'w-100')
+
+block content
+  script(type='application/ld+json').
+    {
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      "name": "#{product.name}",
+      "image": !{JSON.stringify(product.ldJson)},
+      "description": "#{product.shortDescription ? `${product.name} - ${formatMoney(product.price)} - ${product.shortDescription.replace(/(<([^>]+)>)/ig, '').replace("\n",' ')}`:`${product.name} - ${formatMoney(product.price)} - ${store.name}`}",
+      "sku": "#{product.sku}",
+      "brand": {
+        "@type": "Brand",
+        "name": "#{product.brandText || store.name}"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "#{config.url.site}#{originalUrl}",
+        "priceCurrency": "COP",
+        "price": "#{product.price}",
+        "priceValidUntil": "#{(new Date()).getFullYear()}-#{(new Date()).getMonth() + 1}-#{(new Date()).getDate()+1}T23:59:59-05:00",
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock",
+        "seller": {
+          "@type": "Organization",
+          "name": "#{store.name}"
+        }
+      },
+      "aggregateRating": {
+        "@type": "aggregateRating",
+        "ratingValue": #{rating(product.name) / 10},
+        "reviewCount": #{rating("R:" + product.name)}
+      },
+      "review": {
+        "@type": "Review",
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": #{rating(product.name) / 10},
+          "bestRating": 5
+        },
+        "author": {
+          "@type": "Person",
+          "name": #{config.site.name}
+        }
+      }
+    }
+  script(type='application/ld+json').
+    {
+      "@context": "https://schema.org/",
+      "@type": "BreadcrumbList",
+      "itemListElement": !{JSON.stringify(_.map(product.categoryIDs, (category, i)=>{return {"@type": "ListItem","position": i+1,"name": category.name,"item": `${config.url.site}${store.slug}/categorias/${category.slugLong}`}}))}
+    }
+
+  .container
+    .row
+      .col-xs-12
+        ul.breadcrumb
+          li.breadcrumb__item
+            a.item(href=`/${store.slug}`) Inicio
+          li.breadcrumb__item
+            a.item(href=`/${store.slug}/categorias`) Categorías
+          each category,index in product.categoryIDs
+            li.breadcrumb__item
+              a.item(href=`/${store.slug}/categorias/${category.slugLong}`) #{category.name}
+          li.breadcrumb__item.breadcrumb--active #{product.name}
+
+      .col-md-6
+        h1.invisible #{product.name}
+        .p-1.white.br-1.rd-0-2
+          .carousel.primary
+            .carousel-arrow.carousel-arrow-left
+              .carousel-icon-left
+                .out-screen Mover a la izquierda
+                i.fas.fa-chevron-left
+
+            .carousel-list
+              ul
+                each image in product.imagesSizes
+                  li
+                    .h-100.br-1.p-1.all.white
+                      +img(product.name, image, ['484x484_jpg', '484x484_jpg'])
+
+            .carousel-arrow.carousel-arrow-right
+              .carousel-icon-right
+                .out-screen Mover a la derecha
+                i.fas.fa-chevron-right
+          if (product.imagesSizes.length > 1)
+            .mt-1.flex.oa
+              each image in product.imagesSizes
+                .p-0-5.white.br-1.rd-0-2.mr-1
+                  +img(product.name, image, ['96x96_jpg', '196x196_jpg'], 'h-96p')
+
+        .show-xs.white.br-1.rd-0-2.p-1.mt-1
+          +product(product)
+
+        if product.longDescription
+          .white.br-1.rd-0-2.p-1.mt-1
+            .t-primary.title
+              | Descripción
+            .mt-0-5 !{product.longDescription}
+
+
+        .white.br-1.rd-0-2.p-1.mt-1
+          .t-primary.title
+            | Compra
+          ul.list-ul.mt-0-5
+            li Una vez que se ha enviado su producto, generalmente demora de 2 a 5 días hábiles en ciudades principales.
+            li Puede pedir devolver su pago hasta 14 días después de la compra y que su producto no haya llegado o no sea lo que ha pedido.
+
+        .white.br-1.rd-0-2.p-1.mt-1
+          .t-primary.title
+            | Pago y Seguridad
+          .t-secondary.subtitle.mt-0-5
+            | Métodos de Pago
+          .flex.mt-1
+            .tc.mr-4
+              img.w-img-48(src='/images/pagos/ico_tarjetas.svg' alt='pago tarjetas de crédito')
+              .b.small Todas las tarjetas
+            .tc
+              img.h-img-48(src='/images/pagos/ico_pse.svg' alt='pago pse')
+              .b.small Cuentas de ahorro
+
+          p Su información de pago se procesa de forma segura. No almacenamos detalles de la tarjeta de crédito ni tenemos acceso a la información de su tarjeta de crédito.
+          .hr
+          .t-secondary.subtitle.mt-0-5
+            | Seguridad
+          .flex.mt-1
+            .bigx2.mr-0-5
+              i.fas.fa-shield-alt
+            div
+              .t-primary COMPRA SEGURA
+              .t-secondary GARANTIZADO
+
+      .col-md-6.hide-xs.hide-sm
+        .white.br-1.rd-0-2.p-1.place-product.sticky('data-sku'=product.sku style='top: 100px')
+          +product(product)
+
+      .col-xs-12
+        .flex.mt-2.mb-0-5
+          .title.b.t-primary.w-100
+            | Productos relacionados
+        .white.br-1.rd-0-2.p-1.mt-1
+          .row
+            .col-xs-12
+              .list-products-inline.carousel.primary('data-list'=store.slug+'/productos/'+product.sku)
+                .carousel-arrow.carousel-arrow-left
+                  .carousel-icon-left
+                    .out-screen Mover a la izquierda
+                    i.fas.fa-chevron-left
+
+                .carousel-list
+                  ul
+                    each product,pos in products
+                      li
+                        .w-230p.w-170p-xs.w-170p-sm.br-1.white.h-100
+                          .h-100.relative.p-1.pb-3.product(data-sku=product.sku data-product=JSON.stringify({
+                              sku: product.sku,
+                              name: product.name,
+                              categoryText: product.categoryText,
+                              brandText: product.brandText,
+                              price: product.price,
+                              store: store.slug
+                            }) data-pos=pos+1)
+                            a(href='/'+store.slug+'/productos/'+product.sku)
+                              +img(product.name, _.first(product.imagesSizes), ['196x196_jpg', '392x392_jpg'])
+                            if product.brandText
+                              .t-white-700.small.mb-1 #{product.brandText}
+                            .t-primary.tc.b.small #{product.name}
+                            .t-secondary.b.big #{formatMoney(product.price)}
+                            .t-action.small.mb-4
+                              if product.inventory
+                                if product.stock == 0
+                                  | Agotado
+                                else if product.stock < 10
+                                  | En stock, Pocas unidades
+                                else
+                                  | En stock
+                              else
+                                | En stock
+
+                            .absolute.w-100c2.ab-1
+                              if product.inventory && product.stock == 0
+                                a.btn.btn--secondary-0-500.w-100.ab-0(href='/'+store.slug+'/productos/'+product.sku) Ver
+                              else
+                                button.btn.btn--secondary.w-100.add
+                                  i.fas.fa-cart-plus
+                                  | #{' '}
+                                  | Agregar
+
+                .carousel-arrow.carousel-arrow-right
+                  .carousel-icon-right
+                    .out-screen Mover a la derecha
+                    i.fas.fa-chevron-right
+
+
+  include ../../fragments/footer_store.pug

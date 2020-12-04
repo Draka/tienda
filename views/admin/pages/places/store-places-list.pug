@@ -1,0 +1,56 @@
+extends ../../layout-list
+
+block list
+  .msg.info.mb-0-5
+    .flex
+      i.fas.fa-exclamation.h2.mr-0-25.w-2.tc
+      div Las Sedes representan una tienda física, se usan para posicionar tu tienda en buscadores, si no necesitas esta sección puedes omitirla.
+
+  if items.length
+    table.small.table.table--lines.table--lines.table--striped
+      thead
+        tr
+          th.b Estado
+          th.b Nombre
+          th.b Dirección
+          th.b Horario
+          th.tc
+            i.fas.fa-cog
+      tbody
+        each item of items
+          tr
+            td
+              +active(item.active)
+            td
+              a.b(href=`/administracion/tiendas/${store._id}/sedes/${item._id}/editar`) #{item.name}
+            td
+              | #{item.address}
+            td
+              table.small.table.table--lines.table--lines.table--striped
+                tr
+                  td.b L:
+                  td.nowrap #{' '} #{item.schedule.monday[0]}-#{item.schedule.monday[1]}
+                  td.b V:
+                  td.nowrap.w-100 #{' '} #{item.schedule.friday[0]}-#{item.schedule.friday[1]}
+                tr
+                  td.b M:
+                  td.nowrap #{' '} #{item.schedule.thuesday[0]}-#{item.schedule.thuesday[1]}
+                  td.b S:
+                  td.nowrap #{' '} #{item.schedule.saturday[0]}-#{item.schedule.saturday[1]}
+                tr
+                  td.b Mi:
+                  td.nowrap #{' '} #{item.schedule.wednesday[0]}-#{item.schedule.wednesday[1]}
+                  td.b D:
+                  td.nowrap #{' '} #{item.schedule.sunday[0]}-#{item.schedule.sunday[1]}
+                tr
+                  td.b J:
+                  td.nowrap #{' '} #{item.schedule.thurday[0]}-#{item.schedule.thurday[1]}
+                  td.b F:
+                  td.nowrap #{' '} #{item.schedule.holiday[0]}-#{item.schedule.holiday[1]}
+            td.tc
+              button.btn.btn--error.small(data-id=item._id) Eliminar
+  else
+    .white.br-1.rd-0-2.p-3
+      .remark.info.flex.mb-0-5
+        i.fas.fa-info-circle.h4.mr-1.t-info
+        | No hay Sedes creadas.

@@ -1,0 +1,26 @@
+extends ../../layout-list
+
+block list
+  if items.length
+    table.small.table.table--lines.table--lines.table--striped
+      thead
+        tr
+          th.b Nombre
+          th.tc(colspan=2)
+            i.fas.fa-cog
+      tbody
+        each item of items
+          tr
+            td.w-100
+              a.b(href=`/administracion/tiendas/${store._id}/categorias/${item._id}/editar`) #{item.name}
+            td.tc
+              a.btn-flat.p-0-5.rd-0-2(href=`/administracion/tiendas/${store._id}/categorias/${item._id}/editar` title='Editar')
+                i.fas.fa-pencil-alt
+            td.tc
+              button.btn-flat.p-0-5.rd-0-2(data-id=item._id title='Eliminar')
+                i.fas.fa-trash-alt
+  else
+    .white.br-1.rd-0-2.p-3
+      .remark.info.flex.mb-0-5
+        i.fas.fa-info-circle.h4.mr-1.t-info
+        | No hay categorías creadas.

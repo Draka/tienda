@@ -1,0 +1,50 @@
+extends ../../layout
+
+block content
+  .container
+    include ../../fragments/breadcrumb
+
+  .container
+    h1 Registro
+    .row.justify-content-center
+      .col-xs-12.col-md-6
+        .oh.white.br-1.rd-0-2.mh-2
+          .p-1
+            .msg.error#form-results
+            .row
+              form.col-xs-12.validate-rest(id="signupForm" action=`${config.url.api}users` method="post" data-page=`registro-confirmacion` data-error="#form-results")
+                .row
+                  .col-xs-12
+                    .form-group
+                      .form-control
+                        input.input#firstname(type="text" name="firstname" placeholder=' ' required)
+                        label(for='firstname') Nombre
+                  .col-xs-12
+                    .form-group
+                      .form-control
+                        input.input#lastname(type="text" name="lastname" placeholder=' ' required)
+                        label(for='lastname') Apellido
+                  .col-xs-12
+                    .form-group
+                      .form-control
+                        input.input#cellphone(type="text" name="cellphone" placeholder=' ' required cellphone)
+                        label(for='cellphone') Número de célular
+                  .col-xs-12
+                    .form-group
+                      .form-control
+                        input.input#email(type="email" name="email" autocomplete="username" placeholder=' ' required)
+                        label(for='email') Correo Electrónico
+                  .col-xs-12
+                    .form-group
+                      .form-control
+                        input.input#password(type="password" name="password" autocomplete="new-password" placeholder=' ' required)
+                        label(for='password') Contraseña
+                .row
+                  .col-xs-12.tr
+                    button.btn.btn--primary.w-100-xs(type="submit") Completar registro
+          .p-1.white-500
+            .row
+              .col-xs-12
+                a(href="/iniciar-sesion") Iniciar Sesión
+              .col-xs-12
+                a(href="/recuperar-contrasena") ¿Olvidaste tu contraseña?

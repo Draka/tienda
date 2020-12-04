@@ -1,0 +1,25 @@
+extends ../../layout-edit
+
+block edit
+  form.validate-rest(id="updateProfileForm" action=`${config.url.api}admin/stores/${store._id}` method="put" data-page=`/administracion/tiendas/${store._id}/redes-sociales` data-error="#form-results")
+    .row
+      .col-xs-12
+        each social, key in socialMedia
+          .form-group
+            .form-control
+              input.input(type="hidden" name=`contacts[${key}][slug]` value=social[0])
+              input.input(
+                id=`contacts-${social[0]}`
+                type=social[2]
+                name=`contacts[${key}][value]`
+                placeholder=' '
+                value=(store.contacts.find(i=>i.slug==social[0])||{}).value
+                )&attributes(social[3])
+              label(for=`contacts-${social[0]}`) #{social[1]}
+
+
+    .row
+      .col-xs-12.tr
+        a.btn.btn--secondary.w-100-xs(href=`/administracion/tiendas/${store._id}/redes-sociales`) Cancelar
+        | #{' '}
+        button.btn.btn--primary.w-100-xs.mt-2-xs(type="submit") Editar Tienda

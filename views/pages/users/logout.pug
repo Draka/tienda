@@ -1,0 +1,20 @@
+extends ../../layout
+
+block content
+  .container
+    h1.mb-3.pt-3 Cerrar Sesión
+    .row.justify-content-center
+      .col-xs-12.col-md-6
+        .oh.white.br-1.rd-0-2
+          .p-3
+            .row
+              .col-xs-12
+                .msg.action
+                  | Se ha cerrado tu sesión
+          .p-3.white-500
+            .row
+              .col-xs-12
+                a(href="/iniciar-sesion") Iniciar Sesión
+  script.
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');

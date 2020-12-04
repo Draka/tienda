@@ -1,0 +1,26 @@
+extends ../../layout-list
+
+block list
+  if items.length
+    table.small.table.table--lines.table--lines.table--striped
+      thead
+        tr
+          th.tc
+            i.far.fa-map
+          th.w-100.b Nombre
+          th.tc
+            i.fas.fa-cog
+      tbody
+        each item of items
+          tr
+            td.tc
+              img.h-96p(src=item.image)
+            td.w-100
+              a.b(href=`/administracion/tiendas/${store._id}/zonas-de-coberturas/${item._id}/editar`) #{item.name}
+            td.w-100
+              button.btn.btn--error.w-100(data-id=item._id) Eliminar
+  else
+    .white.br-1.rd-0-2.p-3
+      .remark.info.flex.mb-0-5
+        i.fas.fa-info-circle.h4.mr-1.t-info
+        | No hay áreas de cobertura creadas.

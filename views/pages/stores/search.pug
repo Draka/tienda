@@ -1,0 +1,19 @@
+extends ../../layout_store
+
+block content
+  .invisible #{description}
+  .container
+    .row
+      .col-xs-12
+        nav.breadcrumb.ph-3.small.uppercase
+          a.b.item(href=`/${store.slug}`) INICIO
+          a.b.item(href=`/${store.slug}/buscar`) BUSCAR
+        h1.tc Resultados de la búsqueda
+      .col-xs-12.mt-3
+        .list-products-grid('data-category'='' 'data-limit'=42 'data-list'=store.slug+'/page_search')
+          ul.row-xp.flex-wrap.justify-content-center
+            .loading.bigx2
+              i.fas.fa-sync.fa-spin
+          nav.mt-3
+
+  include ../../fragments/footer_store.pug

@@ -1,0 +1,38 @@
+extends ../../layout
+include ../../fragments/nologin
+
+block content
+  .container
+    .row
+      .col-xs-12
+        nav.breadcrumb.ph-3.small.uppercase
+          a.b.item(href=`/`) INICIO
+          a.b.item(href=`/perfil`) PERFIL
+
+  .container.session.start-hide
+    h1.pt-3 Pefil
+    .hr.mb-5.mt-2
+    .row.justify-content-center
+      .col-xs-12.col-md-6
+        .white.br-1.rd-0-2.p-3
+          .row
+            .col-sm-6
+              b #{__('Nombre')}:
+            .col-sm-6.firstname
+            .col-sm-6.mt-3-xs
+              b #{__('Apellido')}:
+            .col-sm-6.lastname
+            .col-sm-6.mt-3-xs
+              b #{__('Número de célular')}:
+            .col-sm-6.cellphone
+            .col-sm-6.mt-3-xs
+              b #{__('Correo Electrónico')}:
+            .col-sm-6.email
+            .col-xs-12
+              .hr.mh-3
+            .col-xs-12.tc
+              a.button.primary.w-100-xs(href='/editar-perfil') #{__('Editar perfil')}
+            .col-xs-12.tc.mt-2
+              a.button.primary.w-100-xs(href='/cambiar-contrasena') #{__('Cambiar contraseña')}
+
+  +nologin('Perfil')

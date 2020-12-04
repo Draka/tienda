@@ -1,0 +1,26 @@
+extends ../../layout-edit
+
+block edit
+  form.validate-rest(
+    id="form"
+    action=`${config.url.api}admin/stores/${store._id}/categories/${item._id}`
+    method="put"
+    data-page=`/administracion/tiendas/${store._id}/categorias`
+    data-error="#form-results")
+    .row
+      .col-xs-12
+        .form-group
+          .form-control
+            select#categoryID.input(name='categoryID')
+              option(value="") --
+              each category of items
+                option(value=category._id selected=item.categoryID && item.categoryID.toString()==category._id.toString()) #{category.name}
+            label.nowrap(for='categoryID') Categoría Padre
+        .form-group
+          .form-control
+            input.input#name(type="text" name="name" placeholder=' ' required value=item.name)
+            label(for='name') Nombre
+
+    .row
+      .col-xs-12.tr
+        button.btn.btn--primary.w-100-xs.mt-2-xs(type="submit") Editar Categoría

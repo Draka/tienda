@@ -1,0 +1,75 @@
+extends ../../layout-list
+
+block list
+  .msg.info.mb-0-5
+    .flex
+      i.fas.fa-exclamation.h2.mr-0-25.w-2.tc
+      ul
+        li Solo los productos Publicados serán visibles a los usuarios.
+        li Si ya ha publicado un producto y no quiere venderlo más, es mejor dejarlo como no disponible.
+        li Solo puede subir imagenes cuando un producto ya ha sido creado o usando el método de cargar archivo.
+
+  if items.length
+    .remark
+      b P
+      | #{' '} = Publicado,
+      | #{' '}
+      b D
+      | #{' '} = Digital
+    table.small.table.table--lines.table--lines.table--striped
+      thead
+        tr
+          th.b Imagenes
+          th.b.tc P
+          th.b.tc D
+          th.b SKU
+          th.b Nombre
+          th.b Categoría
+          th.b Precio
+          th.b Descripción
+          th.tc(colspan=2)
+            i.fas.fa-cog
+      tbody
+        each item of items
+          tr
+            td
+              .flex
+                each image,i in item.imagesSizes
+                  img.m-0-25(src=image['48x48_jpg'])
+
+            td.tc
+              +boolean(item.publish)
+            td.tc
+              +boolean(item.digital.is)
+            td
+              | #{item.sku}
+            td
+              a.b(href=`/administracion/tiendas/${store._id}/productos/${item._id}/editar`) #{item.name}
+            td
+              | !{item.categoryText.join(' <i class="fas fa-chevron-right"></i> ')}
+            td.tr
+              .b.t-secondary #{formatMoney(item.price || 0)}
+            td
+              | #{item.shortDescription}
+            td.tc
+              a.btn-flat.p-0-5.rd-0-2(href=`/administracion/tiendas/${store._id}/productos/${item._id}/editar` title='Editar')
+                i.fas.fa-pencil-alt
+            td.tc
+              button.btn-flat.p-0-5.rd-0-2(data-id=item._id title='Eliminar')
+                i.fas.fa-trash-alt
+      tfoot
+        tr
+          th(colspan="10")
+            .pagination.justify-content-right
+              a.item(href=`?page=0`)
+                i.fas.fa-chevron-left
+                - var n = 0;
+                while n < Math.ceil(count/limit)
+                  a.item(href=`?page=${n++}`)= n
+              a.item(href=`?page=${Math.ceil(count/limit) - (count % limit == 0 ? 0 : 1)}`)
+                i.fas.fa-chevron-right
+  else
+    .white.br-1.rd-0-2.p-3
+      .remark.info.flex.mb-0-5
+        i.fas.fa-info-circle.h4.mr-1.t-info
+        | No hay productos creados.

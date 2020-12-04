@@ -1,0 +1,147 @@
+exports.user = (id, cb) => {
+  const key = `__user__${id}`;
+  client.get(key, (_err, reply) => {
+    if (reply && process.env.NODE_ENV === 'production') {
+      cb(null, JSON.parse(reply));
+    } else {
+      models.User
+        .findById(id)
+        .exec((err, doc) => {
+          if (err) {
+            return cb(err);
+          }
+          client.set(key, JSON.stringify(doc), 'EX', 3600);
+          cb(null, doc);
+        });
+    }
+  });
+};
+
+exports.store = (id, cb) => {
+  const key = `__store__${id}`;
+  client.get(key, (_err, reply) => {
+    if (reply && process.env.NODE_ENV === 'production') {
+      cb(null, JSON.parse(reply));
+    } else {
+      models.Store
+        .findById(id)
+        .exec((err, doc) => {
+          if (err) {
+            return cb(err);
+          }
+          client.set(key, JSON.stringify(doc), 'EX', 3600);
+          cb(null, doc);
+        });
+    }
+  });
+};
+
+// Todas las areas de cobertura de una tienda
+exports.coveragesAreas = (storeID, cb) => {
+  const key = `__coverages-areas__${storeID}`;
+  client.get(key, (_err, reply) => {
+    if (reply && process.env.NODE_ENV === 'production') {
+      cb(null, JSON.parse(reply));
+    } else {
+      models.CoverageArea
+        .find({ storeID })
+        .exec((err, doc) => {
+          if (err) {
+            return cb(err);
+          }
+          client.set(key, JSON.stringify(doc), 'EX', 3600);
+          cb(null, doc);
+        });
+    }
+  });
+};
+
+exports.place = (id, cb) => {
+  const key = `__place__${id}`;
+  client.get(key, (_err, reply) => {
+    if (reply && process.env.NODE_ENV === 'production') {
+      cb(null, JSON.parse(reply));
+    } else {
+      models.Place
+        .findById(id)
+        .exec((err, doc) => {
+          if (err) {
+            return cb(err);
+          }
+          client.set(key, JSON.stringify(doc), 'EX', 3600);
+          cb(null, doc);
+        });
+    }
+  });
+};
+
+function categoryTree(storeID, categoryID, cb) {
+  models.Category
+    .find({
+      storeID,
+      categoryID,
+    })
+    .select('_id name active')
+    .sort({
+      name: 1,
+    })
+    .lean()
+    .exec((err, docs) => {
+      if (err) {
+        cb(err);
+      } else {
+        async.mapLimit(docs, 20, (i, cb) => {
+          categoryTree(storeID, i._id, (_err, r) => {
+            i.categories = r;
+            cb(null, i);
+          });
+        }, (_err, docs) => {
+          cb(null, docs);
+        });
+      }
+    });
+}
+exports.categoryTree = (storeID, cb) => {
+  const key = `__category_tree__${storeID}`;
+  client.get(key, (_err, reply) => {
+    if (reply && process.env.NODE_ENV === 'production') {
+      cb(null, JSON.parse(reply));
+    } else {
+      categoryTree(storeID, null, (err, docs) => {
+        if (err) {
+          return cb(err);
+        }
+        client.set(key, JSON.stringify(docs), 'EX', 3600);
+        cb(null, docs);
+      });
+    }
+  });
+};
+
+function treePush(items, arr, depth = 0) {
+  _.each(items, (i) => {
+    i.name = _.repeat('--', depth) + i.name;
+    arr.push(i);
+    treePush(i.categories, arr, depth + 1);
+    delete i.categories;
+  });
+}
+exports.treePush = treePush;
+
+function up(arr, categoryID, cb) {
+  models.Category
+    .findOne({ _id: categoryID })
+    .select('categoryID name')
+    .exec((err, doc) => {
+      if (err) {
+        cb(err);
+      } else if (doc) {
+        arr.unshift({ _id: doc._id, name: doc.name });
+        up(arr, doc.categoryID, cb);
+      } else {
+        cb(null, arr);
+      }
+    });
+}
+
+exports.up = up;

@@ -1,0 +1,37 @@
+extends ../../layout-edit
+
+block edit
+  form.validate-rest(id="updateProfileForm" action=`${config.url.api}admin/stores/${store._id}` method="put" data-page=`/administracion/tiendas/${store._id}` data-error="#form-results")
+    .row
+      .col-xs-12
+        .form-group
+          .form-control
+            label
+              input.checkbox#publish(type="checkbox" name="publish" value='1' checked=store.publish)
+              span Publicado
+        .form-group
+          .form-control
+            input.input#name(type="text" name="name" placeholder=' ' required value=store.name)
+            label(for='name') Nombre de la tienda
+        .form-group
+          .form-control
+            input.input#slogan(type="text" name="slogan" placeholder=' ' required value=store.slogan)
+            label(for='slogan') Slogan
+        .form-group
+          .form-control
+            textarea.input#description(name="description" placeholder=' ' required he) #{store.description}
+            label(for='description') Descripción
+        .form-group.ph-1
+          .mb-1.subtitle Visión
+          textarea.cke#vision(data-target='#vision' name="vision") !{store.vision}
+
+        .form-group.ph-1
+          .mb-1.subtitle Descripción Larga
+          textarea.cke#descriptionLong(data-target='#descriptionLong' name="descriptionLong") !{store.descriptionLong}
+
+
+    .row
+      .col-xs-12.tr
+        a.btn.btn--secondary.w-100-xs(href=`/administracion/tiendas/${store._id}`) Cancelar
+        | #{' '}
+        button.btn.btn--primary.w-100-xs.mt-2-xs(type="submit") Editar Tienda

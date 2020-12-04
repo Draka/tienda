@@ -1,0 +1,48 @@
+{
+    "env": {
+        "commonjs": true,
+        "es2021": true,
+        "node": true
+    },
+    "extends": [
+        "airbnb-base"
+    ],
+    "parserOptions": {
+        "ecmaVersion": 12
+    },
+    "globals": {
+        "_": true,
+        "mongoose": true,
+        "config": true,
+        "checkAuth": true,
+        "listErrors": true,
+        "moment": true,
+        "models": true,
+        "validator": true,
+        "async": true,
+        "client": true,
+        "__": true,
+        "checkAuthAdmin": true,
+        "checkAuthAdminStore": true,
+        "configPage": true,
+        "lang": true,
+        "configStore": true,
+        "AWS": true
+    },
+    "rules": {
+        "max-len": ["error", {
+            "code": 200
+        }],
+        "no-unused-vars": ["error", {
+            "vars": "all",
+            "varsIgnorePattern": "[_]",
+            "args": "after-used",
+            "argsIgnorePattern": "^_",
+            "caughtErrors": "none"
+        }],
+        "consistent-return": "off",
+        "no-underscore-dangle": "off",
+        "no-shadow":"off",
+        "no-param-reassign":"off"
+    }
+}

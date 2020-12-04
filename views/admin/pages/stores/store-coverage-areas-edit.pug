@@ -1,0 +1,30 @@
+extends ../../layout-edit
+
+block edit
+  form.validate-rest(
+    id="updateProfileForm"
+    action=`${config.url.api}admin/stores/${store._id}/coverages-areas/${item._id}`
+    method="put"
+    data-page=`/administracion/tiendas/${store._id}/zonas-de-coberturas`
+    data-error="#form-results")
+    .row
+      .col-xs-12
+        .msg.info.mb-0-5
+          .flex
+            i.fas.fa-exclamation.h2.mr-0-25.w-2.tc
+            div Las áreas de cobertura son una zona de un mapa donde se prestará el servicio de envio local proporcionado por el dueño de la tienda.
+        .form-group
+          .form-control
+            input.input#name(type="text" name="name" placeholder=' ' required value=item.name)
+            label(for='name') Nombre del área de cobertura
+        .form-group
+          .form-control
+            .subtitle Mapa
+        .form-group
+          .form-control
+            input#center(type="hidden" name="center" value=`${center.longitude},${center.latitude}`)
+            input#points(type="hidden" name="points" value=item.points)
+            #map-edit.w-100.h-460p
+    .row
+      .col-xs-12.tr
+        button.btn.btn--primary.w-100-xs.mt-2-xs(type="submit") Editar Zona de Cobertura

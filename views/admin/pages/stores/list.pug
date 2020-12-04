@@ -1,0 +1,70 @@
+extends ../../layout-list
+
+block list
+  .msg.info.mb-0-5
+    .flex
+      i.fas.fa-exclamation.h2.mr-0-25.w-2.tc
+      ul
+        li Seleccione una Tienda para editar.
+
+  if items.length
+    .remark
+      b P
+      | #{' '} = Publicado,
+      | #{' '}
+      b A
+      | #{' '} = Aprobada
+      | #{' '}
+    table.small.table.table--lines.table--lines.table--striped
+      thead
+        tr
+          th &nbsp;
+          th.b Logo
+          th.b.tc P
+          th.b.tc A
+          th.b Nombre
+          th.b URL
+          th.b Descripción
+          th.tc(colspan=2)
+            i.fas.fa-cog
+      tbody
+        each item of items
+          tr
+            td.tc
+              a.btn.btn--secondary.small(href=`/administracion/tiendas/${item._id}/seleccionar` title='Seleccionar')
+                | Seleccionar
+            td.tc
+              if item.image
+                img.m-0-25(src=item.imageSizes['48x48_jpg'])
+            td.tc
+              +boolean(item.publish)
+            td.tc
+              +boolean(item.approve)
+            td
+              a.b(href=`/administracion/tiendas/${item._id}/editar`) #{item.name}
+            td
+              a(href=`${config.url.site}${item.slug}` target='_blank') #{`${config.url.site}${item.slug}`}
+            td
+              | #{item.description}
+            td.tc
+              a.btn-flat.p-0-5.rd-0-2(href=`/administracion/tiendas/${item._id}/editar` title='Editar')
+                i.fas.fa-pencil-alt
+            td.tc
+              button.btn-flat.p-0-5.rd-0-2(data-id=item._id title='Eliminar')
+                i.fas.fa-trash-alt
+      tfoot
+        tr
+          th(colspan="10")
+            .pagination.justify-content-right
+              a.item(href=`?page=0`)
+                i.fas.fa-chevron-left
+                - var n = 0;
+                while n < Math.ceil(count/limit)
+                  a.item(href=`?page=${n++}`)= n
+              a.item(href=`?page=${Math.ceil(count/limit) - (count % limit == 0 ? 0 : 1)}`)
+                i.fas.fa-chevron-right
+  else
+    .white.br-1.rd-0-2.p-3
+      .remark.info.flex.mb-0-5
+        i.fas.fa-info-circle.h4.mr-1.t-info
+        | No hay productos creados.

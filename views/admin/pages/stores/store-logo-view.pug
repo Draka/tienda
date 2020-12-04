@@ -1,0 +1,14 @@
+extends ../../layout-view
+
+block view
+  if store.image
+    table.small.table.table--lines
+      tbody
+        tr
+          td.w-100.tc
+            img(src=store.imageSizes['196x196_jpg'])
+  else
+    .white.br-1.rd-0-2.p-3
+      .remark.info.flex.mb-0-5
+        i.fas.fa-info-circle.h4.mr-1.t-info
+        | No tiene un logo para mostrar.

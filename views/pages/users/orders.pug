@@ -1,0 +1,12 @@
+extends ../../layout
+include ../../fragments/nologin
+
+block content
+  .container.session.start-hide
+    h1.pt-3 Lista de pedidos
+    .hr.mb-5.mt-2
+    .row
+      .col-xs-12
+        .order-list
+
+  +nologin('Inicia sesión')

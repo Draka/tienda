@@ -1,0 +1,10 @@
+{
+  "dst": "script.js",
+  "folder": "sources",
+  "files": [
+    "jquery.slim.min.js",
+    "jquery.lazy.min.js",
+    "loadCSS.js",
+    "main.js"
+  ]
+}

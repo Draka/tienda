@@ -1,0 +1,51 @@
+
+//- meta(http-equiv='Content-Security-Policy'
+//- content=
+//- 'default-src *.p4s.co;'+
+//- 'font-src 'self' *.p4s.co ;'+
+//- 'frame-src 'self' *.youtube.com *.wompi.co *.p4s.co *.facebook.com;'+
+//- 'connect-src 'self' *.bugsnag.com *.p4s.co *.google-analytics.com *.facebook.com;'+
+//- 'img-src 'self' data: *.p4s.co *.googletagmanager.com *.google-analytics.com stats.g.doubleclick.net google.com.co *.hexagon-analytics.com hexagon-analytics.com *.mapbox.com *.facebook.com;'+
+//- 'object-src 'none';'+
+//- 'script-src 'self' 'unsafe-inline' 'unsafe-eval' *.siftscience.com *.p4s.co *.google-analytics.com *.googletagmanager.com *.mapbox.com *.wompi.co *.facebook.net;'+
+//- 'style-src 'self' 'unsafe-inline' *.p4s.co *.mapbox.com *.facebook.com')
+if process.env.NODE_ENV == 'production'
+  script.
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-PZSNWCV');
+script.
+  window.dataLayer = window.dataLayer || [];
+  function gtag(d){dataLayer.push(d);}
+
+meta(name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0')
+meta(http-equiv='content-type' content='text/html; charset=UTF-8')
+
+title
+  if store
+    | #{title} en #{store.name}
+  else
+    | #{title} #{config.site.separator} #{config.site.name}
+
+//- preload
+link(rel='preload' href=config.url.static+'css/style.min.css?='+config.v as='style')
+link(rel='preload' href=config.url.static+'css/fonts.min.css?='+config.v as='style' )
+link(rel='preload' href=config.url.static+'webfonts/lato-v16-latin-700.woff2' as='font' crossorigin)
+link(rel='preload' href=config.url.static+'webfonts/lato-v16-latin-regular.woff2' as='font' crossorigin)
+link(rel='preload' href=config.url.static+'webfonts/fa-brands-400.woff2' as='font' crossorigin)
+link(rel='preload' href=config.url.static+'webfonts/fa-solid-900.woff2' as='font' crossorigin)
+
+
+link(rel='preload' href=config.url.static+'lib/script.js?='+config.v as='script')
+if js
+  link(rel='preload' href=config.url.static+'js/'+js+'.js?='+config.v as='script')
+
+if mapbox
+  link(rel='preload' href='https://api.mapbox.com/mapbox-gl-js/v1.9.1/mapbox-gl.css' as='style')
+  link(rel='preload' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css' as='style')
+
+link(rel='shortcut icon' href=config.url.static+'images/favicon.png' type='image/x-icon')
+link(rel='icon', type='image/vnd.microsoft.icon', href=config.url.static+'images/favicon.ico')
+link(rel='stylesheet', href=config.url.static+'css/style.min.css?='+config.v)

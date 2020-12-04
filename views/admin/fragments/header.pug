@@ -1,0 +1,58 @@
+header
+  .hide-xs
+    nav.navbar.primary-500.fixed.shadow
+      .container.left
+        a.logo(href='/')
+          img(src='/images/logo_f_negro.svg' alt='Tienda Logo')
+
+        .expand
+        .login.relative
+          a.dropdown(aria-controls='menu-login')
+            span
+              i.fas.fa-user-circle.fa-fw
+              | #{' '}
+              span Hola, #{session.personalInfo.firstname}
+            span.icon.ml-1
+              i.fas.fa-arrow-down.fa-fw
+          #menu-login.dropdown-list.right.shadow
+            ul.list-categories(role='menu')
+              li(role='menuitem')
+                a.item(href='/cerrar-sesion')
+                  i.fas.fa-sign-out-alt
+                  | #{' '}Cerrar Sesión
+
+  .show-xs
+    nav.navbar.primary.shadow.fixed.top
+      ul.flex.w-100
+        li
+          a.sidenav-action.w-4.justify-content-center(href='#' data-target='#mobile-menu')
+            i.fas.fa-bars
+            span.out-screen Menú
+        li.expand
+          a.logo.justify-content-center(href='/')
+            img(src='/images/logo_f_negro.svg' alt='Tienda Logo')
+
+  nav#mobile-menu.sidenav
+    .sidenav-body
+      .white-500.w-100.flex.h-3
+        .w-100.title.tc.b Cuenta
+      .nologin
+        ul.list(role='menu')
+          li(role='menuitem')
+            a(href='/iniciar-sesion') Iniciar Sesión
+          li(role='menuitem')
+            a(href='/registro') Registro
+
+      ul.list.login(role='menu')
+        li(role='menuitem')
+          a(href='/perfil')
+            i.far.fa-address-card
+            | #{' '}Perfil
+        li(role='menuitem')
+          a(href='/pedidos')
+            i.fas.fa-shopping-bag
+            | #{' '}Pedidos
+        li(role='menuitem')
+          a(href='/cerrar-sesion')
+            i.fas.fa-sign-out-alt
+            | #{' '}Cerrar Sesión

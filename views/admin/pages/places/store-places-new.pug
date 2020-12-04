@@ -1,0 +1,101 @@
+extends ../../layout-edit
+
+block edit
+  form.validate-rest(
+    id="updateProfileForm"
+    action=`${config.url.api}admin/stores/${store._id}/places`
+    method="post"
+    data-page=`/administracion/tiendas/${store._id}/sedes`
+    data-error="#form-results")
+    .row
+      .col-xs-12
+        .form-group
+          .form-control
+            label
+              input.checkbox#active(type="checkbox" name="active" value=true)
+              span Activo
+        .form-group
+          .form-control
+            input.input#name(type="text" name="name" placeholder=' ' required)
+            label(for='name') Nombre
+        .form-group
+          .form-control
+            input.input#address(type="text" name="address" placeholder=' ' required)
+            label(for='address') Dirección
+        .form-group
+          .form-control
+            .subtitle Mapa
+        .form-group
+          .form-control
+            input#point(type="hidden" name="point")
+            #map-edit-point.w-100.h-460p
+        .form-group
+          .form-control
+            .title Horario de atención
+        .subtitle Lunes
+        .form-group.flex
+          .form-control
+            input.input#monday-0(type="time" name="schedule[monday][0]" placeholder=' ')
+            label.nowrap(for='monday-0') Inicio
+          .form-control.pl-1
+            input.input#monday-1(type="time" name="schedule[monday][1]" placeholder=' ')
+            label(for='monday-1') Cierre
+        .subtitle Martes
+        .form-group.flex
+          .form-control
+            input.input#thuesday-0(type="time" name="schedule[thuesday][0]" placeholder=' ')
+            label.nowrap(for='thuesday-0') Inicio
+          .form-control.pl-1
+            input.input#thuesday-1(type="time" name="schedule[thuesday][1]" placeholder=' ')
+            label(for='thuesday-1') Cierre
+        .subtitle Miércoles
+        .form-group.flex
+          .form-control
+            input.input#wednesday-0(type="time" name="schedule[wednesday][0]" placeholder=' ')
+            label.nowrap(for='wednesday-0') Inicio
+          .form-control.pl-1
+            input.input#wednesday-1(type="time" name="schedule[wednesday][1]" placeholder=' ')
+            label(for='wednesday-1') Cierre
+        .subtitle Jueves
+        .form-group.flex
+          .form-control
+            input.input#thurday-0(type="time" name="schedule[thurday][0]" placeholder=' ')
+            label.nowrap(for='thurday-0') Inicio
+          .form-control.pl-1
+            input.input#thurday-1(type="time" name="schedule[thurday][1]" placeholder=' ')
+            label(for='thurday-1') Cierre
+        .subtitle Viernes
+        .form-group.flex
+          .form-control
+            input.input#friday-0(type="time" name="schedule[friday][0]" placeholder=' ')
+            label.nowrap(for='friday-0') Inicio
+          .form-control.pl-1
+            input.input#friday-1(type="time" name="schedule[friday][1]" placeholder=' ')
+            label(for='friday-1') Cierre
+        .subtitle Sábado
+        .form-group.flex
+          .form-control
+            input.input#saturday-0(type="time" name="schedule[saturday][0]" placeholder=' ')
+            label.nowrap(for='saturday-0') Inicio
+          .form-control.pl-1
+            input.input#saturday-1(type="time" name="schedule[saturday][1]" placeholder=' ')
+            label(for='saturday-1') Cierre
+        .subtitle Domingo
+        .form-group.flex
+          .form-control
+            input.input#sunday-0(type="time" name="schedule[sunday][0]" placeholder=' ')
+            label.nowrap(for='sunday-0') Inicio
+          .form-control.pl-1
+            input.input#sunday-1(type="time" name="schedule[sunday][1]" placeholder=' ')
+            label(for='sunday-1') Cierre
+        .subtitle Féstivos
+        .form-group.flex
+          .form-control
+            input.input#holiday-0(type="time" name="schedule[holiday][0]" placeholder=' ')
+            label.nowrap(for='holiday-0') Inicio
+          .form-control.pl-1
+            input.input#holiday-1(type="time" name="schedule[holiday][1]" placeholder=' ')
+            label(for='holiday-1') Cierre
+    .row
+      .col-xs-12.tr
+        button.btn.btn--primary.w-100-xs.mt-2-xs(type="submit") Crear Sede

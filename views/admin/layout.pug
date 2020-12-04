@@ -1,0 +1,26 @@
+doctype html
+html(lang='es')
+  head
+    include fragments/head.pug
+    include fragments/metatag.pug
+
+  body
+    if process.env.NODE_ENV == 'production'
+      noscript
+        iframe(src='https://www.googletagmanager.com/ns.html?id=GTM-PZSNWCV' height='0' width='0' style='display:none;visibility:hidden')
+
+    .stub
+      .stub__left.white.brr-1
+        nav.navbar.primary.fixed.shadow
+          .container
+            | Admin
+        .container.pt-5
+          include fragments/menu.pug
+      .stub__right
+        include fragments/header.pug
+        .container.left.navbar-fixed.ph-1
+          block content
+
+
+    include fragments/footer.pug
+    include fragments/scripts.pug

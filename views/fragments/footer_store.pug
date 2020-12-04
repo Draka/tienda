@@ -1,0 +1,46 @@
+.container-fluid.white-500.mt-2.ph-1
+  .container
+    .row
+      .col-md-7
+        b #{store.name}
+        p !{store.descriptionLong}
+      .col-md-5
+        if store.contacts
+          b Medios de Contacto
+          each contact in store.contacts
+            if contact.slug == 'facebook'
+              .flex
+                .icon.big
+                  i.fab.fa-facebook-square
+                .b.ellipsis.ml-2
+                  a(href=contact.value title='Facebook' target='_blank') Facebook
+            else if contact.slug == 'twitter'
+              .flex
+                .icon.big
+                  i.fab.fa-twitter-square
+                .b.ellipsis.ml-2
+                  a(href=contact.value title='Twitter' target='_blank') Twitter
+            else if contact.slug == 'whatsapp'
+              .flex
+                .icon.big
+                  i.fab.fa-whatsapp-square
+                .b.ellipsis.ml-2
+                  a(href=`https://wa.me/${contact.value}?text=Hola, encontré en tienda.p4s.co tus productos, quisiera saber más.` title='Whatsapp' target='_blank') Whatsapp
+            else if contact.slug == 'cellphone'
+              .flex
+                .icon.big
+                  i.fas.fa-mobile-alt
+                .b.ellipsis.ml-2
+                  a(href=`tel:${contact.value}` title='Número de Célular' target='_blank') Célular
+            else if contact.slug == 'phone'
+              .flex
+                .icon.big
+                  i.fas.fa-phone-square-alt
+                .b.ellipsis.ml-2
+                  a(href=`tel:${contact.value}` title='Número de Teléfonico' target='_blank') Teléfono
+            else if contact.slug == 'url'
+              .flex
+                .icon.big
+                  i.fab.fa-chrome
+                .b.ellipsis.ml-2
+                  a(href=contact.value title='Página web' target='_blank') Página Web
