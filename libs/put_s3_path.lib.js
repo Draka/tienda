@@ -2,17 +2,16 @@ exports.putS3Path = (items, store) => {
   _.each(items, (o) => {
     o.imagesSizes = _.map(o.images, (i) => {
       const sizes = {};
-      const s3 = process.env.NODE_ENV === 'production' ? config.url.s3 : '';
       const pathImg = `ecommerce/${store._id}/products/${o._id}/${i}`;
 
       _.each(global.imagesSizes, (is) => {
-        sizes[`${is.x}x${is.y}_jpg`] = `${s3}/${pathImg}/${is.x}x${is.y}.jpg`;
+        sizes[`${is.x}x${is.y}_jpg`] = `${config.url.static}${pathImg}/${is.x}x${is.y}.jpg`;
       });
 
       _.each(global.imagesSizes, (is) => {
-        sizes[`${is.x}x${is.y}_webp`] = `${s3}/${pathImg}/${is.x}x${is.y}.webp`;
+        sizes[`${is.x}x${is.y}_webp`] = `${config.url.static}${pathImg}/${is.x}x${is.y}.webp`;
       });
-      sizes.original = `${s3}/${pathImg}/original`;
+      sizes.original = `${config.url.static}${pathImg}/original`;
       return sizes;
     });
   });
@@ -24,17 +23,16 @@ exports.putS3LogoPath = (stores) => {
       return;
     }
     const sizes = {};
-    const s3 = process.env.NODE_ENV === 'production' ? config.url.s3 : '';
     const pathImg = `ecommerce/${store._id}/logo`;
 
     _.each(global.imagesSizes, (is) => {
-      sizes[`${is.x}x${is.y}_jpg`] = `${s3}/${pathImg}/${is.x}x${is.y}.jpg?v=${store.image}`;
+      sizes[`${is.x}x${is.y}_jpg`] = `${config.url.static}${pathImg}/${is.x}x${is.y}.jpg?v=${store.image}`;
     });
 
     _.each(global.imagesSizes, (is) => {
-      sizes[`${is.x}x${is.y}_webp`] = `${s3}/${pathImg}/${is.x}x${is.y}.webp?v=${store.image}`;
+      sizes[`${is.x}x${is.y}_webp`] = `${config.url.static}${pathImg}/${is.x}x${is.y}.webp?v=${store.image}`;
     });
-    sizes.original = `${s3}/${pathImg}/original`;
+    sizes.original = `${config.url.static}${pathImg}/original`;
     store.imageSizes = sizes;
   });
 };

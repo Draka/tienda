@@ -36,6 +36,9 @@ module.exports = (req, res, next) => {
       if (body.name && !_.trim(body.name)) {
         errors.push({ field: 'name', msg: 'Escribe un nombre de Producto válido.' });
       }
+      if (body.sku && !_.trim(body.sku)) {
+        errors.push({ field: 'sku', msg: 'Escribe un SKU de Producto válido.' });
+      }
       if (errors.length) {
         return cb(listErrors(400, null, errors));
       }

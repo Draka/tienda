@@ -5,7 +5,7 @@ exports.stores = (cb) => {
       cb(null, JSON.parse(reply));
     } else {
       models.Store
-        .find({ publish: true, check: true })
+        .find({ publish: true, approve: true })
         .exec((err, doc) => {
           if (err) {
             return cb(err);

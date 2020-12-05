@@ -37,7 +37,7 @@ block content
               .white.br-1.rd-0-2.p-1
                   .row
                     .col-xs-12
-                      .list-products-inline.carousel.primary('data-category'=featured.category.slugLong 'data-limit'=featured.quantity 'data-list'=store.slug+'/page_home' data-load='0')
+                      .list-products-inline.carousel.primary
                         .carousel-arrow.carousel-arrow-left
                           .carousel-icon-left
                             .out-screen Mover a la izquierda
@@ -48,14 +48,18 @@ block content
                             each product,pos in products[featured.category._id]
                               li
                                 .w-230p.w-170p-xs.w-170p-sm.br-1.white.h-100
-                                  .h-100.relative.p-1.pb-3.product(data-sku=product.sku data-product=JSON.stringify({
+                                  .h-100.relative.p-1.pb-3.product(
+                                    data-list=store.slug+'/page_home'
+                                    data-sku=product.sku 
+                                    data-product=JSON.stringify({
                                       sku: product.sku,
                                       name: product.name,
                                       categoryText: product.categoryText,
                                       brandText: product.brandText,
                                       price: product.price,
                                       store: store.slug
-                                    }) data-pos=pos+1)
+                                    }) 
+                                    data-pos=pos+1)
                                     a(href='/'+store.slug+'/productos/'+product.sku)
                                       +img(product)
                                     if product.brandText

@@ -149,6 +149,9 @@ function preUpdate(result, next) {
   if (result.name) {
     result.slug = _.kebabCase(_.deburr(_.get(result, 'name')));
   }
+  if (result.sku) {
+    result.sku = _.kebabCase(_.deburr(_.get(result, 'sku')));
+  }
   if (result.features) {
     result.features.forEach((e) => {
       e.slug = _.kebabCase(_.deburr(e.name));
