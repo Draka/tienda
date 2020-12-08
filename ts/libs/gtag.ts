@@ -1,3 +1,5 @@
+import '../util/products.d';
+
 declare global {
   // eslint-disable-next-line camelcase
   interface Window { dataLayer: any; google_tag_manager: any}
@@ -26,7 +28,7 @@ export class Gtag {
       position: 1, // Product position (number).
       price: product.price,
       quantity,
-      store: product.store
+      store: product.store,
     });
 
     this.event({
@@ -35,9 +37,9 @@ export class Gtag {
         currencyCode: 'COP',
         remove: {
           actionField: { list },
-          products: l
-        }
-      }
+          products: l,
+        },
+      },
     });
   }
 
@@ -52,7 +54,7 @@ export class Gtag {
       position: 1, // Product position (number).
       price: product.price,
       quantity,
-      store: product.store
+      store: product.store,
     });
 
     this.event({
@@ -61,9 +63,9 @@ export class Gtag {
         currencyCode: 'COP',
         add: {
           actionField: { list },
-          products: l
-        }
-      }
+          products: l,
+        },
+      },
     });
   }
 
@@ -84,15 +86,15 @@ export class Gtag {
         list_name: list, // Product list (string).
         position: i, // Product position (number).
         price: product.price,
-        store: product.store
+        store: product.store,
       });
     });
 
     this.event({
       ecommerce: {
         currencyCode: 'COP',
-        impressions: l
-      }
+        impressions: l,
+      },
     });
   }
 
@@ -113,7 +115,7 @@ export class Gtag {
       list_name: list, // Product list (string).
       position: <number>i, // Product position (number).
       price: product.price,
-      store: product.store
+      store: product.store,
     });
 
     this.event({
@@ -122,12 +124,12 @@ export class Gtag {
         currencyCode: 'COP',
         click: {
           actionField: { list },
-          products: l
-        }
+          products: l,
+        },
       },
       eventCallback() {
         document.location.href = <string>$(obj).attr('href');
-      }
+      },
     });
     return false;
   }
@@ -142,7 +144,7 @@ export class Gtag {
       list_name: list, // Product list (string).
       position: 1, // Product position (number).
       price: product.price,
-      store: product.store
+      store: product.store,
     });
 
     this.event({
@@ -150,9 +152,9 @@ export class Gtag {
         currencyCode: 'COP',
         detail: {
           actionField: { list },
-          products: l
-        }
-      }
+          products: l,
+        },
+      },
     });
   }
 
@@ -167,7 +169,7 @@ export class Gtag {
         list_name: 'cart1', // Product list (string).
         position: 1, // Product position (number).
         price: product.price,
-        store: product.store
+        store: product.store,
       });
     });
 
@@ -177,14 +179,14 @@ export class Gtag {
         currencyCode: 'COP',
         checkout: {
           actionField: {
-            step: 1
+            step: 1,
           },
-          products: l
-        }
+          products: l,
+        },
       },
       eventCallback() {
         document.location.href = <string>$(obj).attr('href');
-      }
+      },
     });
     return false;
   }
@@ -197,13 +199,13 @@ export class Gtag {
         checkout_option: {
           actionField: {
             step: 2,
-            option: typePayment
+            option: typePayment,
           },
-        }
+        },
       },
       eventCallback() {
         document.location.href = <string>$(obj).attr('href');
-      }
+      },
     });
   }
 
@@ -218,7 +220,7 @@ export class Gtag {
         list_name: 'cart1', // Product list (string).
         position: 1, // Product position (number).
         price: product.price,
-        store: product.store
+        store: product.store,
       });
     });
 
@@ -232,11 +234,11 @@ export class Gtag {
             affiliation: order.store.name,
             revenue: order.order.subtotal, // Total transaction value (incl. tax and shipping)
             tax: 0,
-            shipping: order.order.shipping
+            shipping: order.order.shipping,
           },
-          products: l
-        }
-      }
+          products: l,
+        },
+      },
     });
     return false;
   }
@@ -244,7 +246,7 @@ export class Gtag {
   search(searchTerm: string) {
     this.event({
       event: 'search',
-      search_term: searchTerm
+      search_term: searchTerm,
     });
   }
 }

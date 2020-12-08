@@ -1,0 +1,114 @@
+#address.modal.start-hide(tabindex='-1' role='dialog')
+  .modal-dialog(role='document')
+    form#addressForm.col-xs-12.validate-rest(action=`${config.url.api}services/geocoder` method="get" data-fnc-error="ca.errorAddress")
+      .modal-content
+        .modal-header
+          .title.b Seleccionar dirección
+          button.close.close-modal.flat(type='button' data-dismiss='modal' aria-label='Cerrar')
+            span(aria-hidden='true') &times;
+        .modal-body
+          .row
+            .col-xs-12
+              .form-group
+                label(for='country') País
+                .form-control
+                  select#country(type="text" name="country" required)
+                    option(value='colombia') Colombia
+
+            .col-xs-12
+              .form-group
+                .form-control
+                  input#city(type="text" name="city" placeholder=" " required)
+                  label(for='city') Ciudad
+
+            .col-xs-6
+              .form-group
+                .form-control
+                  select#streetType(name="streetType" required)
+                    option(value='calle') Calle
+                    option(value='carrera') Carrera
+                    option(value='autopista') Autopista
+                    option(value='avenida') Avenida
+                    option(value='avenida carrera') Avenida Carrera
+                    option(value='avenida calle') Avenida Calle
+                    option(value='circular') Circular
+                    option(value='circunvalar') Circunvalar
+                    option(value='diagonal') Diagonal
+                    option(value='manzana') Manzana
+                    option(value='transversal') Transversal
+                    option(value='via') Vía
+                  label(for='streetType') Dirección
+
+
+            .col-xs-6
+              .form-group
+                .form-control
+                  input#street(type="text" name="street" placeholder="20A Sur" required)
+                  label(for='street')
+                    span Nombre de Calle
+            .col-xs-6
+              .form-group
+                .form-control
+                  input#corner(type="text" name="corner" placeholder="#43" required)
+                  label(for='corner')
+                    span Número de Calle
+            .col-xs-6
+              .form-group
+                .form-control
+                  input#number(type="text" name="number" placeholder="50" required)
+                  label(for='number')
+                    span Número
+            .col-xs-12
+              .form-group
+                .form-control
+                  input#neighborhood(type="text" placeholder=" " name="neighborhood")
+                  label(for='neighborhood') Barrio, Localidad
+            .col-xs-12
+              .form-group
+                .form-control
+                  input#extra(type="text" placeholder=" " name="extra")
+                  label(for='extra') Casa, apt., torre
+        .modal-footer.tr
+          button.secondary.small.close-modal(type='button') Cancelar
+          | #{' '}
+          button.primary.small(type='submit') Buscar
+
+    form#mapForm.col-xs-12.validate-rest.start-hide(action=`${config.url.api}users/addresses` method="post" data-fnc-error="ca.errorAddress")
+      .modal-content
+        .modal-header
+          .title.b Confirmar punto
+          button.close.close-modal(type='button' data-dismiss='modal' aria-label='Cerrar')
+            span(aria-hidden='true') &times;
+        .modal-body
+          .remark.alert.mb-2
+            | Por favor confirme el punto de su dirección en el mapa
+          input#addressJSON(type="hidden" name="addressJSON")
+          #map.h-img-484
+
+        .modal-footer.tr
+          button.secondary.small.back(type='button') Volver
+          | #{' '}
+          button.primary.small(type='submit') Confirmar
+
+#change-cart.modal.start-hide(tabindex='-1' role='dialog')
+  .modal-dialog(role='document')
+      .modal-content
+        .modal-header
+          .b Cambios en tu carrito
+          button.close.close-modal.flat(type='button' data-dismiss='modal' aria-label='Cerrar')
+            span(aria-hidden='true') &times;
+        .modal-body
+          .row.list-products-remove.start-hide
+            .col-xs-12
+              .title Productos retirados
+              .list
+          .row.list-products-new-prices.start-hide
+            .col-xs-12
+              .title Productos con nuevos precios
+              .list
+
+
+        .modal-footer.tr
+          button.secondary.small(type='button' onclick="cart.undo()") Cancelar
+          | #{' '}
+          button.primary.small(type='button' onclick='cart.changePlaceAndResum()') Cambiar

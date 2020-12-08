@@ -1,3 +1,7 @@
+interface ProducPreInterface {
+  store: string,
+  sku: string
+}
 interface ProducInterface {
   store: string,
   sku: string,
@@ -10,9 +14,7 @@ interface ProducInterface {
   inventory?: boolean,
   stock?: number,
   digital?: {
-    streaming: boolean
-    msg?: string
-    url?: string
+    is: boolean
   }
 }
 interface ProducsInterface {

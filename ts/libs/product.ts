@@ -5,23 +5,26 @@ import { Cart } from './cart';
 export class Product {
   static img(product: ProducInterface, size = ['196x196', '392x392']) {
     if (product?.imagesSizes && product.imagesSizes.length) {
+      const ext = Vars.webp ? '_webp' : '_jpg';
       const first = product.imagesSizes[0];
-      let img1 = first[size[0]];
-      let img2 = first[size[1]];
-      if (!img1 && (size[0] === '48x48' || size[0] === '96x96')) {
-        img1 = first['75x75'];
-        img2 = first['150x150'];
-      }
+      const img1 = first[`${size[0]}${ext}`];
+      const img2 = first[`${size[1]}${ext}`];
       return `<img class="w-100 lazy" data-src="${img1}" data-retina="${img2}" alt="${product.name}">`;
     }
     return `<img class="w-100 lazy" data-src="${Vars.imgNoAvailable}" alt="${product.name}">`;
   }
 
+  /**
+   * Genera la url para mostrar una imagen
+   * @param product
+   * @param size
+   */
   static imgNow(product: ProducInterface, size = ['196x196', '392x392']) {
     const classSize = size[0].split('x')[0];
     if (product?.imagesSizes && product.imagesSizes.length) {
+      const ext = Vars.webp ? '_webp' : '_jpg';
       const first = product.imagesSizes[0];
-      return `<img class="h-img-${classSize}" src="${first[size[1]]}" alt="${product.name}">`;
+      return `<img class="h-img-${classSize}" src="${first[`${size[1]}${ext}`]}" alt="${product.name}">`;
     }
     return `<img class="h-img-${classSize}" src="${Vars.imgNoAvailable}" alt="${product.name}">`;
   }
@@ -56,7 +59,7 @@ export class Product {
     + '</div>');
     productHTML.find('.add').click((event) => {
       const cart = new Cart();
-      cart.add(product.sku, list);
+      cart.add(product.sku, list, product.store);
     });
     productHTML.find('a').click((event) => gtag.clickItem($(event.currentTarget), product, pos, list));
     return productHTML;

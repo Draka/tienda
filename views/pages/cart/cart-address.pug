@@ -1,0 +1,83 @@
+extends ../../layout
+
+block content
+
+  .container.pt-3
+    .row
+      .col-xs-12
+        .steps
+          a(href='/carrito').step.completed
+            .step-icon
+              i.fas.fa-box-open
+            .step-content
+              .step-title Productos
+              .step-description Verifique sus productos
+          a(href='/carrito-direccion').step.actived
+            .step-icon
+              i.fas.fa-map-marked-alt
+            .step-content
+              .step-title Dirección
+              .step-description Verifique su lugar de entrega
+          .step.disabled
+            .step-icon
+              i.fas.fa-money-check-alt
+            .step-content
+              .step-title Pago
+              .step-description Pago por Wompi
+
+  .container.session
+    h1 Confirmar dirección de entrega
+    .row.cart-screen-adrress
+      .col-md-7
+        .white.br-1.rd-0-2.p-1.mh-2
+          .title Facturación y envío
+          table.table.table--striped
+            tr
+              th.b Nombre
+              td.firstname #{session.personalInfo.firstname}
+            tr
+              th.b Apellido
+              td.lastname #{session.personalInfo.lastname}
+            tr
+              th.b Número de célular
+              td.cellphone #{session.personalInfo.callsign} #{session.personalInfo.cellphone}
+            tr
+              th.b Correo Electrónico
+              td.email #{session.email}
+            tr
+              td.user-address(colspan=2)
+            tr
+              td(colspan=2)
+                button.btn.btn--secondary.small.w-100.show-addresss CAMBIAR DIRECCIÓN
+
+        .cart-list-availability
+
+      .col-md-5.cart-summary
+        .white.br-1.rd-0-2.p-1.mh-2.sticky(style='top:100px')
+          h2 TOTAL DEL CARRITO
+
+          .cart-list-address
+
+          table.small.table.table--striped
+            tr
+              th Subtotal
+              td.t-secondary.cart-subtotal
+            tr
+              th Envío
+              td.t-secondary.cart-shipping
+            tr
+              th Total
+              td.b.t-secondary.cart-total
+
+          .remark.alert.mb-1
+              | Sus datos personales se utilizarán para respaldar su experiencia en este sitio web, para administrar el acceso a su cuenta y para otros fines descritos en la
+              | #{' '}
+              a.b(href='/doc/politica-tratamiento-de-datos') Política de Tratamiento de Datos
+              |.
+          button.btn.btn--primary.w-100.btn-cart2 IR A PAGAR
+
+    +emptyCart
+
+
+  include ../../fragments/modal_cart.pug
+

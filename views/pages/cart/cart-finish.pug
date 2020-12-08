@@ -1,0 +1,72 @@
+extends ../../layout
+include ../../fragments/nologin
+
+block content
+
+  .container.pt-3
+    .row
+      .col-xs-12
+        .steps
+          a(href='/carrito').step.completed
+            .step-icon
+              i.fas.fa-box-open
+            .step-content
+              .step-title Productos
+              .step-description Verifique sus productos
+          a(href='/carrito-direccion').step.completed
+            .step-icon
+              i.fas.fa-map-marked-alt
+            .step-content
+              .step-title Dirección
+              .step-description Verifique su lugar de entrega
+          .step.actived
+            .step-icon
+              i.fas.fa-money-check-alt
+            .step-content
+              .step-title Pago
+              .step-description Pago por Wompi
+
+  .container.session.start-hide.cart-detail-order(data-map="false")
+    .row
+      .col-xs-12
+        h1.tc Hacer pago
+    .row
+      .col-md-6
+        .white.br-1.rd-0-2.p-3.tc.h-100
+          .bigx2
+            i.fas.fa-shopping-basket
+          h2 Tu orden fue confirmada
+          .remark.primary.mh-3
+            | Número de pedidos #{' '}
+            a(href='/'+__('pedidos'))
+              b.number-order
+          a.button.action(href='/'+__('pedidos')) #{__('Lista de Pedidos')}
+
+      .col-md-6
+        .white.br-1.rd-0-2.p-3.mt-3-sm.mt-3-xs
+          .t-primary.title
+            | Compra
+          ul.list-ul.mt-2
+            li Una vez que se ha enviado su producto, generalmente demora de 2 a 5 días hábiles en ciudades principales.
+            li Puede pedir devolver su pago hasta 14 días después de la compra y que su producto no haya llegado o no sea lo que ha pedido.
+
+        .white.br-1.rd-0-2.p-3.mt-3
+          .t-primary.title
+            | Pago y Seguridad
+          .t-secondary.subtitle.mt-2
+            | Métodos de Pago
+          .flex.mt-2
+            .tc.mr-4
+              img.w-img-48(src='/common/images/wompi/ico_tarjetas.svg' alt='pago tarjetas de crédito')
+              .b.small Todas las tarjetas
+            .tc.mr-4
+              img.w-img-48(src='/common/images/wompi/ico_nequi.svg' alt='pago nequi')
+            .tc
+              img.h-img-48(src='/common/images/wompi/ico_pse.svg' alt='pago pse')
+              .b.small Cuentas de ahorro
+
+    .row
+      .col-md-12
+        .order-detail
+
+  +nologin('Inicia sesión')

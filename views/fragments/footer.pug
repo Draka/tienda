@@ -1,20 +1,34 @@
 footer.mt-8
   .container-fluid.primary
-    .container.ph-3
+    .container.ph-1
       .row
         .col-md-4.tc.vertical-align-center.mb-3-xs.mb-3-sm.mb-3-md
           img.h-4(src='/images/logo_cuadrado_f_negro.svg' alt='tienda logo blanco')
-        .col-md-8.tc.vertical-align-center
-          span.mr-4 ¿Interesado en vender sus productos?
-          a.btn.btn--secondary-300(href='https://admin-tienda.p4s.co/signup' target='_blank') Conocer marcas
+        .col-md-8.vertical-align-center
+          ul
+            li.p-0-5
+              a(href='/usuario/vendedor') ¿Interesado en vender sus productos?
+            li.p-0-5
+              a(href='/doc/politica-de-privacidad-y-tratamiento-de-datos') Política de Privacidad y Tratamiento de Datos
+            li.p-0-5
+              a(href='/doc/terminos-y-condiciones-comprador') Términos y Condiciones Comprador
+            li.p-0-5
+              a(href='/doc/terminos-y-condiciones-vendedor') Términos y Condiciones Vendedor
+            li.p-0-5
+              | Comentarios y dudas:
+              | #{' '} 
+              a.b(href=`mailto:${config.email.emailInfo}`) #{config.email.emailInfo}
         .col-md-12
-          .hr.mh-4
+          .hr.mh-1
       .row
         .col-md-4.tc.mb-3-xs.mb-3-sm.mb-3-md
           img.h-2(src='/images/logo.svg' alt='p4s logo')
-          .small Tienda&nbsp;
+          .small 
+            span.b Véndelo Mejor
+            | #{' '}
+            | es una idea apoyada por el portal de emprendimiento
+            | #{' '}
             a(href='https://p4s.co') p4s
-            | &nbsp;es una idea apoyada por el portar de emprendimiento p4s, del mismo dominio
         .col-md-4.mb-3-xs.mb-3-sm.mb-3-md.tc-xs.tc-sm.tc-md
           //- title.b.mb-2 Ayuda
           //- a.small.ml-4(href='/preguntas') Preguntas Frecuentes
@@ -29,8 +43,9 @@ footer.mt-8
       .row
         .col-md-4.mb-3-xs.mb-3-sm.mb-3-md
           .small TODOS LOS DERECHOS RESERVADOS
-          .small e-Mail:&nbsp;
-            a(href='info@p4s.co') info@p4s.co
+          .small powered by:
+            | #{' '} 
+            a(href='https://vendelomejor.com/') Véndelo Mejor
         .col-md-4.mb-3-xs.mb-3-sm.mb-3-md
           img.h-2(src='/images/wompi.png' alt='wompi')
           .small COMPRA 100% SEGURA

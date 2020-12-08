@@ -38,11 +38,20 @@ export class Cart {
     }
   }
 
+  /**
+   * Pone los valores del carrito en el localstorage
+   */
   set() {
     localStorage.setItem('stores', JSON.stringify(this.stores));
     this.cartCount.count();
   }
 
+  /**
+   * Trae el producto de la tienda o lo crea con 0
+   * @param store
+   * @param sku
+   * @param cb
+   */
   get(store: string, sku: string, cb: any) {
     if (!this.stores[store]) {
       this.stores[store] = { cart: {}, name: '' };
@@ -61,23 +70,27 @@ export class Cart {
           const product: ProducInterface = {
             store,
             sku,
-            name: data.product.name,
-            categoryText: data.product.categoryText,
-            brandText: data.product.brandText,
-            price: data.inventory.price,
+            name: data.name,
+            categoryText: data.categoryText,
+            brandText: data.brandText,
+            price: data.price,
             quantity: 0,
-            imagesSizes: data.product.imagesSizes,
+            imagesSizes: data.imagesSizes,
           };
           this.stores[store].cart[sku] = product;
-          this.stores[store].name = data.store.name;
+          this.stores[store].name = data.storeName;
           this.set();
           cb(product);
         });
     } else { cb(item); }
   }
 
+  /**
+   * Genera el html parra mostrar una imagen de un producto
+   * @param product
+   */
   static lineImg(product: ProducInterface):string {
-    return `<div class="flex mt-3"><div class="mr-3">${Product.imgNow(product, ['48x48', '96x96'])}</div><div>${product.name}</div></div>`;
+    return `<div class="flex mt-1"><div class="mr-1">${Product.imgNow(product, ['48x48', '96x96'])}</div><div>${product.name}</div></div>`;
   }
 
   static updateUUID() {
@@ -92,6 +105,9 @@ export class Cart {
     });
   }
 
+  /**
+   * Asigna un cartID
+   */
   getCartID(): string {
     this.cartID = <string>localStorage.getItem('cartID');
     if (!this.cartID) {
@@ -101,9 +117,15 @@ export class Cart {
     return this.cartID;
   }
 
-  setQuantity(sku: string, quantity: number, list: string, store = Vars.store) {
+  /**
+   * Asigna al carro de una tienda una cantidad a un producto
+   * @param productPre
+   * @param quantity
+   * @param list
+   */
+  setQuantity(productPre: ProducPreInterface, quantity: number, list: string) {
     this.getCartID();
-    this.get(store, sku, (product: ProducInterface) => {
+    this.get(productPre.store, productPre.sku, (product: ProducInterface) => {
       if (product) {
         const msg = Cart.lineImg(product);
         if (quantity === 0) {
@@ -115,8 +137,8 @@ export class Cart {
               title: 'Producto eliminado',
               msg,
             },
-          ]);
-          delete this.stores[store].cart[sku];
+          ], 'info');
+          delete this.stores[product.store]?.cart[product.sku];
         } else if (product.quantity < quantity) {
           this.gtag.addItem(product, quantity - product.quantity, list);
           product.quantity = quantity;
@@ -126,7 +148,7 @@ export class Cart {
               title: 'Producto agregado',
               msg,
             },
-          ]);
+          ], 'info');
         } else if (product.quantity > quantity) {
           this.gtag.removeItem(product, product.quantity - quantity, list);
           product.quantity = quantity;
@@ -136,7 +158,7 @@ export class Cart {
               title: 'Producto modificado',
               msg,
             },
-          ]);
+          ], 'info');
         } else {
           return;
         }
@@ -148,6 +170,9 @@ export class Cart {
     });
   }
 
+  /**
+   * Suma el valor de los productos
+   */
   subtotal() {
     let subtotal = 0;
     $.each(this.stores, (_slug, store) => {
@@ -158,20 +183,28 @@ export class Cart {
     $('.cart-subtotal').html(`${Vars.formatMoney(subtotal)}`);
   }
 
-  add(sku: string, list: string, store = Vars.store) {
+  /**
+   * Agrega 1 unidad a el producto de una tienda
+   * @param product
+   * @param list
+   */
+  add(sku: string, list: string, store: string) {
     const product = this.stores[store]?.cart[sku];
-    this.setQuantity(sku, (product?.quantity || 0) + 1, list, store);
+    this.setQuantity({ store, sku }, (product?.quantity || 0) + 1, list);
   }
 
   minus(sku: string, list: string, store = Vars.store) {
     const product = this.stores[store].cart[sku];
     if (product && product.quantity > 0) {
-      this.setQuantity(sku, product.quantity - 1, list, store);
+      this.setQuantity(product, product.quantity - 1, list);
     }
   }
 
   remove(sku: string, list: string, store: string) {
-    this.setQuantity(sku, 0, list, store);
+    const product = this.stores[store].cart[sku];
+    if (product) {
+      this.setQuantity(product, 0, list);
+    }
   }
 
   static getAddressJSON() {

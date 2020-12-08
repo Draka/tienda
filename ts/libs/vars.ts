@@ -11,14 +11,16 @@ export class Vars {
 
   static urlS3Images: string = Vars.b.data('urlS3Images');
 
-  static imgNoAvailable= `${Vars.urlS3}common/images/imagen_no_disponible.svg`;
+  static imgNoAvailable = `${Vars.urlS3}common/images/imagen_no_disponible.svg`;
 
-  static store= Vars.b.data('store')
+  static store = Vars.b.data('store')
 
-  static place= Vars.b.data('defaultPlace')
+  static place = Vars.b.data('defaultPlace')
+
+  static webp = document.createElement('canvas').toDataURL('image/webp').indexOf('data:image/webp') === 0;
 
   static badge(input: string) {
-    const status:any = {
+    const status: any = {
       created: 'Creado',
       paid: 'Pagado',
       cancelled: 'Cancelado',
@@ -30,7 +32,7 @@ export class Vars {
       missing: 'No Respondieron',
       completed: 'Completado',
     };
-    const color:any = {
+    const color: any = {
       created: 'primary',
       paid: 'alert',
       cancelled: 'error',
@@ -49,7 +51,7 @@ export class Vars {
     return `<button class="primary small id_${orderID} w-100">Pagar</button>`;
   }
 
-  static statusToDate(arr:Array<any>, status: string) {
+  static statusToDate(arr: Array<any>, status: string) {
     const st = arr.filter((s) => s.status === status);
     if (!st.length) {
       return '';
@@ -57,7 +59,7 @@ export class Vars {
     return Vars.format(st[0].date);
   }
 
-  static format(str:string) {
+  static format(str: string) {
     if (!str) return '';
     const days = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
 
@@ -66,14 +68,14 @@ export class Vars {
     return `${d.getDate()} de ${days[d.getMonth()]} de ${d.getFullYear()}`;
   }
 
-  static formatMoney(number:number, decPlaces = 0, simbol = '$', decSep = ',', thouSep = '.') {
+  static formatMoney(number: number, decPlaces = 0, simbol = '$', decSep = ',', thouSep = '.') {
     const re = `\\d(?=(\\d{${3}})+${decPlaces > 0 ? '\\D' : '$'})`;
     // eslint-disable-next-line no-bitwise
     const num = number.toFixed(Math.max(0, ~~decPlaces));
     return simbol + num.replace('.', thouSep).replace(new RegExp(re, 'g'), `$&${decSep}`);
   }
 
-  static getParameterByName(name:string, url:string = window.location.href) {
+  static getParameterByName(name: string, url: string = window.location.href) {
     name = name.replace(/[[\]]/g, '\\$&');
     const regex = new RegExp(`[?&]${name}(=([^&#]*)|&|#|$)`);
     const results = regex.exec(url);

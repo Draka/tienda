@@ -16,6 +16,7 @@ module.exports = (app) => {
       title: 'Iniciar Sesión',
       description: 'Inicie sesión, hay muchos productos para que escoja de nuestra plaza de emprendedores',
       breadcrumbs,
+      js: 'page',
     });
   });
   app.get('/registro', (req, res) => {
@@ -35,6 +36,7 @@ module.exports = (app) => {
       title: 'Registrarse como cliente',
       description: 'Inscríbase en Tienda p4s, navegue por nuestra vitrina virtual, seleccione sus productos y pague online',
       breadcrumbs,
+      js: 'page',
     });
   });
   app.get('/registro-confirmacion', (req, res) => {
@@ -51,8 +53,8 @@ module.exports = (app) => {
     ];
     res.render('pages/users/signup_confirm', {
       title: 'Registro Confirmación',
-      js: 'simple',
       breadcrumbs,
+      js: 'page',
     });
   });
   app.get('/recuperar-contrasena', (req, res) => {
@@ -69,8 +71,8 @@ module.exports = (app) => {
     ];
     res.render('pages/users/password_reset', {
       title: '¿Olvidaste tu contraseña?',
-      js: 'simple',
       breadcrumbs,
+      js: 'page',
     });
   });
   app.get('/recuperar-contrasena-confirmacion', (req, res) => {
@@ -87,8 +89,8 @@ module.exports = (app) => {
     ];
     res.render('pages/users/password_reset_confirm', {
       title: '¿Olvidaste tu contraseña?',
-      js: 'simple',
       breadcrumbs,
+      js: 'page',
     });
   });
   app.get('/cerrar-sesion', (req, res) => {
@@ -109,8 +111,8 @@ module.exports = (app) => {
     ];
     res.render('pages/users/signout', {
       title: 'Sesión finalizada',
-      js: 'simple',
       breadcrumbs,
+      js: 'page',
     });
   });
 };

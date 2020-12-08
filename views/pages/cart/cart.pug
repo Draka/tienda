@@ -1,0 +1,48 @@
+extends ../../layout
+
+block content
+
+  .container.pt-3
+    .row
+      .col-xs-12
+        .steps
+          a(href='/carrito').step.actived
+            .step-icon
+              i.fas.fa-box-open
+            .step-content
+              .step-title Productos
+              .step-description Verifique sus productos
+          .step.disabled
+            .step-icon
+              i.fas.fa-map-marked-alt
+            .step-content
+              .step-title Dirección
+              .step-description Verifique su lugar de entrega
+          .step.disabled
+            .step-icon
+              i.fas.fa-money-check-alt
+            .step-content
+              .step-title Pago
+              .step-description Pago por Wompi
+
+  .container
+      h1 Productos
+
+      .row.cart-screen
+        .col-md-8
+          .cart-list.mh-2
+
+        .col-md-4.cart-summary
+          .oh.white.br-1.rd-0-2.mh-2
+            .p-1
+              .big TOTAL DEL CARRITO
+            .p-1
+              .row
+                .col-xs-6
+                  | Subtotal
+                .col-xs-6.cart-subtotal.tr.t-secondary.big.b
+                .col-xs-12.mt-2
+                  a.btn.btn--primary.w-100.tc.btn-cart1(href='/carrito-direccion') CONFIRMAR DIRECCIÓN
+
+      +emptyCart
+

@@ -22,7 +22,7 @@ const enviroment = {
   email: {
     title: 'Tienda',
     emailNoreply: 'no-reply@p4s.co',
-    emailInfo: 'tienda@p4s.co',
+    emailInfo: 'info@vendelomejor.co',
   },
   url: {
     api: process.env.URL_API || '/v1/', // url del sitio

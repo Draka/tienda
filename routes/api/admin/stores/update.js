@@ -8,7 +8,6 @@ module.exports = (req, res, next) => {
   });
   const body = _.pick(fbody, [
     'name',
-    'slug',
     'slogan',
     'separator',
     'description',

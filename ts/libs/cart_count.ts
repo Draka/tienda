@@ -1,3 +1,4 @@
+import '../util/products.d';
 import { Gtag } from './gtag';
 
 export class CartCount {
@@ -17,6 +18,9 @@ export class CartCount {
     }
   }
 
+  /**
+   * Pone el número de productos encima del carrito
+   */
   count() {
     this.getCart();
     let number = 0;
@@ -27,9 +31,9 @@ export class CartCount {
         products.push(product);
       });
     });
-    $('.num-shopping-cart').html(number.toString());
-    $('.link-shopping-cart').click((event) => {
-      this.gtag.cart1($(event.currentTarget), products);
-    });
+    $('.num-shopping-cart').html(number.toString()).removeClass('start-hide');
+    // $('.link-shopping-cart').click((event) => {
+    //   this.gtag.cart1($(event.currentTarget), products);
+    // });
   }
 }

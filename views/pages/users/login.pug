@@ -8,11 +8,18 @@ block content
     h1 Iniciar Sesión
     .row.justify-content-center
       .col-xs-12.col-md-6
+        if returnPage
+          .oh.white.br-1.rd-0-2.mb-2
+            .p-1.tc
+              .bigx2
+                  i.fas.fa-shopping-cart
+              h2 Para continuar necesitas iniciar sesión.
+
         .oh.white.br-1.rd-0-2.mh-2
           .p-1
             .msg.error#form-results
             .row
-              form.col-xs-12.validate-rest(id="loginForm" action=`${config.url.api}users/login?cookie=1` method="post" data-page=`/` data-error="#form-results")
+              form.col-xs-12.validate-rest(id="loginForm" action=`${config.url.api}users/login?cookie=1` method="post" data-page=returnPage || '/' data-error="#form-results")
                 .row
                   .col-xs-12
                     .form-group

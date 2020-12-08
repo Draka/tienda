@@ -1,0 +1,17 @@
+extends ../../layout_account
+
+block content
+  .container
+    include ../../fragments/breadcrumb
+    .row
+      .col-xs-6
+        h1 #{title}
+
+    .row
+      .col-md-8
+        .msg(class=msg.color)
+          if msg.title
+            .b.title.p-1 #{msg.title}
+          .hr
+          .p-1 !{msg.text}
+

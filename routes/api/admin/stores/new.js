@@ -10,8 +10,12 @@ module.exports = (req, res, next) => {
       if (!_.trim(body.name)) {
         errors.push({ field: 'name', msg: 'Escribe un nombre de tienda válido.' });
       }
-      if (_.trim(body.slug)) {
+      if (!_.trim(body.slug)) {
         body.slug = body.name;
+      }
+      body.slug = _.kebabCase(_.deburr(_.trim(body.slug)));
+      if (global.forbidden.indexOf(body.slug) >= 0) {
+        errors.push({ field: 'slug', msg: 'Slug prohibido.' });
       }
       if (errors.length) {
         return cb(listErrors(400, null, errors));
@@ -20,7 +24,7 @@ module.exports = (req, res, next) => {
     },
     query: ['validate', (_results, cb) => {
       models.Store
-        .countDocuments({ slug: _.kebabCase(_.deburr(_.trim(body.slug))) })
+        .countDocuments({ slug: body.slug })
         .exec(cb);
     }],
     check: ['query', (results, cb) => {

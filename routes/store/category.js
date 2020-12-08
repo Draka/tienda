@@ -1,10 +1,31 @@
 const { putS3LogoPath } = require('../../libs/put_s3_path.lib');
-const query = require('../../libs/query.lib');
 const queryStore = require('../../libs/query_store.lib');
 const { putS3Path } = require('../../libs/put_s3_path.lib');
 const categoriesUp = require('../../libs/categories_up.lib');
 
 module.exports = (req, res, next) => {
+  const query = {
+    publish: 1,
+    $and: [
+      {
+        $or: [
+          { 'available.start': { $exists: false } },
+          { 'available.start': null },
+          { 'available.start': '' },
+          { 'available.start': { $lte: new Date() } },
+        ],
+      },
+      {
+        $or: [
+          { 'available.end': { $exists: false } },
+          { 'available.end': null },
+          { 'available.end': '' },
+          { 'available.end': { $gte: new Date() } },
+        ],
+      },
+
+    ],
+  };
   async.auto({
     user: (cb) => {
       if (!req.user || !req.user._id) {
@@ -20,6 +41,7 @@ module.exports = (req, res, next) => {
         return cb(listErrors(404, null, [{ field: 'storeID', msg: 'No existe la tienda' }]));
       }
       putS3LogoPath([results.store]);
+      query.storeID = results.store._id;
       cb();
     }],
     category: ['postFind', (results, cb) => {
@@ -71,10 +93,6 @@ module.exports = (req, res, next) => {
         .exec(cb);
     }],
     products: ['category', (results, cb) => {
-      const query = {
-        storeID: results.store._id,
-        publish: 1,
-      };
       if (results.category) {
         query.categoryIDs = results.category._id;
       }
@@ -90,12 +108,18 @@ module.exports = (req, res, next) => {
       putS3Path(results.products, results.store);
       cb();
     }],
+    count: ['category', (results, cb) => {
+      if (results.category) {
+        query.categoryIDs = results.category._id;
+      }
+      models.Product
+        .countDocuments(query)
+        .exec(cb);
+    }],
   }, (err, results) => {
     if (err) {
       return next(err);
     }
-
-    console.log(results.categoryIDs);
 
     res.render('pages/stores/category.pug', {
       user: results.user,
@@ -106,8 +130,9 @@ module.exports = (req, res, next) => {
       products: results.products,
       categoryIDs: results.categoryIDs,
       title: results.category ? `${results.category.name} - compra ${results.category.name}` : 'Categorías',
+      count: results.count,
       menu: 'index',
-      js: 'page',
+      js: 'store',
     });
   });
 };

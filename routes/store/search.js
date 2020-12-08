@@ -1,15 +1,41 @@
 const { putS3LogoPath } = require('../../libs/put_s3_path.lib');
-const query = require('../../libs/query.lib');
 const queryStore = require('../../libs/query_store.lib');
 const { putS3Path } = require('../../libs/put_s3_path.lib');
-const categoriesUp = require('../../libs/categories_up.lib');
 
 module.exports = (req, res, next) => {
+  const query = {
+    publish: 1,
+    $and: [
+      {
+        $or: [
+          { 'available.start': { $exists: false } },
+          { 'available.start': null },
+          { 'available.start': '' },
+          { 'available.start': { $lte: new Date() } },
+        ],
+      },
+      {
+        $or: [
+          { 'available.end': { $exists: false } },
+          { 'available.end': null },
+          { 'available.end': '' },
+          { 'available.end': { $gte: new Date() } },
+        ],
+      },
+
+    ],
+  };
+  // si hay una busqueda
+  if (req.query.q) {
+    req.query.q = _.deburr(_.trim(req.query.q));
+    query.$or = [
+      { slug: { $regex: req.query.q, $options: 'i' } },
+      { categoryText: { $regex: req.query.q, $options: 'i' } },
+      { brandText: { $regex: req.query.q, $options: 'i' } },
+    ];
+  }
   async.auto({
     user: (cb) => {
-      if (!req.user || !req.user._id) {
-        return cb();
-      }
       cb(null, global.session);
     },
     store: (cb) => {
@@ -20,21 +46,10 @@ module.exports = (req, res, next) => {
         return cb(listErrors(404, null, [{ field: 'storeID', msg: 'No existe la tienda' }]));
       }
       putS3LogoPath([results.store]);
+      query.storeID = results.store._id;
       cb();
     }],
-    category: ['postFind', (results, cb) => {
-      queryStore.categoryByLongSlug(results.store._id, req.params.categorySlugLong, cb);
-    }],
-    categoryIDs: ['category', (results, cb) => {
-      if (!req.params.categorySlugLong) {
-        return cb(null, []);
-      }
-      categoriesUp(req.params.categorySlugLong, cb);
-    }],
-    categories: ['store', (results, cb) => {
-      if (!results.store) {
-        return cb(null, []);
-      }
+    categories: ['postFind', (results, cb) => {
       models.Category
         .find({
           storeID: results.store._id,
@@ -51,33 +66,7 @@ module.exports = (req, res, next) => {
         .lean()
         .exec(cb);
     }],
-    categoriesHeader: ['category', 'categories', (results, cb) => {
-      if (!req.params.categorySlugLong) {
-        return cb(null, results.categories);
-      }
-      models.Category
-        .find({
-          storeID: results.store._id,
-          categoryID: results.category._id,
-        })
-        .select({
-          name: 1,
-          slugLong: 1,
-          active: 1,
-        })
-        .sort({
-          name: 1,
-        })
-        .exec(cb);
-    }],
-    products: ['category', (results, cb) => {
-      const query = {
-        storeID: results.store._id,
-        publish: 1,
-      };
-      if (results.category) {
-        query.categoryIDs = results.category._id;
-      }
+    products: ['postFind', (results, cb) => {
       models.Product
         .find(query)
         .sort({
@@ -90,25 +79,25 @@ module.exports = (req, res, next) => {
       putS3Path(results.products, results.store);
       cb();
     }],
+    count: ['postFind', (_results, cb) => {
+      models.Product
+        .countDocuments(query)
+        .exec(cb);
+    }],
   }, (err, results) => {
     if (err) {
       return next(err);
     }
 
-    console.log(results.categoryIDs);
-
-    res.render('pages/stores/category.pug', {
-      user: results.user,
+    res.render('pages/stores/search.pug', {
       store: results.store,
-      category: results.category,
       categories: results.categories,
-      categoriesHeader: results.categoriesHeader,
       products: results.products,
-      categoryIDs: results.categoryIDs,
-      title: results.category ? `${results.category.name} - compra ${results.category.name}` : 'Categorías',
+      title: `Resultado de búsqueda de ${req.query.q}`,
       q: req.query.q,
+      count: results.count,
       menu: 'index',
-      js: 'page',
+      js: 'store',
     });
   });
 };

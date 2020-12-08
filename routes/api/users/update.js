@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt-nodejs');
 
 function comparePassword(password, field) {
   return new Promise((resolve, reject) => {
-    bcrypt.compare(password, field, function (err, isMatch) {
+    bcrypt.compare(password, field, (err, isMatch) => {
       if (err) {
         return reject(err);
       }
@@ -12,13 +12,13 @@ function comparePassword(password, field) {
 }
 
 module.exports = (req, res, next) => {
-  let errors = [];
-  let body = _.pick(req.body, ['password', 'newPassword', 'personalInfo']);
+  const errors = [];
+  const body = _.pick(req.body, ['password', 'newPassword', 'personalInfo']);
   if (!body.password) {
     body.personalInfo = {
       firstname: req.body.firstname,
       lastname: req.body.lastname,
-      cellphone: req.body.cellphone
+      cellphone: req.body.cellphone,
     };
   }
 
@@ -34,7 +34,7 @@ module.exports = (req, res, next) => {
         if (body.personalInfo.lastname && (_.get(body, 'personalInfo.lastname') || '').length < 3) {
           errors.push({ field: 'lastname', msg: __('Debe escribir un apellido válido') });
         }
-        let re = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
+        const re = /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/im;
         if (body.personalInfo.cellphone && !re.test(_.get(body, 'personalInfo.cellphone') || '')) {
           errors.push({ field: 'cellphone', msg: __('Debe escribir un número de célular válido') });
         }
@@ -45,22 +45,20 @@ module.exports = (req, res, next) => {
       cb();
     },
     query: ['validate', (results, cb) => {
-      models.User.
-        findById(req.user._id).
-        select({
+      models.User
+        .findById(req.user._id)
+        .select({
           password: 1,
           passwordTemp: 1,
-          personalInfo: 1
-        }).
-        exec(cb);
+          personalInfo: 1,
+        })
+        .exec(cb);
     }],
     checkPassword: ['query', (results, cb) => {
       if (!body.password) {
         return cb(null, true);
       }
-      Promise.all(['password', 'passwordTemp'].map((field) => {
-        return comparePassword(req.body.password, results.query[field]);
-      })).then((rp) => {
+      Promise.all(['password', 'passwordTemp'].map((field) => comparePassword(req.body.password, results.query[field]))).then((rp) => {
         if (!rp[0] && !rp[1]) {
           errors.push({ field: 'password', msg: __('Contraseña inválida.') });
           return cb(listErrors(401, null, errors));
@@ -69,18 +67,15 @@ module.exports = (req, res, next) => {
         body.passwordTemp = '';
 
         cb(null, true);
-      }, (err) => {
-        return cb(err);
-      });
+      }, (err) => cb(err));
     }],
     update: ['checkPassword', (results, cb) => {
       results.query.set(body).save(cb);
-    }]
+    }],
   }, (err) => {
     if (err) {
       return next(err);
-    } else {
-      res.status(201).send({ status: true });
     }
+    res.status(201).send({ status: true });
   });
 };

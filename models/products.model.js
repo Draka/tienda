@@ -146,6 +146,9 @@ const schema = new mongoose.Schema({
 
 function preUpdate(result, next) {
   client.del(`__product__${result._id}`);
+  if (result.sku) {
+    client.del(`__product__${result.storeID}__${result.sku}`);
+  }
   if (result.name) {
     result.slug = _.kebabCase(_.deburr(_.get(result, 'name')));
   }

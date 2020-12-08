@@ -1,5 +1,4 @@
 const { putS3LogoPath } = require('../../libs/put_s3_path.lib');
-const query = require('../../libs/query.lib');
 const queryStore = require('../../libs/query_store.lib');
 const { putS3Path } = require('../../libs/put_s3_path.lib');
 const { capitalized, rating } = require('../../libs/util.lib');
@@ -94,7 +93,7 @@ module.exports = (req, res, next) => {
       products: results.products,
       title: results.product.name,
       menu: 'index',
-      js: 'page',
+      js: 'store',
       rating,
     });
   });

@@ -28,6 +28,10 @@ const schema = new mongoose.Schema({
 
 function preUpdate(result, next) {
   client.del(`__category__${result._id}`);
+  client.del(`__category_tree__${result.storeID}`);
+  if (result.slugLong) {
+    client.del(`__category__${result.storeID}__${result.slugLong}`);
+  }
   if (result.name) {
     result.slug = _.kebabCase(_.deburr(_.get(result, 'name')));
   }

@@ -1,5 +1,5 @@
-ul.breadcrumb.pt-1
-  if breadcrumbs
+if breadcrumbs
+  ul.breadcrumb.pt-1
     each breadcrumb in breadcrumbs
       li.breadcrumb__item(class=breadcrumb.active?'breadcrumb--active':'')
         if breadcrumb.link
@@ -7,4 +7,4 @@ ul.breadcrumb.pt-1
         else
           | #{breadcrumb.text}
 
-.hr.mh-1
+  .hr.mh-1

@@ -1,9 +1,13 @@
 const { putS3LogoPath } = require('../../libs/put_s3_path.lib');
-const query = require('../../libs/query.lib');
 const queryStore = require('../../libs/query_store.lib');
 const { putS3Path } = require('../../libs/put_s3_path.lib');
 
 module.exports = (req, res, next) => {
+  // Salta a otra url
+  if (global.forbidden.indexOf(req.params.storeSlug) >= 0) {
+    return next('route');
+  }
+
   async.auto({
     user: (cb) => {
       if (!req.user || !req.user._id) {
@@ -65,7 +69,6 @@ module.exports = (req, res, next) => {
             }
             putS3Path(docs, results.store);
             products[featured.category._id] = docs;
-            console.log(docs);
             cb();
           });
       }, (err) => {
@@ -77,8 +80,6 @@ module.exports = (req, res, next) => {
       return next(err);
     }
 
-    console.log(results.products);
-
     res.render('pages/stores/index.pug', {
       user: results.user,
       store: results.store,
@@ -86,7 +87,7 @@ module.exports = (req, res, next) => {
       products: results.products,
       title: 'Centro Comercial Virtual',
       menu: 'index',
-      js: 'page',
+      js: 'store',
     });
   });
 };

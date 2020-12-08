@@ -101,10 +101,10 @@ export class CartList {
                 .append(
                   `<td class="w-img-48">${img}</td>`
                   + `<td><div class="b">${product.name}</div></td>`
-                  + `<td class="tr">${Vars.formatMoney(product.price)}</td>`
+                  + `<td class="tr">${Vars.formatMoney(product.price)}</td>`,
                 )
                 .append(
-                  $('<td class="tr">').append(controls.clone(true, true))
+                  $('<td class="tr">').append(controls.clone(true, true)),
                 )
                 .append(`<td class="tr t-secondary b">${Vars.formatMoney(product.quantity * product.price)}</td>`));
             // Mobile
@@ -114,17 +114,17 @@ export class CartList {
                   .append(`<tr><th class="h-img-48">${img}</th><td class="b big">${product.name}</td></tr>`)
                   .append(
                     $('<tr>')
-                      .append('<th class="b">PRECIO</th>' + `<td class="t-secondary tr">${Vars.formatMoney(product.price)}</td>`)
+                      .append('<th class="b">PRECIO</th>' + `<td class="t-secondary tr">${Vars.formatMoney(product.price)}</td>`),
                   )
                   .append(
                     $('<tr>')
                       .append('<th class="b">CANTIDAD</th>')
-                      .append($('<td>').append(controls.clone(true, true)))
+                      .append($('<td>').append(controls.clone(true, true))),
                   )
                   .append(
                     $('<tr>')
-                      .append('<th class="b">SUBTOTAL</th>' + `<td class="t-secondary tr b">${Vars.formatMoney(product.quantity * product.price)}</td>`)
-                  )
+                      .append('<th class="b">SUBTOTAL</th>' + `<td class="t-secondary tr b">${Vars.formatMoney(product.quantity * product.price)}</td>`),
+                  ),
               );
           });
 
@@ -294,7 +294,7 @@ export class CartList {
         stores: this.cart.stores,
         cartID: this.cart.getCartID(),
         address,
-        pptu: $('#pptu').is(':checked')
+        pptu: $('#pptu').is(':checked'),
       })
         .done((data: any) => {
           Cart.reset();
@@ -318,7 +318,7 @@ export class CartList {
         return;
       }
       $.each(store.cart, (i, product) => {
-        if (!product.digital?.streaming) {
+        if (!product.digital?.is) {
           checkAddress = true;
         }
       });

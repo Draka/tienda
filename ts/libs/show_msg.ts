@@ -7,9 +7,10 @@ interface ErrorInterface {
 export class ShowMsg {
   // Muestra los errores del back
   static show(errors:any, alert = 'secondary') {
+    const timeShow = 5000;
     let em = $('.error-modal');
     if (!em.length) {
-      em = $('<div class="error-modal fixed ab-0 w-100 p-3">').hide();
+      em = $('<div class="error-modal fixed ab-0 w-100 p-1">').hide();
       $('body').append(em);
     }
     em.show();
@@ -31,12 +32,12 @@ export class ShowMsg {
         Cart.reset();
         setTimeout(() => {
           document.location.href = window.location.origin + window.location.pathname;
-        }, 5000);
+        }, timeShow);
       }
-      const msg = $(`<div class="msg ${alert} p-3 trn-3 op-0">`);
-      const close = $('<button class="absolute ar-1 flat small" data-dismiss="modal" aria-label="Cerrar">')
-        .html('<span aria-hidden="true">&times;</span>')
-        .click(() => {
+      const msg = $(`<div class="msg ${alert} p-1 trn-3 op-0">`);
+      const close = $('<button class="btn-flat p-1 absolute ar-2" data-dismiss="modal" aria-label="Cerrar">')
+        .html('<span aria-hidden="true"><i class="fas fa-times"></i></span>')
+        .on('click', () => {
           msg.removeClass('op-1');
           setTimeout(() => {
             msg.remove();
@@ -61,7 +62,7 @@ export class ShowMsg {
       }, 1);
       setTimeout(() => {
         close.trigger('click');
-      }, 5000);
+      }, timeShow);
     });
   }
 }

@@ -24,6 +24,19 @@ const vars = {
     ['email', 'Correo Electrónico', 'email', '', 'fas fa-envelope'],
     ['web', 'Página Web', 'url', '', 'fas fa-globe'],
   ],
+  forbidden: [
+    'usuario',
+    'administracion',
+    'pedidos',
+    'v1',
+    'iniciar-sesion',
+    'registro',
+    'registro-confirmacion',
+    'recuperar-contrasena',
+    'recuperar-contrasena-confirmacion',
+    'cerrar-sesion',
+    'carrito',
+  ],
 };
 _.forEach(vars, (v, i) => {
   global[i] = v;

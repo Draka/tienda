@@ -39,9 +39,9 @@ header
                       | #{' '}Administar Tiendas
                   li.hr
                 li(role='menuitem')
-                  a.item(href='/perfil')
+                  a.item(href='/usuario')
                     i.far.fa-address-card
-                    | #{' '}Perfil
+                    | #{' '}Ver Cuenta
                 li(role='menuitem')
                   a.item(href='/pedidos')
                     i.fas.fa-shopping-bag
@@ -80,6 +80,35 @@ header
                 each category in categories
                   li(role='menuitem')
                     a.item(href='/'+store.slug+'/categorias/'+category.slugLong) #{category.name}
+    if account
+      nav.navbar.white.shadow.mt-4
+        .container
+          ul
+            li.flex
+              a.nav-link.brand-logo(href='/usuario')
+                div.not-wrap.b #{session.personalInfo.name}
+          .expand
+          .relative
+            a.dropdown(aria-controls='menu-categories')
+              span
+                i.fas.fa-user-cog
+                | #{' '}
+                span Cuenta
+              span.icon.ml-1
+                i.fas.fa-angle-down
+            #menu-categories.dropdown-list.right.shadow
+              ul(role='menu')
+                li(role='menuitem')
+                  a.item(href='/usuario') Ver mis datos
+                li(role='menuitem')
+                  a.item(href='/usuario/correo') Cambiar correo electrónico
+                li(role='menuitem')
+                  a.item(href='/usuario/contrasena') Cambiar mi contraseña
+                if !session.admin && !session.adminStore
+                  li.hr
+                  li(role='menuitem')
+                    a.item(href='/usuario/vendedor') Volverme vendedor
+
   .show-xs
     nav.navbar.primary.shadow.fixed.top
       ul.flex.w-100
