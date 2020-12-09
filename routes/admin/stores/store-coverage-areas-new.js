@@ -55,7 +55,7 @@ module.exports = (req, res, next) => {
       title: 'Nueva Área de cobertura',
       menu: 'tienda-zonas-de-coberturas',
       breadcrumbs,
-      mapbox: 'draw',
+      osm: 'draw',
       js: 'admin',
     });
   });

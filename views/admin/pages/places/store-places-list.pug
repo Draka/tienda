@@ -7,20 +7,24 @@ block list
       div Las Sedes representan una tienda física, se usan para posicionar tu tienda en buscadores, si no necesitas esta sección puedes omitirla.
 
   if items.length
+    .remark
+      b A
+      | #{' '} = Activo
+      | #{' '}
     table.small.table.table--lines.table--lines.table--striped
       thead
         tr
-          th.b Estado
+          th.b.tc A
           th.b Nombre
           th.b Dirección
           th.b Horario
-          th.tc
+          th.tc(colspan=2)
             i.fas.fa-cog
       tbody
         each item of items
           tr
-            td
-              +active(item.active)
+            td.tc
+              +boolean(item.active)
             td
               a.b(href=`/administracion/tiendas/${store._id}/sedes/${item._id}/editar`) #{item.name}
             td
@@ -48,7 +52,11 @@ block list
                   td.b F:
                   td.nowrap #{' '} #{item.schedule.holiday[0]}-#{item.schedule.holiday[1]}
             td.tc
-              button.btn.btn--error.small(data-id=item._id) Eliminar
+              a.btn-flat.p-0-5.rd-0-2(href=`/administracion/tiendas/${store._id}/sedes/${item._id}/editar` title='Editar')
+                i.fas.fa-pencil-alt
+            td.tc
+              button.btn-flat.p-0-5.rd-0-2(data-id=item._id title='Eliminar')
+                i.fas.fa-trash-alt
   else
     .white.br-1.rd-0-2.p-3
       .remark.info.flex.mb-0-5

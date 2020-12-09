@@ -53,10 +53,13 @@ if mapbox
     link(rel='preload' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.2.0/mapbox-gl-draw.js' as='script')
 
 if osm
-  link(rel='preload' href='https://unpkg.com/leaflet@1.7.1/dist/leaflet.css', integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==", crossorigin as='style')
-  link(rel='preload' href='https://unpkg.com/leaflet@1.7.1/dist/leaflet.js', integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==", crossorigin as='script')
-  link(rel='preload' href=config.url.static+'lib/L.Control.Locate.min.js' as='script')
-  link(rel='preload' href=config.url.static+'css/L.Control.Locate.min.css' as='style')
+  link(rel='preload' href=config.url.static+'lib/leaflet/leaflet.css' as='style')
+  link(rel='preload' href=config.url.static+'lib/leaflet/leaflet.js' as='script')
+  link(rel='preload' href=config.url.static+'lib/leaflet/L.Control.Locate.min.js' as='script')
+  link(rel='preload' href=config.url.static+'lib/leaflet/L.Control.Locate.min.css' as='style')
+  if osm=='draw'
+    link(rel='preload' href=config.url.static+'lib/leaflet/leaflet-geoman.css' as='style')
+    link(rel='preload' href=config.url.static+'lib/leaflet/leaflet-geoman.min.js' as='script')
 
 if cke
   link(rel='preload' href=config.url.static+'lib/ckeditor/ckeditor.js' as='script')

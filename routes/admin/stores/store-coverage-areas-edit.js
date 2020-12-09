@@ -61,21 +61,16 @@ module.exports = (req, res, next) => {
       },
     ];
     const points = JSON.parse(results.coverageArea.points);
-    console.log('xx', getCenterOfBounds(points[0].map((p) => ({
-      latitude: p[1], longitude: p[0],
-    }))));
 
     res.render('admin/pages/stores/store-coverage-areas-edit.pug', {
       user: results.user,
       store: results.store,
       item: results.coverageArea,
-      center: getCenterOfBounds(points[0].map((p) => ({
-        latitude: p[1], longitude: p[0],
-      }))),
+      center: getCenterOfBounds(points),
       title: 'Editar Área de cobertura',
       menu: 'tienda-zonas-de-coberturas',
       breadcrumbs,
-      mapbox: 'draw',
+      osm: 'draw',
       js: 'admin',
     });
   });

@@ -8,7 +8,7 @@ block list
           th.tc
             i.far.fa-map
           th.w-100.b Nombre
-          th.tc
+          th.tc(colspan=2)
             i.fas.fa-cog
       tbody
         each item of items
@@ -17,8 +17,12 @@ block list
               img.h-96p(src=item.image)
             td.w-100
               a.b(href=`/administracion/tiendas/${store._id}/zonas-de-coberturas/${item._id}/editar`) #{item.name}
-            td.w-100
-              button.btn.btn--error.w-100(data-id=item._id) Eliminar
+            td.tc
+              a.btn-flat.p-0-5.rd-0-2(href=`/administracion/tiendas/${store._id}/zonas-de-coberturas/${item._id}/editar` title='Editar')
+                i.fas.fa-pencil-alt
+            td.tc
+              button.btn-flat.p-0-5.rd-0-2(data-id=item._id title='Eliminar')
+                i.fas.fa-trash-alt
   else
     .white.br-1.rd-0-2.p-3
       .remark.info.flex.mb-0-5

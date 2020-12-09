@@ -1,12 +1,8 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable no-inner-declarations */
 /* eslint-disable max-len */
-declare const Quill: any;
-declare const mapboxgl: any;
-declare const MapboxDraw: any;
 declare const L: any;
 declare const ClassicEditor: any;
-declare const CKEDITOR: any;
 
 export class Edit {
   token = 'pk.eyJ1Ijoic3JkcmFrYSIsImEiOiJja2FlZHBmYXUwMHpoMnJudHJnazZsOWY1In0.tAAoQbjhJKq_DdwpTTimrw'
@@ -45,72 +41,101 @@ export class Edit {
   mapEdit() {
     const list = $('#map-edit');
     if (list.length) {
-      const points = (<string>$('#center').val()).split(',');
+      const points = (<string>$('#center').val() || ',').split(',');
       this._mapEdit({ latitude: points[1] || 4.646876, longitude: points[0] || -74.087547 });
     }
   }
 
   _mapEdit(coords) {
-    const points = $('#points').val() ? JSON.parse(<string>$('#points').val()) : '';
-    mapboxgl.accessToken = this.token;
-    const map = new mapboxgl.Map({
-      container: 'map-edit', // container id
-      style: 'mapbox://styles/mapbox/streets-v9', // stylesheet location
-      center: [coords.longitude, coords.latitude], // starting position
-      zoom: 10.5, // starting zoom
-    });
-    const draw = new MapboxDraw({
-      displayControlsDefault: false,
-      controls: {
-        polygon: true,
-        trash: true,
+    // center of the map
+    const center = [coords.latitude, coords.longitude];
+    const map = L.map('map-edit').setView(center, 13);
+    L.control.locate({
+      initialZoomLevel: 15,
+      locateOptions: {
+        enableHighAccuracy: true,
+        maxZoom: 15,
       },
-    });
+      strings: {
+        title: 'Localizar mi posición',
+      },
+    }).addTo(map);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    }).addTo(map);
 
-    map.addControl(
-      new mapboxgl.GeolocateControl({
-        positionOptions: {
-          enableHighAccuracy: true,
-        },
-        trackUserLocation: true,
-      }),
-    );
+    let points = [];
 
-    map.addControl(draw, 'top-left');
-    map.on('load', () => {
-      if (points) {
-        const gj = {
-          type: 'Feature',
-          properties: {},
-          geometry: {
-            type: 'Polygon',
-            coordinates: points,
+    try {
+      points = JSON.parse(<string>$('#points').val());
+    } catch (error) {
+      points = [];
+    }
+
+    if (points.length) {
+      const geoJsonData = {
+        type: 'FeatureCollection',
+        features: [
+          {
+            type: 'Feature',
+            properties: {},
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                points.map((p) => [p.lng, p.lat]),
+              ],
+            },
           },
-        };
-        draw.add(gj);
-      }
-    });
+        ],
+      };
 
-    map.on('draw.modechange', (_e) => {
-      const data = draw.getAll();
-      // puntos
-      $('#points').val(JSON.stringify(data.features[0].geometry.coordinates));
+      // const geoJsonButton = document.getElementById('test-geojson');
+      const geoJsonLayer = L.geoJson(null, { pmIgnore: false });
+      geoJsonLayer.addTo(map);
+      geoJsonLayer.addData(geoJsonData);
+      geoJsonLayer.on('pm:edit', (e) => {
+        const points = e.layer._latlngs[0];
+        $('#points').val(JSON.stringify(points));
+      });
+      geoJsonLayer.on('pm:dragend', (e) => {
+        const points = e.layer._latlngs[0];
+        $('#points').val(JSON.stringify(points));
+      });
+      geoJsonLayer.on('pm:remove', () => {
+        $('#points').val('[]');
+      });
+    }
 
-      if (draw.getMode() === 'draw_polygon') {
-        const pids = [];
-        const lid = data.features[data.features.length - 1].id;
-        data.features.forEach((f) => {
-          if (f.geometry.type === 'Polygon' && f.id !== lid) {
-            pids.push(f.id);
-          }
-        });
-        draw.delete(pids);
-      }
+    map.pm.addControls({
+      position: 'topleft',
+      drawMarker: false,
+      drawCircleMarker: false,
+      drawRectangle: false,
+      drawPolyline: false,
+      drawCircle: false,
+      cutPolygon: false,
     });
-    map.on('draw.update', (_e) => {
-      const data = draw.getAll();
-      // puntos
-      $('#points').val(JSON.stringify(data.features[0].geometry.coordinates));
+    map.on('pm:drawstart', () => {
+      const layers = map.pm.getGeomanDrawLayers();
+      $.each(layers, (_i, layer) => {
+        layer.remove();
+      });
+    });
+    map.on('pm:create', (e) => {
+      const points = e.layer._latlngs[0];
+      $('#points').val(JSON.stringify(points));
+      e.layer.on('pm:ediit', (e) => {
+        const points = e.layer._latlngs[0];
+        $('#points').val(JSON.stringify(points));
+      });
+      e.layer.on('pm:dragend', (e) => {
+        const points = e.layer._latlngs[0];
+        $('#points').val(JSON.stringify(points));
+      });
+
+      e.layer.on('pm:remove', () => {
+        $('#points').val('[]');
+      });
     });
   }
 
@@ -147,6 +172,7 @@ export class Edit {
     });
 
     function onLocationFound(e) {
+      $('#point').val(`${marker.getLatLng().lng},${marker.getLatLng().lat}`);
       marker.setLatLng(e.latlng)
         .bindPopup('Mueva el marcador si es necesario').openPopup();
     }

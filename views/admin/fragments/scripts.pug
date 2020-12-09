@@ -17,10 +17,13 @@ if mapbox
     script(src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.2.0/mapbox-gl-draw.js")
 
 if osm
-  link(rel="stylesheet", href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css", integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==", crossorigin)
-  script(src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js", integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==", crossorigin)
-  link(rel='stylesheet', href=config.url.static+'css/L.Control.Locate.min.css')
-  script(src=config.url.static+'lib/L.Control.Locate.min.js')
+  link(rel="stylesheet", href=config.url.static+'lib/leaflet/leaflet.css')
+  script(src=config.url.static+'lib/leaflet/leaflet.js')
+  link(rel='stylesheet', href=config.url.static+'lib/leaflet/L.Control.Locate.min.css')
+  script(src=config.url.static+'lib/leaflet/L.Control.Locate.min.js')
+  if osm=='draw'
+    link(rel='stylesheet', href=config.url.static+'lib/leaflet/leaflet-geoman.css')
+    script(src=config.url.static+'lib/leaflet/leaflet-geoman.min.js')
 
 if wompi
   //- Pagos

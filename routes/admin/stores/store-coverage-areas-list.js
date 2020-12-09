@@ -51,17 +51,30 @@ module.exports = (req, res, next) => {
       user: results.user,
       store: results.store,
       items: results.coveragesAreas.map((i) => {
+        let points = [];
+
+        try {
+          points = JSON.parse(i.points);
+        } catch (error) {
+          points = [];
+        }
+        points = points.map((p) => [p.lng, p.lat]);
+        points.push(points[0]);
+
         let gj = JSON.stringify({
           type: 'Feature',
           properties: {},
           geometry: {
             type: 'Polygon',
-            coordinates: JSON.parse(i.points),
+            // coordinates: points,
+            coordinates: [
+              points,
+            ],
           },
         });
         gj = `geojson(${gj})`;
 
-        i.image = `https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/${encodeURI(gj)}/auto/100x100@2x?logo=false&attribution=false&access_token=${config.mapbox}`;
+        i.image = `https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/${encodeURI(gj)}/auto/96x96@2x?logo=false&attribution=false&access_token=${config.mapbox}`;
         return i;
       }),
       title: 'Áreas de cobertura',
