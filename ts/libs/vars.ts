@@ -11,7 +11,7 @@ export class Vars {
 
   static urlS3Images: string = Vars.b.data('urlS3Images');
 
-  static imgNoAvailable = `${Vars.urlS3}common/images/imagen_no_disponible.svg`;
+  static imgNoAvailable = '/images/imagen_no_disponible.svg';
 
   static store = Vars.b.data('store')
 

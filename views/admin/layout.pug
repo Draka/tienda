@@ -7,7 +7,7 @@ html(lang='es')
   body
     if process.env.NODE_ENV == 'production'
       noscript
-        iframe(src='https://www.googletagmanager.com/ns.html?id=GTM-PZSNWCV' height='0' width='0' style='display:none;visibility:hidden')
+        iframe(src='https://www.googletagmanager.com/ns.html?id='+config.gtm height='0' width='0' style='display:none;visibility:hidden')
 
     .stub
       .stub__left.white.brr-1

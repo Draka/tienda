@@ -15,19 +15,24 @@ block list
       | #{' '} = Publicado,
       | #{' '}
       b D
-      | #{' '} = Digital
+      | #{' '} = Digital,
+      | #{' '}
+      b I
+      | #{' '} = Uso de Inventario (Stock)
     table.small.table.table--lines.table--lines.table--striped
       thead
         tr
           th.b Imagenes
           th.b.tc P
           th.b.tc D
+          th.b.tc I
           th.b SKU
           th.b Nombre
           th.b Categoría
           th.b Precio
+          th.b Inventario (Stock)
           th.b Descripción
-          th.tc(colspan=2)
+          th.tc(colspan=3)
             i.fas.fa-cog
       tbody
         each item of items
@@ -41,16 +46,33 @@ block list
               +boolean(item.publish)
             td.tc
               +boolean(item.digital.is)
+            td.tc
+              +boolean(item.inventory)
             td
               | #{item.sku}
             td
               a.b(href=`/administracion/tiendas/${store._id}/productos/${item._id}/editar`) #{item.name}
+              if item.available
+                if item.available.start
+                  .nowrap
+                    i Inicio: #{moment.tz(global.tz).format('DD-MM-YYYY HH:mm:ss [-5 GMT]')}
+                if item.available.end
+                  .nowrap
+                    i Fin: #{moment.tz(global.tz).format('DD-MM-YYYY HH:mm:ss [-5 GMT]')}
             td
               | !{item.categoryText.join(' <i class="fas fa-chevron-right"></i> ')}
             td.tr
               .b.t-secondary #{formatMoney(item.price || 0)}
+            td.tr
+              if item.inventory
+                | #{item.stock}
+              else
+                | -
             td
               | #{item.shortDescription}
+            td.tc
+              a.btn-flat.p-0-5.rd-0-2(href=`/${store.slug}/productos/${item.sku}` title='Ver' target="_blank")
+                i.fas.fa-external-link-alt
             td.tc
               a.btn-flat.p-0-5.rd-0-2(href=`/administracion/tiendas/${store._id}/productos/${item._id}/editar` title='Editar')
                 i.fas.fa-pencil-alt
@@ -59,7 +81,7 @@ block list
                 i.fas.fa-trash-alt
       tfoot
         tr
-          th(colspan="10")
+          th(colspan="13")
             .pagination.justify-content-right
               a.item(href=`?page=0`)
                 i.fas.fa-chevron-left

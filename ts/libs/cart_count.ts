@@ -31,7 +31,13 @@ export class CartCount {
         products.push(product);
       });
     });
-    $('.num-shopping-cart').html(number.toString()).removeClass('start-hide');
+    if (number) {
+      $('.num-shopping-cart').html(number.toString()).removeClass('start-hide');
+      $('.cart-empty').addClass('start-hide');
+    } else {
+      $('.num-shopping-cart').html(number.toString()).addClass('start-hide');
+      $('.cart-empty').removeClass('start-hide');
+    }
     // $('.link-shopping-cart').click((event) => {
     //   this.gtag.cart1($(event.currentTarget), products);
     // });

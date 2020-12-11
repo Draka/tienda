@@ -60,7 +60,7 @@ export class CartList {
           const lineStore = $(`<div id="cart_${slug}" class="mb-5">`)
             .append(`<div class="title">Pedido de: ${elem.name}</div>`);
 
-          const desktop = $('<table class="small hide-xs striped">')
+          const desktop = $('<table class="table table--striped small hide-xs">')
             .append('<thead><tr>'
           + '<th>&nbsp;</th>'
           + '<th colspan="2" class="tc">PRODUCTO</th>'
@@ -73,33 +73,33 @@ export class CartList {
 
           $.each(elem.cart, (sku, product) => {
             const img = Product.img(product, ['48x48', '96x96']);
-            const remove = $('<button class="secondary small">')
+            const remove = $('<button class="btn btn--secondary small">')
               .html('<i class="fas fa-times hand"></i>')
               .click(() => {
                 this.cart.remove(product.sku, `${slug}/page_cart`, slug);
               });
 
-            const add = $('<button class="secondary small mr-2">')
+            const add = $('<button class="btn btn--secondary small mr-0-25">')
               .html('<i class="fas fa-plus"></i><span class="out-screen">Aumentar cantidad</span>')
               .click(() => {
                 this.cart.add(<string>sku, `${slug}/page_cart`, slug);
               });
 
-            const minus = $('<button class="secondary small mr-2">')
+            const minus = $('<button class="btn btn--secondary small mr-0-25">')
               .html('<i class="fas fa-minus"></i><span class="out-screen">Disminuir cantidad</span>')
               .click(() => {
                 this.cart.minus(<string>sku, `${slug}/page_cart`, slug);
               });
-            const controls = $('<div class="box-controls flex">')
+            const controls = $('<div class="box-controls flex justify-content-center">')
               .append(minus.clone(true, true))
-              .append(`<div class="value w-img-48 mr-2 tc b br-1 rd-0-2 h-100">${product.quantity}</div>`)
+              .append(`<div class="value w-48p mr-0-25 tc b p-0-25 br-1 rd-0-2 h-100">${product.quantity}</div>`)
               .append(add.clone(true, true));
             // Desktop
             desktop
               .append($('<tr>')
                 .append($('<td>').append(remove.clone(true, true)))
                 .append(
-                  `<td class="w-img-48">${img}</td>`
+                  `<td class="w-48p">${img}</td>`
                   + `<td><div class="b">${product.name}</div></td>`
                   + `<td class="tr">${Vars.formatMoney(product.price)}</td>`,
                 )
@@ -110,11 +110,11 @@ export class CartList {
             // Mobile
             mobile
               .append(
-                $('<table class="small striped">')
+                $('<table class="table table--striped small">')
                   .append(`<tr><th class="h-img-48">${img}</th><td class="b big">${product.name}</td></tr>`)
                   .append(
                     $('<tr>')
-                      .append('<th class="b">PRECIO</th>' + `<td class="t-secondary tr">${Vars.formatMoney(product.price)}</td>`),
+                      .append(`<th class="b">PRECIO</th><td class="t-secondary tr">${Vars.formatMoney(product.price)}</td>`),
                   )
                   .append(
                     $('<tr>')
@@ -123,7 +123,7 @@ export class CartList {
                   )
                   .append(
                     $('<tr>')
-                      .append('<th class="b">SUBTOTAL</th>' + `<td class="t-secondary tr b">${Vars.formatMoney(product.quantity * product.price)}</td>`),
+                      .append(`<th class="b">SUBTOTAL</th><td class="t-secondary tr b">${Vars.formatMoney(product.quantity * product.price)}</td>`),
                   ),
               );
           });
@@ -178,7 +178,7 @@ export class CartList {
             let lineStore = `<div id="cart_${slug}" class="mt-5">`
               + `<div class="b">${elem.name}</div>`;
 
-            lineStore += '<table class="small striped">'
+            lineStore += '<table class="table table--striped small">'
                 + '<thead>'
                 + '<tr>'
                 + '<th class="tc">PRODUCTO</th>'
@@ -342,14 +342,14 @@ export class CartList {
             const { slug } = elem.store;
             const lineStore = $(`<div id="cart_${slug}" class="mt-5">`)
               .append(`<div class="row"><div class="col-md-8"><h2>Pedido #${elem.orderID} de: ${elem.store.name}</h2></div>`
-              + `<div class="col-md-4"><button id="id_${elem.orderID}" class="secondary small w-100 hide">Pagar ${Vars.formatMoney(elem.order.total)}</button></div></div>`);
+              + `<div class="col-md-4"><button id="id_${elem.orderID}" class="btn btn--secondary small w-100 hide">Pagar ${Vars.formatMoney(elem.order.total)}</button></div></div>`);
 
             if (elem.payment.pse && ['created'].indexOf(elem.status) >= 0) {
               Wompi.btn(lineStore.find(`#id_${elem.orderID}`).removeClass('hide'), elem);
             }
 
             // Desktop
-            let desktop = '<table class="hide-xs small striped">'
+            let desktop = '<table class="table table--striped hide-xs small">'
                   + '<thead>'
                   + '<tr>'
                   + '<th colspan="2" class="tc">PRODUCTO</th>'
@@ -372,9 +372,9 @@ export class CartList {
                     + `<td class="tr t-secondary b">${Vars.formatMoney(product.quantity * product.price)}</td>`
                     + '</tr>';
               // Mobile
-              mobile += '<table class="small striped">'
+              mobile += '<table class="table table--striped small">'
                       + '<tr>'
-                      + `<th class="w-img-48">${img}</th>`
+                      + `<th class="w-48p">${img}</th>`
                       + `<td class="b big">${product.name}</td></tr>`
                       + '<tr><th class="b">PRECIO</th>'
                       + `<td class="t-secondary">${Vars.formatMoney(product.price)}</td></tr>`
@@ -398,7 +398,7 @@ export class CartList {
                 + `<td class="tr big t-secondary b">${Vars.formatMoney(elem.order.total)}</td>`
                 + '</tr></tfoot></table>';
 
-            mobile += '<table class="small striped"><tr>'
+            mobile += '<table class="table table--striped small"><tr>'
               + '<td class="b">Subtotal</td>'
               + `<td class="tr t-secondary">${Vars.formatMoney(elem.order.subtotal)}</td>`
               + '</tr>'

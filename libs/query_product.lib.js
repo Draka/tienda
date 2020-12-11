@@ -7,7 +7,10 @@ exports.productBySKU = (storeID, sku, cb) => {
     } else {
       models.Product
         .findOne({ storeID, sku, delete: false })
-        .select('digital.is available publish price inventory stock imagesURLs images imagesSizes categoryText featured name sku slug brandText shortDescription longDescription features storeID groups')
+        .populate({
+          path: 'categoryIDs',
+          select: 'name slugLong',
+        })
         .lean()
         .exec((err, doc) => {
           if (err) {

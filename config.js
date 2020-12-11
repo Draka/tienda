@@ -36,6 +36,7 @@ const enviroment = {
     separator: '|',
   },
   mapbox: 'pk.eyJ1Ijoic3JkcmFrYSIsImEiOiJja2FlZHBmYXUwMHpoMnJudHJnazZsOWY1In0.tAAoQbjhJKq_DdwpTTimrw',
+  gtm: process.env.GTM || 'GTM-PZSNWCV',
 };
 
 module.exports = enviroment;

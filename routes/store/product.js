@@ -1,5 +1,6 @@
 const { putS3LogoPath } = require('../../libs/put_s3_path.lib');
 const queryStore = require('../../libs/query_store.lib');
+const queryProduct = require('../../libs/query_product.lib');
 const { putS3Path } = require('../../libs/put_s3_path.lib');
 const { capitalized, rating } = require('../../libs/util.lib');
 
@@ -42,22 +43,14 @@ module.exports = (req, res, next) => {
         .exec(cb);
     }],
     product: ['store', (results, cb) => {
-      models.Product
-        .findOne({
-          storeID: results.store._id,
-          sku: req.params.sku,
-          publish: 1,
-        })
-        .populate({
-          path: 'categoryIDs',
-          select: 'name slugLong',
-        })
-        .exec(cb);
+      queryProduct.productBySKU(results.store._id, req.params.sku, cb);
     }],
     postFindProduct: ['product', (results, cb) => {
-      if (!results.store) {
+      if (!results.store || !results.product) {
         return cb(listErrors(404, null, [{ field: 'storeID', msg: 'No existe el producto' }]));
       }
+      results.product.isAvailable = !((_.get(results.product, 'available.start') && moment.tz().isBefore(results.product.available.start))
+      || (_.get(results.product, 'available.end') && moment.tz().isAfter(results.product.available.end)));
       putS3Path([results.product], results.store);
       cb();
     }],
@@ -72,10 +65,15 @@ module.exports = (req, res, next) => {
           updateAt: -1,
         })
         .limit(12)
+        .lean()
         .exec(cb);
     }],
     postFindProducts: ['products', (results, cb) => {
       putS3Path(results.products, results.store);
+      _.each(results.products, (product) => {
+        product.isAvailable = !((_.get(product, 'available.start') && moment.tz().isBefore(product.available.start))
+      || (_.get(product, 'available.end') && moment.tz().isAfter(product.available.end)));
+      });
       cb();
     }],
   }, (err, results) => {

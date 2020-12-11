@@ -35,6 +35,28 @@ module.exports = (req, res, next) => {
     if (err) {
       return next(err);
     }
-    res.send(results.product);
+    const product = _.pick(results.product, [
+      'digital.is',
+      'available',
+      'publish',
+      'price',
+      'inventory',
+      'stock',
+      'imagesURLs',
+      'images',
+      'imagesSizes',
+      'categoryText',
+      'featured',
+      'name',
+      'sku',
+      'slug',
+      'brandText',
+      'shortDescription',
+      'longDescription',
+      'features',
+      'storeID',
+      'groups',
+    ]);
+    res.send(product);
   });
 };

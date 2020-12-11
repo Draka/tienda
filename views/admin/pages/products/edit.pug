@@ -73,6 +73,15 @@ block edit
               label(for='name') Nombre
           .form-group
             .form-control
+              label
+                input.checkbox#inventory(type="checkbox" name="inventory" value='1' checked=item.inventory)
+                span Usa Inventario (Stock)
+          .form-group
+            .form-control
+              input.input#stock(type="number" name="stock" placeholder=' ' value=item.stock)
+              label(for='stock') Inventario (Stock, Existencias)
+          .form-group
+            .form-control
               input.input#price(type="number" name="price" placeholder=' ' required value=item.price)
               label(for='price') Precio
           .form-group

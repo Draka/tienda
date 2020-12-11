@@ -24,9 +24,9 @@ export class Product {
     if (product?.imagesSizes && product.imagesSizes.length) {
       const ext = Vars.webp ? '_webp' : '_jpg';
       const first = product.imagesSizes[0];
-      return `<img class="h-img-${classSize}" src="${first[`${size[1]}${ext}`]}" alt="${product.name}">`;
+      return `<img class="h-${classSize}p" src="${first[`${size[1]}${ext}`]}" alt="${product.name}">`;
     }
-    return `<img class="h-img-${classSize}" src="${Vars.imgNoAvailable}" alt="${product.name}">`;
+    return `<img class="h-${classSize}p" src="${Vars.imgNoAvailable}" alt="${product.name}">`;
   }
 
   static single(product: ProducInterface, pos: number | string | symbol, list: string) {

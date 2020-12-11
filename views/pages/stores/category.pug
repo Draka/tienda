@@ -34,42 +34,7 @@ block content
             each product,pos in products
               li
                 .w-230p.w-170p-xs.w-170p-sm.br-1.white.h-100
-                  .h-100.relative.p-1.pb-3.product(
-                    data-list=store.slug+'/categorias/'+(categories.slugLong||'root')
-                    data-product=JSON.stringify({
-                      sku: product.sku,
-                      name: product.name,
-                      categoryText: product.categoryText,
-                      brandText: product.brandText,
-                      price: product.price,
-                      store: store.slug
-                    }) 
-                    data-pos=pos+1)
-                    a(href='/'+store.slug+'/productos/'+product.sku)
-                      +img(product.name, _.first(product.imagesSizes), ['196x196_jpg', '392x392_jpg'])
-                    if product.brandText
-                      .t-white-700.small.mb-1 #{product.brandText}
-                    .t-primary.tc.b.small #{product.name}
-                    .t-secondary.b.big #{formatMoney(product.price)}
-                    .t-action.small.mb-4
-                      if product.inventory
-                        if product.stock == 0
-                          | Agotado
-                        else if product.stock < 10
-                          | En stock, Pocas unidades
-                        else
-                          | En stock
-                      else
-                        | En stock
-
-                    .absolute.w-100c2.ab-1
-                      if product.inventory && product.stock == 0
-                        a.btn.btn--secondary-0-500.w-100.ab-0(href='/'+store.slug+'/productos/'+product.sku) Ver
-                      else
-                        button.btn.btn--secondary.w-100.add
-                          i.fas.fa-cart-plus
-                          | #{' '}
-                          | Agregar
+                  +simpleProduct(store, product)
           nav.mt-3
 
   include ../../fragments/footer_store.pug

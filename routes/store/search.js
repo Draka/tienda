@@ -77,6 +77,10 @@ module.exports = (req, res, next) => {
     }],
     postFindProducts: ['products', (results, cb) => {
       putS3Path(results.products, results.store);
+      _.each(results.products, (product) => {
+        product.isAvailable = !((_.get(product, 'available.start') && moment.tz().isBefore(product.available.start))
+      || (_.get(product, 'available.end') && moment.tz().isAfter(product.available.end)));
+      });
       cb();
     }],
     count: ['postFind', (_results, cb) => {

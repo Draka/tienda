@@ -136,7 +136,7 @@ app.use((err, req, res, next) => {
   if (req.originalUrl.split('/')[1] === 'v1') {
     res.status(err.status || 500).send(err);
   } else {
-    res.render('error.pug', { error: err });
+    res.status(err.status).render('error.pug', { error: err });
   }
 });
 

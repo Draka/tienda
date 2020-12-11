@@ -1,6 +1,21 @@
 extends ../../layout_store
 
 mixin product(product)
+  if !(product.publish && product.isAvailable)
+    .msg.mb-1.error
+      i.fas.fa-exclamation-triangle
+      | #{' '}
+      | No disponible
+  else if product.inventory && product.stock == 0
+    .msg.mb-1.error
+      i.fas.fa-exclamation-triangle
+      | #{' '}
+      | Agotado
+  else if product.inventory && product.stock < 10
+    .msg.mb-1.alert
+      i.fas.fa-info-circle
+      | #{' '}
+      | Pocas unidades
   h2.t-primary #{product.name}
   .mt-1.small
     if (product.brandText)
@@ -22,18 +37,29 @@ mixin product(product)
     .social.t-secondary
       | #{formatMoney(product.price)}
       .message
-  .quantity.flex.hide.mt-1
-    .box-controls.flex
-      button.primary.small.mr-0-5.minus
-        i.fas.fa-minus
-        span.out-screen Disminuir cantidad
-      .value.w-img-48.mr-0-5.tc.b.br-1.rd-0-2.h-100(id='value_'+product.sku)
-        | 0
-      button.primary.small.mr-0-5.plus
-        i.fas.fa-plus
-        span.out-screen Aumentar cantidad
-    button.primary.small.add AÑADIR AL CARRITO
-  if (_.get(product, 'digital.streaming'))
+  .t-action.small.mb-1
+    if product.inventory
+      if product.stock == 0
+        | Agotado
+      else if product.stock < 10
+        | En stock, Pocas unidades
+      else
+        | En stock
+    else
+      | En stock
+  if (product.publish && product.isAvailable) && ((product.inventory && product.stock) > 0 || !product.inventory)
+    .quantity.flex.mt-1
+      .box-controls.flex
+        button.btn.btn--primary.small.mr-0-5.minus
+          i.fas.fa-minus
+          span.out-screen Disminuir cantidad
+        .value.w-48p.mr-0-5.tc.b.p-0-25.br-1.rd-0-2.h-100(id='value_'+product.sku)
+          | 0
+        button.btn.btn--primary.small.mr-0-5.plus
+          i.fas.fa-plus
+          span.out-screen Aumentar cantidad
+      button.btn.btn--primary.small.add AÑADIR AL CARRITO
+  if (_.get(product, 'digital.is'))
     .remark.info.mh-1 Producto de transmisión por internet
   .product-description.mt-2.mb-2
     | !{product.shortDescription.replace("\n",'<br>')}
@@ -46,7 +72,7 @@ mixin product(product)
       .mt-0-25.product-upc
         b #{__('UPC')}:
         | &nbsp;#{product.upc}
-    if (_.get(product, 'digital.streaming'))
+    if (_.get(product, 'digital.is'))
       .mt-0-25.product-meta La URL del producto digital será mostrada luego de ser comprado.
     if product.features
       each feature in product.features
@@ -192,7 +218,16 @@ block content
               .t-secondary GARANTIZADO
 
       .col-md-6.hide-xs.hide-sm
-        .white.br-1.rd-0-2.p-1.place-product.sticky('data-sku'=product.sku style='top: 100px')
+        .white.br-1.rd-0-2.p-1.place-product.sticky(
+          data-product=JSON.stringify({
+            sku: product.sku,
+            name: product.name,
+            categoryText: product.categoryText,
+            brandText: product.brandText,
+            price: product.price,
+            store: store.slug
+          }) 
+          style='top: 100px')
           +product(product)
 
       .col-xs-12
@@ -213,42 +248,7 @@ block content
                     each product,pos in products
                       li
                         .w-230p.w-170p-xs.w-170p-sm.br-1.white.h-100
-                          .h-100.relative.p-1.pb-3.product(
-                            data-list=store.slug+'/productos/'+product.sku
-                            data-product=JSON.stringify({
-                              sku: product.sku,
-                              name: product.name,
-                              categoryText: product.categoryText,
-                              brandText: product.brandText,
-                              price: product.price,
-                              store: store.slug
-                            }) 
-                            data-pos=pos+1)
-                            a(href='/'+store.slug+'/productos/'+product.sku)
-                              +img(product.name, _.first(product.imagesSizes), ['196x196_jpg', '392x392_jpg'])
-                            if product.brandText
-                              .t-white-700.small.mb-1 #{product.brandText}
-                            .t-primary.tc.b.small #{product.name}
-                            .t-secondary.b.big #{formatMoney(product.price)}
-                            .t-action.small.mb-4
-                              if product.inventory
-                                if product.stock == 0
-                                  | Agotado
-                                else if product.stock < 10
-                                  | En stock, Pocas unidades
-                                else
-                                  | En stock
-                              else
-                                | En stock
-
-                            .absolute.w-100c2.ab-1
-                              if product.inventory && product.stock == 0
-                                a.btn.btn--secondary-0-500.w-100.ab-0(href='/'+store.slug+'/productos/'+product.sku) Ver
-                              else
-                                button.btn.btn--secondary.w-100.add
-                                  i.fas.fa-cart-plus
-                                  | #{' '}
-                                  | Agregar
+                          +simpleProduct(store, product)
 
                 .carousel-arrow.carousel-arrow-right
                   .carousel-icon-right
