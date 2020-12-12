@@ -43,6 +43,10 @@ nav
           a.item(href=`/administracion/tiendas/${session.options.storeSelect}/redes-sociales`) Redes Sociales
         li.navigation__item(class=menu=='tienda-zonas-de-coberturas'?'navigation--active':'')
           a.item(href=`/administracion/tiendas/${session.options.storeSelect}/zonas-de-coberturas`) Zonas de Coberturas
+        li.navigation__item(class=menu=='tienda-opciones-de-entrega'?'navigation--active':'')
+          a.item(href=`/administracion/tiendas/${session.options.storeSelect}/opciones-de-entrega`) Opciones de entrega
+        li.navigation__item(class=menu=='tienda-opciones-de-pago'?'navigation--active':'')
+          a.item(href=`/administracion/tiendas/${session.options.storeSelect}/opciones-de-pago`) Opciones de pago
 
   if _.get(session, 'options.storeSelect')
     .expandable

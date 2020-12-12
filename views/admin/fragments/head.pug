@@ -27,12 +27,12 @@ title
   | #{title} #{config.site.separator} #{config.site.name}
 
 //- preload
+link(rel='preload' href=config.url.static+'webfonts/lato-v16-latin-700.woff2' as='font' crossorigin type='font/woff2')
+link(rel='preload' href=config.url.static+'webfonts/lato-v16-latin-regular.woff2' as='font' crossorigin type='font/woff2')
+link(rel='preload' href=config.url.static+'webfonts/fa-brands-400.woff2' as='font' crossorigin type='font/woff2')
+link(rel='preload' href=config.url.static+'webfonts/fa-solid-900.woff2' as='font' crossorigin type='font/woff2')
 link(rel='preload' href=config.url.static+'admin/css/style.min.css?='+config.v as='style')
 link(rel='preload' href=config.url.static+'css/fonts.min.css?='+config.v as='style' )
-link(rel='preload' href=config.url.static+'webfonts/lato-v16-latin-700.woff2' as='font' crossorigin)
-link(rel='preload' href=config.url.static+'webfonts/lato-v16-latin-regular.woff2' as='font' crossorigin)
-link(rel='preload' href=config.url.static+'webfonts/fa-brands-400.woff2' as='font' crossorigin)
-link(rel='preload' href=config.url.static+'webfonts/fa-solid-900.woff2' as='font' crossorigin)
 
 
 link(rel='preload' href=config.url.static+'lib/script.js?='+config.v as='script')

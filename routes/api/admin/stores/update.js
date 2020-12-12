@@ -9,25 +9,48 @@ module.exports = (req, res, next) => {
   const body = _.pick(fbody, [
     'name',
     'slogan',
-    'separator',
     'description',
-    'multiStore',
-    'defaultPlace',
     'inventory',
-    'slots',
-    'userID',
     'featuredCategories',
-    'deliveriesCompaniesIDs',
-    'paymentsMethodsIDs',
     'vision',
     'descriptionLong',
     'contacts',
     'address',
     'publish',
+    'deliveries',
+    'payments',
   ]);
   if (req.body.lat && req.body.lng) {
     body['location.type'] = 'Point';
     body['location.coordinates'] = [req.body.lng, req.body.lat];
+  }
+  if (body.deliveries) {
+    body.deliveries = _.map(global.deliveries, (delivery) => {
+      const d = _.find(body.deliveries, { slug: delivery.slug });
+      return {
+        slug: delivery.slug,
+        active: _.get(d, 'active') || false,
+        value: _.get(d, 'value') || 0,
+      };
+    });
+  }
+  if (body.payments) {
+    body.payments = _.map(global.payments, (payment) => {
+      const d = _.find(body.payments, { slug: payment.slug });
+      return {
+        slug: payment.slug,
+        active: _.get(d, 'active') || false,
+      };
+    });
+  }
+  if (body.contacts) {
+    body.contacts = _.map(global.socialMedia, (contact) => {
+      const d = _.find(body.contacts, { slug: contact[0] });
+      return {
+        slug: contact[0],
+        value: _.get(d, 'value') || '',
+      };
+    });
   }
   async.auto({
     validate: (cb) => {

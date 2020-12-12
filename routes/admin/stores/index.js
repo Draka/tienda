@@ -13,4 +13,8 @@ module.exports = (app) => {
   app.get('/administracion/tiendas/:storeID([0-9a-f]{24})/zonas-de-coberturas', checkAuthAdminStore, require('./store-coverage-areas-list'));
   app.get('/administracion/tiendas/:storeID([0-9a-f]{24})/zonas-de-coberturas/nuevo', checkAuthAdminStore, require('./store-coverage-areas-new'));
   app.get('/administracion/tiendas/:storeID([0-9a-f]{24})/zonas-de-coberturas/:coverageAreaID([0-9a-f]{24})/editar', checkAuthAdminStore, require('./store-coverage-areas-edit'));
+  app.get('/administracion/tiendas/:storeID([0-9a-f]{24})/opciones-de-entrega', checkAuthAdminStore, require('./delivery-options'));
+  app.get('/administracion/tiendas/:storeID([0-9a-f]{24})/opciones-de-entrega/editar', checkAuthAdminStore, require('./delivery-options-edit'));
+  app.get('/administracion/tiendas/:storeID([0-9a-f]{24})/opciones-de-pago', checkAuthAdminStore, require('./payment-options'));
+  app.get('/administracion/tiendas/:storeID([0-9a-f]{24})/opciones-de-pago/editar', checkAuthAdminStore, require('./payment-options-edit'));
 };

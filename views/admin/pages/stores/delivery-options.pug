@@ -1,0 +1,23 @@
+extends ../../layout-list
+
+block list
+  .remark
+    b A
+    | #{' '} = Activo,
+    | #{' '}
+  table.small.table.table--lines.table--lines.table--striped
+    thead
+      tr
+        th.b.tc A
+        th.w-100.b Metodo de Envío
+        th.w-100.b Costo
+    tbody
+      each item of deliveries
+        tr
+          td.tc
+            +boolean(item.active)
+          td.w-100
+            .b #{item.name}
+            .small #{item.description}
+          td.tr
+            .b.t-secondary #{formatMoney(item.value || 0)}

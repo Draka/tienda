@@ -1,0 +1,37 @@
+extends ../../layout-list
+
+block list
+  .remark
+    b A
+    | #{' '} = Activo,
+    | #{' '}
+  form.validate-rest(
+      id="updateDeliveryForm"
+      action=`${config.url.api}admin/stores/${store._id}`
+      method="post"
+      data-page=`/administracion/tiendas/${store._id}/opciones-de-entrega`
+      data-error="#form-results")
+    .msg.error#form-results
+    table.small.table.table--lines.table--lines.table--striped
+      thead
+        tr
+          th.b.tc A
+          th.w-100.b Metodo de Envío
+          th.w-100.b Costo
+      tbody
+        each item,i in deliveries
+          tr
+            td.tc
+              label
+                input.checkbox.checkbox--no-margin(type="checkbox" name=`deliveries[${i}][active]` value='1' checked=item.active)
+                span 
+            td.w-100
+              .b #{item.name}
+              .small #{item.description}
+            td.tc
+              input(type="hidden" name=`deliveries[${i}][slug]` value=item.slug)
+              input.input.tr(type="number" min=0 name=`deliveries[${i}][value]` placeholder=' ' required value=item.value)
+
+    .row
+      .col-xs-12.tr
+        button.btn.btn--primary.w-100-xs.mt-2-xs(type="submit") Editar opciones de entrega

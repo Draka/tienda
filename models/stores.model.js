@@ -87,18 +87,34 @@ const schema = new mongoose.Schema({
   //     ref: `${config.dbPrefix}categories`,
   //   },
   // }],
-  // deliveriesCompaniesIDs: [
-  //   {
-  //     type: mongoose.Schema.Types.ObjectId,
-  //     ref: `${config.dbPrefix}deliveries_companies`,
-  //   },
-  // ],
-  // paymentsMethodsIDs: [
-  //   {
-  //     type: mongoose.Schema.Types.ObjectId,
-  //     ref: `${config.dbPrefix}payments_methods`,
-  //   },
-  // ],
+  deliveries: [
+    {
+      active: {
+        type: Boolean,
+        default: false,
+      },
+      slug: {
+        type: String,
+        trim: true,
+      },
+      value: {
+        type: Number,
+        default: 0,
+      },
+    },
+  ],
+  payments: [
+    {
+      active: {
+        type: Boolean,
+        default: false,
+      },
+      slug: {
+        type: String,
+        trim: true,
+      },
+    },
+  ],
 }, { timestamps: true });
 
 function preUpdate(result, next) {

@@ -37,6 +37,38 @@ const vars = {
     'cerrar-sesion',
     'carrito',
   ],
+  payments: [
+    {
+      slug: 'wompi',
+      name: 'Wompi',
+      description: 'Pago seguro con tarjetas crédito y debito y otros medios de pago',
+    },
+    {
+      slug: 'contra-entrega',
+      name: 'Contra-entrega',
+      description: 'Pago contra entrega',
+    },
+  ],
+  deliveries: [
+    {
+      name: 'Encomienda Nacional',
+      slug: 'encomienda-nacional',
+      description: 'Se usa una empresa de encomiendas a nivel nacional',
+      payments: ['wompi'],
+    },
+    {
+      name: 'Encomienda Local',
+      slug: 'encomienda-local',
+      description: 'Se usa una empresa de encomiendas local',
+      payments: ['wompi'],
+    },
+    {
+      name: 'Transporte Local',
+      slug: 'transporte-local',
+      description: 'El dueño de la tienda se encarga de llevar el producto',
+      payments: ['wompi', 'contra-entrega'],
+    },
+  ],
 };
 _.forEach(vars, (v, i) => {
   global[i] = v;

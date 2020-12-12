@@ -68,6 +68,10 @@ module.exports = (req, res, next) => {
               return cb(err);
             }
             putS3Path(docs, results.store);
+            _.each(docs, (product) => {
+              product.isAvailable = !((_.get(product, 'available.start') && moment.tz().isBefore(product.available.start))
+            || (_.get(product, 'available.end') && moment.tz().isAfter(product.available.end)));
+            });
             products[featured.category._id] = docs;
             cb();
           });
