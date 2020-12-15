@@ -9,7 +9,7 @@
 //- 'object-src 'none';'+
 //- 'script-src 'self' 'unsafe-inline' 'unsafe-eval' *.siftscience.com *.p4s.co *.google-analytics.com *.googletagmanager.com *.mapbox.com *.wompi.co *.facebook.net;'+
 //- 'style-src 'self' 'unsafe-inline' *.p4s.co *.mapbox.com *.facebook.com')
-if process.env.NODE_ENV == 'production'
+if process.env.NODE_ENV == 'production' && config.gtm
   script.
     (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],

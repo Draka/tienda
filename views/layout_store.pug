@@ -49,7 +49,7 @@ html(lang='es')
     include fragments/metatag.pug
 
   body(data-url-api=config.url.api)
-    if process.env.NODE_ENV == 'production'
+    if process.env.NODE_ENV == 'production' && config.gtm
       noscript
         iframe(src='https://www.googletagmanager.com/ns.html?id='+config.gtm height='0' width='0' style='display:none;visibility:hidden')
 
