@@ -7,7 +7,8 @@ block content
         .br-1.p-3.mb-3.brt-10.rd-0-5.white
           .row
             .col-md-4.tc
-              img.h-192p.lazy.responsive(data-src=store.imageSizes['196x196_jpg'] data-retina=store.imageSizes['392x392_jpg'] alt=store.name)
+              if store.imageSizes
+                img.h-192p.lazy.responsive(data-src=store.imageSizes['196x196_jpg'] data-retina=store.imageSizes['392x392_jpg'] alt=store.name)
             .col-md-8
               h1.mb-2 #{store.name}
               .big #{store.slogan}

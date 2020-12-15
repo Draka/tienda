@@ -89,7 +89,7 @@ module.exports = (req, res, next) => {
       store: results.store,
       categories: results.categories,
       products: results.products,
-      title: 'Centro Comercial Virtual',
+      title: config.site.title,
       menu: 'index',
       js: 'store',
     });

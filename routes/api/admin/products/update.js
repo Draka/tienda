@@ -83,7 +83,7 @@ module.exports = (req, res, next) => {
           cimg = _.random(10000, 99999);
         } while (results.query.images.indexOf(cimg) !== -1);
         results.query.images.push(cimg);
-        const pathImg = `ecommerce/${req.params.storeID}/products/${req.params.productID}/${cimg}`;
+        const pathImg = `${req.params.storeID}/products/${req.params.productID}/${cimg}`;
         imageToS3(pathImg, null, image, global.imagesSizes, true, cb);
       }, cb);
     }],
@@ -97,7 +97,7 @@ module.exports = (req, res, next) => {
         if (pos >= 0) {
           results.query.images.splice(pos, 1);
         }
-        deleteS3(`ecommerce/${req.params.storeID}/products/${req.params.productID}/${i}`, cb);
+        deleteS3(`tenancy/${config.tenancy}/ecommerce/${config.s3.folder}/${req.params.storeID}/products/${req.params.productID}/${i}`, cb);
       }, cb);
     }],
     category: ['uploadFile', (_results, cb) => {

@@ -3,7 +3,8 @@ footer.mt-8
     .container.ph-1
       .row
         .col-md-4.tc.vertical-align-center.mb-3-xs.mb-3-sm.mb-3-md
-          img.h-4(src='/images/logo_cuadrado_f_negro.svg' alt='tienda logo blanco')
+          img.h-96p(src=`${config.url.static}tenancy/${config.tenancy}/images/logo-name.svg` alt=`${config.site.name} logo nombre`)
+          .small.pt-1 TIENDAS EN PESOS COLOMBIANOS
         .col-md-8.vertical-align-center
           ul
             li.p-0-5
@@ -18,36 +19,31 @@ footer.mt-8
               | Comentarios y dudas:
               | #{' '} 
               a.b(href=`mailto:${config.email.emailInfo}`) #{config.email.emailInfo}
-        .col-md-12
-          .hr.mh-1
+  .container-fluid.primary-500
+    .container.tc.ph-3
       .row
-        .col-md-4.tc.mb-3-xs.mb-3-sm.mb-3-md
-          img.h-2(src='/images/logo.svg' alt='p4s logo')
+        .col-md-4.mb-3-xs.mb-3-sm.mb-3-md
+          img.h-2(src=config.url.static+'images/logo-p4s.svg' alt='p4s logo')
           .small 
             span.b Véndelo Mejor
             | #{' '}
             | es una idea apoyada por el portal de emprendimiento
             | #{' '}
             a(href='https://p4s.co') p4s
-        .col-md-4.mb-3-xs.mb-3-sm.mb-3-md.tc-xs.tc-sm.tc-md
-          //- title.b.mb-2 Ayuda
-          //- a.small.ml-4(href='/preguntas') Preguntas Frecuentes
-        .col-md-4.tc.mb-3-xs.mb-3-sm.mb-3-md
-          .small Visita nuestra página de facebook
-          .bigx2
-            a(href="https://www.facebook.com/tiendap4s" target='_blank')
-              i.fab.fa-facebook-square
-              span.out-screen Página de facebook
-  .container-fluid.primary-500
-    .container.tc.ph-3
-      .row
-        .col-md-4.mb-3-xs.mb-3-sm.mb-3-md
+          img.h-2.mt-1(src=config.url.static+'images/logo-name.svg' alt='Véndelo Mejor logo blanco')
           .small TODOS LOS DERECHOS RESERVADOS
           .small powered by:
             | #{' '} 
             a(href='https://vendelomejor.com/') Véndelo Mejor
         .col-md-4.mb-3-xs.mb-3-sm.mb-3-md
-          img.h-2(src='/images/wompi.png' alt='wompi')
+          img.h-2(src=config.url.static+'images/wompi.png' alt='wompi')
           .small COMPRA 100% SEGURA
         .col-md-4
-          .small TIENDAS EN PESOS COLOMBIANOS
+          .small #{config.site.name} es creado y es mantenido por:
+          br
+          .b Véndelo Mejor
+          .hr.mh-0-25
+          .title
+            a(href="https://www.facebook.com/tiendap4s" target='_blank')
+              i.fab.fa-facebook-square
+              span.out-screen Página de facebook

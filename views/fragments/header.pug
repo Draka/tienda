@@ -3,7 +3,7 @@ header
     nav.navbar.primary.shadow.fixed.top
       .container
         a.logo(href='/')
-          img(src='/images/logo_f_negro.svg' alt='Tienda Logo')
+          img(src=`${config.url.static}tenancy/${config.tenancy}/images/logo-top.svg` alt=`${config.site.name} logo`)
 
         .expand
           if store
@@ -61,7 +61,8 @@ header
       nav.navbar.white.shadow.mt-4
         .container
           a(href='/'+store.slug)
-            img.h-3(src=store.imageSizes['96x96_jpg'] alt=store.name)
+            if store.imageSizes
+              img.h-3(src=store.imageSizes['96x96_jpg'] alt=store.name)
           ul
             li.flex
               a.nav-link.brand-logo(href='/'+store.slug)
@@ -118,7 +119,7 @@ header
             span.out-screen Menú
         li.expand
           a.logo.justify-content-center(href='/')
-            img(src='/images/logo_f_negro.svg' alt='Tienda Logo')
+            img(src=`${config.url.static}tenancy/${config.tenancy}/images/logo-top.svg` alt=`${config.site.name} logo`)
         li
           a.link-shopping-cart.relative.w-4.justify-content-center(href='/carrito')
             i.fas.fa-shopping-cart

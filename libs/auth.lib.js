@@ -10,6 +10,7 @@ function isAuthenticated(token) {
 }
 
 module.exports = (req, res, next) => {
+  global.originalUrl = ((req.originalUrl.split('?'))[0]).substring(1);
   const token = (req.headers.authorization && req.headers.authorization.split(' ')[1]) || _.get(req, 'signedCookies.token');
   const payload = isAuthenticated(token);
 

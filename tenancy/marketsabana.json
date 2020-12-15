@@ -1,0 +1,17 @@
+{
+    "email": {
+        "title": "Market Sabana",
+        "emailNoreply": "no-reply@marketsabana.com",
+        "emailInfo": "info@marketsabana.com"
+    },
+    "site": {
+        "name": "Market Sabana",
+        "title": "De Cundinamarca",
+        "description": "..",
+        "separator": "|",
+        "twitter": "",
+        "sameAs": [
+            "https://marketsabana.com/"
+        ]
+    }
+}

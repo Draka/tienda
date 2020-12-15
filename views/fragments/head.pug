@@ -34,7 +34,7 @@ link(rel='preload' href=config.url.static+'webfonts/lato-v16-latin-700.woff2' as
 link(rel='preload' href=config.url.static+'webfonts/lato-v16-latin-regular.woff2' as='font' crossorigin type='font/woff2')
 link(rel='preload' href=config.url.static+'webfonts/fa-brands-400.woff2' as='font' crossorigin type='font/woff2')
 link(rel='preload' href=config.url.static+'webfonts/fa-solid-900.woff2' as='font' crossorigin type='font/woff2')
-link(rel='preload' href=config.url.static+'css/style.min.css?='+config.v as='style')
+link(rel='preload' href=config.url.static+'tenancy/'+config.tenancy+'/css/style.min.css?='+config.v as='style')
 link(rel='preload' href=config.url.static+'css/fonts.min.css?='+config.v as='style' )
 
 
@@ -55,6 +55,6 @@ if osm
     link(rel='preload' href=config.url.static+'lib/leaflet/leaflet-geoman.css' as='style')
     link(rel='preload' href=config.url.static+'lib/leaflet/leaflet-geoman.min.js' as='script')
     
-link(rel='shortcut icon' href=config.url.static+'images/favicon.png' type='image/x-icon')
-link(rel='icon', type='image/vnd.microsoft.icon', href=config.url.static+'images/favicon.ico')
-link(rel='stylesheet', href=config.url.static+'css/style.min.css?='+config.v)
+link(rel='shortcut icon' href=config.url.static+'tenancy/'+config.tenancy+'/images/favicon.png' type='image/x-icon')
+link(rel='icon', type='image/vnd.microsoft.icon', href=config.url.static+'tenancy/'+config.tenancy+'/images/favicon.ico')
+link(rel='stylesheet', href=config.url.static+'tenancy/'+config.tenancy+'/css/style.min.css?='+config.v)

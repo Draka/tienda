@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "debug": "DEBUG=tienda:* PORT=3000 nodemon  --ignore public --ignore 'dst/*' ./bin/www"
+    "debug": "TENANCY=marketsabana DEBUG=tienda:* PORT=3000 nodemon  --ignore public --ignore 'dst/*' ./bin/www",
+    "s3": "TENANCY=marketsabana PORT=3001 nodemon  --ignore public --ignore 'dst/*' s3.js"
   },
   "dependencies": {
     "async": "^3.2.0",
@@ -20,6 +21,7 @@
     "http-errors": "~1.8.0",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.20",
+    "mime-types": "^2.1.27",
     "moment-timezone": "^0.5.31",
     "mongoose": "^5.10.7",
     "morgan": "~1.10.0",
@@ -32,7 +34,6 @@
     "uglify-js": "^3.11.0",
     "validator": "^13.1.17"
   },
-  "optionalDependencies": {},
   "devDependencies": {
     "@types/jquery": "^3.5.1",
     "@types/mapbox-gl": "^1.12.2",
@@ -44,6 +45,7 @@
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-plugin-import": "^2.22.1",
     "nodemon": "^2.0.4",
+    "spdy": "^4.0.2",
     "ts-node": "^9.0.0",
     "typescript": "^4.0.3"
   }

@@ -7,8 +7,8 @@ block content
   .container
     h1 Quiero empezar a vender
 
-    div 
-        | Texto
+    include ../../fragments/landpage-invite.pug
+
     .row.justify-content-center
       .col-xs-12.col-md-6
         if !session
@@ -28,15 +28,16 @@ block content
             .p-1
               .msg.error#form-results
               .row
-                form.col-xs-12.validate-rest(id="passwordResetForm" action=`${config.url.api}users/get-salesman` method="post" data-page=`recuperar-contrasena-confirmacion` data-error="#form-results")
+                form.col-xs-12.validate-rest(id="passwordResetForm" action=`${config.url.api}users` method="put" data-page=`/administracion/tiendas` data-error="#form-results")
                   .row
                     .col-xs-12
                       .form-group
                         .form-control
                           label
+                            input(type="hidden" name="adminStore" value="1")
                             input.checkbox#tyc(
                               type="checkbox" 
-                              name="tyc" 
+                              name="acceptance[tycv]" 
                               value='1' 
                               requireCheck 
                               data-msg-error="Debe aceptar los Términos y Condiciones de Vendedor para continuar"

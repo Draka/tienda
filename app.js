@@ -113,6 +113,7 @@ app.use(jsMiddleware({
   sourceMap: true,
   debug: true,
 }));
+app.use(express.static(path.join(__dirname, `public/tenancy${config.tenancy}`)));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, `public/${config.s3.folder}`)));
 app.use(auth);
@@ -134,6 +135,7 @@ app.use((err, req, res, next) => {
   }
   console.log(req.originalUrl.split('/'));
   if (req.originalUrl.split('/')[1] === 'v1') {
+    console.error(err);
     res.status(err.status || 500).send(err);
   } else {
     res.status(err.status || 500).render('error.pug', { error: err });

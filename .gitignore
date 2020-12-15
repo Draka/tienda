@@ -60,4 +60,7 @@ typings/
 # next.js build output
 .next
 
-public/local
+public/tenancy/**/ecommerce
+public/tenancy/**/files
+localhost.*
+myCA.*

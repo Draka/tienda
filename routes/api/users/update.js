@@ -1,42 +1,51 @@
-const bcrypt = require('bcrypt-nodejs');
-
-function comparePassword(password, field) {
-  return new Promise((resolve, reject) => {
-    bcrypt.compare(password, field, (err, isMatch) => {
-      if (err) {
-        return reject(err);
-      }
-      resolve(isMatch);
-    });
-  });
-}
-
 module.exports = (req, res, next) => {
   const errors = [];
-  const body = _.pick(req.body, ['password', 'newPassword', 'personalInfo']);
-  if (!body.password) {
-    body.personalInfo = {
-      firstname: req.body.firstname,
-      lastname: req.body.lastname,
-      cellphone: req.body.cellphone,
-    };
-  }
+  const fbody = {};
+  _.each(req.body, (v, k) => {
+    _.set(fbody, k, v);
+  });
+  const body = _.pick(fbody, [
+    'personalInfo',
+    'acceptance',
+    'adminStore',
+  ]);
 
   async.auto({
     validate: (cb) => {
-      if (body.newPassword && body.newPassword.length < global.minPassword) {
-        errors.push({ field: 'password', msg: __('La contraseña nueva debe tener al menos %s caracteres', global.minPassword) });
-      }
-      if (!body.password) {
-        if (body.personalInfo.firstname && (_.get(body, 'personalInfo.firstname') || '').length < 3) {
+      if (body.personalInfo) {
+        if (!body.personalInfo.firstname || (_.get(body, 'personalInfo.firstname') || '').length < 3) {
           errors.push({ field: 'firstname', msg: __('Debe escribir un nombre válido') });
         }
-        if (body.personalInfo.lastname && (_.get(body, 'personalInfo.lastname') || '').length < 3) {
+        if (!body.personalInfo.lastname || (_.get(body, 'personalInfo.lastname') || '').length < 3) {
           errors.push({ field: 'lastname', msg: __('Debe escribir un apellido válido') });
         }
+        if (!body.personalInfo.callsign || (_.get(body, 'personalInfo.callsign') || '').length < 3) {
+          errors.push({ field: 'callsign', msg: __('Debe escribir un indicativo válido') });
+        }
         const re = /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/im;
-        if (body.personalInfo.cellphone && !re.test(_.get(body, 'personalInfo.cellphone') || '')) {
+
+        if (!body.personalInfo.cellphone || !re.test(`${_.get(body, 'personalInfo.callsign')}${_.get(body, 'personalInfo.cellphone')}` || '')) {
           errors.push({ field: 'cellphone', msg: __('Debe escribir un número de célular válido') });
+        }
+      }
+      if (body.acceptance) {
+        if (body.acceptance.tycc && body.adminStore) {
+          body.acceptance.tycc = {
+            check: true,
+            date: new Date(),
+          };
+        }
+        if (body.acceptance.tycv) {
+          body.acceptance.tycv = {
+            check: true,
+            date: new Date(),
+          };
+        }
+        if (body.acceptance.pptd) {
+          body.acceptance.pptd = {
+            check: true,
+            date: new Date(),
+          };
         }
       }
       if (errors.length) {
@@ -47,29 +56,9 @@ module.exports = (req, res, next) => {
     query: ['validate', (results, cb) => {
       models.User
         .findById(req.user._id)
-        .select({
-          password: 1,
-          passwordTemp: 1,
-          personalInfo: 1,
-        })
         .exec(cb);
     }],
-    checkPassword: ['query', (results, cb) => {
-      if (!body.password) {
-        return cb(null, true);
-      }
-      Promise.all(['password', 'passwordTemp'].map((field) => comparePassword(req.body.password, results.query[field]))).then((rp) => {
-        if (!rp[0] && !rp[1]) {
-          errors.push({ field: 'password', msg: __('Contraseña inválida.') });
-          return cb(listErrors(401, null, errors));
-        }
-        body.password = body.newPassword;
-        body.passwordTemp = '';
-
-        cb(null, true);
-      }, (err) => cb(err));
-    }],
-    update: ['checkPassword', (results, cb) => {
+    update: ['query', (results, cb) => {
       results.query.set(body).save(cb);
     }],
   }, (err) => {

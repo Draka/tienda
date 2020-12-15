@@ -22,7 +22,7 @@ module.exports = (req, res, next) => {
     res.render('pages/landpage.pug', {
       user: results.user,
       stores: results.stores,
-      title: 'Centro Comercial Virtual',
+      title: config.site.title,
       menu: 'index',
       js: 'page',
     });

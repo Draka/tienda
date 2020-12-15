@@ -1,0 +1,20 @@
+{
+    "email": {
+        "title": "Véndelo Mejor",
+        "emailNoreply": "no-reply@vendelomejor.com",
+        "emailInfo": "info@vendelomejor.com"
+    },
+    "site": {
+        "name": "Véndelo mejor",
+        "title": "Mercado de emprendedores",
+        "description": "Véndelo mejor es un centro comercial virtual de tiendas de emprendedores, navegue por sus mostradores seleccione, compre, pague en línea y reciba desde la comodidad de su hogar u oficina.",
+        "separator": "|",
+        "twitter": "",
+        "sameAs": [
+            "https://www.facebook.com/Tienda-p4s-108008880983303",
+            "https://www.facebook.com/tiendap4s",
+            "https://tienda.p4s.co/",
+            "https://vendelomejor.com/"
+        ]
+    }
+}

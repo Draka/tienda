@@ -71,16 +71,10 @@ const schema = new mongoose.Schema({
     index: true,
     default: false,
   },
-  stores: {
-    admin: {
-      type: Boolean,
-      index: true,
-      default: false,
-    },
-    tyc: {
-      type: Boolean,
-      default: false,
-    },
+  adminStore: {
+    type: Boolean,
+    index: true,
+    default: false,
   },
   bank: {
     name: {
@@ -143,6 +137,20 @@ const schema = new mongoose.Schema({
     cellphone: {
       type: String,
       trim: true,
+    },
+  },
+  acceptance: {
+    tycc: {
+      date: Date,
+      check: Boolean,
+    },
+    tycv: {
+      date: Date,
+      check: Boolean,
+    },
+    pptd: {
+      date: Date,
+      check: Boolean,
     },
   },
   check: {

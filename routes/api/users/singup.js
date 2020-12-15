@@ -16,7 +16,7 @@ module.exports = (req, res, next) => {
       if (!validator.isEmail(body.email)) {
         errors.push({ field: 'email', msg: __('Por favor, escribe una dirección de correo válida.') });
       }
-      if (body.password.length < global.minPassword) {
+      if (body.password && body.password.length < global.minPassword) {
         errors.push({ field: 'password', msg: __('La contraseña debe tener al menos %s caracteres.', global.minPassword) });
       }
       if ((_.get(body, 'personalInfo.firstname') || '').length < 3) {

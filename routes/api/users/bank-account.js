@@ -64,7 +64,7 @@ module.exports = (req, res, next) => {
         return cb(listErrors(400, null, errors));
       }
 
-      const dir = `./public/${config.s3.folder}/ecommerce/users/${req.user._id}`;
+      const dir = `./public/tenancy/${config.tenancy}/files/${config.s3.folder}/users/${req.user._id}`;
       async.auto({
         makedirLocal: (cb) => {
           if (process.env.NODE_ENV === 'production') {
@@ -81,7 +81,7 @@ module.exports = (req, res, next) => {
             // ajustes de s3
             const params = {
               Bucket: config.s3.bucket,
-              Key: `${config.s3.folder}/users/${req.user._id}/bank`, // ruta donde va a quedar
+              Key: `public/tenancy/${config.tenancy}/files/${config.s3.folder}/users/${req.user._id}/bank`, // ruta donde va a quedar
               Body: req.files.file.data,
               ContentType: req.files.file.mimetype,
               CacheControl: 'private, max-age=31536000',
@@ -92,8 +92,14 @@ module.exports = (req, res, next) => {
             // sube el archivo
             console.log('sube', `users/${req.user._id}/bank`);
             s3.upload(params, cb);
+          } else {
+            cb();
           }
-          req.files.file.mv(`${dir}/bank`);
+        }],
+        moveFileLocal: ['makedirLocal', (_results, cb) => {
+          if (process.env.NODE_ENV !== 'production') {
+            req.files.file.mv(`${dir}/bank`);
+          }
           _.set(body, 'bank.file', `${dir}/bank`);
           _.set(body, 'bank.mime', req.files.file.mimetype);
           _.set(body, 'bank.fileCheck', true);

@@ -3,7 +3,7 @@ header
     nav.navbar.primary-500.fixed.shadow
       .container.left
         a.logo(href='/')
-          img(src='/images/logo_f_negro.svg' alt='Tienda Logo')
+          img(src=`${config.url.static}tenancy/${config.tenancy}/images/logo-top.svg` alt=`${config.site.name} logo`)
 
         .expand
         .login.relative
@@ -30,7 +30,7 @@ header
             span.out-screen Menú
         li.expand
           a.logo.justify-content-center(href='/')
-            img(src='/images/logo_f_negro.svg' alt='Tienda Logo')
+            img(src=`${config.url.static}tenancy/${config.tenancy}/images/logo-top.svg` alt=`${config.site.name} logo`)
 
   nav#mobile-menu.sidenav
     .sidenav-body
