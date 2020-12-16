@@ -92,7 +92,7 @@ module.exports = (req, res, next) => {
 
       const cimg = _.random(10000, 99999);
       results.query.image = cimg;
-      const pathImg = `ecommerce/${req.params.storeID}/logo`;
+      const pathImg = `${req.params.storeID}/logo`;
       imageToS3(pathImg, null, req.files.image, global.imagesSizes, true, cb);
     }],
     save: ['uploadFile', (results, cb) => {
