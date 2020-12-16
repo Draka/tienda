@@ -34,7 +34,7 @@ const enviroment = {
   files: process.env.FILES || 'local',
   site: tenancyConfig.site,
   mapbox: 'pk.eyJ1Ijoic3JkcmFrYSIsImEiOiJja2FlZHBmYXUwMHpoMnJudHJnazZsOWY1In0.tAAoQbjhJKq_DdwpTTimrw',
-  gtm: process.env.GTM || 'GTM-PZSNWCV',
+  gtm: process.env.GTM || '',
 };
 
 module.exports = enviroment;
