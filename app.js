@@ -115,7 +115,6 @@ app.use(jsMiddleware({
 }));
 app.use(express.static(path.join(__dirname, `public/tenancy${config.tenancy}`)));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, `public/${config.s3.folder}`)));
 app.use(auth);
 
 require('./routes')(app);
