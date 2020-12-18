@@ -1,6 +1,5 @@
 /* eslint-disable global-require */
 module.exports = (app) => {
-  app.get('/', require('./landpage'));
   app.get('/:storeSlug', require('./store'));
   app.get('/:storeSlug/buscar', require('./search'));
   app.get('/:storeSlug/categorias', require('./category'));

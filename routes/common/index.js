@@ -1,4 +1,7 @@
+/* eslint-disable global-require */
 module.exports = (app) => {
+  app.get('/', require('./landpage'));
+
   app.get('/iniciar-sesion', (req, res) => {
     const breadcrumbs = [
       {
