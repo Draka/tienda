@@ -22,4 +22,11 @@ module.exports = (app) => {
       heapUsed: memory.heapUsed / 1048576,
     });
   });
+  app.get('/flush', (req, res) => {
+    global.client.flushall('ASYNC', (err, succeeded) => {
+      res.send({
+        flush: err || succeeded,
+      });
+    });
+  });
 };
