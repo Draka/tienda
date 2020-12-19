@@ -17,11 +17,10 @@ const auth = require('./libs/auth.lib');
 const cache = require('./libs/cache.lib');
 const jsMiddleware = require('./libs/js_middleware.lib');
 const tsMiddleware = require('./libs/ts_middleware.lib');
+const imgMiddleware = require('./libs/img_middleware.lib');
 const { formatMoney } = require('./libs/util.lib');
 
 global.formatMoney = formatMoney;
-// Genera scripts
-tsMiddleware();
 
 global.client = redis.createClient({
   retry_strategy(options) {
@@ -68,6 +67,9 @@ const dbOptions = {
 mongoose.connect(config.db, dbOptions).then(
   () => {
     console.log('MongoDB open');
+    // Genera scripts
+    tsMiddleware();
+    imgMiddleware();
   },
   (err) => {
     console.log('MongoDB error', err);
