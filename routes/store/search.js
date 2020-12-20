@@ -36,7 +36,7 @@ module.exports = (req, res, next) => {
   }
   async.auto({
     user: (cb) => {
-      cb(null, global.session);
+      cb(null, req.user);
     },
     store: (cb) => {
       queryStore.storeBySlug(req.params.storeSlug, cb);
@@ -94,6 +94,7 @@ module.exports = (req, res, next) => {
     }
 
     res.render('pages/stores/search.pug', {
+      session: req.user,
       store: results.store,
       categories: results.categories,
       products: results.products,

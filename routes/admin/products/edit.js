@@ -4,7 +4,7 @@ const { putS3Path } = require('../../../libs/put_s3_path.lib');
 module.exports = (req, res, next) => {
   async.auto({
     user: (cb) => {
-      cb(null, global.session);
+      cb(null, req.user);
     },
     store: ['user', (results, cb) => {
       query.store(req.params.storeID, cb);
@@ -76,6 +76,7 @@ module.exports = (req, res, next) => {
     ];
 
     res.render('admin/pages/products/edit.pug', {
+      session: req.user,
       user: results.user,
       store: results.store,
       item: results.item,

@@ -18,7 +18,7 @@ const breadcrumbs = [
 module.exports = (req, res, next) => {
   async.auto({
     user: (cb) => {
-      cb(null, global.session);
+      cb(null, req.user);
     },
     store: ['user', (results, cb) => {
       query.store(_.get(results, 'user.options.storeSelect'), cb);
@@ -34,6 +34,7 @@ module.exports = (req, res, next) => {
       text: `La tienda, <b>${results.store.name}</b> se ha creado.<br> Ingrese a su configuración <a href="/administracion/tiendas/${results.store._id}">aquí</a>`,
     };
     res.render('admin/pages/messages/general.pug', {
+      session: req.user,
       user: results.user,
       title: 'Tienda',
       menu: 'tienda/nuevo',

@@ -13,7 +13,7 @@ module.exports = (req, res, next) => {
       if (!req.user || !req.user._id) {
         return cb();
       }
-      cb(null, global.session);
+      cb(null, req.user);
     },
     store: (cb) => {
       queryStore.storeBySlug(req.params.storeSlug, cb);
@@ -85,6 +85,7 @@ module.exports = (req, res, next) => {
     }
 
     res.render('pages/stores/index.pug', {
+      session: req.user,
       user: results.user,
       store: results.store,
       categories: results.categories,

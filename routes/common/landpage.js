@@ -4,7 +4,7 @@ const queryStore = require('../../libs/query_store.lib');
 module.exports = (req, res, next) => {
   async.auto({
     user: (cb) => {
-      cb(null, global.session);
+      cb(null, req.user);
     },
     stores: ['user', (results, cb) => {
       queryStore.stores(cb);
@@ -20,6 +20,7 @@ module.exports = (req, res, next) => {
     }
 
     res.render('pages/landpage.pug', {
+      session: req.user,
       user: results.user,
       stores: results.stores,
       title: config.site.title,

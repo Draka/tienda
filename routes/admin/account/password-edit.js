@@ -21,7 +21,11 @@ module.exports = (req, res, next) => {
       return next(err);
     }
     res.render('admin/pages/account/password-edit.pug', {
-      user, menu: 'contrasena', active: 'editar', breadcrumbs,
+      session: req.user,
+      user,
+      menu: 'contrasena',
+      active: 'editar',
+      breadcrumbs,
     });
   });
 };

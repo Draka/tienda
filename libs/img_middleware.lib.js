@@ -10,7 +10,7 @@ const sizes = [{ x: 343 }, { x: 1920 }, { x: 686 }];
 const sizesPNG = [{ y: 460 }];
 
 module.exports = () => {
-  if (1 && process.env.NODE_ENV !== 'production') {
+  if (0 && process.env.NODE_ENV !== 'production') {
     async.auto({
       jpg: (cb) => {
         async.each(getFilesJPG(`./public/tenancy/${config.tenancy}/images/_home`), (d, cb) => {

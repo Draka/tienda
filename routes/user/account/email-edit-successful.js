@@ -18,7 +18,8 @@ const msg = {
 
 module.exports = (req, res) => {
   res.render('pages/messages/general.pug', {
-    user: global.session,
+    session: req.user,
+    user: req.user,
     breadcrumbs,
     account: true,
     msg,

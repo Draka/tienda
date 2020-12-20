@@ -16,6 +16,7 @@ module.exports = (app) => {
     ];
 
     res.render('pages/users/login', {
+      session: req.user,
       title: 'Iniciar Sesión',
       description: 'Inicie sesión, hay muchos productos para que escoja de nuestra plaza de emprendedores',
       breadcrumbs,
@@ -36,6 +37,7 @@ module.exports = (app) => {
     ];
 
     res.render('pages/users/signup', {
+      session: req.user,
       title: 'Registrarse como cliente',
       description: 'Inscríbase en Tienda p4s, navegue por nuestra vitrina virtual, seleccione sus productos y pague online',
       breadcrumbs,
@@ -55,6 +57,7 @@ module.exports = (app) => {
       },
     ];
     res.render('pages/users/signup_confirm', {
+      session: req.user,
       title: 'Registro Confirmación',
       breadcrumbs,
       js: 'page',
@@ -73,6 +76,7 @@ module.exports = (app) => {
       },
     ];
     res.render('pages/users/password_reset', {
+      session: req.user,
       title: '¿Olvidaste tu contraseña?',
       breadcrumbs,
       js: 'page',
@@ -91,6 +95,7 @@ module.exports = (app) => {
       },
     ];
     res.render('pages/users/password_reset_confirm', {
+      session: req.user,
       title: '¿Olvidaste tu contraseña?',
       breadcrumbs,
       js: 'page',
@@ -99,7 +104,6 @@ module.exports = (app) => {
   app.get('/cerrar-sesion', (req, res) => {
     // elimina la cookie
     res.clearCookie('token');
-    delete global.session;
     delete req.user;
     const breadcrumbs = [
       {
@@ -113,6 +117,7 @@ module.exports = (app) => {
       },
     ];
     res.render('pages/users/signout', {
+      session: req.user,
       title: 'Sesión finalizada',
       breadcrumbs,
       js: 'page',

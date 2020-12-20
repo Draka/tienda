@@ -21,6 +21,7 @@ module.exports = (req, res, next) => {
       return next(err);
     }
     res.render('admin/pages/stores/store-new.pug', {
+      session: req.user,
       user,
       title: 'Nueva tienda',
       menu: 'tienda-nueva',

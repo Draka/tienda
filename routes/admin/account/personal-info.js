@@ -21,7 +21,11 @@ module.exports = (req, res, next) => {
       return next(err);
     }
     res.render('admin/pages/account/personal-info.pug', {
-      user, menu: 'informacion-personal', active: 'informacion-personal', breadcrumbs,
+      session: req.user,
+      user,
+      menu: 'informacion-personal',
+      active: 'informacion-personal',
+      breadcrumbs,
     });
   });
 };

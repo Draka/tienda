@@ -5,6 +5,6 @@ module.exports = (req, res, next) => {
     if (err) {
       return next(err);
     }
-    res.render('admin/pages/dashboard/index.pug', { user });
+    res.render('admin/pages/dashboard/index.pug', { session: req.user, user });
   });
 };

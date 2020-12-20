@@ -13,6 +13,7 @@ module.exports = (app) => {
       },
     ];
     res.render('pages/documents/politica-de-privacidad-y-tratamiento-de-datos', {
+      session: req.user,
       title: 'Política de Privacidad y Tratamiento de Datos',
       breadcrumbs,
       js: 'page',
@@ -31,6 +32,7 @@ module.exports = (app) => {
       },
     ];
     res.render('pages/documents/terminos-y-condiciones-cliente', {
+      session: req.user,
       title: 'Términos y Condiciones Cliente',
       breadcrumbs,
       js: 'page',
@@ -49,6 +51,7 @@ module.exports = (app) => {
       },
     ];
     res.render('pages/documents/terminos-y-condiciones-vendedor', {
+      session: req.user,
       title: 'Términos y Condiciones Vendedor',
       breadcrumbs,
       js: 'page',

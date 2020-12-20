@@ -3,7 +3,7 @@ const query = require('../../../libs/query.lib');
 module.exports = (req, res, next) => {
   async.auto({
     user: (cb) => {
-      cb(null, global.session);
+      cb(null, req.user);
     },
     store: ['user', (results, cb) => {
       query.store(req.params.storeID, cb);
@@ -44,8 +44,8 @@ module.exports = (req, res, next) => {
         text: 'Administración',
       },
       {
-        link: `/administracion/tiendas`,
-        text: `Tiendas`,
+        link: '/administracion/tiendas',
+        text: 'Tiendas',
       },
       {
         link: `/administracion/tiendas/${req.params.storeID}`,
@@ -63,6 +63,7 @@ module.exports = (req, res, next) => {
     ];
 
     res.render('admin/pages/places/store-places-edit.pug', {
+      session: req.user,
       user: results.user,
       store: results.store,
       item: results.item,

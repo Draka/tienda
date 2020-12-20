@@ -4,7 +4,7 @@ module.exports = (req, res, next) => {
   async.auto({
     user: (cb) => {
       models.User
-        .findById(global.session._id)
+        .findById(req.user._id)
         .exec(cb);
     },
     store: ['user', (results, cb) => {

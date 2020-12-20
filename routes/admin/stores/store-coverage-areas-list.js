@@ -3,7 +3,7 @@ const query = require('../../../libs/query.lib');
 module.exports = (req, res, next) => {
   async.auto({
     user: (cb) => {
-      cb(null, global.session);
+      cb(null, req.user);
     },
     store: ['user', (results, cb) => {
       query.store(req.params.storeID, cb);
@@ -48,6 +48,7 @@ module.exports = (req, res, next) => {
     ];
 
     res.render('admin/pages/stores/store-coverage-areas-list.pug', {
+      session: req.user,
       user: results.user,
       store: results.store,
       items: results.coveragesAreas.map((i) => {

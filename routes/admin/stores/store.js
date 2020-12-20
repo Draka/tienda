@@ -9,7 +9,7 @@ module.exports = (req, res, next) => {
 
   async.auto({
     user: (cb) => {
-      cb(null, global.session);
+      cb(null, req.user);
     },
     check: ['user', (results, cb) => {
       if (results.user.admin || results.user.adminStore) {
@@ -61,6 +61,7 @@ module.exports = (req, res, next) => {
     ];
 
     res.render('admin/pages/stores/list.pug', {
+      session: req.user,
       user: results.user,
       items: results.items,
       limit,

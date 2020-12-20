@@ -17,7 +17,6 @@ module.exports = (req, res, next) => {
   if (payload) {
     query.user(payload._id, (err, user) => {
       req.user = user;
-      global.session = user;
       return next(err);
     });
     // Lo de abajo para cuando tenga tiempo
@@ -55,7 +54,6 @@ module.exports = (req, res, next) => {
     // }, next);
   } else {
     req.user = null;
-    global.session = null;
     next();
   }
 };

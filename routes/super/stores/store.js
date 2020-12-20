@@ -8,7 +8,7 @@ module.exports = (req, res, next) => {
 
   async.auto({
     user: (cb) => {
-      cb(null, global.session);
+      cb(null, req.user);
     },
     items: ['user', (results, cb) => {
       models.Store
@@ -52,6 +52,7 @@ module.exports = (req, res, next) => {
     ];
 
     res.render('admin/pages/super-stores/list.pug', {
+      session: req.user,
       items: results.items,
       limit,
       page,

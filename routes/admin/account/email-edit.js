@@ -21,6 +21,7 @@ module.exports = (req, res, next) => {
       return next(err);
     }
     res.render('admin/pages/account/email-edit.pug', {
+      session: req.user,
       user, menu: 'correo', active: 'editar', breadcrumbs,
     });
   });

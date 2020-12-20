@@ -25,7 +25,11 @@ module.exports = (req, res, next) => {
       return next(err);
     }
     res.render('admin/pages/account/bank-account-edit.pug', {
-      user, menu: 'cuenta-bancaria', active: 'editar', breadcrumbs,
+      session: req.user,
+      user,
+      menu: 'cuenta-bancaria',
+      active: 'editar',
+      breadcrumbs,
     });
   });
 };
