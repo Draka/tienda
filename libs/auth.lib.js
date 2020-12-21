@@ -53,7 +53,6 @@ module.exports = (req, res, next) => {
     //   }],
     // }, next);
   } else {
-    req.user = null;
     next();
   }
 };

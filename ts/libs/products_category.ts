@@ -1,19 +1,12 @@
-import { GetApi } from './get_api';
-import { Vars } from './vars';
-import { Product } from './product';
 import { Gtag } from './gtag';
 import { Cart } from './cart';
-import { ShowMsg } from './show_msg';
 
 export class ProductCategory {
-  getApi: GetApi
-
   gtag = new Gtag()
 
   cart = new Cart()
 
   constructor() {
-    this.getApi = new GetApi('');
     this.placeProduct();
   }
 
@@ -27,6 +20,9 @@ export class ProductCategory {
     });
   }
 
+  /**
+   * De la lista de productos, agrega lógica para gtag y controles para agregarr al carro
+   */
   placeProduct() {
     $('.place-product').each((_i, el) => {
       const $el = $(el);

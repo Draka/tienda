@@ -2,9 +2,14 @@ extends ../../layout-list
 
 block list
   if items.length
+    .remark
+      b A
+      | #{' '} = Activo
+      | #{' '}
     table.small.table.table--lines.table--lines.table--striped
       thead
         tr
+          th.b.tc A
           th.tc
             i.far.fa-map
           th.w-100.b Nombre
@@ -13,6 +18,8 @@ block list
       tbody
         each item of items
           tr
+            td.tc
+              +boolean(item.active)
             td.tc
               img.h-96p(src=item.image)
             td.w-100

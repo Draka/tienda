@@ -55,18 +55,28 @@ const vars = {
       slug: 'encomienda-nacional',
       description: 'Se usa una empresa de encomiendas a nivel nacional',
       payments: ['wompi'],
+      virtualDelivery: false,
     },
     {
       name: 'Encomienda Local',
       slug: 'encomienda-local',
       description: 'Se usa una empresa de encomiendas local',
       payments: ['wompi'],
+      virtualDelivery: false,
     },
     {
       name: 'Transporte Local',
       slug: 'transporte-local',
       description: 'El dueño de la tienda se encarga de llevar el producto',
       payments: ['wompi', 'contra-entrega'],
+      virtualDelivery: false,
+    },
+    {
+      name: 'Producto Virtual',
+      slug: 'virtual-product',
+      description: 'No se necesita un evío físico, los detalles de la compra se enviarán por correo',
+      payments: ['wompi'],
+      virtualDelivery: true,
     },
   ],
 };

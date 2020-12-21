@@ -10,11 +10,11 @@ export class GetApi {
   h = {}
 
   constructor(
-    token: string
+    token: string,
   ) {
     if (token) {
       this.h = {
-        Authorization: `bearer ${token}`
+        Authorization: `bearer ${token}`,
       };
     }
   }
@@ -32,7 +32,7 @@ export class GetApi {
     return sclib.ajax({
       url: Vars.urlApi + path,
       type: 'GET',
-      headers: this.h
+      headers: this.h,
     });
   }
 
@@ -50,7 +50,7 @@ export class GetApi {
       url: Vars.urlApi + path,
       type: 'POST',
       headers: this.h,
-      data: JSON.stringify(data)
+      data: JSON.stringify(data),
     });
   }
 }

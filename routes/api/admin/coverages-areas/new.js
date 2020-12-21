@@ -1,6 +1,7 @@
 module.exports = (req, res, next) => {
   const errors = [];
   const body = _.pick(req.body, [
+    'active',
     'name',
     'points',
   ]);
