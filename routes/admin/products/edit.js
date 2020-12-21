@@ -13,7 +13,7 @@ module.exports = (req, res, next) => {
       if (!results.store) {
         return cb(listErrors(404, null, [{ field: 'storeID', msg: 'No existe la tienda' }]));
       }
-      if (results.user.admin) {
+      if (results.user.admin || req.user.adminStore) {
         return cb();
       }
       if (results.user.id === results.store.userID) {
