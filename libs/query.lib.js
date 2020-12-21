@@ -6,6 +6,7 @@ exports.user = (id, cb) => {
     } else {
       models.User
         .findById(id)
+        .lean()
         .exec((err, doc) => {
           if (err) {
             return cb(err);
@@ -25,6 +26,7 @@ exports.store = (id, cb) => {
     } else {
       models.Store
         .findById(id)
+        .lean()
         .exec((err, doc) => {
           if (err) {
             return cb(err);
