@@ -30,7 +30,7 @@ module.exports = (req, res, next) => {
       cb();
     }],
     count: ['user', (_results, cb) => {
-      models.Product
+      models.Store
         .countDocuments(body)
         .exec(cb);
     }],

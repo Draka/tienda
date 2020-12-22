@@ -28,7 +28,6 @@ const vars = {
     'usuario',
     'administracion',
     'pedidos',
-    'v1',
     'iniciar-sesion',
     'registro',
     'registro-confirmacion',
@@ -36,6 +35,7 @@ const vars = {
     'recuperar-contrasena-confirmacion',
     'cerrar-sesion',
     'carrito',
+    'v1',
   ],
   payments: [
     {

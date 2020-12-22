@@ -14,7 +14,7 @@ module.exports = (data, user, cb) => {
       },
       UserID: {
         DataType: 'String',
-        StringValue: user._id.toString(),
+        StringValue: (user && user._id) ? user._id.toString() : '',
       },
     },
     MessageBody: 'correo',

@@ -1,6 +1,10 @@
 const queryStore = require('../../../../libs/query_store.lib');
 
 module.exports = (req, res, next) => {
+  // Salta a otra url
+  if (global.forbidden.indexOf(req.params.storeSlug) >= 0) {
+    return next('route');
+  }
   const errors = [];
   async.auto({
     validate: (cb) => {

@@ -1,5 +1,4 @@
 const { putS3LogoPath } = require('../../../libs/put_s3_path.lib');
-const query = require('../../../libs/query.lib');
 
 module.exports = (req, res, next) => {
   const body = _.pick(req.query, ['name']);

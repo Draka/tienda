@@ -227,7 +227,7 @@ export class CartList {
           + '</div>';
           $el.append(details);
           // busca en el api los métodos de envío
-          this.getApi.p(`${i}/services/search-shipping-methods`, Cart.getAddressJSON())
+          this.getApi.p(`stores/${i}/services/search-shipping-methods`, Cart.getAddressJSON())
             .done((data: any) => {
               let m = '';
               $.each(data.shippingMethods, (k, methods) => {
@@ -247,7 +247,7 @@ export class CartList {
                 });
 
               // busca en el api los métodos de pago
-              this.getApi.p(`${i}/services/search-payments-methods`, { shippingMethod: $(`input[name="shipping-methods-${i}"]`).val() })
+              this.getApi.p(`stores/${i}/services/search-payments-methods`, { shippingMethod: $(`input[name="shipping-methods-${i}"]`).val() })
                 .done((data: any) => {
                   this.paymentsMethods[i] = data.paymentsMethods;
                   $el.find(`#step-store-${i} .shipping-methods`).find('label').first().trigger('click');
