@@ -5,3 +5,4 @@ exports.CoverageArea = require('./coverages-areas.model');
 exports.Place = require('./places.model');
 exports.Product = require('./products.model');
 exports.Category = require('./categories.model');
+exports.Address = require('./addresses.model');

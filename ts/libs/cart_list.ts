@@ -214,15 +214,14 @@ export class CartList {
           if (Object.keys(store.cart).length === 0) {
             return;
           }
-
           valid = true;
           const slug = <string>i;
-          const details = `<div id="step-store-${slug}" class="white br-1 rd-0-2 p-3 mt-3">`
+          const details = `<div id="step-store-${slug}" class="white br-1 rd-0-2 p-1 mt-1">`
           + `<div class="title">${store.name}</div>`
           + '<div class="hr"></div>'
-          + '<div class="subtitle b mt-2">Método de envío</div>'
+          + '<div class="subtitle b mt-0-25">Método de envío</div>'
           + '<div class="shipping-methods"><div class="bigx2"><i class="fas fa-sync fa-spin"></i></div></div>'
-          + '<div class="subtitle b mt-2">Método de pago</div>'
+          + '<div class="subtitle b mt-0-25">Método de pago</div>'
           + '<div class="payments-methods"><div class="bigx2"><i class="fas fa-sync fa-spin"></i></div></div>'
           + '</div>';
           $el.append(details);
@@ -231,8 +230,9 @@ export class CartList {
             .done((data: any) => {
               let m = '';
               $.each(data.shippingMethods, (k, methods) => {
-                m += '<div class="mt-3 mb-1 ml-3 small"><label>'
-                  + `<input id="r-shipping-methods-${i}-${<string>k}" type="radio" name="shipping-methods-${i}" value="${methods.slug}" data-price="${methods.price}" ${k === 0 ? 'checked="checked"' : ''}>`
+                m += '<div class="mt-1 mb-1 ml-1 small"><label>'
+                  + `<input id="r-shipping-methods-${i}-${<string>k}" type="radio" class="radio" name="shipping-methods-${i}" `
+                  + `value="${methods.slug}" data-price="${methods.price}" ${k === 0 ? 'checked="checked"' : ''}>`
                   + `<span>${methods.name}</span> - <span class="t-secondary">${Vars.formatMoney(methods.price)}</span></label>`
                   + `<div class="remark">${methods.description}</div>`
                   + '</div>';
@@ -244,8 +244,9 @@ export class CartList {
                 .done((data: any) => {
                   let m = '';
                   $.each(data.paymentsMethods, (k, methods) => {
-                    m += '<div class="mh-1 ml-3 small"><label>'
-                  + `<input id="r-payments-methods-${i}-${<string>k}" type="radio" name="payments-methods-${i}" value="${methods.slug}" data-price="${methods.price}" ${k === 0 ? 'checked="checked"' : ''}>`
+                    m += '<div class="mh-1 ml-1 small"><label>'
+                  + `<input id="r-payments-methods-${i}-${<string>k}" type="radio" class="radio"  name="payments-methods-${i}" `
+                  + `value="${methods.slug}" data-price="${methods.price}" ${k === 0 ? 'checked="checked"' : ''}>`
                   + `<span>${methods.name}</span></label>`
                   + `<div class="remark">${methods.description}</div>`
                   + '</div>';
@@ -256,7 +257,7 @@ export class CartList {
         });
       });
     }
-    $('.btn-cart2').click(() => {
+    $('.btn-cart2').on('click', () => {
       // Mira la dirección
       const address = Cart.getAddressJSON();
       if (this.checkAddress() && !address.address) {

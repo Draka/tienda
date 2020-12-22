@@ -48,6 +48,7 @@ global.client.on('connect', () => {
   global.client.flushall('ASYNC', (err, succeeded) => {
     console.log('flush cache', succeeded);
   });
+  global.redisMiddleware = cache;
 });
 
 global.redisMiddleware = cache;

@@ -56,6 +56,7 @@ const vars = {
       description: 'Se usa una empresa de encomiendas a nivel nacional',
       payments: ['wompi'],
       virtualDelivery: false,
+      personalDelivery: false,
     },
     {
       name: 'Encomienda Local',
@@ -63,6 +64,7 @@ const vars = {
       description: 'Se usa una empresa de encomiendas local',
       payments: ['wompi'],
       virtualDelivery: false,
+      personalDelivery: false,
     },
     {
       name: 'Transporte Local',
@@ -70,6 +72,7 @@ const vars = {
       description: 'El dueño de la tienda se encarga de llevar el producto',
       payments: ['wompi', 'contra-entrega'],
       virtualDelivery: false,
+      personalDelivery: true,
     },
     {
       name: 'Producto Virtual',
@@ -77,6 +80,7 @@ const vars = {
       description: 'No se necesita un evío físico, los detalles de la compra se enviarán por correo',
       payments: ['wompi'],
       virtualDelivery: true,
+      personalDelivery: false,
     },
   ],
 };

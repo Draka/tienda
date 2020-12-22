@@ -27,11 +27,11 @@ module.exports = (req, res, next) => {
   };
   // si hay una busqueda
   if (req.query.q) {
-    req.query.q = _.deburr(_.trim(req.query.q));
+    const q = _.deburr(_.trim(req.query.q));
     query.$or = [
-      { slug: { $regex: req.query.q, $options: 'i' } },
-      { categoryText: { $regex: req.query.q, $options: 'i' } },
-      { brandText: { $regex: req.query.q, $options: 'i' } },
+      { slug: { $regex: q, $options: 'i' } },
+      { categoryText: { $regex: q, $options: 'i' } },
+      { brandText: { $regex: q, $options: 'i' } },
     ];
   }
   async.auto({

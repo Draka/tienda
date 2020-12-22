@@ -57,6 +57,7 @@ module.exports = (req, res, next) => {
       'storeID',
       'groups',
     ]);
+    product.storeName = results.store.name;
     res.send(product);
   });
 };

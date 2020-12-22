@@ -27,6 +27,7 @@ module.exports = (req, res, next) => {
             description: dc.description,
             price: d.value,
             virtualDelivery: dc.virtualDelivery,
+            personalDelivery: dc.personalDelivery,
             payments: dc.payments,
           });
         }
@@ -40,7 +41,7 @@ module.exports = (req, res, next) => {
       if (!results.coveragesAreas.length || !req.body.location) {
         return cb(null, []);
       }
-      async.each(results.coveragesAreas, (area, cb) => {
+      async.mapLimit(results.coveragesAreas, 5, (area, cb) => {
         const inArea = geolib.isPointInPolygon(
           { latitude: _.get(req.body, 'location.lat'), longitude: _.get(req.body, 'location.lng') },
           area.points.map((point) => ({
@@ -50,7 +51,7 @@ module.exports = (req, res, next) => {
         );
         cb(null, inArea);
       }, (_err, results) => {
-        cb(null, _.map(results.inArea, true));
+        cb(null, results.lastIndexOf(true) >= 0);
       });
     }],
   }, (err, results) => {
