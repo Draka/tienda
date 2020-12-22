@@ -130,23 +130,23 @@ header
     .sidenav-body
       .white-500.w-100.flex.h-3
         .w-100.title.tc.b Cuenta
-      .nologin.start-hide
+      if !session
         ul.list(role='menu')
           li(role='menuitem')
             a(href='/iniciar-sesion') Iniciar Sesión
           li(role='menuitem')
             a(href='/registro') Registro
-
-      ul.list.login.start-hide(role='menu')
-        li(role='menuitem')
-          a(href='/perfil')
-            i.far.fa-address-card
-            | #{' '}Perfil
-        //- li(role='menuitem')
-        //-   a(href='/pedidos')
-        //-     i.fas.fa-shopping-bag
-        //-     | #{' '}Pedidos
-        li(role='menuitem')
-          a(href='/cerrar-sesion')
-            i.fas.fa-sign-out-alt
-            | #{' '}Cerrar Sesión
+      else
+        ul.list(role='menu')
+          li(role='menuitem')
+            a(href='/usuario')
+              i.far.fa-address-card
+              | #{' '}Ver Cuenta
+          //- li(role='menuitem')
+          //-   a(href='/pedidos')
+          //-     i.fas.fa-shopping-bag
+          //-     | #{' '}Pedidos
+          li(role='menuitem')
+            a(href='/cerrar-sesion')
+              i.fas.fa-sign-out-alt
+              | #{' '}Cerrar Sesión
