@@ -14,6 +14,8 @@ export class CartList {
 
   session = new Session();
 
+  paymentsMethods = {}
+
   getApi:GetApi
 
   sum = { subtotal: 0, shipping: 0, total: 0 }
@@ -215,8 +217,7 @@ export class CartList {
             return;
           }
           valid = true;
-          const slug = <string>i;
-          const details = `<div id="step-store-${slug}" class="white br-1 rd-0-2 p-1 mt-1">`
+          const details = `<div id="step-store-${i}" class="white br-1 rd-0-2 p-1 mt-1">`
           + `<div class="title">${store.name}</div>`
           + '<div class="hr"></div>'
           + '<div class="subtitle b mt-0-25">Método de envío</div>'
@@ -230,28 +231,26 @@ export class CartList {
             .done((data: any) => {
               let m = '';
               $.each(data.shippingMethods, (k, methods) => {
-                m += '<div class="mt-1 mb-1 ml-1 small"><label>'
+                if ((data.inArea && methods.personalDelivery) || !methods.personalDelivery) {
+                  m += `<div class="mt-1 mb-1 ml-1 small"><label data-payments='${JSON.stringify(methods.payments)}'>`
                   + `<input id="r-shipping-methods-${i}-${<string>k}" type="radio" class="radio" name="shipping-methods-${i}" `
                   + `value="${methods.slug}" data-price="${methods.price}" ${k === 0 ? 'checked="checked"' : ''}>`
                   + `<span>${methods.name}</span> - <span class="t-secondary">${Vars.formatMoney(methods.price)}</span></label>`
                   + `<div class="remark">${methods.description}</div>`
                   + '</div>';
+                }
               });
-              $el.find(`#step-store-${slug} .shipping-methods`).html(m);
+              $el.find(`#step-store-${i} .shipping-methods`).html(m)
+                .find('label').on('click', (event) => {
+                  const list = $(event.currentTarget).data('payments');
+                  this.showStepAddressPayment($el, i, list);
+                });
 
               // busca en el api los métodos de pago
               this.getApi.p(`${i}/services/search-payments-methods`, { shippingMethod: $(`input[name="shipping-methods-${i}"]`).val() })
                 .done((data: any) => {
-                  let m = '';
-                  $.each(data.paymentsMethods, (k, methods) => {
-                    m += '<div class="mh-1 ml-1 small"><label>'
-                  + `<input id="r-payments-methods-${i}-${<string>k}" type="radio" class="radio"  name="payments-methods-${i}" `
-                  + `value="${methods.slug}" data-price="${methods.price}" ${k === 0 ? 'checked="checked"' : ''}>`
-                  + `<span>${methods.name}</span></label>`
-                  + `<div class="remark">${methods.description}</div>`
-                  + '</div>';
-                  });
-                  $el.find(`#step-store-${slug} .payments-methods`).html(m);
+                  this.paymentsMethods[i] = data.paymentsMethods;
+                  $el.find(`#step-store-${i} .shipping-methods`).find('label').first().trigger('click');
                 });
             });
         });
@@ -310,6 +309,23 @@ export class CartList {
       $('.cart-screen-adrress').addClass('hide');
       $('.cart-empty').removeClass('hide');
     }
+  }
+
+  showStepAddressPayment($el, i, list) {
+    let m = '';
+
+    $.each(list, (k, slug) => {
+      const methods = this.paymentsMethods[i].find((o) => o.slug === slug);
+      if (methods) {
+        m += '<div class="mh-1 ml-1 small"><label>'
+        + `<input id="r-payments-methods-${i}-${<string>k}" type="radio" class="radio"  name="payments-methods-${i}" `
+        + `value="${methods.slug}" data-price="${methods.price}" ${k === 0 ? 'checked="checked"' : ''}>`
+        + `<span>${methods.name}</span></label>`
+        + `<div class="remark">${methods.description}</div>`
+        + '</div>';
+      }
+    });
+    $el.find(`#step-store-${i} .payments-methods`).html(m);
   }
 
   checkAddress() {

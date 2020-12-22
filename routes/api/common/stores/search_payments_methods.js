@@ -18,48 +18,24 @@ module.exports = (req, res, next) => {
       if (errors.length) {
         return cb(listErrors(400, null, errors));
       }
-      _.each(results.store.deliveries, (d) => {
-        const dc = _.find(config.deliveries, { slug: d.slug });
+      _.each(results.store.payments, (d) => {
+        const dc = _.find(global.payments, { slug: d.slug });
         if (d.active && dc) {
           selectMethods.push({
             name: dc.name,
             slug: dc.slug,
             description: dc.description,
-            price: d.price,
-            virtualDelivery: dc.virtualDelivery,
-            payments: dc.payments,
           });
         }
       });
       cb(null, selectMethods);
-    }],
-    coveragesAreas: ['store', (results, cb) => {
-      queryStore.coveragesAreas(results.store._id, cb);
-    }],
-    inArea: ['coveragesAreas', (results, cb) => {
-      if (!results.coveragesAreas.length || !req.body.location) {
-        return cb(null, []);
-      }
-      async.each(results.coveragesAreas, (area, cb) => {
-        const inArea = geolib.isPointInPolygon(
-          { latitude: _.get(req.body, 'location.lat'), longitude: _.get(req.body, 'location.lng') },
-          area.points.map((point) => ({
-            latitude: point.lat,
-            longitude: point.lng,
-          })),
-        );
-        cb(null, inArea);
-      }, (_err, results) => {
-        cb(null, _.map(results.inArea, true));
-      });
     }],
   }, (err, results) => {
     if (err) {
       return next(err);
     }
     res.send({
-      shippingMethods: results.selectMethods,
-      inArea: results.inArea,
+      paymentsMethods: results.selectMethods,
     });
   });
 };
