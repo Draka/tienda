@@ -6,6 +6,7 @@ module.exports = (req, res, next) => {
   body.personalInfo = {
     firstname: req.body.firstname,
     lastname: req.body.lastname,
+    callsign: req.body.callsign,
     cellphone: req.body.cellphone,
   };
   body.email = _.trim(body.email);
@@ -25,8 +26,12 @@ module.exports = (req, res, next) => {
       if ((_.get(body, 'personalInfo.lastname') || '').length < 3) {
         errors.push({ field: 'lastname', msg: __('Debe escribir un apellido válido') });
       }
+      if (!body.personalInfo.callsign || (_.get(body, 'personalInfo.callsign') || '').length < 3) {
+        errors.push({ field: 'callsign', msg: __('Debe escribir un indicativo válido') });
+      }
       const re = /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/im;
-      if (!re.test(_.get(body, 'personalInfo.cellphone') || '')) {
+
+      if (!body.personalInfo.cellphone || !re.test(`${_.get(body, 'personalInfo.callsign')}${_.get(body, 'personalInfo.cellphone')}` || '')) {
         errors.push({ field: 'cellphone', msg: __('Debe escribir un número de célular válido') });
       }
       if (errors.length) {
