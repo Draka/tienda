@@ -51,6 +51,6 @@ module.exports = (req, res, next) => {
     if (err) {
       return next(err);
     }
-    res.send(results.getSQS);
+    res.send(results);
   });
 };
