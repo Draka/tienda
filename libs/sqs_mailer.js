@@ -38,7 +38,7 @@ module.exports = (data, user, cb) => {
     QueueUrl: appCnf.s3.sqs,
   };
   sqs.sendMessage(params, (err, m) => {
-    console.log(err, m);
+    console.log(params, err, m);
     cb(err, m);
   });
 };
