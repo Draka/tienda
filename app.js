@@ -23,6 +23,7 @@ const { formatMoney } = require('./libs/util.lib');
 global.formatMoney = formatMoney;
 
 global.client = redis.createClient({
+  prefix: `_${appCnf.tenancy}_`,
   retry_strategy(options) {
     if (options.error && options.error.code === 'ECONNREFUSED') {
       // End reconnecting on a specific error and flush all commands with
