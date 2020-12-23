@@ -2,7 +2,7 @@
 const schema = new mongoose.Schema({
   userID: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: `${config.dbPrefix}users`,
+    ref: `${appCnf.dbPrefix}users`,
     index: true,
   },
   name: {
@@ -66,7 +66,7 @@ const schema = new mongoose.Schema({
   },
   // defaultPlace: {
   //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: `${config.dbPrefix}places`,
+  //   ref: `${appCnf.dbPrefix}places`,
   //   index: true,
   // },
   inventory: {
@@ -84,7 +84,7 @@ const schema = new mongoose.Schema({
   //   },
   //   category: {
   //     type: mongoose.Schema.Types.ObjectId,
-  //     ref: `${config.dbPrefix}categories`,
+  //     ref: `${appCnf.dbPrefix}categories`,
   //   },
   // }],
   deliveries: [
@@ -130,6 +130,6 @@ function preUpdate(result, next) {
   next();
 }
 schema.post('validate', preUpdate);
-const Model = mongoose.model(`${config.dbPrefix}stores`, schema);
+const Model = mongoose.model(`${appCnf.dbPrefix}stores`, schema);
 
 module.exports = Model;

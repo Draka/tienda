@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "debug": "TENANCY=marketsabana DEBUG=tienda:* PORT=3000 nodemon  --ignore public --ignore 'dst/*' ./bin/www",
-    "s3": "TENANCY=marketsabana PORT=3001 nodemon  --ignore public --ignore 'dst/*' s3.js"
+    "debug": "TENANCY=vendelomejor DEBUG=tienda:* PORT=3000 nodemon  --ignore public --ignore 'dst/*' ./bin/www",
+    "s3": "PORT=3001 nodemon  --ignore public --ignore 'dst/*' s3.js"
   },
   "dependencies": {
     "async": "^3.2.0",
@@ -32,6 +32,7 @@
     "sharp": "^0.26.1",
     "shrink-ray-current": "^4.1.2",
     "uglify-js": "^3.11.0",
+    "utf8": "^3.0.0",
     "validator": "^13.1.17"
   },
   "devDependencies": {

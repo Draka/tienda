@@ -25,9 +25,9 @@ mixin product(product)
       b SKU:
       | &nbsp;#{product.sku}
   .tr.social
-    a.mr-1(href=`https://www.facebook.com/sharer.php?u=${config.url.site}${originalUrl}` _target='_blank' title='Compartir en facebook' rel="noopener")
+    a.mr-1(href=`https://www.facebook.com/sharer.php?u=${appCnf.url.site}${originalUrl}` _target='_blank' title='Compartir en facebook' rel="noopener")
       i.fab.fa-facebook
-    a(href=`https://twitter.com/share?text=${product.name}&amp;url=${config.url.site}${originalUrl}` _target='_blank' title='Compartir en twitter' rel="noopener")
+    a(href=`https://twitter.com/share?text=${product.name}&amp;url=${appCnf.url.site}${originalUrl}` _target='_blank' title='Compartir en twitter' rel="noopener")
       i.fab.fa-twitter
   .hr.mh-1
 
@@ -84,7 +84,7 @@ mixin img(name, image, size = ['196x196_jpg', '392x392_jpg'], cssClass)
   if (image)
     img.lazy(data-src=image[size[0]] data-retina=image[size[1]] alt=name class=cssClass?cssClass:'w-100')
   else
-    img.lazy(data-src=`${config.url.static}images/imagen_no_disponible.svg` alt=name class=cssClass?cssClass:'w-100')
+    img.lazy(data-src=`${appCnf.url.static}images/imagen_no_disponible.svg` alt=name class=cssClass?cssClass:'w-100')
 
 block content
   script(type='application/ld+json').
@@ -101,7 +101,7 @@ block content
       },
       "offers": {
         "@type": "Offer",
-        "url": "#{config.url.site}#{originalUrl}",
+        "url": "#{appCnf.url.site}#{originalUrl}",
         "priceCurrency": "COP",
         "price": "#{product.price}",
         "priceValidUntil": "#{(new Date()).getFullYear()}-#{(new Date()).getMonth() + 1}-#{(new Date()).getDate()+1}T23:59:59-05:00",
@@ -126,7 +126,7 @@ block content
         },
         "author": {
           "@type": "Person",
-          "name": #{config.site.name}
+          "name": #{appCnf.site.name}
         }
       }
     }
@@ -134,7 +134,7 @@ block content
     {
       "@context": "https://schema.org/",
       "@type": "BreadcrumbList",
-      "itemListElement": !{JSON.stringify(_.map(product.categoryIDs, (category, i)=>{return {"@type": "ListItem","position": i+1,"name": category.name,"item": `${config.url.site}${store.slug}/categorias/${category.slugLong}`}}))}
+      "itemListElement": !{JSON.stringify(_.map(product.categoryIDs, (category, i)=>{return {"@type": "ListItem","position": i+1,"name": category.name,"item": `${appCnf.url.site}${store.slug}/categorias/${category.slugLong}`}}))}
     }
 
   .container

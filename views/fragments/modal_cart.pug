@@ -1,6 +1,6 @@
 #address.modal.start-hide(tabindex='-1' role='dialog')
   .modal-dialog(role='document')
-    form#addressForm.col-xs-12.validate-rest(action=`${config.url.api}services/geocoder` method="get" data-fnc-error="ca.errorAddress")
+    form#addressForm.col-xs-12.validate-rest(action=`${appCnf.url.api}services/geocoder` method="get" data-fnc-error="ca.errorAddress")
       .modal-content
         .modal-header
           .title.b Seleccionar dirección
@@ -73,7 +73,7 @@
           | #{' '}
           button.btn.btn--primary.small(type='submit') Buscar
 
-    form#mapForm.col-xs-12.validate-rest.start-hide(action=`${config.url.api}users/addresses` method="post" data-fnc-error="ca.errorAddress")
+    form#mapForm.col-xs-12.validate-rest.start-hide(action=`${appCnf.url.api}users/addresses` method="post" data-fnc-error="ca.errorAddress")
       .modal-content
         .modal-header
           .title.b Confirmar punto

@@ -16,7 +16,7 @@ module.exports = (app) => {
     const memory = process.memoryUsage();
     res.send({
       w,
-      v: config.v,
+      v: appCnf.v,
       rss: memory.rss / 1048576,
       heapTotal: memory.heapTotal / 1048576,
       heapUsed: memory.heapUsed / 1048576,

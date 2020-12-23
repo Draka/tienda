@@ -12,6 +12,6 @@ const schema = new mongoose.Schema({
     lng: Number,
   },
 }, { timestamps: true });
-const Model = mongoose.model(`${config.dbPrefix}addresses`, schema);
+const Model = mongoose.model(`${appCnf.dbPrefix}addresses`, schema);
 
 module.exports = Model;

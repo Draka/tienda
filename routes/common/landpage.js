@@ -23,7 +23,7 @@ module.exports = (req, res, next) => {
       session: req.user,
       user: results.user,
       stores: results.stores,
-      title: config.site.title,
+      title: appCnf.site.title,
       menu: 'index',
       js: 'page',
     });

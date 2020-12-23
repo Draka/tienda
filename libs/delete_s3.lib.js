@@ -2,8 +2,8 @@ const fs = require('fs');
 const path = require('path');
 
 const s3 = new AWS.S3({
-  accessKeyId: config.s3.accessKeyId,
-  secretAccessKey: config.s3.secretAccessKey,
+  accessKeyId: appCnf.s3.accessKeyId,
+  secretAccessKey: appCnf.s3.secretAccessKey,
 });
 
 const deleteFolderRecursive = (xpath) => {
@@ -23,7 +23,7 @@ const deleteFolderRecursive = (xpath) => {
 const deleteS3 = (file, cb) => {
   if (process.env.NODE_ENV === 'production') {
     let params = {
-      Bucket: config.s3.bucket,
+      Bucket: appCnf.s3.bucket,
       Prefix: file,
     };
     s3.listObjects(params, (err, data) => {
@@ -31,7 +31,7 @@ const deleteS3 = (file, cb) => {
 
       if (data.Contents.length === 0) { return cb(); }
 
-      params = { Bucket: config.s3.bucket };
+      params = { Bucket: appCnf.s3.bucket };
       params.Delete = { Objects: [] };
 
       data.Contents.forEach((content) => {

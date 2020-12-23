@@ -3,7 +3,7 @@ extends ../../layout-edit-cmp
 block edit
   form.validate(
     id="updateProfileForm"
-    action=`${config.url.api}admin/stores/${store._id}/products/${item._id}`
+    action=`${appCnf.url.api}admin/stores/${store._id}/products/${item._id}`
     method="post"
     enctype="multipart/form-data"
     data-error="#form-results")
@@ -33,7 +33,7 @@ block edit
 
   form.validate-rest(
     id="updateProfileForm"
-    action=`${config.url.api}admin/stores/${store._id}/products/${item._id}`
+    action=`${appCnf.url.api}admin/stores/${store._id}/products/${item._id}`
     method="put"
     data-page=`/administracion/tiendas/${store._id}/productos`
     data-error="#form-results")

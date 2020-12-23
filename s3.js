@@ -1,7 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-console */
 require('./constants');
-global.config = require('./config');
+global.appCnf = require('./appCnf');
 
 const port = process.env.PORT || '3001';
 const spdy = require('spdy');
@@ -48,7 +48,6 @@ const options = {
   key: fs.readFileSync('localhost.key'),
   cert: fs.readFileSync('localhost.crt'),
 };
-console.log(options);
 spdy
   .createServer(options, app)
   .listen(port, (error) => {

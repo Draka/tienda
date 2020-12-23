@@ -3,11 +3,11 @@ header
     nav.navbar.primary.shadow.fixed.top
       .container
         a.logo(href='/')
-          img(src=`${config.url.static}tenancy/${config.tenancy}/images/logo-top.svg` alt=`${config.site.name} logo`)
+          img(src=`${appCnf.url.static}tenancy/${appCnf.tenancy}/images/logo-top.svg` alt=`${appCnf.site.name} logo`)
 
         .expand
           if store
-            form.flex(class="search" action=`${config.url.site}${store.slug}/buscar`)
+            form.flex(class="search" action=`${appCnf.url.site}${store.slug}/buscar`)
               label.out-screen(for='query-d') Buscar
               input#query-d.input--simple.w-100.rdtl-50.rdbl-50.ph-0-25.pw-1(type="text" name="q" placeholder='Buscar' required value=q)
               button.btn.btn--secondary
@@ -119,7 +119,7 @@ header
             span.out-screen Menú
         li.expand
           a.logo.justify-content-center(href='/')
-            img(src=`${config.url.static}tenancy/${config.tenancy}/images/logo-top.svg` alt=`${config.site.name} logo`)
+            img(src=`${appCnf.url.static}tenancy/${appCnf.tenancy}/images/logo-top.svg` alt=`${appCnf.site.name} logo`)
         li
           a.link-shopping-cart.relative.w-4.justify-content-center(href='/carrito')
             i.fas.fa-shopping-cart

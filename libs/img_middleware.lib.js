@@ -13,7 +13,7 @@ module.exports = () => {
   if (0 && process.env.NODE_ENV !== 'production') {
     async.auto({
       jpg: (cb) => {
-        async.each(getFilesJPG(`./public/tenancy/${config.tenancy}/images/_home`), (d, cb) => {
+        async.each(getFilesJPG(`./public/tenancy/${appCnf.tenancy}/images/_home`), (d, cb) => {
           const st = path.parse(d);
           async.each(sizes, (size, cb) => {
             sharp(d)
@@ -29,7 +29,7 @@ module.exports = () => {
         }, cb);
       },
       webp: (cb) => {
-        async.each(getFilesJPG(`./public/tenancy/${config.tenancy}/images/_home`), (d, cb) => {
+        async.each(getFilesJPG(`./public/tenancy/${appCnf.tenancy}/images/_home`), (d, cb) => {
           const st = path.parse(d);
           async.each(sizes, (size, cb) => {
             sharp(d)
@@ -45,7 +45,7 @@ module.exports = () => {
         }, cb);
       },
       pngJpg: (cb) => {
-        async.each(getFilesPNG(`./public/tenancy/${config.tenancy}/images/_home`), (d, cb) => {
+        async.each(getFilesPNG(`./public/tenancy/${appCnf.tenancy}/images/_home`), (d, cb) => {
           const st = path.parse(d);
           async.each(sizesPNG, (size, cb) => {
             sharp(d)
@@ -61,7 +61,7 @@ module.exports = () => {
         }, cb);
       },
       pngWebp: (cb) => {
-        async.each(getFilesPNG(`./public/tenancy/${config.tenancy}/images/_home`), (d, cb) => {
+        async.each(getFilesPNG(`./public/tenancy/${appCnf.tenancy}/images/_home`), (d, cb) => {
           const st = path.parse(d);
           async.each(sizesPNG, (size, cb) => {
             sharp(d)

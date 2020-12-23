@@ -5,25 +5,25 @@ block content
     {
       "@context": "http://www.schema.org",
       "@type": "LocalBusiness",
-      "name": "#{config.site.name}",
-      "url": "#{config.url.site}",
-      "sameAs": !{JSON.stringify(config.site.sameAs)},
-      "logo": "#{config.url.static}tenancy/#{config.tenancy}/images/logo-01.png",
-      "image": "#{config.url.static}tenancy/#{config.tenancy}/images/logo-02.png",
-      "description": "#{config.site.description}",
+      "name": "#{appCnf.site.name}",
+      "url": "#{appCnf.url.site}",
+      "sameAs": !{JSON.stringify(appCnf.site.sameAs)},
+      "logo": "#{appCnf.url.static}tenancy/#{appCnf.tenancy}/images/logo-01.png",
+      "image": "#{appCnf.url.static}tenancy/#{appCnf.tenancy}/images/logo-02.png",
+      "description": "#{appCnf.site.description}",
       "address": {
         "@type": "PostalAddress",
         "addressCountry": "Colombia"
       }
     }
 
-  h1.out-screen #{config.site.name}
-  .container-fluid.h-460p.h-100-xs.bg.s-cover.lazy(data-src=config.url.static+'tenancy/'+config.tenancy+'/images/home/1920_home2.jpg')
+  h1.out-screen #{appCnf.site.name}
+  .container-fluid.h-460p.h-100-xs.bg.s-cover.lazy(data-src=appCnf.url.static+'tenancy/'+appCnf.tenancy+'/images/home/1920_home2.jpg')
     .container
       .row
         .col-lg-5.offset-lg-6
           .p-3.mh-5.a-black-20.rd-0-5
-            .bigx2.b-category #{config.site.name}
+            .bigx2.b-category #{appCnf.site.name}
             .subtitle.b El espacio para que des a conocer los productos de tu emprendimiento
   if stores.length
     .container

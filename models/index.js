@@ -6,3 +6,4 @@ exports.Place = require('./places.model');
 exports.Product = require('./products.model');
 exports.Category = require('./categories.model');
 exports.Address = require('./addresses.model');
+exports.Mail = require('./mails.model');

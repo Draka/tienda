@@ -90,7 +90,7 @@ module.exports = (req, res, next) => {
       store: results.store,
       categories: results.categories,
       products: results.products,
-      title: config.site.title,
+      title: appCnf.site.title,
       menu: 'index',
       js: 'store',
     });

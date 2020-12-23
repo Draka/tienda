@@ -3,7 +3,7 @@ extends ../../layout-edit-cmp
 block edit
   form.validate-rest(
     id="updateProfileForm"
-    action=`${config.url.api}admin/stores/${store._id}/products`
+    action=`${appCnf.url.api}admin/stores/${store._id}/products`
     method="post"
     data-page=`/administracion/tiendas/${store._id}/productos`
     data-error="#form-results")

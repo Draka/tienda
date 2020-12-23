@@ -3,7 +3,7 @@ extends ../../layout-edit
 block edit
   form.validate(
     id="form"
-    action=`${config.url.api}admin/stores/${store._id}`
+    action=`${appCnf.url.api}admin/stores/${store._id}`
     method="post"
     enctype="multipart/form-data"
     data-error="#form-results")

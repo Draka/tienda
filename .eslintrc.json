@@ -13,7 +13,7 @@
     "globals": {
         "_": true,
         "mongoose": true,
-        "config": true,
+        "appCnf": true,
         "checkAuth": true,
         "listErrors": true,
         "moment": true,

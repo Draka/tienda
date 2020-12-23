@@ -2,8 +2,8 @@ const bcrypt = require('bcrypt-nodejs');
 const fs = require('fs');
 
 const s3 = new AWS.S3({
-  accessKeyId: config.s3.accessKeyId,
-  secretAccessKey: config.s3.secretAccessKey,
+  accessKeyId: appCnf.s3.accessKeyId,
+  secretAccessKey: appCnf.s3.secretAccessKey,
 });
 
 function comparePassword(password, field) {
@@ -64,7 +64,7 @@ module.exports = (req, res, next) => {
         return cb(listErrors(400, null, errors));
       }
 
-      const dir = `./public/tenancy/${config.tenancy}/files/${config.s3.folder}/users/${req.user._id}`;
+      const dir = `./public/tenancy/${appCnf.tenancy}/files/${appCnf.s3.folder}/users/${req.user._id}`;
       async.auto({
         makedirLocal: (cb) => {
           if (process.env.NODE_ENV === 'production') {
@@ -80,8 +80,8 @@ module.exports = (req, res, next) => {
           if (process.env.NODE_ENV === 'production') {
             // ajustes de s3
             const params = {
-              Bucket: config.s3.bucket,
-              Key: `public/tenancy/${config.tenancy}/files/${config.s3.folder}/users/${req.user._id}/bank`, // ruta donde va a quedar
+              Bucket: appCnf.s3.bucket,
+              Key: `public/tenancy/${appCnf.tenancy}/files/${appCnf.s3.folder}/users/${req.user._id}/bank`, // ruta donde va a quedar
               Body: req.files.file.data,
               ContentType: req.files.file.mimetype,
               CacheControl: 'private, max-age=31536000',

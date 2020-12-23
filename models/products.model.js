@@ -1,7 +1,7 @@
 const schema = new mongoose.Schema({
   storeID: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: `${config.dbPrefix}stores`,
+    ref: `${appCnf.dbPrefix}stores`,
     index: true,
     required: true,
   },
@@ -70,7 +70,7 @@ const schema = new mongoose.Schema({
   imagesSizes: [],
   categoryIDs: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: `${config.dbPrefix}categories`,
+    ref: `${appCnf.dbPrefix}categories`,
     index: true,
   }],
   categoryText: [{
@@ -133,7 +133,7 @@ const schema = new mongoose.Schema({
         },
         productID: {
           type: mongoose.Schema.Types.ObjectId,
-          ref: `${config.dbPrefix}products`,
+          ref: `${appCnf.dbPrefix}products`,
         },
       },
     ],
@@ -166,6 +166,6 @@ schema.post('validate', preUpdate);
 
 schema.index({ storeID: 1, sku: 1 }, { unique: true });
 
-const Model = mongoose.model(`${config.dbPrefix}products`, schema);
+const Model = mongoose.model(`${appCnf.dbPrefix}products`, schema);
 
 module.exports = Model;

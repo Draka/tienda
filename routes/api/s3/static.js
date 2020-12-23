@@ -5,8 +5,8 @@ const fs = require('fs');
 const path = require('path');
 
 const s3 = new AWS.S3({
-  accessKeyId: config.s3.accessKeyId,
-  secretAccessKey: config.s3.secretAccessKey,
+  accessKeyId: appCnf.s3.accessKeyId,
+  secretAccessKey: appCnf.s3.secretAccessKey,
 });
 
 async function getFiles(dir) {
@@ -45,7 +45,7 @@ module.exports = (req, res, next) => {
         fs.readFile(file, (err, fileContent) => {
           const pathKey = file.split('/public/')[1];
           const params = {
-            Bucket: config.s3.bucket,
+            Bucket: appCnf.s3.bucket,
             Key: pathKey, // ruta donde va a quedar
             Body: fileContent,
             CacheControl: 'private, max-age=31536000',

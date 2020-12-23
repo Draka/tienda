@@ -67,7 +67,7 @@ module.exports = (req, res, next) => {
           errors.push({ field: 'email', msg: __('Correo electrónico o Contraseña inválidos.') });
           return cb(listErrors(401, null, errors));
         }
-        cb(null, generateToken(results.query, config.keySecret));
+        cb(null, generateToken(results.query, appCnf.keySecret));
       }, (err) => cb(err));
     }],
     saveToken: ['token', (results, cb) => {

@@ -3,7 +3,7 @@ const query = require('./query.lib');
 
 function isAuthenticated(token) {
   try {
-    return jwt.verify(token, config.keySecret);
+    return jwt.verify(token, appCnf.keySecret);
   } catch (err) {
     return false;
   }

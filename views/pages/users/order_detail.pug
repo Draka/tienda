@@ -55,7 +55,7 @@ block content
 
   #cancelOrder.modal.start-hide(tabindex='-1' role='dialog')
     .modal-dialog(role='document')
-      form#cancelOrderForm.col-xs-12.validate-rest(action=`${config.url.api}orders/cancel` data-page=`/cancelar-confirmacion` method="post")
+      form#cancelOrderForm.col-xs-12.validate-rest(action=`${appCnf.url.api}orders/cancel` data-page=`/cancelar-confirmacion` method="post")
         .modal-content
           .modal-header
             .b Desea cancelar el pedido

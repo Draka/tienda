@@ -11,7 +11,7 @@ block content
     .col-md-8
       .white.br-1.rd-0-2.p-3
         .msg.error#form-results
-        form.validate-rest(id="updateProfileForm" action=`${config.url.api}users/personal-info` method="put" data-page=`/administracion/informacion-personal` data-error="#form-results")
+        form.validate-rest(id="updateProfileForm" action=`${appCnf.url.api}users/personal-info` method="put" data-page=`/administracion/informacion-personal` data-error="#form-results")
           .row
             .col-xs-12
               .form-group

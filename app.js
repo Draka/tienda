@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 require('./constants');
-global.config = require('./config');
+global.appCnf = require('./appCnf');
 
 const createError = require('http-errors');
 const express = require('express');
@@ -41,7 +41,7 @@ global.client = redis.createClient({
     // reconnect after
     return Math.min(options.attempt * 100, 3000);
   },
-  url: config.redis.url,
+  url: appCnf.redis.url,
 });
 global.client.on('connect', () => {
   console.log('redis connected');
@@ -65,7 +65,7 @@ const dbOptions = {
   useUnifiedTopology: true,
   sslValidate: true,
 };
-mongoose.connect(config.db, dbOptions).then(
+mongoose.connect(appCnf.db, dbOptions).then(
   () => {
     console.log('MongoDB open');
     // Genera scripts
@@ -102,7 +102,7 @@ app.use(shrinkRay({
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use(fileUpload());
-app.use(cookieParser(config.keySecret));
+app.use(cookieParser(appCnf.keySecret));
 app.use(sassMiddleware({
   src: path.join(__dirname, 'public'),
   dest: path.join(__dirname, 'public'),
@@ -116,7 +116,7 @@ app.use(jsMiddleware({
   sourceMap: true,
   debug: true,
 }));
-app.use(express.static(path.join(__dirname, `public/tenancy${config.tenancy}`)));
+app.use(express.static(path.join(__dirname, `public/tenancy${appCnf.tenancy}`)));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(auth);
 

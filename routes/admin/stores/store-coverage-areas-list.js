@@ -75,7 +75,7 @@ module.exports = (req, res, next) => {
         });
         gj = `geojson(${gj})`;
 
-        i.image = `https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/${encodeURI(gj)}/auto/96x96@2x?logo=false&attribution=false&access_token=${config.mapbox}`;
+        i.image = `https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/${encodeURI(gj)}/auto/96x96@2x?logo=false&attribution=false&access_token=${appCnf.mapbox}`;
         return i;
       }),
       title: 'Áreas de cobertura',

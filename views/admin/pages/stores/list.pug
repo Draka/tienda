@@ -43,7 +43,7 @@ block list
             td
               a.b(href=`/administracion/tiendas/${item._id}/editar`) #{item.name}
             td
-              a(href=`${config.url.site}${item.slug}` target='_blank') #{`${config.url.site}${item.slug}`}
+              a(href=`${appCnf.url.site}${item.slug}` target='_blank') #{`${appCnf.url.site}${item.slug}`}
             td
               | #{item.description}
             td.tc

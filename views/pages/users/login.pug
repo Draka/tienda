@@ -19,7 +19,7 @@ block content
           .p-1
             .msg.error#form-results
             .row
-              form.col-xs-12.validate-rest(id="loginForm" action=`${config.url.api}users/login?cookie=1` method="post" data-page=returnPage || '/' data-error="#form-results")
+              form.col-xs-12.validate-rest(id="loginForm" action=`${appCnf.url.api}users/login?cookie=1` method="post" data-page=returnPage || '/' data-error="#form-results")
                 .row
                   .col-xs-12
                     .form-group

@@ -1,7 +1,7 @@
 const schema = new mongoose.Schema({
   storeID: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: `${config.dbPrefix}stores`,
+    ref: `${appCnf.dbPrefix}stores`,
     index: true,
     required: true,
   },
@@ -56,6 +56,6 @@ function preUpdate(result, next) {
 }
 schema.post('validate', preUpdate);
 schema.index({ storeID: 1, slug: 1 }, { unique: true });
-const Model = mongoose.model(`${config.dbPrefix}places`, schema);
+const Model = mongoose.model(`${appCnf.dbPrefix}places`, schema);
 
 module.exports = Model;

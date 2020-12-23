@@ -1,7 +1,7 @@
 const schema = new mongoose.Schema({
   userID: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: `${config.dbPrefix}users`,
+    ref: `${appCnf.dbPrefix}users`,
     index: true,
   },
   token: {
@@ -29,6 +29,6 @@ function preUpdate(result, next) {
 }
 schema.post('validate', preUpdate);
 
-const Model = mongoose.model(`${config.dbPrefix}sessions`, schema);
+const Model = mongoose.model(`${appCnf.dbPrefix}sessions`, schema);
 
 module.exports = Model;

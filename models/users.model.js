@@ -181,12 +181,12 @@ const schema = new mongoose.Schema({
   options: {
     storeSelect: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: `${config.dbPrefix}stores`,
+      ref: `${appCnf.dbPrefix}stores`,
     },
   },
 }, { timestamps: true });
 
 schema.post('validate', preUpdate);
-const Model = mongoose.model(`${config.dbPrefix}users`, schema);
+const Model = mongoose.model(`${appCnf.dbPrefix}users`, schema);
 
 module.exports = Model;

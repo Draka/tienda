@@ -2,7 +2,7 @@
 const schema = new mongoose.Schema({
   storeID: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: `${config.dbPrefix}stores`,
+    ref: `${appCnf.dbPrefix}stores`,
     index: true,
     required: true,
   },
@@ -29,6 +29,6 @@ function preUpdate(result, next) {
 }
 schema.post('validate', preUpdate);
 
-const Model = mongoose.model(`${config.dbPrefix}coverages-areas`, schema);
+const Model = mongoose.model(`${appCnf.dbPrefix}coverages-areas`, schema);
 
 module.exports = Model;

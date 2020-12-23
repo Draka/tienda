@@ -1,13 +1,13 @@
 const schema = new mongoose.Schema({
   storeID: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: `${config.dbPrefix}stores`,
+    ref: `${appCnf.dbPrefix}stores`,
     index: true,
     required: true,
   },
   categoryID: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: `${config.dbPrefix}categories`,
+    ref: `${appCnf.dbPrefix}categories`,
     index: true,
   },
   name: {
@@ -40,6 +40,6 @@ function preUpdate(result, next) {
 
 schema.post('validate', preUpdate);
 schema.index({ storeID: 1, categoryID: 1, slug: 1 }, { unique: true });
-const Model = mongoose.model(`${config.dbPrefix}categories`, schema);
+const Model = mongoose.model(`${appCnf.dbPrefix}categories`, schema);
 
 module.exports = Model;

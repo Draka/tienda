@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt-nodejs');
-const mailer = require('../../../libs/mailer');
+const sqsMailer = require('../../../libs/sqs_mailer');
 
 function hash(obj, key) {
   return new Promise((resolve, reject) => {
@@ -29,11 +29,11 @@ module.exports = (req, res, next) => {
       query: (cb) => {
         models.User
           .findOne({
-            emailNormalized: validator.normalizeEmail(req.body.email)
+            emailNormalized: validator.normalizeEmail(req.body.email),
           })
           .select({
             email: 1,
-            personalInfo: 1
+            personalInfo: 1,
           })
           .exec(cb);
       },
@@ -45,22 +45,22 @@ module.exports = (req, res, next) => {
       }],
       update: ['check', (results, cb) => {
         results.query.set({
-          passwordTemp: req.body.passwordTemp
+          passwordTemp: req.body.passwordTemp,
         }).save(cb);
       }],
       mailer: ['update', (results, cb) => {
         if (!results.query) {
           return cb();
         }
-        mailer({
+        sqsMailer({
           to: { email: results.query.email, name: results.query.personalInfo.name },
-          subject: `${__('¿Olvidaste tu contraseña?')} - ${config.email.title}`,
-          template: 'user_password_reset',
-          passwordTemp
+          subject: `${__('¿Olvidaste tu contraseña?')} - ${appCnf.email.title}`,
+          template: 'password-reset',
+          passwordTemp,
         },
         results.query,
         cb);
-      }]
+      }],
     }, (err) => {
       if (err) {
         return next(err);

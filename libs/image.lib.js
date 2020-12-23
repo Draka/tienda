@@ -7,8 +7,8 @@ const sharp = require('sharp');
 const util = require('./util.lib');
 
 const s3 = new AWS.S3({
-  accessKeyId: config.s3.accessKeyId,
-  secretAccessKey: config.s3.secretAccessKey,
+  accessKeyId: appCnf.s3.accessKeyId,
+  secretAccessKey: appCnf.s3.secretAccessKey,
 });
 
 /**
@@ -38,7 +38,7 @@ exports.imageToS3 = (pathImg, urlImg, localImg, sizes, saveOriginal, cb) => {
       if (process.env.NODE_ENV === 'production') {
         return cb();
       }
-      const dir = `./public/tenancy/${config.tenancy}/ecommerce/${config.s3.folder}/${pathImg}`;
+      const dir = `./public/tenancy/${appCnf.tenancy}/ecommerce/${appCnf.s3.folder}/${pathImg}`;
       if (!fs.existsSync(dir)) {
         fs.mkdir(dir, { recursive: true }, cb);
       } else {
@@ -135,14 +135,14 @@ exports.imageToS3 = (pathImg, urlImg, localImg, sizes, saveOriginal, cb) => {
         .toFile(`./tmp/original_${nameTemp}.jpg`, cb);
     }],
     uploadSizes: ['sizes', 'makedirLocal', (_results, cb) => {
-      if (process.env.NODE_ENV === 'production' || config.s3.forced) {
+      if (process.env.NODE_ENV === 'production' || appCnf.s3.forced) {
         console.log('S3 por tamaños');
         async.each(sizes, (size, cb) => {
           const fileContent = fs.readFileSync(`./tmp/${size.x}x${size.y}_${nameTemp}.jpg`);
           // ajustes de s3
           const params = {
-            Bucket: config.s3.bucket,
-            Key: `tenancy/${config.tenancy}/ecommerce/${config.s3.folder}/${pathImg}/${size.x}x${size.y}.jpg`, // ruta donde va a quedar
+            Bucket: appCnf.s3.bucket,
+            Key: `tenancy/${appCnf.tenancy}/ecommerce/${appCnf.s3.folder}/${pathImg}/${size.x}x${size.y}.jpg`, // ruta donde va a quedar
             Body: fileContent,
             ContentType: 'image/jpeg',
             CacheControl: 'private, max-age=31536000',
@@ -162,21 +162,21 @@ exports.imageToS3 = (pathImg, urlImg, localImg, sizes, saveOriginal, cb) => {
       if (process.env.NODE_ENV !== 'production') {
         // save local
         async.each(sizes, (size, cb) => {
-          fs.copyFile(`./tmp/${size.x}x${size.y}_${nameTemp}.jpg`, `./public/tenancy/${config.tenancy}/ecommerce/${config.s3.folder}/${pathImg}/${size.x}x${size.y}.jpg`, cb);
+          fs.copyFile(`./tmp/${size.x}x${size.y}_${nameTemp}.jpg`, `./public/tenancy/${appCnf.tenancy}/ecommerce/${appCnf.s3.folder}/${pathImg}/${size.x}x${size.y}.jpg`, cb);
         }, cb);
       } else {
         cb();
       }
     }],
     uploadSizesW: ['sizesW', 'makedirLocal', (_results, cb) => {
-      if (process.env.NODE_ENV === 'production' || config.s3.forced) {
+      if (process.env.NODE_ENV === 'production' || appCnf.s3.forced) {
         console.log('S3 por tamaños');
         async.each(sizes, (size, cb) => {
           const fileContent = fs.readFileSync(`./tmp/${size.x}x${size.y}_${nameTemp}.webp`);
           // ajustes de s3
           const params = {
-            Bucket: config.s3.bucket,
-            Key: `tenancy/${config.tenancy}/ecommerce/${config.s3.folder}/${pathImg}/${size.x}x${size.y}.webp`, // ruta donde va a quedar
+            Bucket: appCnf.s3.bucket,
+            Key: `tenancy/${appCnf.tenancy}/ecommerce/${appCnf.s3.folder}/${pathImg}/${size.x}x${size.y}.webp`, // ruta donde va a quedar
             Body: fileContent,
             ContentType: 'image/webp',
             CacheControl: 'private, max-age=31536000',
@@ -196,7 +196,7 @@ exports.imageToS3 = (pathImg, urlImg, localImg, sizes, saveOriginal, cb) => {
       if (process.env.NODE_ENV !== 'production') {
         // save local
         async.each(sizes, (size, cb) => {
-          fs.copyFile(`./tmp/${size.x}x${size.y}_${nameTemp}.webp`, `./public/tenancy/${config.tenancy}/ecommerce/${config.s3.folder}/${pathImg}/${size.x}x${size.y}.webp`, cb);
+          fs.copyFile(`./tmp/${size.x}x${size.y}_${nameTemp}.webp`, `./public/tenancy/${appCnf.tenancy}/ecommerce/${appCnf.s3.folder}/${pathImg}/${size.x}x${size.y}.webp`, cb);
         }, cb);
       } else {
         cb();
@@ -207,13 +207,13 @@ exports.imageToS3 = (pathImg, urlImg, localImg, sizes, saveOriginal, cb) => {
         return cb();
       }
 
-      if (process.env.NODE_ENV === 'production' || config.s3.forced) {
+      if (process.env.NODE_ENV === 'production' || appCnf.s3.forced) {
         console.log('S3 original');
         const fileContent = fs.readFileSync(`./tmp/original_${nameTemp}.jpg`);
         // ajustes de s3
         const params = {
-          Bucket: config.s3.bucket,
-          Key: `tenancy/${config.tenancy}/ecommerce/${config.s3.folder}/${pathImg}/original.jpg`, // ruta donde va a quedar
+          Bucket: appCnf.s3.bucket,
+          Key: `tenancy/${appCnf.tenancy}/ecommerce/${appCnf.s3.folder}/${pathImg}/original.jpg`, // ruta donde va a quedar
           Body: fileContent,
           ContentType: 'image/jpeg',
           CacheControl: 'private, max-age=31536000',
@@ -231,7 +231,7 @@ exports.imageToS3 = (pathImg, urlImg, localImg, sizes, saveOriginal, cb) => {
     uploadOriginalLocal: ['original', 'makedirLocal', (_results, cb) => {
       if (process.env.NODE_ENV !== 'production') {
         // save local
-        fs.copyFile(`./tmp/original_${nameTemp}.jpg`, `./public/tenancy/${config.tenancy}/ecommerce/${config.s3.folder}/${pathImg}/original.jpg`, cb);
+        fs.copyFile(`./tmp/original_${nameTemp}.jpg`, `./public/tenancy/${appCnf.tenancy}/ecommerce/${appCnf.s3.folder}/${pathImg}/original.jpg`, cb);
       } else {
         cb();
       }

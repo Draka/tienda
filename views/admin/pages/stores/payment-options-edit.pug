@@ -7,7 +7,7 @@ block list
     | #{' '}
   form.validate-rest(
       id="updateDeliveryForm"
-      action=`${config.url.api}admin/stores/${store._id}`
+      action=`${appCnf.url.api}admin/stores/${store._id}`
       method="post"
       data-page=`/administracion/tiendas/${store._id}/opciones-de-pago`
       data-error="#form-results")

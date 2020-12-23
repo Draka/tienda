@@ -12,7 +12,7 @@ block content
       .col-md-8
         .white.br-1.rd-0-2.p-1.mb-2
           .msg.error#form-results
-          form.validate-rest(id="updateProfileForm" action=`${config.url.api}users/email` method="put" data-page=`/usuario/correo-cambiado` data-error="#form-results")
+          form.validate-rest(id="updateProfileForm" action=`${appCnf.url.api}users/email` method="put" data-page=`/usuario/correo-cambiado` data-error="#form-results")
             .row
               .col-xs-12
                 .form-group

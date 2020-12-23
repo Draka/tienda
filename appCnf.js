@@ -21,7 +21,7 @@ const enviroment = {
     secretAccessKey: process.env.AWS_ACCESS || 'ySts7ugv7F2jRDbgxlGJmuV5Rt4hlvp0j3hWEADk',
     bucket: process.env.AWS_BUCKET || 'vendelomejor.com',
     folder: process.env.AWS_FOLDER || 'local',
-    sqs: process.env.AWS_SQS || 'https://sqs.us-east-1.amazonaws.com/237646395144/vendelomejor_correos',
+    sqs: process.env.AWS_SQS || 'https://sqs.us-east-1.amazonaws.com/237646395144/dev-mail',
     forced: false, // true para que en local se suba a s3, para pruebas
   },
   log: process.env.LOG || 'dev',

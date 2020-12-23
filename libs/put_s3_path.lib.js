@@ -2,16 +2,16 @@ exports.putS3Path = (items, store) => {
   _.each(items, (o) => {
     o.imagesSizes = _.map(o.images, (i) => {
       const sizes = {};
-      const pathImg = `tenancy/${config.tenancy}/ecommerce/${config.s3.folder}/${store._id}/products/${o._id}/${i}`;
+      const pathImg = `tenancy/${appCnf.tenancy}/ecommerce/${appCnf.s3.folder}/${store._id}/products/${o._id}/${i}`;
 
       _.each(global.imagesSizes, (is) => {
-        sizes[`${is.x}x${is.y}_jpg`] = `${config.url.static}${pathImg}/${is.x}x${is.y}.jpg`;
+        sizes[`${is.x}x${is.y}_jpg`] = `${appCnf.url.static}${pathImg}/${is.x}x${is.y}.jpg`;
       });
 
       _.each(global.imagesSizes, (is) => {
-        sizes[`${is.x}x${is.y}_webp`] = `${config.url.static}${pathImg}/${is.x}x${is.y}.webp`;
+        sizes[`${is.x}x${is.y}_webp`] = `${appCnf.url.static}${pathImg}/${is.x}x${is.y}.webp`;
       });
-      sizes.original = `${config.url.static}${pathImg}/original`;
+      sizes.original = `${appCnf.url.static}${pathImg}/original`;
       return sizes;
     });
   });
@@ -23,16 +23,16 @@ exports.putS3LogoPath = (stores) => {
       return;
     }
     const sizes = {};
-    const pathImg = `tenancy/${config.tenancy}/ecommerce/${config.s3.folder}/${store._id}/logo`;
+    const pathImg = `tenancy/${appCnf.tenancy}/ecommerce/${appCnf.s3.folder}/${store._id}/logo`;
 
     _.each(global.imagesSizes, (is) => {
-      sizes[`${is.x}x${is.y}_jpg`] = `${config.url.static}${pathImg}/${is.x}x${is.y}.jpg?v=${store.image}`;
+      sizes[`${is.x}x${is.y}_jpg`] = `${appCnf.url.static}${pathImg}/${is.x}x${is.y}.jpg?v=${store.image}`;
     });
 
     _.each(global.imagesSizes, (is) => {
-      sizes[`${is.x}x${is.y}_webp`] = `${config.url.static}${pathImg}/${is.x}x${is.y}.webp?v=${store.image}`;
+      sizes[`${is.x}x${is.y}_webp`] = `${appCnf.url.static}${pathImg}/${is.x}x${is.y}.webp?v=${store.image}`;
     });
-    sizes.original = `${config.url.static}${pathImg}/original`;
+    sizes.original = `${appCnf.url.static}${pathImg}/original`;
     store.imageSizes = sizes;
   });
 };

@@ -3,7 +3,7 @@ extends ../../layout-edit
 block edit
   form.validate-rest(
     id="updateProfileForm"
-    action=`${config.url.api}admin/stores/${store._id}/places`
+    action=`${appCnf.url.api}admin/stores/${store._id}/places`
     method="post"
     data-page=`/administracion/tiendas/${store._id}/sedes`
     data-error="#form-results")

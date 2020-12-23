@@ -1,10 +1,23 @@
 const sqs = new AWS.SQS({
-  accessKeyId: config.s3.accessKeyId,
-  secretAccessKey: config.s3.secretAccessKey,
+  accessKeyId: appCnf.s3.accessKeyId,
+  secretAccessKey: appCnf.s3.secretAccessKey,
   region: 'us-east-1',
 });
 
 module.exports = (data, user, cb) => {
+  data.source = {
+    name: appCnf.email.title,
+    email: appCnf.email.emailInfo,
+  };
+  data.replyToAddresses = [
+    appCnf.email.emailNoreply,
+  ];
+  data.site = {
+    name: appCnf.site.name,
+    urlSite: appCnf.url.site,
+    urlStatic: appCnf.url.static,
+    info: appCnf.email.emailInfo,
+  };
   const params = {
     DelaySeconds: 0,
     MessageAttributes: {
@@ -16,9 +29,13 @@ module.exports = (data, user, cb) => {
         DataType: 'String',
         StringValue: (user && user._id) ? user._id.toString() : '',
       },
+      Tenancy: {
+        DataType: 'String',
+        StringValue: appCnf.tenancy,
+      },
     },
     MessageBody: 'correo',
-    QueueUrl: config.s3.sqs,
+    QueueUrl: appCnf.s3.sqs,
   };
   sqs.sendMessage(params, cb);
 };
