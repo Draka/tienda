@@ -8,6 +8,7 @@ const sqs = new AWS.SQS({
 });
 
 module.exports = (req, res, next) => {
+  console.log('ENTRA');
   async.auto({
     getSQS: (cb) => {
       const params = {
