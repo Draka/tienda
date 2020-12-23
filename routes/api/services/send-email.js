@@ -22,6 +22,7 @@ module.exports = (req, res, next) => {
         VisibilityTimeout: 20,
         WaitTimeSeconds: 0,
       };
+      console.log(params);
       sqs.receiveMessage(params, cb);
     },
     mailer: ['getSQS', (results, cb) => {
