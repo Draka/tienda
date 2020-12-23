@@ -37,5 +37,8 @@ module.exports = (data, user, cb) => {
     MessageBody: 'correo',
     QueueUrl: appCnf.s3.sqs,
   };
-  sqs.sendMessage(params, cb);
+  sqs.sendMessage(params, (err, m) => {
+    console.log(err, m);
+    cb(err, m);
+  });
 };
