@@ -131,12 +131,12 @@ app.use((req, res, next) => {
 // error handler
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
+  console.error(err);
   // set locals, only providing error in development
   res.locals.message = err.message;
   if (process.env.NODE_ENV === 'production') {
     res.locals.error = {};
   }
-  console.log(req.originalUrl.split('/'));
   if (req.originalUrl.split('/')[1] === 'v1') {
     console.error(err);
     res.status(err.status || 500).send(err);
