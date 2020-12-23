@@ -1,5 +1,4 @@
 const AWS = require('aws-sdk');
-const mailer = require('../../../libs/mailer');
 
 const sqs = new AWS.SQS({
   accessKeyId: appCnf.s3.accessKeyId,
