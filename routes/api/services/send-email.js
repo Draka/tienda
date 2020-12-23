@@ -26,7 +26,7 @@ module.exports = (req, res, next) => {
       sqs.receiveMessage(params, cb);
     },
     mailer: ['getSQS', (results, cb) => {
-      async.eachLimit(results.getSQS.Messages, 5, (msg, cb) => {
+      async.mapLimit(results.getSQS.Messages, 5, (msg, cb) => {
         async.auto({
           mail: (cb) => {
             mailer(
