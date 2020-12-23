@@ -64,3 +64,4 @@ public/tenancy/**/ecommerce
 public/tenancy/**/files
 localhost.*
 myCA.*
+package-lock.json
