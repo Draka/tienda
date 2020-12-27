@@ -172,12 +172,13 @@ export class CartList {
           return;
         }
         const slug = <string>i;
-        this.getApi.p(`${i}/services/check-cart`, { items: elem.cart })
+        this.getApi.p(`stores/${i}/services/check-cart`, { items: elem.cart })
           .done((data: any) => {
+            let valid = false;
             this.cart.stores[i].cart = data.validateItems.items;
             this.cart.set();
             // pinta los productos
-            let lineStore = `<div id="cart_${slug}" class="mt-5">`
+            let lineStore = `<div id="cart_${slug}" class="mt-1">`
               + `<div class="b">${elem.name}</div>`;
 
             lineStore += '<table class="table table--striped small">'
@@ -188,9 +189,10 @@ export class CartList {
                 + '</tr>'
                 + '</thead>';
             $.each(data.validateItems.items, (sku, product) => {
+              valid = true;
               // Desktop
               lineStore += '<tr>'
-                      + `<td><span class="b">${product.name}</span> (x${product.quantity})</td>`
+                      + `<td><span class="b">${product.name}</span> (${product.quantity})</td>`
                       + `<td class="tr t-secondary">${Vars.formatMoney(product.quantity * product.price)}</td>`;
               this.sum.subtotal += product.quantity * product.price;
             });
@@ -198,6 +200,14 @@ export class CartList {
             list.append(lineStore);
             // muestra totales
             this.putTotals();
+
+            if (valid) {
+              $('.cart-screen-adrress').removeClass('hide');
+              $('.cart-empty').addClass('hide');
+            } else {
+              $('.cart-screen-adrress').addClass('hide');
+              $('.cart-empty').removeClass('hide');
+            }
           });
       });
     }
@@ -244,6 +254,7 @@ export class CartList {
                 .find('label').on('click', (event) => {
                   const list = $(event.currentTarget).data('payments');
                   this.showStepAddressPayment($el, i, list);
+                  this.putTotals();
                 });
 
               // busca en el api los métodos de pago

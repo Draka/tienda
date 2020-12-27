@@ -43,7 +43,10 @@ module.exports = (req, res, next) => {
       }
       async.mapLimit(results.coveragesAreas, 5, (area, cb) => {
         const inArea = geolib.isPointInPolygon(
-          { latitude: _.get(req.body, 'location.lat'), longitude: _.get(req.body, 'location.lng') },
+          {
+            latitude: _.get(req.body, 'location.lat'),
+            longitude: _.get(req.body, 'location.lng'),
+          },
           area.points.map((point) => ({
             latitude: point.lat,
             longitude: point.lng,

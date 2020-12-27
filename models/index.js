@@ -7,3 +7,5 @@ exports.Product = require('./products.model');
 exports.Category = require('./categories.model');
 exports.Address = require('./addresses.model');
 exports.Mail = require('./mails.model');
+exports.Order = require('./orders.model');
+exports.Inc = require('./incs.model');

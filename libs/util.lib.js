@@ -125,3 +125,10 @@ exports.removeDiacritics = (str) => {
   }
   return str;
 };
+
+/**
+ * Indica si un producto esta disponible
+ * @param {*} product
+ */
+exports.isAvailable = (product) => !((_.get(product, 'available.start') && moment.tz().isBefore(product.available.start))
+  || (_.get(product, 'available.end') && moment.tz().isAfter(product.available.end)));

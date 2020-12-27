@@ -3,6 +3,7 @@ const queryStore = require('../../libs/query_store.lib');
 const queryProduct = require('../../libs/query_product.lib');
 const { putS3Path } = require('../../libs/put_s3_path.lib');
 const { capitalized, rating } = require('../../libs/util.lib');
+const { isAvailable } = require('../../libs/util.lib');
 
 module.exports = (req, res, next) => {
   async.auto({
@@ -49,8 +50,7 @@ module.exports = (req, res, next) => {
       if (!results.store || !results.product) {
         return cb(listErrors(404, null, [{ field: 'storeID', msg: 'No existe el producto' }]));
       }
-      results.product.isAvailable = !((_.get(results.product, 'available.start') && moment.tz().isBefore(results.product.available.start))
-      || (_.get(results.product, 'available.end') && moment.tz().isAfter(results.product.available.end)));
+      results.product.isAvailable = isAvailable(results.product);
       putS3Path([results.product], results.store);
       cb();
     }],
@@ -71,8 +71,7 @@ module.exports = (req, res, next) => {
     postFindProducts: ['products', (results, cb) => {
       putS3Path(results.products, results.store);
       _.each(results.products, (product) => {
-        product.isAvailable = !((_.get(product, 'available.start') && moment.tz().isBefore(product.available.start))
-      || (_.get(product, 'available.end') && moment.tz().isAfter(product.available.end)));
+        product.isAvailable = isAvailable(product);
       });
       cb();
     }],

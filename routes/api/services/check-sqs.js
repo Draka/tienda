@@ -17,7 +17,7 @@ module.exports = (req, res, next) => {
         MessageAttributeNames: [
           'All',
         ],
-        QueueUrl: 'https://sqs.us-east-1.amazonaws.com/237646395144/mail',
+        QueueUrl: 'https://sqs.us-east-1.amazonaws.com/237646395144/mail-status',
         VisibilityTimeout: 20,
         WaitTimeSeconds: 0,
       };

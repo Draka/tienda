@@ -1,6 +1,7 @@
 const { putS3LogoPath } = require('../../libs/put_s3_path.lib');
 const queryStore = require('../../libs/query_store.lib');
 const { putS3Path } = require('../../libs/put_s3_path.lib');
+const { isAvailable } = require('../../libs/util.lib');
 
 module.exports = (req, res, next) => {
   // Salta a otra url
@@ -69,8 +70,7 @@ module.exports = (req, res, next) => {
             }
             putS3Path(docs, results.store);
             _.each(docs, (product) => {
-              product.isAvailable = !((_.get(product, 'available.start') && moment.tz().isBefore(product.available.start))
-            || (_.get(product, 'available.end') && moment.tz().isAfter(product.available.end)));
+              product.isAvailable = isAvailable(product);
             });
             products[featured.category._id] = docs;
             cb();

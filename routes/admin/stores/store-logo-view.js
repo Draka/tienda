@@ -29,7 +29,6 @@ module.exports = (req, res, next) => {
     if (err) {
       return next(err);
     }
-    console.log(results.store);
     const breadcrumbs = [
       {
         link: '/administracion',

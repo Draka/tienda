@@ -8,14 +8,6 @@ if mapbox
   link(rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css')
   script(src='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js')
 
-  if mapbox=='geocoder'
-    link(rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css')
-    script(src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js')
-
-  if mapbox=='draw'
-    link(rel="stylesheet", href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.2.0/mapbox-gl-draw.css", type="text/css")
-    script(src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.2.0/mapbox-gl-draw.js")
-
 if osm
   link(rel="stylesheet", href=appCnf.url.static+'lib/leaflet/leaflet.css')
   script(src=appCnf.url.static+'lib/leaflet/leaflet.js')
