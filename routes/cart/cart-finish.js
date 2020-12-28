@@ -7,6 +7,12 @@ module.exports = (req, res, next) => {
       models.Order
         .find({
           userID: req.user._id,
+          status: {
+            $in: [
+              'created',
+              'picking',
+            ],
+          },
         })
         .sort({
           createdAt: 1,
@@ -53,7 +59,6 @@ module.exports = (req, res, next) => {
     if (err) {
       return next(err);
     }
-    console.log(results.orders);
     res.render('pages/cart/cart-finish', {
       session: req.user,
       title: __('Carrito de compras -> Resumen pedido'),

@@ -71,9 +71,12 @@ block content
                 .col-md-8
                   h2 Pedido ##{order.orderID} de: #{order.store.name}
                 .col-md-4
-                  button.btn.btn--secondary.small.w-100.payment(
-                    id='id_'+order.orderID 
-                    data-order=JSON.stringify({total: order.order.total, ref: order.ref.reference})) Pagar #{formatMoney(order.order.total)}
+                  if order.status === 'created' && order.payment.pse
+                    button.btn.btn--secondary.small.w-100.payment(
+                      id='id_'+order.orderID 
+                      data-order=JSON.stringify({total: order.order.total, ref: order.ref.reference})) Pagar #{formatMoney(order.order.total)}
+                  if order.status === 'picking' && !order.payment.pse
+                    button.btn.btn--info.small.w-100 Pago contra entrega
               table.hide-xs.small.table.table--lines
                 thead
                   tr

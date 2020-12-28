@@ -200,7 +200,7 @@ function preSave(next) {
         return next(error);
       }
       if (!inc) {
-        const inc = new models.Inc({ id: 'orderID', seq: 100 });
+        const inc = new models.Inc({ id: 'orderID', seq: 101 });
         inc.save((error) => {
           if (error) {
             return next(error);

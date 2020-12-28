@@ -1,6 +1,7 @@
 const geolib = require('geolib');
 const validateProducts = require('../../../../libs/validate_products.lib');
 const queryStore = require('../../../../libs/query_store.lib');
+const sqsMailer = require('../../../../libs/sqs_mailer');
 
 module.exports = (req, res, next) => {
   const errors = [];
@@ -171,69 +172,113 @@ module.exports = (req, res, next) => {
     }],
     save: ['orders', (results, cb) => {
       async.map(results.orders, (order, cb) => {
-        const items = _.values(order.validateProducts.items);
+        async.auto({
+          order: (cb) => {
+            const items = _.values(order.validateProducts.items);
 
-        const orderDoc = {
-          storeID: order.store._id,
-          store: {
-            slug: order.store.slug,
-            name: order.store.name,
-            image: order.store.image,
-          },
-          // Id del navegador, para evitar una misma orden varias veces
-          browserUUID: body.cartID,
-          userID: req.user._id,
-          userData: {
-            name: req.user.personalInfo.name,
-            cellphone: `${req.user.personalInfo.callsign}${req.user.personalInfo.cellphone}`,
-            firstname: req.user.personalInfo.firstname,
-            lastname: req.user.personalInfo.lastname,
-            email: req.user.email,
-          },
-          products: items,
-          order: {
-            items: items.length,
-            subtotal: _.sumBy(items, (o) => o.price * o.quantity),
-            shipping: order.delivery.value,
-            total: (_.sumBy(items, (o) => o.price * o.quantity) + order.delivery.value),
-          },
-          delivery: {
-            name: order.delivery.name,
-            slug: order.delivery.slug,
-            personalDelivery: order.delivery.personalDelivery,
-          },
-          payment: {
-            name: order.payment.name,
-            slug: order.payment.slug,
-          },
-          statuses: [{ status: 'created' }],
-        };
-        if (orderDoc.payment.slug === 'contra-entrega' || orderDoc.total <= 0) {
-          orderDoc.payment.pse = false;
-        } else {
-          orderDoc.payment.pse = true;
-        }
+            const orderDoc = {
+              storeID: order.store._id,
+              store: {
+                slug: order.store.slug,
+                name: order.store.name,
+                image: order.store.image,
+              },
+              // Id del navegador, para evitar una misma orden varias veces
+              browserUUID: body.cartID,
+              userID: req.user._id,
+              userData: {
+                name: req.user.personalInfo.name,
+                cellphone: `${req.user.personalInfo.callsign}${req.user.personalInfo.cellphone}`,
+                firstname: req.user.personalInfo.firstname,
+                lastname: req.user.personalInfo.lastname,
+                email: req.user.email,
+              },
+              products: items,
+              order: {
+                items: items.length,
+                subtotal: _.sumBy(items, (o) => o.price * o.quantity),
+                shipping: order.delivery.value,
+                total: (_.sumBy(items, (o) => o.price * o.quantity) + order.delivery.value),
+              },
+              delivery: {
+                name: order.delivery.name,
+                slug: order.delivery.slug,
+                personalDelivery: order.delivery.personalDelivery,
+              },
+              payment: {
+                name: order.payment.name,
+                slug: order.payment.slug,
+              },
+              statuses: [{ status: 'created' }],
+            };
+            if (orderDoc.payment.slug === 'contra-entrega' || orderDoc.total <= 0) {
+              orderDoc.payment.pse = false;
+            } else {
+              orderDoc.payment.pse = true;
+            }
 
-        if (body.address && body.address.address) {
-          orderDoc.address = {
-            address: body.address.address,
-            cellphone: `${req.user.personalInfo.callsign}${req.user.personalInfo.cellphone}`,
-            city: body.address.city,
-            neighborhood: _.get(_.find(body.address.form, { name: 'neighborhood' }), 'value'),
-            extra: body.extra,
-            location: {
-              type: 'Point',
-              coordinates: [_.get(body, 'address.location.lng') || 0, _.get(body, 'address.location.lat') || 0],
-            },
-          };
-        }
-        // Si el tipo de pago es contraentrega
-        if (!orderDoc.payment.pse) {
-          orderDoc.status = 'picking';
-          orderDoc.statuses.push({ status: 'picking' });
-        }
-        const xorder = new models.Order(orderDoc);
-        xorder.save(cb);
+            if (body.address && body.address.address) {
+              orderDoc.address = {
+                address: body.address.address,
+                cellphone: `${req.user.personalInfo.callsign}${req.user.personalInfo.cellphone}`,
+                city: body.address.city,
+                neighborhood: _.get(_.find(body.address.form, { name: 'neighborhood' }), 'value'),
+                extra: body.extra,
+                location: {
+                  type: 'Point',
+                  coordinates: [_.get(body, 'address.location.lng') || 0, _.get(body, 'address.location.lat') || 0],
+                },
+              };
+            }
+            // Si el tipo de pago es contraentrega
+            if (!orderDoc.payment.pse) {
+              orderDoc.status = 'picking';
+              orderDoc.statuses.push({ status: 'picking' });
+            }
+            const xorder = new models.Order(orderDoc);
+            xorder.save(cb);
+          },
+          mailerAdmin: ['order', (results, cb) => {
+            // correo solo para contra entrega
+            if (results.order.status === 'created' || results.order.payment.pse) {
+              return cb();
+            }
+            results.order.populate({
+              path: 'storeID',
+              select: 'name',
+              populate: {
+                path: 'userID',
+                select: 'email personalInfo',
+              },
+            }, () => {
+              const admin = _.get(results.order, 'storeID.userID');
+              if (admin) {
+                sqsMailer({
+                  to: { email: admin.email, name: admin.personalInfo.name },
+                  subject: `Nueva Orden #${results.order.orderID}`,
+                  template: 'seller-new-order-payment-against-delivery',
+                  order: _.pick(results.order, ['_id', 'orderID']),
+                }, admin,
+                cb);
+              } else {
+                cb();
+              }
+            });
+          }],
+          mailerClient: ['order', (results, cb) => {
+            // correo solo para contra entrega
+            if (results.order.status === 'created' || results.order.payment.pse) {
+              return cb();
+            }
+            sqsMailer({
+              to: { email: results.order.userData.email, name: results.order.userData.name },
+              subject: `Orden #${results.order.orderID} Confirmada`,
+              template: 'client-new-order-payment-against-delivery',
+              order: _.pick(results.order, ['_id', 'orderID']),
+            }, { _id: results.order.userID },
+            cb);
+          }],
+        }, cb);
       }, cb);
     }],
   }, (err, results) => {
