@@ -9,6 +9,5 @@ cartList.showCart();
 
 cartList.showStepAddress();
 cartList.fixProductsInCart();
-cartList.showDetailOrder();
 CartList.showAddresss();
 Cart.prepareFormAddress();

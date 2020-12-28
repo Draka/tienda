@@ -208,6 +208,12 @@ module.exports = (req, res, next) => {
           },
           statuses: [{ status: 'created' }],
         };
+        if (orderDoc.payment.slug === 'contra-entrega' || orderDoc.total <= 0) {
+          orderDoc.payment.pse = false;
+        } else {
+          orderDoc.payment.pse = true;
+        }
+
         if (body.address && body.address.address) {
           orderDoc.address = {
             address: body.address.address,
@@ -222,7 +228,7 @@ module.exports = (req, res, next) => {
           };
         }
         // Si el tipo de pago es contraentrega
-        if (order.payment.slug === 'contra-entrega') {
+        if (!orderDoc.payment.pse) {
           orderDoc.status = 'picking';
           orderDoc.statuses.push({ status: 'picking' });
         }

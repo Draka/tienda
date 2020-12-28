@@ -155,6 +155,9 @@ const schema = new mongoose.Schema({
     slug: {
       type: String,
     },
+    pse: {
+      type: Boolean,
+    },
   },
   address: {
     address: {
@@ -192,13 +195,11 @@ const schema = new mongoose.Schema({
 function preSave(next) {
   const doc = this;
   if (this.isNew) {
-    console.log('XXXXXXXXX PRE');
     models.Inc.findOneAndUpdate({ id: 'orderID' }, { $inc: { seq: 1 } }, (error, inc) => {
       if (error) {
         return next(error);
       }
       if (!inc) {
-        console.log('XXXXXXXXX llega');
         const inc = new models.Inc({ id: 'orderID', seq: 100 });
         inc.save((error) => {
           if (error) {

@@ -3,17 +3,18 @@ declare let WidgetCheckout: any;
 export class Wompi {
   static key = 'pub_test_Utcl6o6rEhg8FHIhmI37vLFI16EjGSCc';
 
-  static btn(obj: any, order: any) {
-    if (!order.ref || !order.ref.reference) {
+  static btn(obj: any) {
+    const order = obj.data('order');
+    if (!order.ref) {
       return;
     }
-    obj.click((event: any) => {
+    obj.on('click', (event: any) => {
       event.stopPropagation();
       const checkout = new WidgetCheckout({
         currency: 'COP',
-        amountInCents: order.order.total * 100,
-        reference: `${order.ref.reference}`,
-        publicKey: Wompi.key
+        amountInCents: order.total * 100,
+        reference: `${order.ref}`,
+        publicKey: Wompi.key,
       });
       checkout.open((result: any) => {
         setTimeout(() => {

@@ -1,4 +1,5 @@
 /* eslint-disable class-methods-use-this */
+
 export class Util {
   constructor() {
     this.count();

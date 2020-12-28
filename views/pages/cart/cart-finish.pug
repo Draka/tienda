@@ -1,5 +1,4 @@
 extends ../../layout
-include ../../fragments/nologin
 
 block content
 
@@ -26,47 +25,110 @@ block content
               .step-title Pago
               .step-description Pago por Wompi
 
-  .container.session.start-hide.cart-detail-order(data-map="false")
-    .row
-      .col-xs-12
-        h1.tc Hacer pago
+  .container.session(data-map="false")
+    h1 Hacer pago
     .row
       .col-md-6
-        .white.br-1.rd-0-2.p-3.tc.h-100
+        .white.br-1.rd-0-2.p-1.mh-2
           .bigx2
             i.fas.fa-shopping-basket
           h2 Tu orden fue confirmada
           .remark.primary.mh-3
             | Número de pedidos #{' '}
-            a(href='/'+__('pedidos'))
+            a(href='/usuario/pedidos')
               b.number-order
-          a.button.action(href='/'+__('pedidos')) #{__('Lista de Pedidos')}
+          a.btn.btn--action(href='/usuario/pedidos') Lista de Pedidos
 
       .col-md-6
-        .white.br-1.rd-0-2.p-3.mt-3-sm.mt-3-xs
+        .white.br-1.rd-0-2.p-1.mh-2-md.mh-2-lg.mh-2-xl
           .t-primary.title
             | Compra
           ul.list-ul.mt-2
             li Una vez que se ha enviado su producto, generalmente demora de 2 a 5 días hábiles en ciudades principales.
             li Puede pedir devolver su pago hasta 14 días después de la compra y que su producto no haya llegado o no sea lo que ha pedido.
 
-        .white.br-1.rd-0-2.p-3.mt-3
+        .white.br-1.rd-0-2.p-1.mh-2
           .t-primary.title
             | Pago y Seguridad
           .t-secondary.subtitle.mt-2
             | Métodos de Pago
           .flex.mt-2
             .tc.mr-4
-              img.w-img-48(src='/common/images/wompi/ico_tarjetas.svg' alt='pago tarjetas de crédito')
+              img.h-48p(src=appCnf.url.static+'images/pagos/ico_tarjetas.svg' alt='pago tarjetas de crédito')
               .b.small Todas las tarjetas
             .tc.mr-4
-              img.w-img-48(src='/common/images/wompi/ico_nequi.svg' alt='pago nequi')
+              img.h-48p(src=appCnf.url.static+'images/pagos/ico_nequi.svg' alt='pago nequi')
             .tc
-              img.h-img-48(src='/common/images/wompi/ico_pse.svg' alt='pago pse')
+              img.h-48p(src=appCnf.url.static+'images/pagos/ico_pse.svg' alt='pago pse')
               .b.small Cuentas de ahorro
 
     .row
       .col-md-12
         .order-detail
+          each order in orders
+            .mt-2(id='cart'+order.store.slug)
+              .row
+                .col-md-8
+                  h2 Pedido ##{order.orderID} de: #{order.store.name}
+                .col-md-4
+                  button.btn.btn--secondary.small.w-100.payment(
+                    id='id_'+order.orderID 
+                    data-order=JSON.stringify({total: order.order.total, ref: order.ref.reference})) Pagar #{formatMoney(order.order.total)}
+              table.hide-xs.small.table.table--lines
+                thead
+                  tr
+                    th.tc(colspan='2') PRODUCTO
+                    th.tr PRECIO
+                    th.tr CANTIDAD
+                    th.tr SUBTOTAL
+                tbody
+                  each product in order.products
+                    tr
+                      td
+                        +img(product.name, _.first(product.imagesSizes), ['48x48_jpg', '96x96_jpg'], 'h-48p')
+                      td
+                        .b #{product.name}
+                      td.tr #{formatMoney(product.price)}
+                      td.tr #{product.quantity}
+                      td.tr.t-secondary.b #{formatMoney(product.price*product.quantity)}
+                  
+                tfoot
+                  tr
+                    td.b(colspan='4') Subtotal
+                    td.tr.t-secondary #{formatMoney(order.order.subtotal)}
+                  tr
+                    td.b(colspan='4') Envío
+                    td.tr.t-secondary #{formatMoney(order.order.shipping)}
+                  tr
+                    td.b(colspan='4') Total
+                    td.tr.big.t-secondary.b #{formatMoney(order.order.total)}
+              .show-xs
+                each product in order.products
+                  table.small.table.table--striped
+                    tbody
+                      tr
+                        th.w-img-48
+                          +img(product.name, _.first(product.imagesSizes), ['48x48_jpg', '96x96_jpg'], 'h-48p')
+                        td.b.big #{product.name}
+                      tr
+                        th.b PRECIO
+                        td.t-secondary #{formatMoney(product.price)}
+                      tr
+                        th.b CANTIDAD
+                        td.big #{product.quantity}
+                      tr
+                        th.b SUBTOTAL
+                        td.b.big.t-secondary #{formatMoney(product.price*product.quantity)}
+                table.small.table.table--striped
+                  tbody
+                    tr
+                      td.b Subtotal
+                      td.tr.t-secondary #{formatMoney(order.order.subtotal)}
+                    tr
+                      td.b Envío
+                      td.tr.t-secondary #{formatMoney(order.order.shipping)}
+                    tr
+                      td.b Total
+                      td.tr.big.t-secondary.b #{formatMoney(order.order.total)}
 
-  +nologin('Inicia sesión')
+

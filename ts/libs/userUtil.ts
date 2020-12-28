@@ -1,7 +1,10 @@
 /* eslint-disable class-methods-use-this */
+import { Wompi } from './wompi';
+
 export class Util {
   constructor() {
     this.lazy();
+    this.showDetailOrder();
   }
 
   lazy() {
@@ -15,6 +18,12 @@ export class Util {
           }
         }
       },
+    });
+  }
+
+  showDetailOrder() {
+    $('button.payment').each((_i, el) => {
+      Wompi.btn($(el));
     });
   }
 }

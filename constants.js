@@ -83,6 +83,10 @@ const vars = {
       personalDelivery: false,
     },
   ],
+  tenancyUrl: {
+    vendelomejor: 'https://vendelomejor.com/',
+    marketsabana: 'https://marketsabana.com/',
+  },
 };
 _.forEach(vars, (v, i) => {
   global[i] = v;
