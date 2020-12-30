@@ -19,7 +19,7 @@ block list
       | #{' '}
       b I
       | #{' '} = Uso de Inventario (Stock)
-    table.small.table.table--lines.table--lines.table--striped
+    table.small.table.table--lines.table--striped
       thead
         tr
           th.b Imagenes
@@ -55,10 +55,10 @@ block list
               if item.available
                 if item.available.start
                   .nowrap
-                    i Inicio: #{moment.tz(global.tz).format('DD-MM-YYYY HH:mm:ss [-5 GMT]')}
+                    i Inicio: #{moment.tz(item.available.start, global.tz).format('DD-MM-YYYY HH:mm:ss [-5 GMT]')}
                 if item.available.end
                   .nowrap
-                    i Fin: #{moment.tz(global.tz).format('DD-MM-YYYY HH:mm:ss [-5 GMT]')}
+                    i Fin: #{moment.tz(item.available.end, global.tz).format('DD-MM-YYYY HH:mm:ss [-5 GMT]')}
             td
               | !{item.categoryText.join(' <i class="fas fa-chevron-right"></i> ')}
             td.tr

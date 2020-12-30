@@ -14,8 +14,7 @@ module.exports = (app) => {
         active: true,
       },
     ];
-
-    res.render('pages/users/login', {
+    res.render('pages/common/login', {
       session: req.user,
       title: 'Iniciar Sesión',
       description: 'Inicie sesión, hay muchos productos para que escoja de nuestra plaza de emprendedores',
@@ -23,6 +22,7 @@ module.exports = (app) => {
       js: 'page',
     });
   });
+
   app.get('/registro', (req, res) => {
     const breadcrumbs = [
       {
@@ -35,8 +35,7 @@ module.exports = (app) => {
         active: true,
       },
     ];
-
-    res.render('pages/users/signup', {
+    res.render('pages/common/signup', {
       session: req.user,
       title: 'Registrarse como cliente',
       description: `Inscríbase en ${appCnf.site.name}, navegue por nuestra vitrina virtual, seleccione sus productos y pague online`,
@@ -44,6 +43,7 @@ module.exports = (app) => {
       js: 'page',
     });
   });
+
   app.get('/registro-confirmacion', (req, res) => {
     const breadcrumbs = [
       {
@@ -56,13 +56,14 @@ module.exports = (app) => {
         active: true,
       },
     ];
-    res.render('pages/users/signup_confirm', {
+    res.render('pages/common/signup-confirm', {
       session: req.user,
       title: 'Registro Confirmación',
       breadcrumbs,
       js: 'page',
     });
   });
+
   app.get('/recuperar-contrasena', (req, res) => {
     const breadcrumbs = [
       {
@@ -75,13 +76,14 @@ module.exports = (app) => {
         active: true,
       },
     ];
-    res.render('pages/users/password_reset', {
+    res.render('pages/common/password-reset', {
       session: req.user,
       title: '¿Olvidaste tu contraseña?',
       breadcrumbs,
       js: 'page',
     });
   });
+
   app.get('/recuperar-contrasena-confirmacion', (req, res) => {
     const breadcrumbs = [
       {
@@ -94,13 +96,14 @@ module.exports = (app) => {
         active: true,
       },
     ];
-    res.render('pages/users/password_reset_confirm', {
+    res.render('pages/common/password-reset-confirm', {
       session: req.user,
       title: '¿Olvidaste tu contraseña?',
       breadcrumbs,
       js: 'page',
     });
   });
+
   app.get('/cerrar-sesion', (req, res) => {
     // elimina la cookie
     res.clearCookie('token');
@@ -116,7 +119,7 @@ module.exports = (app) => {
         active: true,
       },
     ];
-    res.render('pages/users/signout', {
+    res.render('pages/common/logout', {
       session: req.user,
       title: 'Sesión finalizada',
       breadcrumbs,

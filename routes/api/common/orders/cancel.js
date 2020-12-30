@@ -17,11 +17,6 @@ module.exports = (req, res, next) => {
           orderID: body.id,
           userID: req.user._id,
         })
-        .select({
-          status: 1,
-          statuses: 1,
-          orderID: 1,
-        })
         .exec(cb);
     }],
     cancel: ['order', (results, cb) => {
@@ -33,7 +28,7 @@ module.exports = (req, res, next) => {
         errors.push({ field: 'status', msg: __('EL pedido ya está cancelado') });
         return next(listErrors(400, null, errors));
       }
-      if (['created'].indexOf(results.order.status) === -1) {
+      if (['created', 'picking'].indexOf(results.order.status) === -1 || (results.order.status === 'picking' && results.order.payment.pse)) {
         errors.push({ field: 'status', msg: __('El pedido no se puede cancelar') });
         return next(listErrors(400, null, errors));
       }
@@ -42,13 +37,17 @@ module.exports = (req, res, next) => {
         reason: body.reason,
       });
       results.order.status = 'cancelled';
-      console.log(results.order);
       results.order.save(cb);
     }],
   }, (err, results) => {
     if (err) {
       return next(err);
     }
-    res.send(results.cancel);
+    res.send(_.pick(results.cancel, [
+      '_id',
+      'orderID',
+      'status',
+      'statuses',
+    ]));
   });
 };

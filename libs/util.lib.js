@@ -132,3 +132,48 @@ exports.removeDiacritics = (str) => {
  */
 exports.isAvailable = (product) => !((_.get(product, 'available.start') && moment.tz().isBefore(product.available.start))
   || (_.get(product, 'available.end') && moment.tz().isAfter(product.available.end)));
+
+exports.statusToDate = (arr, status) => {
+  const st = arr.find((s) => s.status === status);
+  if (!st) {
+    return '';
+  }
+  return moment.tz(st.date, global.tz).format('MMM Do YYYY, h:mm a');
+};
+
+exports.badge = (input) => {
+  const status = {
+    created: 'Creado',
+    paid: 'Pagado',
+    cancelled: 'Cancelado',
+    cancelledAdmin: 'Cancelado',
+    picking: 'Buscando Productos',
+    ready: 'Listo Para Envíar',
+    onway: 'En Camino',
+    arrived: 'Llegó',
+    missing: 'No Respondieron',
+    completed: 'Completado',
+  };
+  const color = {
+    created: 'primary',
+    paid: 'alert',
+    cancelled: 'error',
+    cancelledAdmin: 'error',
+    picking: 'alert',
+    ready: 'info',
+    onway: 'info',
+    arrived: 'info',
+    missing: 'error',
+    completed: 'action',
+  };
+  return `<span class="badge ${color[input]} inline p-0-5">${status[input]}</span>`;
+};
+
+exports.mapImg = (order) => {
+  const accessToken = 'pk.eyJ1Ijoic3JkcmFrYSIsImEiOiJja2FlZHBmYXUwMHpoMnJudHJnazZsOWY1In0.tAAoQbjhJKq_DdwpTTimrw';
+  const url = 'https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/pin-s-heart+285A98';
+  const latlng = order.address.address ? `${order.address.location.coordinates[0]},${order.address.location.coordinates[1]}` : '-74.071683,4.601889';
+  const zoom = order.address.address ? '14' : '11';
+  const img = `${url}(${latlng})/${latlng},${zoom},0,0/484x484?access_token=${accessToken}`;
+  return img;
+};

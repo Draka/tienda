@@ -1,20 +1,20 @@
 extends ../../layout
-include ../../fragments/nologin
 
 block content
   .container
-    h1.mb-3.pt-3 Pedido cancelado
+    include ../../fragments/breadcrumb
+
+  .container
+    h1 Pedido cancelado
     .row.justify-content-center
       .col-xs-12.col-md-6
-        .oh.white.br-1.rd-0-2
-          .p-3
+        .oh.white.br-1.rd-0-2.mh-2
+          .p-1
             .row
               .col-xs-12
                 .msg.action
                   | Se ha cancelado tu pedido
-          .p-3.white-500
+          .p-1.white-500
             .row
               .col-xs-12
-                a.button.primary(href="/pedidos") Ver pedidos
-
-  +nologin('Inicia sesión')
+                a(href="/iniciar-sesion") Ver pedidos

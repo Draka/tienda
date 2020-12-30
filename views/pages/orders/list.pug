@@ -1,0 +1,115 @@
+extends ../../layout_account
+
+block content
+  .container.mt-4
+    include ../../fragments/breadcrumb
+
+    .row
+      .col-xs-6
+        h1 Lista de pedidos
+
+    .row
+      .col-md-12
+        if items.length
+          .hide-xs
+            table.small.table.table--lines.table--striped
+              thead
+                tr
+                  th &nbsp;
+                  th.b TIENDA
+                  th.b NUMERO
+                  th.b ESTADO
+                  th.b PEDIDO
+                  th.b ENTREGA
+                  th.b PRODUCTOS
+                  th.b TOTAL
+              tbody
+                each item of items
+                  tr
+                    td.tc
+                      a(href=`/usuario/pedidos/${item.orderID}` title='Detalle')
+                        i.fas.fa-search
+                    td.tc
+                      +img(`Logo de la tienda ${item.store.name}`, item.store.imageSizes, ['48x48_jpg', '96x96_jpg'], 'h-48p')
+                    td.tc
+                      a(href=`/usuario/pedidos/${item.orderID}` title='Detalle')
+                        | #{item.orderID}
+                    td.tc.subtitle
+                      if item.status === 'created' && item.payment.pse
+                        button.btn.btn--primary.small.w-100.payment.mb-0-5(
+                          id='id_'+item.orderID 
+                          data-order=item._id) Pagar #{formatMoney(item.order.total)}
+                      | !{badge(item.status)}
+                    td
+                      | #{statusToDate(item.statuses, 'created')}
+                    td
+                      | #{statusToDate(item.statuses, 'completed')}
+                    td.tr
+                      | #{item.products.length}
+                    td.tr.b.t-secondary
+                      | #{formatMoney(item.order.total)}
+              tfoot
+                tr
+                  th(colspan="10")
+                    .pagination.justify-content-right
+                      a.item(href=`?page=0`)
+                        i.fas.fa-chevron-left
+                        - var n = 0;
+                        while n < Math.ceil(count/limit)
+                          a.item(href=`?page=${n++}`)= n
+                      a.item(href=`?page=${Math.ceil(count/limit) - (count % limit == 0 ? 0 : 1)}`)
+                        i.fas.fa-chevron-right
+          .show-xs
+            each item of items
+              table.small.table.table--lines.table--striped
+                tbody
+                  tr
+                    th.h-img-48
+                      +img(`Logo de la tienda ${item.store.name}`, item.store.imageSizes, ['48x48_jpg', '96x96_jpg'], 'h-48p')
+                    td.b.big #{item.store.name}
+                  tr
+                    td(colspan='2')
+                      if item.status === 'created' && item.payment.pse
+                        button.btn.btn--primary.w-100.payment.mb-0-5(
+                          id='id_'+item.orderID 
+                          data-order=item._id) Pagar #{formatMoney(item.order.total)}
+                  tr
+                    th.b NUMERO
+                    td #{item.orderID}
+                  tr
+                    th.b ESTADO
+                    td.big
+                      | !{badge(item.status)}
+                  tr
+                    th.b PEDIDO
+                    td #{statusToDate(item.statuses, 'created')}
+                  tr
+                    th.b ENTREGA
+                    td #{statusToDate(item.statuses, 'completed')}
+                  tr
+                    th.b PRODUCTOS
+                    td #{item.products.length}
+                  tr
+                    th.b TOTAL
+                    td.b.big.t-secondary #{formatMoney(item.order.total)}
+                  tr
+                    td(colspan='2')
+                      a.btn.btn--secondary.w-100(href=`/usuario/pedidos/${item.orderID}`) Ver detalles
+                
+            table.small.table.table--lines.table--striped
+              tr
+                th(colspan="10")
+                  .pagination.justify-content-right
+                    a.item(href=`?page=0`)
+                      i.fas.fa-chevron-left
+                      - var n = 0;
+                      while n < Math.ceil(count/limit)
+                        a.item(href=`?page=${n++}`)= n
+                    a.item(href=`?page=${Math.ceil(count/limit) - (count % limit == 0 ? 0 : 1)}`)
+                      i.fas.fa-chevron-right
+
+        else
+          .white.br-1.rd-0-2.p-3
+            .remark.info.flex.mb-0-5
+              i.fas.fa-info-circle.h4.mr-1.t-info
+              | No hay pedidos

@@ -11,7 +11,7 @@ exports.putS3Path = (items, store) => {
       _.each(global.imagesSizes, (is) => {
         sizes[`${is.x}x${is.y}_webp`] = `${appCnf.url.static}${pathImg}/${is.x}x${is.y}.webp`;
       });
-      sizes.original = `${appCnf.url.static}${pathImg}/original`;
+      sizes.original = `${appCnf.url.static}${pathImg}/original.jpg`;
       return sizes;
     });
   });
@@ -32,7 +32,7 @@ exports.putS3LogoPath = (stores) => {
     _.each(global.imagesSizes, (is) => {
       sizes[`${is.x}x${is.y}_webp`] = `${appCnf.url.static}${pathImg}/${is.x}x${is.y}.webp?v=${store.image}`;
     });
-    sizes.original = `${appCnf.url.static}${pathImg}/original`;
+    sizes.original = `${appCnf.url.static}${pathImg}/original.jpg`;
     store.imageSizes = sizes;
   });
 };

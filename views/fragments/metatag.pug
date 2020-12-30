@@ -1,11 +1,25 @@
+mixin imgSocial
+    if product && product.imagesSizes && product.imagesSizes.length
+      link(href=product.imagesSizes[0]['484x484_jpg'] rel='image_src')
+      meta(name='twitter:image' content=product.imagesSizes[0]['484x484_jpg'])
+      meta(property='og:image' content=product.imagesSizes[0]['484x484_jpg'])
+    if store && store.imageSizes
+      link(href=store.imageSizes['484x484_jpg'] rel='image_src')
+      meta(name='twitter:image' content=store.imageSizes['484x484_jpg'])
+      meta(property='og:image' content=store.imageSizes['484x484_jpg'])
+    else
+      link(href=appCnf.url.static+'tenancy/'+appCnf.tenancy+'/images/compartir.jpg' rel='image_src')
+      meta(name='twitter:image' content=appCnf.url.static+'tenancy/'+appCnf.tenancy+'/images/compartir.jpg')
+      meta(property='og:image' content=appCnf.url.static+'tenancy/'+appCnf.tenancy+'/images/compartir.jpg')
+
 
 meta(name='robots' content='index, follow')
 meta(name='author' content='Véndelo Mejor')
 meta(name='description' content=description || appCnf.site.description)
 meta(name='keywords' content='compra online, mercado, tienda, domicilios, p4s, quedate en casa')
 meta(name='language' content='ES')
++imgSocial
 
-link(href=appCnf.url.static+'tenancy/'+appCnf.tenancy+'/images/compartir.jpg' rel='image_src')
 link(href=`${appCnf.url.site}${originalUrl}` rel='canonical')
 
 meta(name='geo.placename' content='Colombia')
@@ -19,13 +33,11 @@ if appCnf.site.twitter
     meta(name='twitter:creator' content=appCnf.site.twitter)
 meta(name='twitter:title' content=`${title} | ${appCnf.site.name}`)
 meta(name='twitter:description' content=description || appCnf.site.description)
-meta(name='twitter:image' content=appCnf.url.static+'tenancy/'+appCnf.tenancy+'/images/compartir.jpg')
 
 meta(property='og:type' content='website')
 meta(property='og:title' content=`${title} | ${appCnf.site.name}`)
 meta(property='og:description' content=description || appCnf.site.description)
 meta(property='og:url' content=`${appCnf.url.site}${originalUrl}`)
-meta(property='og:image' content=appCnf.url.static+'tenancy/'+appCnf.tenancy+'/images/compartir.jpg')
 meta(property='og:site_name' content=`${title} | ${appCnf.site.name}`)
 meta(property='og:locale' content='es_CO')
 meta(property='og:locale:alternate' content='es_CO')

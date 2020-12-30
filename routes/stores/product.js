@@ -52,6 +52,7 @@ module.exports = (req, res, next) => {
       }
       results.product.isAvailable = isAvailable(results.product);
       putS3Path([results.product], results.store);
+      results.product.ldJson = _.map(results.product.imagesSizes, (i) => i.original);
       cb();
     }],
     products: ['product', (results, cb) => {

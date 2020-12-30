@@ -5,7 +5,6 @@ import { GetApi } from './get_api';
 import { Session } from './session';
 import { Gtag } from './gtag';
 import { ShowMsg } from './show_msg';
-import { Wompi } from './wompi';
 
 export class CartList {
   cart:Cart= new Cart()
@@ -44,7 +43,7 @@ export class CartList {
 
   static showAddresss() {
     $('.cart-screen-adrress').show();
-    $('.show-addresss').click(() => {
+    $('.show-addresss').on('click', () => {
       sclib.modalShow('#address');
     });
   }
@@ -309,7 +308,7 @@ export class CartList {
       })
         .done((data: any) => {
           Cart.reset();
-          document.location.href = `${window.location.origin}/carrito-resumen?id=${data.orderIDs}`;
+          document.location.href = `${window.location.origin}/carrito-resumen`;
         })
         .fail(ShowMsg.show);
     });

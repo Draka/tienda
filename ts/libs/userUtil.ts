@@ -1,8 +1,16 @@
 /* eslint-disable class-methods-use-this */
+import { Session } from './session';
+import { GetApi } from './get_api';
 import { Wompi } from './wompi';
 
 export class Util {
+  session = new Session();
+
+  getApi:GetApi
+
   constructor() {
+    this.session = new Session();
+    this.getApi = new GetApi(this.session.token);
     this.lazy();
     this.showDetailOrder();
   }
@@ -23,7 +31,11 @@ export class Util {
 
   showDetailOrder() {
     $('button.payment').each((_i, el) => {
-      Wompi.btn($(el));
+      Wompi.btn(this.getApi, $(el));
+    });
+
+    $('.btn-cancel').on('click', () => {
+      sclib.modalShow('#cancelOrder');
     });
   }
 }

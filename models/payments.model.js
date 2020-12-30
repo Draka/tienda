@@ -2,28 +2,31 @@ const schema = new mongoose.Schema({
   orderID: {
     type: mongoose.Schema.Types.ObjectId,
     ref: `${appCnf.dbPrefix}orders`,
-    index: true
+    index: true,
   },
   userID: {
     type: mongoose.Schema.Types.ObjectId,
     ref: `${appCnf.dbPrefix}users`,
-    index: true
+    index: true,
   },
   reference: {
     type: String,
-    unique: true
+    unique: true,
   },
-  // estado orden
+  amount: {
+    type: Number,
+  },
+  // estado pago
   status: {
     type: String,
     index: true,
     enum: ['created', 'approved', 'declined', 'voided', 'error'],
-    default: 'created'
+    default: 'created',
   },
   transaction: {},
   sentAt: {
-    type: Date
-  }
+    type: Date,
+  },
 }, { timestamps: true });
 
 const Model = mongoose.model(`${appCnf.dbPrefix}payments`, schema);
