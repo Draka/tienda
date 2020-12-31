@@ -59,7 +59,7 @@ module.exports = (req, res) => {
       if (!results.query) {
         return cb();
       }
-      if (1 || results.query.status === 'approved') {
+      if (results.query.status === 'approved') {
         models.Order
           .findOne({
             _id: results.query.orderID,
@@ -118,6 +118,7 @@ module.exports = (req, res) => {
       cb);
     }],
   }, (err, results) => {
+    console.log(JSON.stringify(results));
     res.status(200).send(err || results);
   });
 };
