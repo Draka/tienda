@@ -11,7 +11,7 @@ const breadcrumbs = [
 ];
 
 module.exports = (req, res) => {
-  res.render('pages/users/get-salesman', {
+  res.render('pages/common/get-salesman', {
     session: req.user,
     title: 'Quiero empezar a vender',
     breadcrumbs,
