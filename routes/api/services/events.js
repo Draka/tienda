@@ -5,8 +5,12 @@ module.exports = (req, res) => {
   const body = _.pick(req.body, [
     'event',
     'data',
+    'environment',
+    'signature',
+    'timestamp',
     'sent_at',
   ]);
+  console.log(body);
   async.auto({
     validate: (cb) => {
       if (req.params.token !== 'token666') {
