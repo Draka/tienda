@@ -41,7 +41,7 @@ module.exports = (req, res) => {
             'Content-Length': data.length,
           },
         };
-        if (body.environment === 'test') {
+        if (process.env.NODE_ENV !== 'production') {
           tenancyHost = `http://localhost:${process.env.PORT}/`;
           const url = `${tenancyHost}v1/services/events/token666`;
           const req = http.request(url, options, (res) => {
