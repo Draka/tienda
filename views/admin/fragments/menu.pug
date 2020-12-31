@@ -13,7 +13,7 @@ nav
         a.item(href='/administracion/correo') Correo
       li.navigation__item(class=menu=='cuenta-bancaria'?'navigation--active':'')
         a.item(href='/administracion/cuenta-bancaria') Cuenta bancaria
-
+  .hr.mh-1
   if session && session.admin
     .expandable
       .expandable__header
@@ -23,8 +23,11 @@ nav
       ul.expandable__body.navigation
         li.navigation__item(class=menu=='super-tiendas'?'navigation--active':'')
           a.item(href=`/administracion/super/tiendas`) Aprobar Tiendas
+        li.navigation__item(class=menu=='super-usuarios-lista'?'navigation--active':'')
+          a.item(href=`/administracion/super/usuarios`) Usuarios
         li.navigation__item(class=menu=='super-pedidos-lista'?'navigation--active':'')
-          a.item(href=`/administracion/super/tiendas/pedidos`) Ver pedidos
+          a.item(href=`/administracion/super/tiendas/pedidos`) Pedidos
+    .hr.mh-1
 
   .expandable
     .expandable__header

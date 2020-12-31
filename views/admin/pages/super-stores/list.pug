@@ -30,8 +30,8 @@ block list
         each item of items
           tr
             td.tc
-              a.btn.btn--primary.small(href=`/administracion/super/tiendas/${item._id}` title='Ver')
-                | Ver
+              a(href=`/administracion/super/tiendas/${item._id}` title='Ver')
+                i.fas.fa-search
             td.tc
               if item.image
                 img.m-0-25(src=item.imageSizes['48x48_jpg'])

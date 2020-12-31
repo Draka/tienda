@@ -19,12 +19,12 @@ block list
           each item of items
             tr
               td.tc
-                a(href=`/administracion/tiendas/pedidos/${item.orderID}` title='Detalle')
+                a(href=`/administracion/tiendas/pedidos/${item.orderID}` title='Ver')
                   i.fas.fa-search
               td.tc
                 +img(`Logo de la tienda ${item.store.name}`, item.store.imageSizes, ['48x48_jpg', '96x96_jpg'], 'h-48p')
               td.tc
-                a(href=`/administracion/tiendas/pedidos/${item.orderID}` title='Detalle')
+                a(href=`/administracion/tiendas/pedidos/${item.orderID}` title='Ver')
                   | #{item.orderID}
               td.tc.subtitle
                 | !{badge(item.status)}

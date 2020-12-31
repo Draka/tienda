@@ -27,12 +27,12 @@ block content
                 each item of items
                   tr
                     td.tc
-                      a(href=`/usuario/pedidos/${item.orderID}` title='Detalle')
+                      a(href=`/usuario/pedidos/${item.orderID}` title='Ver')
                         i.fas.fa-search
                     td.tc
                       +img(`Logo de la tienda ${item.store.name}`, item.store.imageSizes, ['48x48_jpg', '96x96_jpg'], 'h-48p')
                     td.tc
-                      a(href=`/usuario/pedidos/${item.orderID}` title='Detalle')
+                      a(href=`/usuario/pedidos/${item.orderID}` title='Ver')
                         | #{item.orderID}
                     td.tc.subtitle
                       if item.status === 'created' && item.payment.pse

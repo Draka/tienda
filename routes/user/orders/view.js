@@ -42,7 +42,7 @@ module.exports = (req, res, next) => {
     res.render('pages/orders/view.pug', {
       session: req.user,
       order: results.order,
-      title: 'Detalle de pedido',
+      title: 'Ver pedido',
       breadcrumbs,
       wompi: true,
       js: 'page',

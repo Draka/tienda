@@ -46,7 +46,7 @@ module.exports = (req, res, next) => {
     res.render('admin/pages/orders/view.pug', {
       session: req.user,
       order: results.order,
-      title: 'Detalle de pedido',
+      title: 'Ver pedido',
       menu: 'pedidos-lista',
       breadcrumbs,
       js: 'admin',

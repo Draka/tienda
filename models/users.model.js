@@ -26,6 +26,9 @@ function preUpdate(result, next) {
   if (_.get(result, 'personalInfo.firstname') && _.get(result, 'personalInfo.lastname')) {
     result.personalInfo.name = `${_.trim(result.personalInfo.firstname)} ${_.trim(result.personalInfo.lastname)}`;
   }
+  if (_.get(result, 'personalInfo.callsign') && _.get(result, 'personalInfo.cellphone')) {
+    result.personalInfo.allCellphone = `${_.trim(result.personalInfo.callsign)}${_.trim(result.personalInfo.cellphone)}`;
+  }
   if (!this.isModified('password') && !this.isNew) {
     return next();
   }
@@ -135,6 +138,10 @@ const schema = new mongoose.Schema({
       trim: true,
     },
     cellphone: {
+      type: String,
+      trim: true,
+    },
+    allCellphone: {
       type: String,
       trim: true,
     },

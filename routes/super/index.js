@@ -2,4 +2,5 @@
 module.exports = (app) => {
   require('./stores')(app);
   require('./orders')(app);
+  require('./users')(app);
 };

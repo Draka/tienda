@@ -1,0 +1,29 @@
+extends ../../layout-view
+
+block view
+  table.small.table.table--lines
+    tbody
+      tr
+        th.nowrap.ellipsis Activo
+        td.w-100
+          +boolean(item.active)
+      tr
+        th.nowrap.ellipsis Super Administrador
+        td.w-100 
+          +boolean(item.admin)
+      tr
+        th.nowrap.ellipsis Administrador de Tiendas
+        td.w-100 
+          +boolean(item.admin)
+      tr
+        th.nowrap.ellipsis Correo Electrónico
+        td.w-100 #{item.email}
+      tr
+        th.nowrap.ellipsis Nombres
+        td.w-100 #{item.personalInfo.firstname}
+      tr
+        th.nowrap.ellipsis Apellidos
+        td.w-100 #{item.personalInfo.lastname}
+      tr
+        th.nowrap.ellipsis Celular
+        td.w-100 #{item.personalInfo.allCellphone}

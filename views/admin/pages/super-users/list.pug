@@ -1,0 +1,63 @@
+extends ../../layout-list
+
+block list
+    if items.length
+      .remark
+        b A
+        | #{' '} = Activo,
+        | #{' '}
+        b SA
+        | #{' '} = Super Admin,
+        | #{' '}
+        b AT
+        | #{' '} = Admin de Tienda
+        | #{' '}
+      table.small.table.table--lines.table--striped
+        thead
+          tr
+            th &nbsp;
+            th.tc.b A
+            th.b CORREO
+            th.b CELULAR
+            th.b NOMBRE
+            th.tc.b SA
+            th.tc.b AT
+            th.b INGRESO
+        tbody
+          each item of items
+            tr
+              td.tc
+                a(href=`/administracion/super/usuarios/${item._id}` title='Ver')
+                  i.fas.fa-search
+              td.tc
+                +boolean(item.active)
+              td
+                | #{item.email}
+              td
+                | #{item.personalInfo.allCellphone}
+              td
+                a(href=`/administracion/super/usuarios/${item._id}` title='Ver')
+                  | #{item.personalInfo.name}
+              td.tc
+                +boolean(item.admin)
+              td.tc
+                +boolean(item.adminStore)
+              td
+                | #{moment.tz(item.createdAt, global.tz).format('MMM D [de] YYYY')}
+        tfoot
+          tr
+            th(colspan="10")
+              .pagination.justify-content-right
+                a.item(href=`?page=0`)
+                  i.fas.fa-chevron-left
+                  - var n = 0;
+                  while n < Math.ceil(count/limit)
+                    a.item(href=`?page=${n++}`)= n
+                a.item(href=`?page=${Math.ceil(count/limit) - (count % limit == 0 ? 0 : 1)}`)
+                  i.fas.fa-chevron-right
+
+    else
+      .white.br-1.rd-0-2.p-3
+        .remark.info.flex.mb-0-5
+          i.fas.fa-info-circle.h4.mr-1.t-info
+          | No hay usuarios
