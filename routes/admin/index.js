@@ -6,4 +6,5 @@ module.exports = (app) => {
   require('./places')(app);
   require('./categories')(app);
   require('./products')(app);
+  require('./orders')(app);
 };

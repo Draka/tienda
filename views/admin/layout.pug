@@ -1,3 +1,8 @@
+mixin img(name, image, size = ['196x196_jpg', '392x392_jpg'], cssClass)
+  if (image)
+    img(src=image[size[1]] alt=name class=cssClass?cssClass:'w-100')
+  else
+    img(src=`${appCnf.url.static}images/imagen_no_disponible.svg` alt=name class=cssClass?cssClass:'w-100')
 doctype html
 html(lang='es')
   head

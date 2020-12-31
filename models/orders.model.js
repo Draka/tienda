@@ -38,6 +38,10 @@ const schema = new mongoose.Schema({
       type: String,
       trim: true,
     },
+    userID: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: `${appCnf.dbPrefix}users`,
+    },
   }],
   // Id del navegador, para evitar una misma orden varias veces
   browserUUID: {

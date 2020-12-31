@@ -14,6 +14,11 @@ const list = {
     title: 'unauthorized',
     errorMessage: 'unauthorized',
   },
+  403: {
+    status: 403,
+    title: 'forbidden',
+    errorMessage: 'forbidden',
+  },
   404: {
     status: 404,
     title: 'notFound',

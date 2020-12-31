@@ -84,6 +84,7 @@ module.exports = (req, res) => {
       results.order.status = 'paid';
       results.order.statuses.push({
         status: 'paid',
+        userID: req.user._id,
       });
       results.order.save(cb);
     }],

@@ -1,11 +1,9 @@
-extends ./layout
-block content
+extends ./layout-seller-order
+block order
   h2 Tienes un nuevo Pedido en #{site.name}
   h3 Hola, #{(_.get(to, 'name')||'').split(' ')[0]}
   p Te confirmamos el pago de un nuevo pedido.
   p Debes verificar el contenido y enviarlo lo más breve posible a la dirección del cliente.
   p Si tu pedido es digital, los detalles para acceder se muestra en la lista de productos de tu pedido pagado.
   p Felicidades y Hasta pronto.
-
-  center(data-parsed='' style='min-width:0;width:100%')
-    a.float-center(href=site.urlSite+'administracion/pedidos/'+order.orderID align='center' style='Margin:0;border:0 solid #08415c;background-color: #08415c;border-radius:3px;color:#fefefe;display:inline-block;font-family:Helvetica,Arial,sans-serif;font-size:20px;font-weight:700;line-height:1.3;margin:0;padding:10px 20px 10px 20px;padding-left:0;padding-right:0;text-align:center;text-decoration:none;width:100%') Datos del Pedido
+  

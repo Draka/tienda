@@ -19,13 +19,15 @@ const jsMiddleware = require('./libs/js_middleware.lib');
 const tsMiddleware = require('./libs/ts_middleware.lib');
 const imgMiddleware = require('./libs/img_middleware.lib');
 const {
-  formatMoney, statusToDate, badge, mapImg,
+  formatMoney, statusToDate, badge, mapImg, statusText, statusIcon,
 } = require('./libs/util.lib');
 
 global.formatMoney = formatMoney;
 global.statusToDate = statusToDate;
 global.badge = badge;
 global.mapImg = mapImg;
+global.statusText = statusText;
+global.statusIcon = statusIcon;
 
 global.client = redis.createClient({
   prefix: `_${appCnf.tenancy}_`,

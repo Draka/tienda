@@ -209,7 +209,10 @@ module.exports = (req, res, next) => {
                 name: order.payment.name,
                 slug: order.payment.slug,
               },
-              statuses: [{ status: 'created' }],
+              statuses: [{
+                status: 'created',
+                userID: req.user._id,
+              }],
             };
             if (orderDoc.payment.slug === 'contra-entrega' || orderDoc.total <= 0) {
               orderDoc.payment.pse = false;
@@ -233,7 +236,10 @@ module.exports = (req, res, next) => {
             // Si el tipo de pago es contraentrega
             if (!orderDoc.payment.pse) {
               orderDoc.status = 'picking';
-              orderDoc.statuses.push({ status: 'picking' });
+              orderDoc.statuses.push({
+                status: 'picking',
+                userID: req.user._id,
+              });
             }
             const xorder = new models.Order(orderDoc);
             xorder.save(cb);

@@ -1,0 +1,6 @@
+extends ./layout-client-order
+block order
+  h2 Pedido en #{site.name} ##{order.orderID}
+  h3 Hola, #{(_.get(to, 'name')||'').split(' ')[0]}
+  p Tu pedido ha cambiado de estado a "#{statusText(order.status)}"
+  p Hasta pronto.

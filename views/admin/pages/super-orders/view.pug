@@ -1,0 +1,240 @@
+extends ../../layout-list
+
+block list
+  .row
+    .col-xs-12
+      if order.status == 'cancelled' || order.status == 'cancelledAdmin'
+        .steps
+          each status in ['created','picking','cancelled','cancelledAdmin']
+            if _.find(order.statuses, {status})
+              .step(class=statusToDate(order.statuses, status)?(order.status==status?' error-300':''):'')
+                .step-icon !{statusIcon(status)}
+                .step-content.hide-sm.hide-md.hide-lg
+                  .step-title #{statusText(status)}
+                  .step-description #{statusToDate(order.statuses, status)}
+      else if order.payment.pse
+        .steps
+          each status in ['paid','picking','ready','onway','completed']
+            if _.find(order.statuses, {status})
+              .step(class=statusToDate(order.statuses, status)?(order.status==status?' info-300':''):'')
+                .step-icon !{statusIcon(status)}
+                .step-content.hide-sm.hide-md.hide-lg
+                  .step-title #{statusText(status)}
+                  .step-description #{statusToDate(order.statuses, status)}
+            else
+              .step.disabled
+                .step-icon !{statusIcon(status)}
+                .step-content.hide-sm.hide-md.hide-lg
+                  .step-title #{statusText(status)}
+      else if !order.payment.pse
+        .steps
+          each status in ['picking','ready','onway','paid','completed']
+            if _.find(order.statuses, {status})
+              .step(class=statusToDate(order.statuses, status)?(order.status==status?' info-300':''):'')
+                .step-icon !{statusIcon(status)}
+                .step-content.hide-sm.hide-md.hide-lg
+                  .step-title #{statusText(status)}
+                  .step-description #{statusToDate(order.statuses, status)}
+            else
+              .step.disabled
+                .step-icon !{statusIcon(status)}
+                .step-content.hide-sm.hide-md.hide-lg
+                  .step-title #{statusText(status)}
+
+  .row
+    .col-md-12
+      .white.br-1.rd-0-2.p-1
+        .row
+          .col-md-6
+            .map
+              img.w-100(src=mapImg(order))
+          .col-md-6
+            table.table.table--striped
+              tbody
+                tr
+                  td.b Número de pedido:
+                  td.b.number-order #{order.orderID}
+                tr
+                  td.b.mt-1-xs Estado:
+                  td.mt-1-xs.subtitle.status 
+                    | !{badge(order.status)}
+                    if order.status == 'cancelled' || order.status == 'cancelledAdmin'
+                      div
+                        span.b Razón:
+                        | #{' '}
+                        | #{_.get(_.find(order.statuses, {status:'cancelled'}),'reason')}
+                        | #{_.get(_.find(order.statuses, {status:'cancelledAdmin'}),'reason')}
+
+                tr
+                  td.b.mt-1-xs Fecha de solicitud:
+                  td.mt-1-xs.date-created #{statusToDate(order.statuses, 'created')}
+                tr
+                  td.b.mt-1-xs Fecha de entrega:
+                  td.mt-1-xs.date-delivery #{statusToDate(order.statuses, 'completed')}
+                tr
+                  td.b.mt-1-xs Productos:
+                  td.mt-1-xs.products #{order.products.length}
+                tr
+                  td.b.mt-1-xs Total:
+                  td.mt-1-xs.b.big.t-secondary.total #{formatMoney(order.order.total)}
+                tr
+                  td.b.mt-1-xs Dirección de Entrega:
+                  td.mt-1-xs.address #{order.address.city} #{order.address.address}
+                tr
+                  td.b.mt-1-xs Nombre de contacto:
+                  td.mt-1-xs.name #{order.userData.name}
+                tr
+                  td.b.mt-1-xs Célular de contacto:
+                  td.mt-1-xs.cellphone #{order.address.cellphone}
+                tr
+                  td.b.mt-1-xs Forma de entrega:
+                  td.mt-1-xs.name #{order.delivery.name}
+                tr
+                  td.b.mt-1-xs Forma de Pago:
+                  td.mt-1-xs.cellphone #{order.payment.name}
+            .row
+              if ['created', 'paid', 'picking', 'ready', 'onway', 'arrived', 'missing'].indexOf(order.status) >= 0
+                .col-md-6
+                  if order.status === 'created' || order.status === 'picking'
+                    button.btn.btn--error.small.w-100.btn-cancel.mb-0-5(
+                      id='id_'+order.orderID 
+                      data-order=order._id) Cancelar
+              if ['paid','picking','ready'].indexOf(order.status) >= 0
+                .col-md-6.vertical-align-center
+                  button.btn.btn--error.small.w-100.btn-next-status(
+                    id='id_'+order.orderID 
+                    data-order=order._id) 
+                      | Cambiar a:
+                      | #{' '}
+                      if order.status == 'paid'
+                        | #{statusText('picking')}
+                      if order.status == 'picking'
+                        | #{statusText('ready')}
+                      if order.status == 'ready'
+                        | #{statusText('onway')}
+
+
+  .row
+    .col-md-12
+      .mt-2
+        .row
+          .col-md-8
+            h2 Pedido ##{order.orderID} de: #{order.store.name}
+        table.hide-xs.small.table.table--lines
+          thead
+            tr
+              th.tc(colspan='2') PRODUCTO
+              th.tr PRECIO
+              th.tr CANTIDAD
+              th.tr SUBTOTAL
+          tbody
+            each product in order.products
+              tr
+                td
+                  +img(product.name, _.first(product.imagesSizes), ['48x48_jpg', '96x96_jpg'], 'h-48p')
+                td
+                  .b #{product.name}
+                td.tr #{formatMoney(product.price)}
+                td.tr #{product.quantity}
+                td.tr.t-secondary.b #{formatMoney(product.price*product.quantity)}
+            
+          tfoot
+            tr
+              td.b(colspan='4') Subtotal
+              td.tr.t-secondary #{formatMoney(order.order.subtotal)}
+            tr
+              td.b(colspan='4') Envío
+              td.tr.t-secondary #{formatMoney(order.order.shipping)}
+            tr
+              td.b(colspan='4') Total
+              td.tr.big.t-secondary.b #{formatMoney(order.order.total)}
+        .show-xs
+          each product in order.products
+            table.small.table.table--striped
+              tbody
+                tr
+                  th.w-img-48
+                    +img(product.name, _.first(product.imagesSizes), ['48x48_jpg', '96x96_jpg'], 'h-48p')
+                  td.b.big #{product.name}
+                tr
+                  th.b PRECIO
+                  td.t-secondary #{formatMoney(product.price)}
+                tr
+                  th.b CANTIDAD
+                  td.big #{product.quantity}
+                tr
+                  th.b SUBTOTAL
+                  td.b.big.t-secondary #{formatMoney(product.price*product.quantity)}
+          table.small.table.table--striped
+            tbody
+              tr
+                td.b Subtotal
+                td.tr.t-secondary #{formatMoney(order.order.subtotal)}
+              tr
+                td.b Envío
+                td.tr.t-secondary #{formatMoney(order.order.shipping)}
+              tr
+                td.b Total
+                td.tr.big.t-secondary.b #{formatMoney(order.order.total)}
+
+  #modalNextStatus.modal.start-hide(tabindex='-1' role='dialog')
+    .modal-dialog(role='document')
+      form#modalNextStatusForm.col-xs-12.validate-rest(action=`${appCnf.url.api}admin/orders/${order._id}/next-status` data-page=`/administracion/super/tiendas/pedidos/${order.orderID}` method="put" data-error="#form-results")
+        .modal-content
+          .modal-header
+            .title.b 
+            | ¿Desea cambiar el estado a
+            | #{' '}
+            if order.status == 'paid'
+              | #{statusText('picking')}
+            if order.status == 'picking'
+              | #{statusText('ready')}
+            if order.status == 'ready'
+              | #{statusText('onway')}
+            | ?
+            input#orderID(type="hidden" name="status" value=order.status)
+            button.close.close-modal.btn-flat(type='button' data-dismiss='modal' aria-label='Cerrar')
+              span(aria-hidden='true')
+                i.fas.fa-times
+          .modal-body
+            .msg.error#form-results
+          .modal-footer.tr
+            button.close-modal.btn.btn--white(type='button') NO, salir
+            | #{' '}
+            button.btn.btn--primary(type='submit')
+              | SI, Cambiar a "
+              if order.status == 'paid'
+                | #{statusText('picking')}
+              if order.status == 'picking'
+                | #{statusText('ready')}
+              if order.status == 'ready'
+                | #{statusText('onway')}
+              | "
+
+  #cancelOrder.modal.start-hide(tabindex='-1' role='dialog')
+    .modal-dialog(role='document')
+      form#cancelOrderForm.col-xs-12.validate-rest(action=`${appCnf.url.api}admin/super/orders/${order._id}/cancel` data-page=`/administracion/super/tiendas/pedidos/${order.orderID}` method="put" data-error="#form-results-c")
+        .modal-content
+          .modal-header
+            .title.b Desea cancelar el pedido
+            button.close.close-modal.btn-flat(type='button' data-dismiss='modal' aria-label='Cerrar')
+              span(aria-hidden='true')
+                i.fas.fa-times
+          .modal-body
+            .msg.error#form-results-c
+            .row
+              .col-xs-12
+                .form-group
+                  .form-control
+                    select.input#reason(name="reason" required)
+                      option(value='') -- Seleccione un motivo --
+                      option(value='Ya no lo necesito') Ya no lo necesito
+                      option(value='Me he arrepentido') Me he arrepentido
+                      option(value='Voy hacer otro pedido') Voy hacer otro pedido
+                      option(value='Voy a comprar en otro lugar') Voy a comprar en otro lugar
+                      option(value='Otro motivo') Otro motivo
+                    label(for='reason') Motivo
+          .modal-footer.tr
+            button.close-modal.btn.btn--secondary(type='button') Salir
+            | #{' '}
+            button.btn.btn--primary(type='submit') Confirmar cancelar

@@ -5,8 +5,48 @@ block content
     include ../../fragments/breadcrumb
 
     .row
-      .col-xs-6
+      .col-xs-12
         h1 Detalle de pedido
+
+    .row
+      .col-xs-12
+        if order.status == 'cancelled' || order.status == 'cancelledAdmin'
+          .steps
+            each status in ['created','picking','cancelled','cancelledAdmin']
+              if _.find(order.statuses, {status})
+                .step(class=statusToDate(order.statuses, status)?(order.status==status?' error-300':''):'')
+                  .step-icon !{statusIcon(status)}
+                  .step-content.hide-sm.hide-md.hide-lg
+                    .step-title #{statusText(status)}
+                    .step-description #{statusToDate(order.statuses, status)}
+        else if order.payment.pse
+          .steps
+            each status in ['paid','picking','ready','onway','completed']
+              if _.find(order.statuses, {status})
+                .step(class=statusToDate(order.statuses, status)?(order.status==status?' info-300':''):'')
+                  .step-icon !{statusIcon(status)}
+                  .step-content.hide-sm.hide-md.hide-lg
+                    .step-title #{statusText(status)}
+                    .step-description #{statusToDate(order.statuses, status)}
+              else
+                .step.disabled
+                  .step-icon !{statusIcon(status)}
+                  .step-content.hide-sm.hide-md.hide-lg
+                    .step-title #{statusText(status)}
+        else if !order.payment.pse
+          .steps
+            each status in ['picking','ready','onway','paid','completed']
+              if _.find(order.statuses, {status})
+                .step(class=statusToDate(order.statuses, status)?(order.status==status?' info-300':''):'')
+                  .step-icon !{statusIcon(status)}
+                  .step-content.hide-sm.hide-md.hide-lg
+                    .step-title #{statusText(status)}
+                    .step-description #{statusToDate(order.statuses, status)}
+              else
+                .step.disabled
+                  .step-icon !{statusIcon(status)}
+                  .step-content.hide-sm.hide-md.hide-lg
+                    .step-title #{statusText(status)}
 
     .row
       .col-md-12
@@ -129,7 +169,7 @@ block content
 
   #cancelOrder.modal.start-hide(tabindex='-1' role='dialog')
     .modal-dialog(role='document')
-      form#cancelOrderForm.col-xs-12.validate-rest(action=`${appCnf.url.api}orders/cancel` data-page=`/usuario/ordenes/cancelar-confirmacion` method="post" data-error="#form-results")
+      form#cancelOrderForm.col-xs-12.validate-rest(action=`${appCnf.url.api}orders/${order._id}/cancel` data-page=`/usuario/ordenes/cancelar-confirmacion` method="put" data-error="#form-results")
         .modal-content
           .modal-header
             .title.b Desea cancelar el pedido
@@ -142,7 +182,6 @@ block content
               .col-xs-12
                 .form-group
                   .form-control
-                    input#orderID(type="hidden" name="id" value=order.orderID)
                     select.input#reason(name="reason" required)
                       option(value='') -- Seleccione un motivo --
                       option(value='Ya no lo necesito') Ya no lo necesito

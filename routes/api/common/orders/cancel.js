@@ -1,6 +1,6 @@
 module.exports = (req, res, next) => {
   const errors = [];
-  const body = _.pick(req.body, ['reason', 'id']);
+  const body = _.pick(req.body, ['reason']);
   async.auto({
     validate: (cb) => {
       if (!_.trim(body.reason)) {
@@ -14,7 +14,7 @@ module.exports = (req, res, next) => {
     order: ['validate', (_results, cb) => {
       models.Order
         .findOne({
-          orderID: body.id,
+          _id: req.params.orderID,
           userID: req.user._id,
         })
         .exec(cb);
@@ -35,6 +35,7 @@ module.exports = (req, res, next) => {
       results.order.statuses.push({
         status: 'cancelled',
         reason: body.reason,
+        userID: req.user._id,
       });
       results.order.status = 'cancelled';
       results.order.save(cb);
