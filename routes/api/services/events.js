@@ -10,7 +10,6 @@ module.exports = (req, res) => {
     'timestamp',
     'sent_at',
   ]);
-  console.log(body);
   async.auto({
     validate: (cb) => {
       if (req.params.token !== 'token666') {
@@ -121,7 +120,6 @@ module.exports = (req, res) => {
       cb);
     }],
   }, (err, results) => {
-    console.log(JSON.stringify(results));
     res.status(200).send(err || results);
   });
 };
