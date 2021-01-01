@@ -10,7 +10,8 @@ module.exports = (req, res) => {
     'timestamp',
     'sent_at',
   ]);
-  console.log(body);
+  let firstStatus = '';
+  console.log(JSON.stringify(body));
   async.auto({
     validate: (cb) => {
       if (req.params.token !== 'token666') {
@@ -28,20 +29,14 @@ module.exports = (req, res) => {
       models.Payment
         .findOne({
           reference: _.get(body, 'data.transaction.reference'),
-          status: 'created',
         })
         .exec(cb);
     }],
     save: ['query', (results, cb) => {
       if (!results.query) {
-        const payment = new models.Payment({
-          status: 'created',
-          reference: _.get(body, 'data.transaction.reference'),
-          transaction: _.get(body, 'data.transaction'),
-          sentAt: body.sent_at,
-        });
-        return payment.save(cb);
+        return cb();
       }
+      firstStatus = results.query.status;
 
       switch (_.get(body, 'data.transaction.status')) {
         case 'APPROVED': // Transacción aprobada
@@ -57,13 +52,17 @@ module.exports = (req, res) => {
           results.query.status = 'error';
           break;
       }
-      results.query.set({ transaction: _.get(body, 'data.transaction'), sentAt: body.sent_at }).save(cb);
+      results.query.set({
+        transaction: _.get(body, 'data.transaction'),
+        sentAt: body.sent_at,
+      }).save(cb);
     }],
     order: ['save', (results, cb) => {
       if (!results.query) {
         return cb();
       }
-      if (results.query.status === 'approved') {
+      if ((results.query.status === 'approved')
+       || (firstStatus === 'approved' && results.query.status === 'voided')) {
         models.Order
           .findOne({
             _id: results.query.orderID,
@@ -85,10 +84,17 @@ module.exports = (req, res) => {
       if (!results.order) {
         return cb();
       }
-      results.order.status = 'paid';
-      results.order.statuses.push({
-        status: 'paid',
-      });
+      if (results.query.status === 'approved') {
+        results.order.status = 'paid';
+        results.order.statuses.push({
+          status: 'paid',
+        });
+      } else if (firstStatus === 'approved' && results.query.status === 'voided') {
+        results.order.status = 'cancelledAdmin';
+        results.order.statuses.push({
+          status: 'cancelledAdmin',
+        });
+      }
       results.order.save(cb);
     }],
     mailerAdmin: ['order', (results, cb) => {
@@ -97,13 +103,18 @@ module.exports = (req, res) => {
       }
       const admin = _.get(results.order, 'storeID.userID');
       if (admin) {
-        sqsMailer({
-          to: { email: admin.email, name: admin.personalInfo.name },
-          subject: `Nueva Orden #${results.order.orderID}`,
-          template: 'seller-new-order',
-          order: _.pick(results.order, ['_id', 'orderID']),
-        }, admin,
-        cb);
+        if (results.query.status === 'approved') {
+          sqsMailer({
+            to: { email: admin.email, name: admin.personalInfo.name },
+            subject: `Nueva Orden #${results.order.orderID}`,
+            template: 'seller-new-order',
+            order: _.pick(results.order, ['_id', 'orderID']),
+          },
+          admin,
+          cb);
+        } else {
+          cb();
+        }
       } else {
         cb();
       }
@@ -112,13 +123,27 @@ module.exports = (req, res) => {
       if (!results.order) {
         return cb();
       }
-      sqsMailer({
-        to: { email: results.order.userData.email, name: results.order.userData.name },
-        subject: `Orden #${results.order.orderID} Confirmada`,
-        template: 'client-new-order',
-        order: _.pick(results.order, ['_id', 'orderID']),
-      }, { _id: results.order.userID },
-      cb);
+      if (results.query.status === 'approved') {
+        sqsMailer({
+          to: { email: results.order.userData.email, name: results.order.userData.name },
+          subject: `Orden #${results.order.orderID} Confirmada`,
+          template: 'client-new-order',
+          order: _.pick(results.order, ['_id', 'orderID']),
+        },
+        { _id: results.order.userID },
+        cb);
+      } else if (firstStatus === 'approved' && results.query.status === 'voided') {
+        sqsMailer({
+          to: { email: results.order.userData.email, name: results.order.userData.name },
+          subject: `Pago de Orden #${results.order.orderID} Reversado`,
+          template: 'client-voided-order',
+          order: _.pick(results.order, ['_id', 'orderID']),
+        },
+        { _id: results.order.userID },
+        cb);
+      } else {
+        cb();
+      }
     }],
   }, (err, results) => {
     console.log(JSON.stringify(results));
