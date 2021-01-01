@@ -11,7 +11,6 @@ module.exports = (req, res) => {
     'sent_at',
   ]);
   let firstStatus = '';
-  console.log(JSON.stringify(body));
   async.auto({
     validate: (cb) => {
       if (req.params.token !== 'token666') {
@@ -146,7 +145,6 @@ module.exports = (req, res) => {
       }
     }],
   }, (err, results) => {
-    console.log(JSON.stringify(results));
-    res.status(200).send(err || results);
+    res.status(200).send(err || { reference: _.get(body, 'data.transaction.reference'), orderID: _.get(results, 'order.orderID') });
   });
 };

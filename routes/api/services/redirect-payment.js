@@ -62,7 +62,6 @@ module.exports = (req, res) => {
           req.on('error', (e) => {
             console.error(e);
           });
-          console.log(data);
           req.write(data);
           req.end();
         }
