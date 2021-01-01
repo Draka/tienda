@@ -5,7 +5,7 @@ block list
     .col-xs-12
       if order.status == 'cancelled' || order.status == 'cancelledAdmin'
         .steps
-          each status in ['created','picking','cancelled','cancelledAdmin']
+          each status in ['created','paid','picking','cancelled','cancelledAdmin']
             if _.find(order.statuses, {status})
               .step(class=statusToDate(order.statuses, status)?(order.status==status?' error-300':''):'')
                 .step-icon !{statusIcon(status)}
