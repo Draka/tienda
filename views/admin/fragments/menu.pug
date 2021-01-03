@@ -27,6 +27,20 @@ nav
           a.item(href=`/administracion/super/usuarios`) Usuarios
         li.navigation__item(class=menu=='super-pedidos-lista'?'navigation--active':'')
           a.item(href=`/administracion/super/tiendas/pedidos`) Pedidos
+    .expandable
+      .expandable__header
+        .expandable__icon
+          i.fas.fa-angle-down.fa-fw
+        .expandable__title Portal
+      ul.expandable__body.navigation
+        li.navigation__item(class=menu=='super-planes'?'navigation--active':'')
+          a.item(href=`/administracion/super/planes`) Planes
+        li.navigation__item(class=menu=='super-paginas'?'navigation--active':'')
+          a.item(href=`/administracion/super/multimedia`) Multimedia
+        li.navigation__item(class=menu=='super-multimedia'?'navigation--active':'')
+          a.item(href=`/administracion/super/paginas`) Páginas
+        li.navigation__item(class=menu=='super-documenttos'?'navigation--active':'')
+          a.item(href=`/administracion/super/documentos`) Documentos
     .hr.mh-1
 
   .expandable

@@ -120,12 +120,12 @@ const schema = new mongoose.Schema({
 function preUpdate(result, next) {
   client.del('__stores__');
   client.del(`__store__${result._id}`);
-  if (_.get(result, 'slug')) {
-    result.slug = _.kebabCase(_.deburr(_.get(result, 'slug')));
+  if (result.slug) {
+    result.slug = _.kebabCase(_.deburr(result.slug));
     client.del(`__store__${result.slug}`);
   }
-  if (_.get(result, 'name') && !_.get(result, 'slug')) {
-    result.slug = _.kebabCase(_.deburr(_.get(result, 'name')));
+  if (result.name && !result.slug) {
+    result.slug = _.kebabCase(_.deburr(result.name));
   }
   next();
 }

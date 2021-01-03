@@ -82,6 +82,6 @@ module.exports = (req, res, next) => {
     if (err) {
       return next(err);
     }
-    res.status(200).send(results.create);
+    res.status(201).send(results.create);
   });
 };

@@ -10,3 +10,5 @@ exports.Mail = require('./mails.model');
 exports.Order = require('./orders.model');
 exports.Inc = require('./incs.model');
 exports.Payment = require('./payments.model');
+exports.Page = require('./pages.model');
+exports.Document = require('./documents.model');

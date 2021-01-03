@@ -1,60 +1,41 @@
 /* eslint-disable global-require */
+const queryDocument = require('../../libs/query_document.lib');
+
 module.exports = (app) => {
-  app.get('/doc/politica-de-privacidad-y-tratamiento-de-datos', (req, res) => {
-    const breadcrumbs = [
-      {
-        link: '/',
-        text: 'Inicio',
+  app.get('/documentos/:documentSlug', (req, res, next) => {
+    async.auto({
+      item: (cb) => {
+        queryDocument.documentBySlug(req.params.documentSlug, cb);
       },
-      {
-        link: '/doc/politica-de-privacidad-y-tratamiento-de-datos',
-        text: 'Política de Privacidad y Tratamiento de Datos',
-        active: true,
-      },
-    ];
-    res.render('pages/documents/politica-de-privacidad-y-tratamiento-de-datos', {
-      session: req.user,
-      title: 'Política de Privacidad y Tratamiento de Datos',
-      breadcrumbs,
-      js: 'page',
-    });
-  });
-  app.get('/doc/terminos-y-condiciones-cliente', (req, res) => {
-    const breadcrumbs = [
-      {
-        link: '/',
-        text: 'Inicio',
-      },
-      {
-        link: '/doc/terminos-y-condiciones-cliente',
-        text: 'Términos y Condiciones Cliente',
-        active: true,
-      },
-    ];
-    res.render('pages/documents/terminos-y-condiciones-cliente', {
-      session: req.user,
-      title: 'Términos y Condiciones Cliente',
-      breadcrumbs,
-      js: 'page',
-    });
-  });
-  app.get('/doc/terminos-y-condiciones-vendedor', (req, res) => {
-    const breadcrumbs = [
-      {
-        link: '/',
-        text: 'Inicio',
-      },
-      {
-        link: '/doc/terminos-y-condiciones-vendedor',
-        text: 'Términos y Condiciones Vendedor',
-        active: true,
-      },
-    ];
-    res.render('pages/documents/terminos-y-condiciones-vendedor', {
-      session: req.user,
-      title: 'Términos y Condiciones Vendedor',
-      breadcrumbs,
-      js: 'page',
+      check: ['item', (results, cb) => {
+        if (!results.item) {
+          return cb(listErrors(404, null, [{ field: 'documentID', msg: 'No existe el Documento' }]));
+        }
+        cb();
+      }],
+    }, (err, results) => {
+      if (err) {
+        return next(err);
+      }
+      const breadcrumbs = [
+        {
+          link: '/',
+          text: 'Inicio',
+        },
+        {
+          link: `/documentos/${results.item.slug}`,
+          text: results.item.title,
+          active: true,
+        },
+      ];
+
+      res.render('pages/documents/view.pug', {
+        session: req.user,
+        item: results.item,
+        title: results.item.title,
+        breadcrumbs,
+        js: 'page',
+      });
     });
   });
 };

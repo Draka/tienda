@@ -1,0 +1,29 @@
+extends ../../layout-edit-cmp
+
+block edit
+  form.validate-rest(
+    id="updateProfileForm"
+    action=`${appCnf.url.api}admin/super/pages`
+    method="post"
+    data-page=`/administracion/super/paginas`
+    data-error="#form-results")
+    .white.br-1.rd-0-2.p-3
+      .msg.error#form-results
+      .row
+        .col-xs-12
+          .form-group
+            .form-control
+              label
+                input.checkbox#publish(type="checkbox" name="publish" value='1')
+                span Publicado
+          .form-group
+            .form-control
+              input.input#title(type="text" name="title" placeholder=' ' required)
+              label(for='title') Título
+          .form-group.ph-1
+            .subtitle.mb-0-5 Html
+            .form-control
+              textarea.cke#html(name="html" placeholder=' ')
+      .row
+        .col-xs-12.tr
+          button.btn.btn--primary.w-100-xs.mt-2-xs(type="submit") Crear Página

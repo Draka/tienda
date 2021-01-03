@@ -1,0 +1,34 @@
+extends ../../layout-list
+
+block list
+  if items.length
+    .remark
+      b P
+      | #{' '} = Publicado,
+      | #{' '}
+    table.small.table.table--lines.table--striped
+      thead
+        tr
+          th.b &nbsp;
+          th.b.tc P
+          th.b Nombre
+          th.b Slug
+      tbody
+        each item of items
+          tr
+            td.tc
+              a(href=`/administracion/super/paginas/editar/${item._id}` title='Ver')
+                i.fas.fa-search
+            td.tc
+              +boolean(item.publish)
+            td
+              a.b(href=`/administracion/super/paginas/editar/${item._id}`) #{item.title}
+            td
+              | #{item.slug}
+            
+      tfoot
+        tr
+          th(colspan="4")
+            +paginator
+  else
+    +noItems('No hay páginas creadas.')
