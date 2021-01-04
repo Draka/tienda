@@ -35,7 +35,7 @@ module.exports = (req, res, next) => {
       session: req.user,
       item: results.item,
       title: 'Editar Documento',
-      menu: 'tienda-documentos',
+      menu: 'super-documentos',
       breadcrumbs,
       cke: true,
       js: 'admin',

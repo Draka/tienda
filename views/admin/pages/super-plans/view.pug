@@ -1,0 +1,27 @@
+extends ../../layout-view
+
+block view
+  table.small.table.table--lines
+    tbody
+      tr
+        th.nowrap.ellipsis Publicado
+        td.w-100
+          +boolean(item.publish)
+      tr
+        th.nowrap.ellipsis Nombre
+        td.w-100 #{item.name}
+      tr
+        th.nowrap.ellipsis Descripción
+        td.w-100 #{item.description}
+      tr
+        th.nowrap.ellipsis Meses de prueba
+        td.w-100 #{item.test}
+      tr
+        th.nowrap.ellipsis Periodo de facturación en meses
+        td.w-100 #{item.period}
+      tr
+        th.nowrap.ellipsis Precio (impuesto incluido)
+        td.w-100 #{formatMoney(item.price || 0)}
+      tr
+        th.nowrap.ellipsis Impuesto
+        td.w-100 %#{item.tax}

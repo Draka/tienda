@@ -4,7 +4,7 @@ const schema = new mongoose.Schema({
     index: true,
     default: false,
   },
-  title: {
+  name: {
     type: String,
     trim: true,
     required: true,
@@ -14,25 +14,41 @@ const schema = new mongoose.Schema({
     trim: true,
     unique: true,
   },
-  html: {
+  description: {
     type: String,
     trim: true,
+  },
+  price: {
+    type: Number,
+    default: 0,
+  },
+  tax: {
+    type: Number,
+    default: 0,
+  },
+  test: {
+    type: Number,
+    default: 0,
+  },
+  period: {
+    type: Number,
+    default: 1,
   },
 }, { timestamps: true });
 
 function preUpdate(result, next) {
-  client.del(`__document__${result._id}`);
+  client.del(`__plan__${result._id}`);
   if (result.slug) {
     result.slug = _.kebabCase(_.deburr(result.slug));
-    client.del(`__document__${result.slug}`);
+    client.del(`__plan__${result.slug}`);
   }
-  if (result.title && !result.slug) {
-    result.slug = _.kebabCase(_.deburr(result.title));
+  if (result.name && !result.slug) {
+    result.slug = _.kebabCase(_.deburr(result.name));
   }
   next();
 }
 schema.post('validate', preUpdate);
 
-const Model = mongoose.model(`${appCnf.dbPrefix}documents`, schema);
+const Model = mongoose.model(`${appCnf.dbPrefix}plans`, schema);
 
 module.exports = Model;

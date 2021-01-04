@@ -53,7 +53,7 @@ module.exports = (req, res, next) => {
       page,
       count: results.count,
       title: 'Documentos',
-      menu: 'tienda-documentos',
+      menu: 'super-documentos',
       xnew: '/administracion/super/documentos/nuevo',
       breadcrumbs,
     });

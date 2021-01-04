@@ -24,7 +24,7 @@ module.exports = (req, res, next) => {
     res.render('admin/pages/super-documents/new.pug', {
       session: req.user,
       title: 'Nuevo Documento',
-      menu: 'tienda-documentos',
+      menu: 'super-documentos',
       breadcrumbs,
       cke: true,
       js: 'admin',

@@ -12,3 +12,4 @@ exports.Inc = require('./incs.model');
 exports.Payment = require('./payments.model');
 exports.Page = require('./pages.model');
 exports.Document = require('./documents.model');
+exports.Plan = require('./plans.model');

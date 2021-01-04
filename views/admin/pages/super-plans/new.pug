@@ -1,0 +1,45 @@
+extends ../../layout-edit-cmp
+
+block edit
+  form.validate-rest(
+    id="updateProfileForm"
+    action=`${appCnf.url.api}admin/super/plans`
+    method="post"
+    data-page=`/administracion/super/planes`
+    data-error="#form-results")
+    .white.br-1.rd-0-2.p-3
+      .msg.error#form-results
+      .row
+        .col-xs-12
+          .form-group
+            .form-control
+              label
+                input.checkbox#publish(type="checkbox" name="publish" value='1')
+                span Publicado
+          .form-group
+            .form-control
+              input.input#name(type="text" name="name" placeholder=' ' required)
+              label(for='name') Nombre
+          .form-group.ph-1
+            .subtitle.mb-0-5 Descripción
+            .form-control
+              textarea.cke#description(name="html" placeholder=' ')
+          .form-group
+            .form-control
+              input.input#test(type="number" name="test" placeholder=' ' required min=0 max=12)
+              label(for='test') Meses de prueba
+          .form-group
+            .form-control
+              input.input#period(type="number" name="period" placeholder=' ' required min=0 max=12)
+              label(for='period') Periodo de facturación en meses
+          .form-group
+            .form-control
+              input.input#price(type="number" name="price" placeholder=' ' required min=0)
+              label(for='price') Precio (incluya impuestos)
+          .form-group
+            .form-control
+              input.input#tax(type="number" name="tax" placeholder=' ' required min=0 max=99)
+              label(for='tax') Impuesto en porcentaje
+      .row
+        .col-xs-12.tr
+          button.btn.btn--primary.w-100-xs.mt-2-xs(type="submit") Crear Plan

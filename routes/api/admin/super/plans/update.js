@@ -6,17 +6,20 @@ module.exports = (req, res, next) => {
   });
   const body = _.pick(fbody, [
     'publish',
-    'title',
-    'slug',
-    'html',
+    'name',
+    'description',
+    'price',
+    'tax',
+    'test',
+    'period',
   ]);
   if (typeof req.body.publish !== 'undefined' && !body.publish) {
     body.publish = false;
   }
   async.auto({
     validate: (cb) => {
-      if (!_.trim(body.title)) {
-        errors.push({ field: 'title', msg: 'Escribe un nombre de Documento válido.' });
+      if (!_.trim(body.name)) {
+        errors.push({ field: 'name', msg: 'Escribe un nombre de Plan válido.' });
       }
       if (errors.length) {
         return cb(listErrors(400, null, errors));
@@ -24,8 +27,8 @@ module.exports = (req, res, next) => {
       cb();
     },
     query: ['validate', (_results, cb) => {
-      models.Document
-        .findById(req.params.documentID)
+      models.Plan
+        .findById(req.params.planID)
         .exec(cb);
     }],
     save: ['query', (results, cb) => {

@@ -11,20 +11,20 @@ module.exports = (req, res, next) => {
         text: 'Administración',
       },
       {
-        link: '/administracion/super/paginas',
-        text: 'Páginas',
+        link: '/administracion/super/planes',
+        text: 'Plans',
       },
       {
-        link: '/administracion/super/paginas/nuevo',
+        link: '/administracion/super/planes/nuevo',
         text: 'Nueva Página',
         active: true,
       },
     ];
 
-    res.render('admin/pages/super-pages/new.pug', {
+    res.render('admin/pages/super-plans/new.pug', {
       session: req.user,
-      title: 'Nueva Página',
-      menu: 'super-paginas',
+      title: 'Nuevo Plan',
+      menu: 'super-planes',
       breadcrumbs,
       cke: true,
       js: 'admin',

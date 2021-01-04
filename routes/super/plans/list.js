@@ -1,5 +1,5 @@
 module.exports = (req, res, next) => {
-  const body = _.pick(req.query, ['title', 'title']);
+  const body = _.pick(req.query, ['name']);
 
   const limit = Math.min(Math.max(1, req.query.limit) || 20, 500);
   const page = Math.max(0, req.query.page) || 0;
@@ -8,14 +8,14 @@ module.exports = (req, res, next) => {
     validate: (cb) => {
       if (req.query.q) {
         body.$or = [
-          { title: { $regex: req.query.q, $options: 'i' } },
+          { name: { $regex: req.query.q, $options: 'i' } },
           { slug: { $regex: req.query.q, $options: 'i' } },
         ];
       }
       return cb();
     },
     items: ['validate', (results, cb) => {
-      models.Page
+      models.Plan
         .find(body)
         .limit(limit)
         .skip(limit * page)
@@ -26,7 +26,7 @@ module.exports = (req, res, next) => {
         .exec(cb);
     }],
     count: ['validate', (_results, cb) => {
-      models.Page
+      models.Plan
         .countDocuments(body)
         .exec(cb);
     }],
@@ -40,21 +40,21 @@ module.exports = (req, res, next) => {
         text: 'Administración',
       },
       {
-        link: '/administracion/super/paginas',
-        text: 'Páginas',
+        link: '/administracion/super/planes',
+        text: 'Planes',
         active: true,
       },
     ];
 
-    res.render('admin/pages/super-pages/list.pug', {
+    res.render('admin/pages/super-plans/list.pug', {
       session: req.user,
       items: results.items,
       limit,
       page,
       count: results.count,
-      title: 'Páginas',
-      menu: 'super-paginas',
-      xnew: '/administracion/super/paginas/nuevo',
+      title: 'Planes',
+      menu: 'super-planes',
+      xnew: '/administracion/super/planes/nuevo',
       breadcrumbs,
     });
   });

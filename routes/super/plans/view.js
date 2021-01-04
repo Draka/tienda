@@ -1,13 +1,13 @@
 module.exports = (req, res, next) => {
   async.auto({
     item: (cb) => {
-      models.Page
-        .findById(req.params.pageID)
+      models.Plan
+        .findById(req.params.planID)
         .exec(cb);
     },
     check: ['item', (results, cb) => {
       if (!results.item) {
-        return cb(listErrors(404, null, [{ field: 'pageID', msg: 'No existe la Página' }]));
+        return cb(listErrors(404, null, [{ field: 'planID', msg: 'No existe el Plan' }]));
       }
       cb();
     }],
@@ -21,21 +21,22 @@ module.exports = (req, res, next) => {
         text: 'Administración',
       },
       {
-        link: '/administracion/super/paginas',
-        text: 'Páginas',
+        link: '/administracion/super/planes',
+        text: 'Plans',
       },
       {
-        link: `/administracion/super/paginas/editar/${req.params.pageID}`,
-        text: `Editar - ${results.item.title}`,
+        link: `/administracion/super/planes/${req.params.planID}`,
+        text: `Detalle - ${results.item.name}`,
         active: true,
       },
     ];
 
-    res.render('admin/pages/super-pages/edit.pug', {
+    res.render('admin/pages/super-plans/view.pug', {
       session: req.user,
       item: results.item,
-      title: 'Editar Página',
-      menu: 'super-paginas',
+      title: 'Ver Plan',
+      menu: 'super-planes',
+      edit: `/administracion/super/planes/editar/${req.params.planID}`,
       breadcrumbs,
       cke: true,
       js: 'admin',
