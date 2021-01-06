@@ -3,10 +3,14 @@ mixin imgSocial
       link(href=product.imagesSizes[0]['484x484_jpg'] rel='image_src')
       meta(name='twitter:image' content=product.imagesSizes[0]['484x484_jpg'])
       meta(property='og:image' content=product.imagesSizes[0]['484x484_jpg'])
-    if store && store.imageSizes
-      link(href=store.imageSizes['484x484_jpg'] rel='image_src')
-      meta(name='twitter:image' content=store.imageSizes['484x484_jpg'])
-      meta(property='og:image' content=store.imageSizes['484x484_jpg'])
+    else if store && _.get(store, 'imageSizes.social')
+      link(href=_.get(store, 'imageSizes.social.1028x540_jpg') rel='image_src')
+      meta(name='twitter:image' content=_.get(store, 'imageSizes.social.1028x540_jpg'))
+      meta(property='og:image' content=_.get(store, 'imageSizes.social.1028x540_jpg'))
+    else if store && _.get(store, 'imageSizes.logo')
+      link(href=_.get(store, 'imageSizes.logo.484x484_jpg') rel='image_src')
+      meta(name='twitter:image' content=_.get(store, 'imageSizes.logo.484x484_jpg'))
+      meta(property='og:image' content=_.get(store, 'imageSizes.logo.484x484_jpg'))
     else
       link(href=appCnf.url.static+'tenancy/'+appCnf.tenancy+'/images/compartir.jpg' rel='image_src')
       meta(name='twitter:image' content=appCnf.url.static+'tenancy/'+appCnf.tenancy+'/images/compartir.jpg')

@@ -55,14 +55,19 @@ const schema = new mongoose.Schema({
     default: false,
     index: true,
   },
-  image: {
-    type: String,
-    trim: true,
-  },
-  imageSizes: {},
-  imageSocial: {
-    type: String,
-    trim: true,
+  images: {
+    logo: {
+      type: String,
+      trim: true,
+    },
+    header: {
+      type: String,
+      trim: true,
+    },
+    social: {
+      type: String,
+      trim: true,
+    },
   },
   // defaultPlace: {
   //   type: mongoose.Schema.Types.ObjectId,

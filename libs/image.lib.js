@@ -20,7 +20,7 @@ const s3 = new AWS.S3({
  * @param {*} saveOriginal almacena imagen original
  * @param {*} cb callback
  */
-exports.imageToS3 = (pathImg, urlImg, localImg, sizes, saveOriginal, cb) => {
+exports.imageToS3 = (pathImg, urlImg, localImg, sizes, saveOriginal, fit, cb) => {
   const nameTemp = util.makeid(10);
   const fileName = `./tmp/${nameTemp}`;
   const errors = [];
@@ -102,7 +102,7 @@ exports.imageToS3 = (pathImg, urlImg, localImg, sizes, saveOriginal, cb) => {
         sharp(fileName)
           .flatten({ background: { r: 255, g: 255, b: 255 } })
           .resize(size.x, size.y, {
-            fit: 'contain',
+            fit,
             background: {
               r: 255, g: 255, b: 255, alpha: 1,
             },
@@ -118,7 +118,7 @@ exports.imageToS3 = (pathImg, urlImg, localImg, sizes, saveOriginal, cb) => {
         sharp(fileName)
           .flatten({ background: { r: 255, g: 255, b: 255 } })
           .resize(size.x, size.y, {
-            fit: 'contain',
+            fit,
             background: {
               r: 255, g: 255, b: 255, alpha: 1,
             },

@@ -47,6 +47,7 @@ exports.coveragesAreas = (storeID, cb) => {
     } else {
       models.CoverageArea
         .find({ storeID })
+        .lean()
         .exec((err, doc) => {
           if (err) {
             return cb(err);
@@ -66,6 +67,7 @@ exports.place = (id, cb) => {
     } else {
       models.Place
         .findById(id)
+        .lean()
         .exec((err, doc) => {
           if (err) {
             return cb(err);
@@ -134,6 +136,7 @@ function up(arr, categoryID, cb) {
   models.Category
     .findOne({ _id: categoryID })
     .select('categoryID name')
+    .lean()
     .exec((err, doc) => {
       if (err) {
         cb(err);

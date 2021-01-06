@@ -1,3 +1,4 @@
+const { getCenterOfBounds } = require('geolib');
 const { putS3LogoPath } = require('../../libs/put_s3_path.lib');
 const queryStore = require('../../libs/query_store.lib');
 const { putS3Path } = require('../../libs/put_s3_path.lib');
@@ -25,6 +26,9 @@ module.exports = (req, res, next) => {
       }
       putS3LogoPath([results.store]);
       cb();
+    }],
+    places: ['store', (results, cb) => {
+      queryStore.places(results.store._id, cb);
     }],
     categories: ['store', (results, cb) => {
       if (!results.store) {
@@ -84,15 +88,28 @@ module.exports = (req, res, next) => {
       return next(err);
     }
 
+    const markers = results.places.map((i) => i.location.coordinates);
+    let center = '';
+    if (markers.length) {
+      center = getCenterOfBounds(markers.map((p) => ({
+        latitude: p[1], longitude: p[0],
+      })));
+    }
+
     res.render('pages/stores/index.pug', {
       session: req.user,
       user: results.user,
       store: results.store,
+      places: results.places,
+      markers,
+      center,
       categories: results.categories,
       products: results.products,
       title: appCnf.site.title,
       menu: 'index',
       js: 'store',
+      osm: true,
+      notMenu: true,
     });
   });
 };

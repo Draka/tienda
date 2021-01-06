@@ -6,8 +6,8 @@ module.exports = (app) => {
   app.get('/administracion/tiendas/:storeID([0-9a-f]{24})', checkAuthAdminStore, require('./store-view'));
   app.get('/administracion/tiendas/:storeID([0-9a-f]{24})/seleccionar', checkAuthAdminStore, require('./select'));
   app.get('/administracion/tiendas/:storeID([0-9a-f]{24})/editar', checkAuthAdminStore, require('./store-edit'));
-  app.get('/administracion/tiendas/:storeID([0-9a-f]{24})/logo', checkAuthAdminStore, require('./store-logo-view'));
-  app.get('/administracion/tiendas/:storeID([0-9a-f]{24})/logo/editar', checkAuthAdminStore, require('./store-logo-edit'));
+  app.get('/administracion/tiendas/:storeID([0-9a-f]{24})/imagenes', checkAuthAdminStore, require('./images-view'));
+  app.get('/administracion/tiendas/:storeID([0-9a-f]{24})/imagenes/editar', checkAuthAdminStore, require('./images-edit'));
   app.get('/administracion/tiendas/:storeID([0-9a-f]{24})/redes-sociales', checkAuthAdminStore, require('./store-social-media-view'));
   app.get('/administracion/tiendas/:storeID([0-9a-f]{24})/redes-sociales/editar', checkAuthAdminStore, require('./store-social-media-edit'));
   app.get('/administracion/tiendas/:storeID([0-9a-f]{24})/zonas-de-coberturas', checkAuthAdminStore, require('./store-coverage-areas-list'));

@@ -1,4 +1,4 @@
-.container-fluid.white-500.mt-2.ph-1
+.container-fluid.white-500.ph-1
   .container
     .row
       .col-md-7
@@ -27,21 +27,9 @@
                     i.fab.fa-whatsapp-square
                   .b.ellipsis.ml-2
                     a(href=`https://wa.me/${contact.value}?text=Hola, encontré en ${appCnf.site.name} tus productos, quisiera saber más.` title='Whatsapp' target='_blank') Whatsapp
-              else if contact.slug == 'cellphone'
+              else if contact.slug == 'web'
                 .flex
                   .icon.big
-                    i.fas.fa-mobile-alt
-                  .b.ellipsis.ml-2
-                    a(href=`tel:${contact.value}` title='Número de Célular' target='_blank') Célular
-              else if contact.slug == 'phone'
-                .flex
-                  .icon.big
-                    i.fas.fa-phone-square-alt
-                  .b.ellipsis.ml-2
-                    a(href=`tel:${contact.value}` title='Número de Teléfonico' target='_blank') Teléfono
-              else if contact.slug == 'url'
-                .flex
-                  .icon.big
-                    i.fab.fa-chrome
+                    i.fas.fa-link
                   .b.ellipsis.ml-2
                     a(href=contact.value title='Página web' target='_blank') Página Web

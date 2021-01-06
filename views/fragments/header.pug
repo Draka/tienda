@@ -57,12 +57,12 @@ header
               i.fas.fa-shopping-cart
               span.badge.inside.num-shopping-cart.m-1.secondary.start-hide
               span.out-screen Ver carrito
-    if store
+    if store && !notMenu
       nav.navbar.white.shadow.mt-4
         .container
           a(href='/'+store.slug)
-            if store.imageSizes
-              img.h-3(src=store.imageSizes['96x96_jpg'] alt=store.name)
+            if _.get(store, 'imageSizes.logo')
+              img.h-3(src=_.get(store, 'imageSizes.logo.96x96_jpg') alt=store.name)
           ul
             li.flex
               a.nav-link.brand-logo(href='/'+store.slug)
@@ -150,3 +150,11 @@ header
             a(href='/cerrar-sesion')
               i.fas.fa-sign-out-alt
               | #{' '}Cerrar Sesión
+
+      if store 
+        .white-500.w-100.flex.h-3
+          .w-100.title.tc.b Categorías
+        ul.list(role='menu')
+          each category in categories
+            li(role='menuitem')
+              a.item(href='/'+store.slug+'/categorias/'+category.slugLong) #{category.name}

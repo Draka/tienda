@@ -37,7 +37,7 @@ block content
                 .relative.br-1.p-1.pb-3.h-100.brt-10.rd-0-5.white
                   .tc
                     a(href=`/${store.slug}`)
-                      +img(`Logo de la tienda ${store.name}`, store.imageSizes)
+                      +img(`Logo de la tienda ${store.name}`, _.get(store, 'imageSizes.logo'))
                   .title.mt-0-5.b #{store.name}
                   .subtitle.pb-1 #{store.slogan}
                   .absolute.bottom.tc.pb-1.w-100c2

@@ -84,7 +84,7 @@ module.exports = (req, res, next) => {
         } while (results.query.images.indexOf(cimg) !== -1);
         results.query.images.push(cimg);
         const pathImg = `${req.params.storeID}/products/${req.params.productID}/${cimg}`;
-        imageToS3(pathImg, null, image, global.imagesSizes, true, cb);
+        imageToS3(pathImg, null, image, global.imagesSizes, true, 'contain', cb);
       }, cb);
     }],
     deleteS3: ['query', (results, cb) => {

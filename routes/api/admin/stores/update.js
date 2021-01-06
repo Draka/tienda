@@ -85,15 +85,19 @@ module.exports = (req, res, next) => {
       if (!req.files) {
         return cb();
       }
-      const mimetype = _.get(req, 'files.image.mimetype');
-      if (['image/jpeg', 'image/png'].indexOf(mimetype) === -1) {
-        return cb();
-      }
+      async.eachOfLimit(req.files, 5, (file, key, cb) => {
+        if (['image/jpeg', 'image/png'].indexOf(file.mimetype) === -1) {
+          return cb();
+        }
+        if (!_.get(global, `storeImageSizes.${key}`)) {
+          return cb();
+        }
 
-      const cimg = _.random(10000, 99999);
-      results.query.image = cimg;
-      const pathImg = `${req.params.storeID}/logo`;
-      imageToS3(pathImg, null, req.files.image, global.imagesSizes, true, cb);
+        const cimg = _.random(10000, 99999);
+        results.query.images[key] = cimg;
+        const pathImg = `${req.params.storeID}/images/${key}`;
+        imageToS3(pathImg, null, file, global.storeImageSizes[key], true, global.storeImageFit[key], cb);
+      }, cb);
     }],
     save: ['uploadFile', (results, cb) => {
       results.query.set(body).save(cb);

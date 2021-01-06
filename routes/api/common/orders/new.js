@@ -288,7 +288,6 @@ module.exports = (req, res, next) => {
       }, cb);
     }],
   }, (err, results) => {
-    // console.log(JSON.stringify(results));
     if (err) {
       return next(err);
     }

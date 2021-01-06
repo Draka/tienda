@@ -56,8 +56,8 @@ nav
       if _.get(user, 'options.storeSelect')
         li.navigation__item(class=menu=='tienda'?'navigation--active':'')
           a.item(href=`/administracion/tiendas/${session.options.storeSelect}`) Configuración
-        li.navigation__item(class=menu=='tienda-logo'?'navigation--active':'')
-          a.item(href=`/administracion/tiendas/${session.options.storeSelect}/logo`) Logo
+        li.navigation__item(class=menu=='tienda-imagenes'?'navigation--active':'')
+          a.item(href=`/administracion/tiendas/${session.options.storeSelect}/imagenes`) Imágenes
         li.navigation__item(class=menu=='tienda-redes-sociales'?'navigation--active':'')
           a.item(href=`/administracion/tiendas/${session.options.storeSelect}/redes-sociales`) Redes Sociales
         li.navigation__item(class=menu=='tienda-zonas-de-coberturas'?'navigation--active':'')

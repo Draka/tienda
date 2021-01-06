@@ -6,6 +6,7 @@ exports.stores = (cb) => {
     } else {
       models.Store
         .find({ publish: true, approve: true })
+        .lean()
         .exec((err, docs) => {
           if (err) {
             return cb(err);
@@ -40,6 +41,29 @@ exports.coveragesAreas = (storeID, cb) => {
   });
 };
 
+exports.places = (storeID, cb) => {
+  const key = `__places__${storeID}`;
+  client.get(key, (_err, reply) => {
+    if (reply && process.env.NODE_ENV === 'production') {
+      cb(null, JSON.parse(reply));
+    } else {
+      models.Place
+        .find({ active: true, storeID })
+        .lean()
+        .exec((err, docs) => {
+          if (err) {
+            return cb(err);
+          }
+          _.each(docs, (doc) => {
+            doc.points = JSON.parse(doc.points || '[]');
+          });
+          client.set(key, JSON.stringify(docs), 'EX', 3600);
+          cb(null, docs);
+        });
+    }
+  });
+};
+
 exports.storeBySlug = (slug, cb) => {
   const key = `__store__${slug}`;
   client.get(key, (_err, reply) => {
@@ -48,6 +72,7 @@ exports.storeBySlug = (slug, cb) => {
     } else {
       models.Store
         .findOne({ slug })
+        .lean()
         .exec((err, doc) => {
           if (err) {
             return cb(err);
@@ -67,6 +92,7 @@ exports.categoryByLongSlug = (storeID, slugLong, cb) => {
     } else {
       models.Category
         .findOne({ storeID, slugLong })
+        .lean()
         .exec((err, doc) => {
           if (err) {
             return cb(err);

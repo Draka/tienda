@@ -1,3 +1,4 @@
+const { putS3LogoPath } = require('../../../libs/put_s3_path.lib');
 const query = require('../../../libs/query.lib');
 
 module.exports = (req, res, next) => {
@@ -20,6 +21,10 @@ module.exports = (req, res, next) => {
       }
       return cb(listErrors(401, null, [{ field: 'storeID', msg: 'No puedes ver esta tienda' }]));
     }],
+    postFind: ['check', (results, cb) => {
+      putS3LogoPath([results.store]);
+      cb();
+    }],
   }, (err, results) => {
     if (err) {
       return next(err);
@@ -38,24 +43,20 @@ module.exports = (req, res, next) => {
         text: `${results.store.name}`,
       },
       {
-        link: `/administracion/tiendas/${req.params.storeID}/logo`,
-        text: 'Logo',
-      },
-      {
-        link: `/administracion/tiendas/${req.params.storeID}/logo/editar`,
-        text: 'Editar',
+        link: `/administracion/tiendas/${req.params.storeID}/imagenes`,
+        text: 'Imágenes',
         active: true,
       },
     ];
 
-    res.render('admin/pages/stores/store-logo-edit.pug', {
+    res.render('admin/pages/stores/images-view.pug', {
       session: req.user,
       user: results.user,
       store: results.store,
-      title: 'Logo',
-      menu: 'tienda-logo',
+      title: 'Imágenes',
+      menu: 'tienda-imagenes',
+      edit: `/administracion/tiendas/${req.params.storeID}/imagenes/editar`,
       breadcrumbs,
-      js: 'admin',
     });
   });
 };

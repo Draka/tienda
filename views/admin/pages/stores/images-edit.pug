@@ -1,0 +1,56 @@
+extends ../../layout-edit
+
+block edit
+  form.validate(
+    id="form"
+    action=`${appCnf.url.api}admin/stores/${store._id}`
+    method="post"
+    enctype="multipart/form-data"
+    data-error="#form-results")
+
+    .row
+      .col-xs-12
+        .form-group
+          .form-control
+            input(type='hidden' name='redirect' value=`/administracion/tiendas/${store._id}/imagenes`)
+            input.input#image(type='file' name='logo' placeholder=' ' accept='image/jpeg,image/png')
+            label
+              .title(for='logo') Logo
+        .remark.action.flex.mb-2
+          .h4.mr-1.t-action
+            i.far.fa-file-image.h1
+          div
+            .big 600x600
+            p Suba una imagen de preferencia png mínimo de 600x600 px, de fondo transparente y máximo 10 megas de tamaño.
+            p Se admite jpg, pero tenga en cuenta dejar un fondo blanco.
+
+        .form-group
+          .form-control
+            input.input#image(type='file' name='header' placeholder=' ' accept='image/jpeg,image/png')
+            label
+              .title(for='header') Cabecera
+        .remark.action.flex.mb-2
+          .h4.mr-1.t-action
+            i.far.fa-file-image.h1
+          div
+            .big 2048x460
+            p Suba una imagen de preferencia jpg mínimo de 2048x460 px y máximo 10 megas de tamaño.
+
+        .form-group
+          .form-control
+            input.input#image(type='file' name='social' placeholder=' ' accept='image/jpeg,image/png')
+            label
+              .title(for='social') Redes Sociales
+        .remark.action.flex.mb-0-5
+          .h4.mr-1.t-action
+            i.far.fa-file-image.h1
+          div
+            .big 1028x540
+            p Suba una imagen de preferencia jpg mínimo de 1028x540 px y máximo 10 megas de tamaño.
+
+
+    .row
+      .col-xs-12.tr
+        a.btn.btn--secondary.w-100-xs(href=`/administracion/tiendas/${store._id}/logo`) Cancelar
+        | #{' '}
+        button.btn.btn--primary.w-100-xs.mt-2-xs(type="submit") Subir imágenes

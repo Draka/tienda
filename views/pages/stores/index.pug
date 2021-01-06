@@ -1,52 +1,44 @@
 extends ../../layout_store
 
 block content
-  .container.mt-3
-    .row.justify-content-center
-      .col-md-10
-        .br-1.p-3.mb-3.brt-10.rd-0-5.white
-          .row
-            .col-md-4.tc
-              if store.imageSizes
-                img.h-192p.lazy.responsive(data-src=store.imageSizes['196x196_jpg'] data-retina=store.imageSizes['392x392_jpg'] alt=store.name)
-            .col-md-8
-              h1.mb-2 #{store.name}
-              .big #{store.slogan}
-              p #{store.description}
-              .hr
-              p !{store.vision}
+  include ../../fragments/header_store.pug
+  .stub
+    .stub__left.white.brr-1.hide-xs
+      include ../../fragments/menu_store.pug
+    .stub__right.w-100-xs
+      .container-fluid
+        .row.pb-2
+          .col-xs-12
+            if store.featuredCategories
+              each featured in store.featuredCategories
+                if products[featured.category._id].length
+                  .flex.mt-2.mb-0-5
+                    .title.b.t-primary.w-100
+                      | #{featured.category.name}
+                    .small.nowrap
+                      a(href=`/${store.slug}/categorias/${featured.category.slugLong}`)
+                        | Ver más
+                        | #{' '}
+                        i.fas.fa-arrow-right
+                  .white.br-1.rd-0-2.p-1
+                      .row
+                        .col-xs-12
+                          .list-products-inline.carousel.primary
+                            .carousel-arrow.carousel-arrow-left
+                              .carousel-icon-left
+                                .out-screen Mover a la izquierda
+                                i.fas.fa-chevron-left
 
-      .col-xs-12
-        if store.featuredCategories
-          each featured in store.featuredCategories
-            if products[featured.category._id].length
-              .flex.mt-2.mb-0-5
-                .title.b.t-primary.w-100
-                  | #{featured.category.name}
-                .small.nowrap
-                  a(href=`/${store.slug}/categorias/${featured.category.slugLong}`)
-                    | Ver más
-                    | #{' '}
-                    i.fas.fa-arrow-right
-              .white.br-1.rd-0-2.p-1
-                  .row
-                    .col-xs-12
-                      .list-products-inline.carousel.primary
-                        .carousel-arrow.carousel-arrow-left
-                          .carousel-icon-left
-                            .out-screen Mover a la izquierda
-                            i.fas.fa-chevron-left
+                            .carousel-list
+                              ul
+                                each product,pos in products[featured.category._id]
+                                  li
+                                    .w-230p.w-170p-xs.w-170p-sm.br-1.white.h-100
+                                      +simpleProduct(store, product)
 
-                        .carousel-list
-                          ul
-                            each product,pos in products[featured.category._id]
-                              li
-                                .w-230p.w-170p-xs.w-170p-sm.br-1.white.h-100
-                                  +simpleProduct(store, product)
-
-                        .carousel-arrow.carousel-arrow-right
-                          .carousel-icon-right
-                            .out-screen Mover a la derecha
-                            i.fas.fa-chevron-right
+                            .carousel-arrow.carousel-arrow-right
+                              .carousel-icon-right
+                                .out-screen Mover a la derecha
+                                i.fas.fa-chevron-right
 
   include ../../fragments/footer_store.pug

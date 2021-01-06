@@ -16,6 +16,16 @@ const vars = {
   langDefault: 'es',
   activeOrders: 2,
   imagesSizes: [{ x: 48, y: 48 }, { x: 96, y: 96 }, { x: 196, y: 196 }, { x: 392, y: 392 }, { x: 484, y: 484 }],
+  storeImageSizes: {
+    logo: [{ x: 48, y: 48 }, { x: 96, y: 96 }, { x: 196, y: 196 }, { x: 392, y: 392 }, { x: 484, y: 484 }, { x: 600, y: 600 }],
+    header: [{ x: 1003, y: 196 }, { x: 2048, y: 460 }],
+    social: [{ x: 373, y: 196 }, { x: 1028, y: 540 }],
+  },
+  storeImageFit: {
+    logo: 'contain',
+    header: 'cover',
+    social: null,
+  },
   __: (str, a1, a2) => str.replace('%s', a1).replace('%s', a2),
   socialMedia: [
     ['facebook', 'Facebook', 'url', '', 'fab fa-facebook-square'],
