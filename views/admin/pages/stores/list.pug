@@ -23,9 +23,11 @@ block list
           th.b.tc P
           th.b.tc A
           th.b Nombre
+          th.b Departamento - Ciudad
+          th.b Actividad Primaria
           th.b URL
           th.b Descripción
-          th.tc(colspan=2)
+          th.tc
             i.fas.fa-cog
       tbody
         each item of items
@@ -43,15 +45,19 @@ block list
             td
               a.b(href=`/administracion/tiendas/${item._id}/editar`) #{item.name}
             td
+              | #{item.department} - #{item.town}
+            td
+              | #{item.primaryActivity}
+            td
               a(href=`${appCnf.url.site}${item.slug}` target='_blank') #{`${appCnf.url.site}${item.slug}`}
             td
               | #{item.description}
             td.tc
               a.btn-flat.p-0-5.rd-0-2(href=`/administracion/tiendas/${item._id}/editar` title='Editar')
                 i.fas.fa-pencil-alt
-            td.tc
-              button.btn-flat.p-0-5.rd-0-2(data-id=item._id title='Eliminar')
-                i.fas.fa-trash-alt
+            //- td.tc
+            //-   button.btn-flat.p-0-5.rd-0-2(data-id=item._id title='Eliminar')
+            //-     i.fas.fa-trash-alt
       tfoot
         tr
           th(colspan="10")

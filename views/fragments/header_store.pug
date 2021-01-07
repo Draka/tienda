@@ -46,7 +46,7 @@ if _.get(store, 'imageSizes.header')
                       i.fab.fa-twitter-square
                 else if contact.slug == 'whatsapp'
                   .icon.bigx2.ml-0-5
-                    a(href=`https://wa.me/${contact.value}?text=Hola, encontré en ${appCnf.site.name} tus productos, quisiera saber más.` title='Whatsapp' target='_blank')
+                    a(href=`https://wa.me/${contact.value}?text=Hola, ${store.name} quisiera saber más de tus productos.` title='Whatsapp' target='_blank')
                       i.fab.fa-whatsapp-square
                 else if contact.slug == 'web'
                   .icon.bigx2.ml-0-5

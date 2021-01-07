@@ -3,6 +3,9 @@ module.exports = (req, res, next) => {
   const body = _.pick(req.body, [
     'name',
     'slug',
+    'department',
+    'town',
+    'primaryActivity',
   ]);
   async.auto({
     validate: (cb) => {

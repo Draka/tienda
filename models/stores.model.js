@@ -120,6 +120,18 @@ const schema = new mongoose.Schema({
       },
     },
   ],
+  department: {
+    type: String,
+    trim: true,
+  },
+  town: {
+    type: String,
+    trim: true,
+  },
+  primaryActivity: {
+    type: String,
+    trim: true,
+  },
 }, { timestamps: true });
 
 function preUpdate(result, next) {

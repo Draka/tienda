@@ -1,4 +1,6 @@
 const query = require('../../../libs/query.lib');
+const departments = require('../../api/common/world/departments_db');
+const towns = require('../../api/common/world/towns_db');
 
 module.exports = (req, res, next) => {
   async.auto({
@@ -53,6 +55,8 @@ module.exports = (req, res, next) => {
       breadcrumbs,
       cke: true,
       js: 'admin',
+      departments,
+      towns: _.orderBy(_.filter(towns, { departmentSlug: results.store.department }), 'name'),
     });
   });
 };

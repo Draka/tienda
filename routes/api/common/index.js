@@ -1,6 +1,11 @@
-/* eslint-disable global-require */
+const products = require('./products');
+const stores = require('./stores');
+const orders = require('./orders');
+const world = require('./world');
+
 module.exports = (app) => {
-  require('./products')(app);
-  require('./stores')(app);
-  require('./orders')(app);
+  products(app);
+  stores(app);
+  orders(app);
+  world(app);
 };

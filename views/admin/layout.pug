@@ -9,7 +9,7 @@ html(lang='es')
     include fragments/head.pug
     include fragments/metatag.pug
 
-  body
+  body(data-url-api=appCnf.url.api)
     if process.env.NODE_ENV == 'production' && appCnf.gtm
       noscript
         iframe(src='https://www.googletagmanager.com/ns.html?id='+appCnf.gtm height='0' width='0' style='display:none;visibility:hidden')

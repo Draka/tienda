@@ -19,6 +19,9 @@ module.exports = (req, res, next) => {
     'publish',
     'deliveries',
     'payments',
+    'department',
+    'town',
+    'primaryActivity',
   ]);
   if (req.body.lat && req.body.lng) {
     body['location.type'] = 'Point';
@@ -46,6 +49,19 @@ module.exports = (req, res, next) => {
   if (body.contacts) {
     body.contacts = _.map(global.socialMedia, (contact) => {
       const d = _.find(body.contacts, { slug: contact[0] });
+      if (contact[3].cellphone) {
+        const re = /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/im;
+
+        if (d.value && !re.test(d.value)) {
+          errors.push({ field: 'cellphone', msg: __('Debe escribir un número de célular válido') });
+        }
+        if (d.value.length === 10) {
+          d.value = `+57${d.value}`;
+        }
+        if (d.value.length === 12) {
+          d.value = `+${d.value}`;
+        }
+      }
       return {
         slug: contact[0],
         value: _.get(d, 'value') || '',

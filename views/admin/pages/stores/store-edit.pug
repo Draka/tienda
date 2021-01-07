@@ -29,6 +29,25 @@ block edit
           .mb-1.subtitle Descripción Larga
           textarea.cke#descriptionLong(data-target='#descriptionLong' name="descriptionLong") !{store.descriptionLong}
 
+        .form-group
+          .form-control
+            select.input#department.department(name='department' required data-target='#town')
+              option(value='') --
+              each department in departments
+                option(value=department.slug selected=store.department==department.slug) #{department.name}
+            label.nowrap(for='department') Departamento
+        .form-group
+          .form-control
+            select.input#town(name='town' required)
+              option(value='') --
+              each town in towns
+                option(value=town.slug selected=store.town==town.name) #{town.name}
+            label.nowrap(for='town') Municipio
+        .form-group
+          .form-control
+            input.input#primaryActivity(type="text" name="primaryActivity" placeholder='Restaurantes, Transporte, Servicios...' required value=store.primaryActivity)
+            label(for='primaryActivity') Actividad primaria
+
 
     .row
       .col-xs-12.tr

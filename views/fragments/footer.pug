@@ -47,3 +47,38 @@ footer.mt-8
             a(href="https://www.facebook.com/tiendap4s" target='_blank')
               i.fab.fa-facebook-square
               span.out-screen Página de facebook
+
+  if !store 
+    .m-1.fixed.bottom 
+      a(href=`https://wa.me/${appCnf.site.whatsapp}?text=Hola, tengo una pregunta sobre ${appCnf.site.name}` title='Whatsapp' target='_blank')
+        .t-action-300.bigx2
+          i.fab.fa-whatsapp.social
+
+  else
+    .m-1.fixed.bottom 
+      .t-action-300.bigx2.hand#open-modal-whatsapp
+        i.fab.fa-whatsapp.social
+    #modal-whatsapp.modal.start-hide(tabindex='-1' role='dialog')
+      .modal-dialog(role='document')
+          .modal-content
+            .modal-header
+              .b Contactar con?
+              button.close.close-modal.btn-flat(type='button' data-dismiss='modal' aria-label='Cerrar')
+                span(aria-hidden='true') &times;
+            .modal-body
+              each contact in store.contacts
+                if contact.value
+                  if contact.slug == 'whatsapp'
+                    a(href=`https://wa.me/${contact.value}?text=Hola, ${store.name} quisiera saber más de tus productos.` title='Whatsapp' target='_blank')
+                      .flex
+                        .t-action-300.big
+                          i.fab.fa-whatsapp.social
+                        .title.b.ml-1 #{store.name}?
+              a.mt-1(href=`https://wa.me/${appCnf.site.whatsapp}?text=Hola, tengo una pregunta sobre ${appCnf.site.name}` title='Whatsapp' target='_blank')
+                .flex
+                  .t-action-300.big
+                    i.fab.fa-whatsapp.social
+                  .title.b.ml-1 #{appCnf.site.name}?
+
+            .modal-footer.tr
+              button.close-modal.btn.btn--white(type='button') Cerrar

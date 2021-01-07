@@ -14,6 +14,7 @@ export class Util {
     this.count();
     this.lazy();
     this.showDetailOrder();
+    this.changeTowns();
   }
 
   count() {
@@ -55,6 +56,21 @@ export class Util {
     });
     $('.btn-cancel').on('click', () => {
       sclib.modalShow('#cancelOrder');
+    });
+  }
+
+  changeTowns() {
+    $('.department').on('change', (event) => {
+      const $el = $(event.currentTarget);
+      this.getApi.g(`towns/${$el.val()}`)
+        .done((data: any) => {
+          const $target = $($el.data('target'));
+          $target.empty(); // remove old options
+          $target.append($('<option></option>').attr('value', '').text('--'));
+          $.each(data, (_i, town) => {
+            $target.append($('<option></option>').attr('value', town.name).text(town.name));
+          });
+        });
     });
   }
 }

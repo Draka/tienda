@@ -19,6 +19,25 @@ block edit
           .flex
             i.fas.fa-exclamation-triangle.h4.mr-0-25.w-2.tc
             | El valor de Slug es permanente.
+
+        .form-group
+          .form-control
+            select.input#department.department(name='department' required data-target='#town')
+              option(value='') --
+              each department in departments
+                option(value=department.slug) #{department.name}
+            label.nowrap(for='department') Departamento
+        .form-group
+          .form-control
+            select.input#town(name='town' required)
+              option(value='') --
+              each town in towns
+                option(value=town.slug) #{town.name}
+            label.nowrap(for='town') Municipio
+        .form-group
+          .form-control
+            input.input#primaryActivity(type="text" name="primaryActivity" placeholder='Restaurantes, Transporte, Servicios...' required)
+            label(for='primaryActivity') Actividad primaria
     .row
       .col-xs-12.tr
         button.btn.btn--primary.w-100-xs.mt-2-xs(type="submit") Crear Tienda

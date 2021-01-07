@@ -10,6 +10,7 @@ export class StoreUtil {
   constructor() {
     this.prepareBtns();
     this.mapMarkers();
+    this.openModalWhatsapp();
   }
 
   prepareBtns() {
@@ -55,6 +56,12 @@ export class StoreUtil {
 
     coords.forEach((i) => {
       L.marker([i[1], i[0]]).addTo(map);
+    });
+  }
+
+  openModalWhatsapp() {
+    $('#open-modal-whatsapp').on('click', () => {
+      sclib.modalShow('#modal-whatsapp');
     });
   }
 }
