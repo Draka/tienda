@@ -34,7 +34,8 @@ block list
                 i.fas.fa-search
             td.tc
               if item.image
-                img.m-0-25(src=item.imageSizes['48x48_jpg'])
+                if item.imageSizes
+                  img.m-0-25(src=item.imageSizes['48x48_jpg'])
             td.tc
               +boolean(item.publish)
             td.tc
