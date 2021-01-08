@@ -37,9 +37,8 @@ block list
               a.btn.btn--secondary.small(href=`/administracion/tiendas/${item._id}/seleccionar` title='Seleccionar')
                 | Seleccionar
             td.tc
-              if item.image
-                if item.imageSizes
-                  img.m-0-25(src=item.imageSizes['48x48_jpg'])
+              if item.imageSizes
+                img.m-0-25(src=item.imageSizes['48x48_jpg'])
             td.tc
               +boolean(item.publish)
             td.tc
