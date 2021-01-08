@@ -19,6 +19,7 @@ block list
       thead
         tr
           th &nbsp;
+          th &nbsp;
           th.b Logo
           th.b.tc P
           th.b.tc A
@@ -32,6 +33,9 @@ block list
             td.tc
               a(href=`/administracion/super/tiendas/${item._id}` title='Ver')
                 i.fas.fa-search
+            td.tc
+              a.btn.btn--secondary.small(href=`/administracion/tiendas/${item._id}/seleccionar` title='Seleccionar')
+                | Seleccionar
             td.tc
               if item.image
                 if item.imageSizes
@@ -51,7 +55,7 @@ block list
               div #{item.userID.email}
       tfoot
         tr
-          th(colspan="10")
+          th(colspan="9")
             .pagination.justify-content-right
               a.item(href=`?page=0`)
                 i.fas.fa-chevron-left

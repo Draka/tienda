@@ -1,6 +1,8 @@
 if _.get(store, 'imageSizes.header')
   .container-fluid.h-460p.h-230p-xs.bg.s-cover.lazy(data-src=_.get(store, 'imageSizes.header.2048x460_jpg') alt=`Imagen de cabecera de ${store.name}` style='background-position: center center')
-  
+else 
+  .container-fluid.h-460p.h-230p-xs.bg.s-cover.lazy(data-src=appCnf.url.static+'tenancy/'+appCnf.tenancy+'/images/store_pattern.jpg' alt=`Imagen de cabecera de ${store.name}` style='background-position: center center')
+
 .container-fluid.black-300.ph-1
   .container
     .row
