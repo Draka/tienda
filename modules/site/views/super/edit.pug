@@ -67,7 +67,7 @@ block edit
                   type=social[2]
                   name=`contacts[${key}][value]`
                   placeholder=' '
-                  value=(item.contacts.find(i=>i.slug==social[0])||{}).value
+                  value=item.contacts ? (item.contacts.find(i=>i.slug==social[0])||{}).value : ''
                   )&attributes(social[3])
                 label(for=`contacts-${social[0]}`) #{social[1]}
 
