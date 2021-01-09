@@ -13,3 +13,4 @@ exports.Payment = require('./payments.model');
 exports.Page = require('./pages.model');
 exports.Document = require('./documents.model');
 exports.Plan = require('./plans.model');
+exports.Site = require('./site.model');

@@ -1,3 +1,47 @@
+exports.model = (model, id, cb) => {
+  const name = _.kebabCase(_.deburr(model));
+  const key = `__${name}__${id}`;
+  client.get(key, (_err, reply) => {
+    if (reply && process.env.NODE_ENV === 'production') {
+      cb(null, JSON.parse(reply));
+    } else {
+      models[model]
+        .findById(id)
+        .lean()
+        .exec((err, doc) => {
+          if (err) {
+            return cb(err);
+          }
+          client.set(key, JSON.stringify(doc), 'EX', 3600);
+          cb(null, doc);
+        });
+    }
+  });
+};
+/**
+ * Datos del sitio
+ * @param {*} cb
+ */
+exports.site = (cb) => {
+  const key = '__site__';
+  client.get(key, (_err, reply) => {
+    if (reply && process.env.NODE_ENV === 'production') {
+      cb(null, JSON.parse(reply));
+    } else {
+      models.Site
+        .findOne()
+        .lean()
+        .exec((err, doc) => {
+          if (err) {
+            return cb(err);
+          }
+          client.set(key, JSON.stringify(doc), 'EX', 3600);
+          cb(null, doc);
+        });
+    }
+  });
+};
+
 exports.user = (id, cb) => {
   const key = `__user__${id}`;
   client.get(key, (_err, reply) => {

@@ -54,7 +54,7 @@ module.exports = (req, res, next) => {
         }
         sqsMailer({
           to: { email: results.query.email, name: results.query.personalInfo.name },
-          subject: `${__('¿Olvidaste tu contraseña?')} - ${appCnf.email.title}`,
+          subject: `${__('¿Olvidaste tu contraseña?')}`,
           template: 'password-reset',
           passwordTemp,
         },

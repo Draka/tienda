@@ -10,17 +10,18 @@ module.exports = (data, user, cb) => {
   async.auto({
     sqs: (cb) => {
       data.source = {
-        name: appCnf.email.title,
-        email: appCnf.email.emailInfo,
+        name: _.get(appCnf, 'site.email.title'),
+        email: _.get(appCnf, 'site.email.emailInfo'),
       };
       data.replyToAddresses = [
-        appCnf.email.emailNoreply,
+        _.get(appCnf, 'site.email.emailNoreply'),
       ];
       data.site = {
-        name: appCnf.site.name,
+        name: _.get(appCnf, 'site.name'),
         urlSite: appCnf.url.site,
         urlStatic: appCnf.url.static,
-        info: appCnf.email.emailInfo,
+        info: _.get(appCnf, 'site.email.emailInfo'),
+        title: _.get(appCnf, 'site.email.title'),
       };
       const params = {
         DelaySeconds: 0,

@@ -3,7 +3,7 @@ header
     nav.navbar.primary-500.fixed.shadow
       .container.left
         a.logo(href='/')
-          img(src=`${appCnf.url.static}tenancy/${appCnf.tenancy}/images/logo-top.svg` alt=`${appCnf.site.name} logo`)
+          img(src=`${appCnf.url.static}tenancy/${appCnf.tenancy}/images/logo-top.svg` alt=`${_.get(appCnf, 'site.name')} logo`)
 
         .expand
         .login.relative
@@ -30,7 +30,7 @@ header
             span.out-screen Menú
         li.expand
           a.logo.justify-content-center(href='/')
-            img(src=`${appCnf.url.static}tenancy/${appCnf.tenancy}/images/logo-top.svg` alt=`${appCnf.site.name} logo`)
+            img(src=`${appCnf.url.static}tenancy/${appCnf.tenancy}/images/logo-top.svg` alt=`${_.get(appCnf, 'site.name')} logo`)
 
   nav#mobile-menu.sidenav
     .sidenav-body

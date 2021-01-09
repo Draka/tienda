@@ -18,6 +18,7 @@ const cache = require('./libs/cache.lib');
 const jsMiddleware = require('./libs/js_middleware.lib');
 const tsMiddleware = require('./libs/ts_middleware.lib');
 const imgMiddleware = require('./libs/img_middleware.lib');
+const { site } = require('./libs/query.lib');
 const {
   formatMoney, statusToDate, badge, mapImg, statusText, statusIcon,
 } = require('./libs/util.lib');
@@ -76,6 +77,7 @@ const dbOptions = {
 mongoose.connect(appCnf.db, dbOptions).then(
   () => {
     console.log('MongoDB open');
+
     // Genera scripts
     tsMiddleware();
     imgMiddleware();
@@ -87,12 +89,17 @@ mongoose.connect(appCnf.db, dbOptions).then(
 );
 // modelos
 global.models = require('./models');
+// carga site
+site((err, doc) => {
+  global.appCnf.site = doc;
+});
 
 const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
+app.locals.basedir = __dirname;
 
 app.use(logger('dev'));
 
@@ -129,6 +136,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(auth);
 
 require('./routes')(app);
+require('./modules')(app);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

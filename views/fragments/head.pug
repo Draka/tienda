@@ -27,7 +27,7 @@ title
   if store
     | #{title} en #{store.name}
   else
-    | #{title} #{appCnf.site.separator} #{appCnf.site.name}
+    | #{title} | #{_.get(appCnf, 'site.name')}
 
 //- preload
 link(rel='preload' href=appCnf.url.static+'webfonts/lato-v16-latin-700.woff2' as='font' crossorigin type='font/woff2')

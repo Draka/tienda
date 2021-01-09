@@ -16,6 +16,9 @@ module.exports = (store, bodyItems, cb) => {
     async.auto({
       // Buscaa el producto
       product: (cb) => {
+        if (!store) {
+          return cb();
+        }
         productBySKU(store._id, item.sku, (err, doc) => {
           if (err) {
             return cb(err);

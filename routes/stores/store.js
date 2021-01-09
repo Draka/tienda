@@ -105,7 +105,7 @@ module.exports = (req, res, next) => {
       center,
       categories: results.categories,
       products: results.products,
-      title: appCnf.site.title,
+      title: _.get(appCnf, 'site.title'),
       menu: 'index',
       js: 'store',
       osm: true,

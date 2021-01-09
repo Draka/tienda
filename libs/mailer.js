@@ -34,7 +34,7 @@ module.exports = (data, userID, tenancy, cb) => {
       },
       Subject: {
         Charset: 'UTF-8',
-        Data: data.subject,
+        Data: `${data.subject} - ${data.site.title}`,
       },
     },
     // Source: `${_.get(data, 'from.name') || site.title}<${site.emailInfo}>`, /* required */

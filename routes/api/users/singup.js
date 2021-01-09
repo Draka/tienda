@@ -58,7 +58,7 @@ module.exports = (req, res, next) => {
     mailer: ['create', (results, cb) => {
       sqsMailer({
         to: { email: body.email, name: results.create.personalInfo.name },
-        subject: `${__('Registro')} - ${appCnf.email.title}`,
+        subject: `${__('Registro')}`,
         template: 'new-user',
       },
       results.create,

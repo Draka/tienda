@@ -1,5 +1,14 @@
 /* eslint-disable no-param-reassign */
 const schema = new mongoose.Schema({
+  site: {
+    type: String,
+    trim: true,
+    index: {
+      unique: true,
+      sparse: true,
+    },
+    default: 'site',
+  },
   name: {
     type: String,
     trim: true,

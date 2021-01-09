@@ -24,7 +24,7 @@ meta(name='viewport' content='width=device-width, initial-scale=1.0, maximum-sca
 meta(http-equiv='content-type' content='text/html; charset=UTF-8')
 
 title
-  | #{title} #{appCnf.site.separator} #{appCnf.site.name}
+  | #{title} | #{_.get(appCnf, 'site.name')}
 
 //- preload
 link(rel='preload' href=appCnf.url.static+'webfonts/lato-v16-latin-700.woff2' as='font' crossorigin type='font/woff2')

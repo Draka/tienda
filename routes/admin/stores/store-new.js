@@ -1,4 +1,5 @@
 const query = require('../../../libs/query.lib');
+const departments = require('../../api/common/world/departments_db');
 
 const breadcrumbs = [
   {
@@ -26,6 +27,9 @@ module.exports = (req, res, next) => {
       title: 'Nueva tienda',
       menu: 'tienda-nueva',
       breadcrumbs,
+      js: 'admin',
+      departments,
+      towns: [],
     });
   });
 };

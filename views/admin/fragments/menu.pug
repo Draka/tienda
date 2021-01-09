@@ -31,10 +31,10 @@ nav
       .expandable__header
         .expandable__icon
           i.fas.fa-angle-down.fa-fw
-        .expandable__title Portal
+        .expandable__title #{_.get(appCnf, 'site.name')}
       ul.expandable__body.navigation
-        //- li.navigation__item(class=menu=='super-site'?'navigation--active':'')
-        //-   a.item(href=`/administracion/super/site`) Sitio
+        li.navigation__item(class=menu=='super-site-config'?'navigation--active':'')
+          a.item(href=`/administracion/super/configuracion`) Configuración
         li.navigation__item(class=menu=='super-planes'?'navigation--active':'')
           a.item(href=`/administracion/super/planes`) Planes
         //- li.navigation__item(class=menu=='super-multimedia'?'navigation--active':'')
