@@ -1,0 +1,7 @@
+extends ./layout-client-order
+block order
+  h2 Pedido cancelado en #{site.name}
+  h3 Hola, #{(_.get(to, 'name')||'').split(' ')[0]}
+  p El pago de la orden ##{order.orderID} ha sido reversado y la orden cancelada.
+  p Si la cancelación fue 2 horas después de hacer el pago, el movimientto de nuevo saldo puede tardar un tiempo.
+  p Hasta pronto.
