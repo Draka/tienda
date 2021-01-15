@@ -8,6 +8,7 @@ module.exports = (req, res, next) => {
     'publish',
     'name',
     'description',
+    'features',
     'price',
     'tax',
     'test',

@@ -1,0 +1,34 @@
+mixin boolean(b)
+  if b!='no' && b
+    span.t-action.p-0-25.pw-0-5.rd-0-2.tc
+      i.fas.fa-check
+  else
+    span.t-error.ph-0-25.pw-0-5.rd-0-2.tc
+      i.fas.fa-times
+
+table.table.table--lines
+  tr
+    th.white-500
+    each item of items
+      th.white-500
+        .tc #{item.name}
+        .tc.small #{item.description}
+  tr
+    td Costo Mensual
+    each item of items
+      td
+        .flex.justify-content-center
+          span COP $
+          span.bigx2 #{item.price/100}k
+          span / mes
+  tr
+    th.white-500(colspan=items.length+1) Características
+  each feature,key in features
+    tr
+      td #{key}
+      each item of items
+        td
+          if feature[item.slug]=='si' || feature[item.slug]=='no'
+            +boolean(feature[item.slug])
+          else
+            | #{feature[item.slug]}

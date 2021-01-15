@@ -1,3 +1,6 @@
+const modCnf = require('../../modCnf');
+const { imageToS3 } = require('../../libs/image.lib');
+
 module.exports = (req, res, next) => {
   const errors = [];
   const fbody = {};
@@ -51,7 +54,33 @@ module.exports = (req, res, next) => {
         .findOne()
         .exec(cb);
     }],
-    save: ['query', (results, cb) => {
+    uploadFile: ['query', (results, cb) => {
+      if (!req.files) {
+        return cb();
+      }
+      async.eachOfLimit(req.files, 5, (file, key, cb) => {
+        if (modCnf.images[key]) {
+          if (modCnf.images[key].mimetype.indexOf(file.mimetype) === -1) {
+            return cb();
+          }
+
+          const cimg = _.random(10000, 99999);
+          const originalExt = _.last(file.name.split('.'));
+          if (modCnf.images[key].convert.length) {
+            _.each(modCnf.images[key].convert, (ext) => {
+              _.set(results.query, `images.${key}.${ext}`, `${key}.${ext}?=${cimg}`);
+            });
+          } else {
+            _.set(results.query, `images.${key}.${modCnf.images[key].ext}`, `${key}.${originalExt}?=${cimg}`);
+          }
+          const pathImg = `site/${key}`;
+          imageToS3(pathImg, key, file, modCnf.images[key].convert, cb);
+        } else {
+          return cb();
+        }
+      }, cb);
+    }],
+    save: ['uploadFile', (results, cb) => {
       if (!results.query) {
         const site = new models.Site(body);
         site.save(cb);

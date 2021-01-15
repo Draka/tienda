@@ -21,9 +21,20 @@ block edit
               input.input#name(type="text" name="name" placeholder=' ' required)
               label(for='name') Nombre
           .form-group.ph-1
-            .subtitle.mb-0-5 Descripción
             .form-control
-              textarea.cke#description(name="html" placeholder=' ')
+              textarea.input#description(name="description" placeholder=' ')
+              label(for='features') Descripción
+          .msg.info.mb-0-5.mt-1
+            .flex
+              i.fas.fa-exclamation.h2.mr-0-25.w-2.tc
+              div
+                div Una característica por línea, use este formato:
+                div Usuarios administradores=5
+                div Estadísticas=si
+          .form-group.ph-1
+            .form-control
+              textarea.input#features(name="features" placeholder=' ' rows=10)
+              label(for='features') Características
           .form-group
             .form-control
               input.input#test(type="number" name="test" placeholder=' ' required min=0 max=12)

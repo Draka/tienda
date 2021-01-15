@@ -52,18 +52,12 @@ const schema = new mongoose.Schema({
     },
   }],
   images: {
-    logo: {
-      type: String,
-      trim: true,
-    },
-    header: {
-      type: String,
-      trim: true,
-    },
-    social: {
-      type: String,
-      trim: true,
-    },
+    favicon: {},
+    favpng: {},
+    logoTop: {},
+    logoSquare: {},
+    logoEmail: {},
+    social: {},
   },
   sameAs: [{
     type: String,

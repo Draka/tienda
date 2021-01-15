@@ -14,16 +14,25 @@ block edit
           .form-group
             .form-control
               label
+                input.checkbox#active(type="checkbox" name="active" value='1' checked=item.active)
+                span Activa
+          .form-group
+            .form-control
+              label
                 input.checkbox#publish(type="checkbox" name="publish" value='1' checked=item.publish)
                 span Publicado
           .form-group
             .form-control
               input.input#title(type="text" name="title" placeholder=' ' required value=item.title)
               label(for='title') Título
-          .form-group.ph-1
-            .subtitle.mb-0-5 Html
+          .form-group
             .form-control
-              textarea.cke#html(name="html" placeholder=' ') #{item.html}
+              input.input#slug(type="text" name="slug" placeholder=' ' value=item.slug)
+              label(for='slug') Slug
+          .form-group.ph-1
+            .form-control
+              textarea.input#html(name="html" placeholder=' ' rows=20) #{item.html}
+              label(for='html') HTML [bbcode]
       .row
         .col-xs-12.tr
           button.btn.btn--primary.w-100-xs.mt-2-xs(type="submit") Editar Página

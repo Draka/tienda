@@ -5,6 +5,14 @@ module.exports = (req, res, next) => {
     site: (cb) => {
       site(cb);
     },
+    images: ['site', (results, cb) => {
+      _.each(results.site.images, (image, path) => {
+        _.each(image, (url, ext) => {
+          results.site.images[path][ext] = `${appCnf.url.static}tenancy/${appCnf.tenancy}/images/${appCnf.s3.folder}/site/${path}/${url}`;
+        });
+      });
+      cb();
+    }],
   }, (err, results) => {
     if (err) {
       return next(err);

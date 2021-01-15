@@ -3,13 +3,17 @@ extends ../../layout-list
 block list
   if items.length
     .remark
+      b A
+      | #{' '} = Activa,
+      | #{' '}
       b P
-      | #{' '} = Publicado,
+      | #{' '} = Publicado
       | #{' '}
     table.small.table.table--lines.table--striped
       thead
         tr
           th.b &nbsp;
+          th.b.tc A
           th.b.tc P
           th.b Nombre
           th.b Slug
@@ -20,15 +24,17 @@ block list
               a(href=`/administracion/super/paginas/editar/${item._id}` title='Ver')
                 i.fas.fa-search
             td.tc
+              +boolean(item.active)
+            td.tc
               +boolean(item.publish)
             td
               a.b(href=`/administracion/super/paginas/editar/${item._id}`) #{item.title}
             td
               | #{item.slug}
-            
+
       tfoot
         tr
-          th(colspan="4")
+          th(colspan="5")
             +paginator
   else
     +noItems('No hay páginas creadas.')

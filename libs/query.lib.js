@@ -18,6 +18,48 @@ exports.model = (model, id, cb) => {
     }
   });
 };
+
+exports.modelSlug = (model, slug, cb) => {
+  const name = _.kebabCase(_.deburr(model));
+  slug = _.kebabCase(_.deburr(slug));
+  const key = `__${name}__${slug}`;
+  client.get(key, (_err, reply) => {
+    if (reply && process.env.NODE_ENV === 'production') {
+      cb(null, JSON.parse(reply));
+    } else {
+      models[model]
+        .findOne({ slug })
+        .lean()
+        .exec((err, doc) => {
+          if (err) {
+            return cb(err);
+          }
+          client.set(key, JSON.stringify(doc), 'EX', 3600);
+          cb(null, doc);
+        });
+    }
+  });
+};
+
+exports.modelAllPublish = (model, cb) => {
+  const key = `__${models[model].collection.collectionName}__publish__`;
+  client.get(key, (_err, reply) => {
+    if (reply && process.env.NODE_ENV === 'production') {
+      cb(null, JSON.parse(reply));
+    } else {
+      models[model]
+        .find({ publish: true })
+        .lean()
+        .exec((err, doc) => {
+          if (err) {
+            return cb(err);
+          }
+          client.set(key, JSON.stringify(doc), 'EX', 3600);
+          cb(null, doc);
+        });
+    }
+  });
+};
 /**
  * Datos del sitio
  * @param {*} cb

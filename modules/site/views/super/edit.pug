@@ -74,3 +74,109 @@ block edit
       .row
         .col-xs-12.tr
           button.btn.btn--primary.w-100-xs.mt-2-xs(type="submit") Guardar Cambios
+
+
+  .white.br-1.rd-0-2.p-3.mt-2
+    form.validate(
+      id="form"
+      action=`${appCnf.url.api}admin/super/config`
+      method="post"
+      enctype="multipart/form-data"
+      data-error="#form-results")
+
+      .row
+        .col-xs-12
+          input(type='hidden' name='redirect' value=`/administracion/super/configuracion`)
+          img(src=_.get(item, 'images.favicon.ico') style="max-height: 100px;")
+          .form-group
+            .form-control
+              input.input#favicon(type='file' name='favicon' placeholder=' ' accept='image/vnd.microsoft.icon')
+              label
+                .title(for='favicon') Favicon.ico
+          .remark.action.flex.mb-2
+            .h4.mr-1.t-action
+              i.far.fa-file-image.h1
+            div
+              .big 42x42 .ico
+              p Es la imagen que se muestra en la pestaña del navegador
+
+          .hr.mb-1
+          img(src=_.get(item, 'images.favpng.png') style="max-height: 100px;")
+          .form-group
+            .form-control
+              input.input#favpng(type='file' name='favpng' placeholder=' ' accept='image/png')
+              label
+                .title(for='favpng') Favicon.png
+          .remark.action.flex.mb-2
+            .h4.mr-1.t-action
+              i.far.fa-file-image.h1
+            div
+              .big 130x130 .png
+              p Es la imagen que se muestra en la pestaña del navegador, la usan los celulares.
+
+          .hr.mb-1
+          .black.p-1
+            img(src=_.get(item, 'images.logoTop.svg') style="max-height: 100px;")
+          .form-group
+            .form-control
+              input.input#logoTop(type='file' name='logoTop' placeholder=' ' accept='image/svg+xml')
+              label
+                .title(for='logoTop') Logo
+          .remark.action.flex.mb-2
+            .h4.mr-1.t-action
+              i.far.fa-file-image.h1
+            div
+              .big .svg
+              p SVG, debe verse sobre el fondo oscuro del menú, es un logo tipo horizontal.
+              p Ideal solo incluir el logo y el texto a la derecha.
+
+          .hr.mb-1
+          .black.p-1
+            img(src=_.get(item, 'images.logoSquare.svg') style="max-height: 100px;")
+          .form-group
+            .form-control
+              input.input#logoSquare(type='file' name='logoSquare' placeholder=' ' accept='image/svg+xml')
+              label
+                .title(for='logoSquare') Logo Cuadrado
+          .remark.action.flex.mb-2
+            .h4.mr-1.t-action
+              i.far.fa-file-image.h1
+            div
+              .big .svg
+              p SVG, debe verse sobre el fondo oscuro del pie de página, es un logo tipo cuadrado.
+              p Ideal solo incluir el logo son texto.
+
+          .hr.mb-1
+          img(src=_.get(item, 'images.logoEmail.img') style="max-height: 100px;")
+          .form-group
+            .form-control
+              input.input#logoEmail(type='file' name='logoEmail' placeholder=' ' accept='image/jpeg,image/png')
+              label
+                .title(for='logoEmail') Logo para correos
+          .remark.action.flex.mb-2
+            .h4.mr-1.t-action
+              i.far.fa-file-image.h1
+            div
+              .big (min: 100, max: 400)x100 .png .jpg
+              p Suba una imagen de preferencia jpg de fondo blanco.
+              p Su logo debe verse en un fondo blanco.
+
+          .hr.mb-1
+          img(src=_.get(item, 'images.social.img') style="max-height: 100px;")
+          .form-group
+            .form-control
+              input.input#social(type='file' name='social' placeholder=' ' accept='image/jpeg,image/png')
+              label
+                .title(for='social') Logo para redes sociales
+          .remark.action.flex.mb-2
+            .h4.mr-1.t-action
+              i.far.fa-file-image.h1
+            div
+              .big 1200x630 .png .jpg
+              p Suba una imagen de preferencia jpg.
+              p Esta imagen se usará cuando se comparta la URL de su portal de tiendas.
+
+
+      .row
+        .col-xs-12.tr
+          button.btn.btn--primary.w-100-xs.mt-2-xs(type="submit") Subir imágenes

@@ -18,6 +18,10 @@ const schema = new mongoose.Schema({
     type: String,
     trim: true,
   },
+  features: {
+    type: String,
+    trim: true,
+  },
   price: {
     type: Number,
     default: 0,
@@ -37,6 +41,7 @@ const schema = new mongoose.Schema({
 }, { timestamps: true });
 
 function preUpdate(result, next) {
+  client.del('__plans__publish__');
   client.del(`__plan__${result._id}`);
   if (result.slug) {
     result.slug = _.kebabCase(_.deburr(result.slug));

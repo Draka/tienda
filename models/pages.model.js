@@ -9,6 +9,11 @@ const schema = new mongoose.Schema({
     index: true,
     default: false,
   },
+  active: {
+    type: Boolean,
+    index: true,
+    default: false,
+  },
   title: {
     type: String,
     trim: true,
