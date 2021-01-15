@@ -118,7 +118,7 @@ exports.imageToS3 = (pathImg, key, localImg, convert, cb) => {
           StorageClass: 'INTELLIGENT_TIERING',
         };
         // sube el archivo
-        console.log('sube', `${pathImg}/${key}`, params);
+        console.log('sube', `${pathImg}/${key}`);
         s3.upload(params, cb);
       } else {
         cb();
