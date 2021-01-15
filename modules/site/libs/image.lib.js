@@ -111,7 +111,7 @@ exports.imageToS3 = (pathImg, key, localImg, convert, cb) => {
           Bucket: appCnf.s3.bucket,
           Key: `tenancy/${appCnf.tenancy}/images/${appCnf.s3.folder}/${pathImg}/${key}.${originalExt}`, // ruta donde va a quedar
           Body: fileContent,
-          ContentType: mime.lookup(fileName),
+          ContentType: localImg.mimetype,
           CacheControl: 'private, max-age=31536000',
           Expires: moment.tz().add(1, 'year').unix(),
           ACL: 'public-read',
