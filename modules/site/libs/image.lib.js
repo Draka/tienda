@@ -105,13 +105,13 @@ exports.imageToS3 = (pathImg, key, localImg, convert, cb) => {
 
       if (process.env.NODE_ENV === 'production' || appCnf.s3.forced) {
         console.log('S3 original');
-        const fileContent = fs.readFileSync(`./tmp/${fileName}`);
+        const fileContent = fs.readFileSync(fileName);
         // ajustes de s3
         const params = {
           Bucket: appCnf.s3.bucket,
           Key: `tenancy/${appCnf.tenancy}/images/${appCnf.s3.folder}/${pathImg}/${key}.${originalExt}`, // ruta donde va a quedar
           Body: fileContent,
-          ContentType: mime.lookup(`./tmp/${fileName}`),
+          ContentType: mime.lookup(fileName),
           CacheControl: 'private, max-age=31536000',
           Expires: moment.tz().add(1, 'year').unix(),
           ACL: 'public-read',
