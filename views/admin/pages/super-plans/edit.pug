@@ -20,6 +20,10 @@ block edit
             .form-control
               input.input#name(type="text" name="name" placeholder=' ' required value=item.name)
               label(for='name') Nombre
+          .form-group
+            .form-control
+              input.input#slug(type="text" name="slug" placeholder=' ' value=item.slug)
+              label(for='slug') Slug
           .form-group.ph-1
             .form-control
               textarea.input#description(name="description" placeholder=' ') #{item.description}
