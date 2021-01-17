@@ -26,6 +26,10 @@ module.exports = (req, res, next) => {
     'available',
     'groups',
     'imagesDeleted',
+    'weight',
+    'length',
+    'height',
+    'width',
   ]);
   if (typeof req.body.publish !== 'undefined' && !body.publish) {
     body.publish = false;

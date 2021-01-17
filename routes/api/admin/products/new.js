@@ -22,6 +22,10 @@ module.exports = (req, res, next) => {
     'digital',
     'available',
     'groups',
+    'weight',
+    'length',
+    'height',
+    'width',
   ]);
   if (typeof req.body.publish !== 'undefined' && !body.publish) {
     body.publish = false;

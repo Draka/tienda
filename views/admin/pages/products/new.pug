@@ -111,6 +111,32 @@ block edit
           .hr.mh-1
           .list-features(data-btn=".add" data-features="[]")
 
+    .white.br-1.rd-0-2.p-3.mt-2
+      .row
+        .col-xs-12
+          .subtitle Medidas del producto, empacado
+          .msg.info.mb-0-5.mt-1
+            .flex
+              i.fas.fa-exclamation.h2.mr-0-25.w-2.tc
+              div
+                | Estas son las medidas del producto empacado, no son las mismas del producto afuera de su caja, son usadas para calcular el valor del transporte mediante mensajería.
+          .form-group
+            .form-control
+              input.input#weight(type="number" name="weight" placeholder=' ' min=1 required value=item.weight)
+              label(for='weight') Peso (en gramos)
+          .form-group
+            .form-control
+              input.input#length(type="number" name="length" placeholder=' ' min=1 required value=item.length)
+              label(for='length') Largo (en centímetros)
+          .form-group
+            .form-control
+              input.input#height(type="number" name="height" placeholder=' ' min=1 required value=item.height)
+              label(for='height') Altura (en centímetros)
+          .form-group
+            .form-control
+              input.input#width(type="number" name="width" placeholder=' ' min=1 required value=item.width)
+              label(for='width') Ancho (en centímetros)
+
       .row
         .col-xs-12.tr
           button.btn.btn--primary.w-100-xs.mt-2-xs(type="submit") Crear Producto

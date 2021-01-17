@@ -142,6 +142,29 @@ const schema = new mongoose.Schema({
     type: Number,
     default: 1,
   },
+  // Medidas para los paquetes
+  // peso en gramos
+  weight: {
+    type: Number,
+    default: 0,
+    required: true,
+  },
+  // medidas en centimetros
+  length: {
+    type: Number,
+    default: 0,
+    required: true,
+  },
+  height: {
+    type: Number,
+    default: 0,
+    required: true,
+  },
+  width: {
+    type: Number,
+    default: 0,
+    required: true,
+  },
 }, { timestamps: true });
 
 function preUpdate(result, next) {
