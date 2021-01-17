@@ -7,6 +7,9 @@ module.exports = (req, res, next) => {
       modelSlug('Page', req.params.slug, cb);
     },
     meta: ['item', (results, cb) => {
+      if (!results.item) {
+        return cb(listErrors(404, null, [{ field: 'pageID', msg: 'No existe la Página' }]));
+      }
       // Busca todos los meta para convertir
       meta(results.item.html, cb);
     }],
