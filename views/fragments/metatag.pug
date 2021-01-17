@@ -19,7 +19,7 @@ mixin imgSocial
 
 meta(name='robots' content='index, follow')
 meta(name='author' content='Véndelo Mejor')
-meta(name='description' content=description || _.get(appCnf, 'site.description'))
+meta(name='description' content=_.get(item, 'seo') || description || _.get(appCnf, 'site.description'))
 meta(name='keywords' content='compra online, mercado, tienda, domicilios, p4s, quedate en casa')
 meta(name='language' content='ES')
 +imgSocial
@@ -36,11 +36,11 @@ if _.find(_.get(appCnf, 'site.contacts'), {slug: 'twtter'})
     meta(name='twitter:site' content=_.find(_.get(appCnf, 'site.contacts'), {slug: 'twtter'}).value)
     meta(name='twitter:creator' content=_.find(_.get(appCnf, 'site.contacts'), {slug: 'twtter'}).value)
 meta(name='twitter:title' content=`${title} | ${_.get(appCnf, 'site.name')}`)
-meta(name='twitter:description' content=description || _.get(appCnf, 'site.description'))
+meta(name='twitter:description' content=_.get(item, 'seo') || description || _.get(appCnf, 'site.description'))
 
 meta(property='og:type' content='website')
 meta(property='og:title' content=`${title} | ${_.get(appCnf, 'site.name')}`)
-meta(property='og:description' content=description || _.get(appCnf, 'site.description'))
+meta(property='og:description' content=_.get(item, 'seo') || description || _.get(appCnf, 'site.description'))
 meta(property='og:url' content=`${appCnf.url.site}${originalUrl}`)
 meta(property='og:site_name' content=`${title} | ${_.get(appCnf, 'site.name')}`)
 meta(property='og:locale' content='es_CO')

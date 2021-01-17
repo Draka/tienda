@@ -19,6 +19,10 @@ const schema = new mongoose.Schema({
     trim: true,
     required: true,
   },
+  seo: {
+    type: String,
+    trim: true,
+  },
   slug: {
     type: String,
     trim: true,

@@ -9,6 +9,7 @@ module.exports = (req, res, next) => {
     'publish',
     'title',
     'slug',
+    'seo',
     'html',
   ]);
   if (typeof req.body.active !== 'undefined' && !body.active) {

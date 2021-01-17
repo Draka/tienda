@@ -27,6 +27,10 @@ block edit
               label(for='title') Título
           .form-group
             .form-control
+              input.input#seo(type="text" name="seo" placeholder=' ' value=item.seo)
+              label(for='seo') Texto SEO
+          .form-group
+            .form-control
               input.input#slug(type="text" name="slug" placeholder=' ' value=item.slug)
               label(for='slug') Slug
           .form-group.ph-1

@@ -8,6 +8,7 @@ module.exports = (req, res, next) => {
     'publish',
     'title',
     'slug',
+    'seo',
     'html',
   ]);
   if (typeof req.body.publish !== 'undefined' && !body.publish) {

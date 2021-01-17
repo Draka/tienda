@@ -132,6 +132,9 @@ header
     .sidenav-body
       .white-500.w-100.flex.h-3
         .w-100.title.tc.b Cuenta
+      ul.list(role='menu')
+        li(role='menuitem')
+          a(href='/paginas/precios') Precios
       if !session
         ul.list(role='menu')
           li(role='menuitem')
