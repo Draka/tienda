@@ -14,3 +14,5 @@ exports.Page = require('./pages.model');
 exports.Document = require('./documents.model');
 exports.Plan = require('./plans.model');
 exports.Site = require('./site.model');
+exports.FaqCategory = require('./faq-categories.model');
+exports.Faq = require('./faq.model');

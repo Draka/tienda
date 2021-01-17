@@ -5,11 +5,10 @@ module.exports = (req, res, next) => {
     _.set(fbody, k, v);
   });
   const body = _.pick(fbody, [
+    'categoryID',
     'active',
-    'publish',
-    'title',
-    'slug',
-    'html',
+    'question',
+    'answer',
   ]);
   if (typeof req.body.active !== 'undefined' && !body.active) {
     body.active = false;
@@ -19,8 +18,8 @@ module.exports = (req, res, next) => {
   }
   async.auto({
     validate: (cb) => {
-      if (!_.trim(body.title)) {
-        errors.push({ field: 'title', msg: 'Escribe un nombre de Página válido.' });
+      if (!_.trim(body.question)) {
+        errors.push({ field: 'question', msg: 'Escribe una Pregunta válida.' });
       }
       if (errors.length) {
         return cb(listErrors(400, null, errors));
@@ -28,12 +27,17 @@ module.exports = (req, res, next) => {
       cb();
     },
     query: ['validate', (_results, cb) => {
-      models.Page
-        .findById(req.params.pageID)
+      models.Faq
+        .findById(req.params.faqID)
         .exec(cb);
     }],
     save: ['query', (results, cb) => {
-      body.userID = req.user._id;
+      if (!results.query) {
+        errors.push({ field: 'faq', msg: 'No existe la Pregunta.' });
+      }
+      if (errors.length) {
+        return cb(listErrors(400, null, errors));
+      }
       results.query.set(body).save(cb);
     }],
   }, (err, results) => {

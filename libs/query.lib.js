@@ -60,6 +60,26 @@ exports.modelAllPublish = (model, cb) => {
     }
   });
 };
+
+exports.modelAll = (model, cb) => {
+  const key = `__${models[model].collection.collectionName}__`;
+  client.get(key, (_err, reply) => {
+    if (reply && process.env.NODE_ENV === 'production') {
+      cb(null, JSON.parse(reply));
+    } else {
+      models[model]
+        .find()
+        .lean()
+        .exec((err, doc) => {
+          if (err) {
+            return cb(err);
+          }
+          client.set(key, JSON.stringify(doc), 'EX', 3600);
+          cb(null, doc);
+        });
+    }
+  });
+};
 /**
  * Datos del sitio
  * @param {*} cb

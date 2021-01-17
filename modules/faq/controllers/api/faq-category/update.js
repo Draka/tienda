@@ -5,22 +5,15 @@ module.exports = (req, res, next) => {
     _.set(fbody, k, v);
   });
   const body = _.pick(fbody, [
-    'active',
-    'publish',
-    'title',
-    'slug',
-    'html',
+    'name',
   ]);
-  if (typeof req.body.active !== 'undefined' && !body.active) {
-    body.active = false;
-  }
   if (typeof req.body.publish !== 'undefined' && !body.publish) {
     body.publish = false;
   }
   async.auto({
     validate: (cb) => {
-      if (!_.trim(body.title)) {
-        errors.push({ field: 'title', msg: 'Escribe un nombre de Página válido.' });
+      if (!_.trim(body.name)) {
+        errors.push({ field: 'name', msg: 'Escribe un nombre de Categoría válido.' });
       }
       if (errors.length) {
         return cb(listErrors(400, null, errors));
@@ -28,12 +21,17 @@ module.exports = (req, res, next) => {
       cb();
     },
     query: ['validate', (_results, cb) => {
-      models.Page
-        .findById(req.params.pageID)
+      models.FaqCategory
+        .findById(req.params.faqCategoryID)
         .exec(cb);
     }],
     save: ['query', (results, cb) => {
-      body.userID = req.user._id;
+      if (!results.query) {
+        errors.push({ field: 'faq-category', msg: 'No existe la Categoría.' });
+      }
+      if (errors.length) {
+        return cb(listErrors(400, null, errors));
+      }
       results.query.set(body).save(cb);
     }],
   }, (err, results) => {
