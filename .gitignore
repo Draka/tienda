@@ -65,3 +65,5 @@ public/tenancy/**/files
 localhost.*
 myCA.*
 package-lock.json
+tmp/
+.DS_Store
