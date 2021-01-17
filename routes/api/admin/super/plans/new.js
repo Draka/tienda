@@ -7,6 +7,7 @@ module.exports = (req, res, next) => {
   const body = _.pick(fbody, [
     'publish',
     'name',
+    'slug',
     'description',
     'features',
     'price',
