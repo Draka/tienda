@@ -47,11 +47,21 @@ exports.imageToS3 = (pathImg, key, localImg, convert, cb) => {
         switch (ext) {
           case 'jpg':
             sharp(fileName)
+              .flatten({
+                background: {
+                  r: 255, g: 255, b: 255, alpha: 1,
+                },
+              })
               .jpeg({ progressive: true })
               .toFile(`./tmp/${nameTemp}.jpg`, cb);
             break;
           case 'webp':
             sharp(fileName)
+              .flatten({
+                background: {
+                  r: 255, g: 255, b: 255, alpha: 1,
+                },
+              })
               .webp()
               .toFile(`./tmp/${nameTemp}.webp`, cb);
             break;
