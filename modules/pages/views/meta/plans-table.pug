@@ -6,7 +6,7 @@ mixin boolean(b)
     span.t-error.ph-0-25.pw-0-5.rd-0-2.tc
       i.fas.fa-times
 
-table.table.table--lines
+table.table.table--lines.hide-xs
   tr
     th.white-500
     each item of items
@@ -28,6 +28,30 @@ table.table.table--lines
       td #{key}
       each item of items
         td
+          if feature[item.slug]=='si' || feature[item.slug]=='no'
+            +boolean(feature[item.slug])
+          else
+            | #{feature[item.slug]}
+
+each item of items
+  table.table.table--lines.show-xs
+    tr
+      th.white-500(colspan=2)
+        .tc #{item.name}
+        .tc.small #{item.description}
+    tr
+      td Costo Mensual
+      td
+        .flex.justify-content-center
+          span COP $
+          span.bigx2 #{item.price/1000}k
+          span / mes
+    tr
+      th.white-500(colspan=2) Características
+    each feature,key in features
+      tr
+        td.nowrap #{key}
+        td.w-100
           if feature[item.slug]=='si' || feature[item.slug]=='no'
             +boolean(feature[item.slug])
           else

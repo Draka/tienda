@@ -1,6 +1,7 @@
 if category
-  h2.mb-1 #{category.name}
+  h2 #{category.name}
+  .hr.mt-0-5.mb-2
 
   each item of items
-    h3 #{item.question}
-    div !{item.answer}
+    h3.b.title #{item.question}
+    .mb-2 !{item.answer}

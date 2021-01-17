@@ -152,7 +152,7 @@ const meta = (text, cb) => {
             if (!results.item) {
               return cb(err, null);
             }
-            text = text.replace(re, template({
+            text = text.replace(match[0], template({
               category: results.item,
               items: results.items,
             }, 'faq'));
