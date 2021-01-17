@@ -10,7 +10,7 @@ module.exports = (req, res, next) => {
     'name',
     'slug',
     'slogan',
-    'description',
+    'seo',
     'inventory',
     'featuredCategories',
     'vision',

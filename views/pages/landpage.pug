@@ -39,7 +39,7 @@ block content
                     a(href=`/${store.slug}`)
                       +img(`Logo de la tienda ${store.name}`, _.get(store, 'imageSizes.logo'))
                   .title.mt-0-5.b #{store.name}
-                  .subtitle.pb-1 #{store.slogan}
+                  .subtitle.pb-1 #{store.seo}
                   .absolute.bottom.tc.pb-1.w-100c2
                     a.btn.btn--secondary.w-100(href=`/${store.slug}`) Visitar
 

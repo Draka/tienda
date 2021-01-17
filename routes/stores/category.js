@@ -125,6 +125,10 @@ module.exports = (req, res, next) => {
       return next(err);
     }
 
+    const item = {
+      seo: `Encuentra ${results.category.name} en ${results.store.name}. ${results.store.slogan}`,
+    };
+
     res.render('pages/stores/category.pug', {
       session: req.user,
       user: results.user,
@@ -134,6 +138,7 @@ module.exports = (req, res, next) => {
       categoriesHeader: results.categoriesHeader,
       products: results.products,
       categoryIDs: results.categoryIDs,
+      item,
       title: results.category ? `${results.category.name} - compra ${results.category.name}` : 'Categorías',
       count: results.count,
       menu: 'index',

@@ -82,15 +82,18 @@ module.exports = (req, res, next) => {
     }
 
     results.product.name = capitalized(_.get(results, 'product.name'));
+    const item = {
+      seo: results.product.shortDescription || `${results.product.name} ${global.formatMoney(results.product.price)} en ${results.store.name}`,
+    };
 
     res.render('pages/stores/product.pug', {
       session: req.user,
-      user: results.user,
       store: results.store,
       categories: results.categories,
       product: results.product,
       products: results.products,
-      title: results.product.name,
+      item,
+      title: `${results.product.name} en ${results.store.name}`,
       menu: 'index',
       js: 'store',
       rating,

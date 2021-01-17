@@ -6,6 +6,14 @@ block content
     .stub__left.white.brr-1.hide-xs
       include ../../fragments/menu_store.pug
     .stub__right.w-100-xs
+      if store.descriptionLong
+        .container
+          .row
+            .col-xs-12
+              .white.br-1.rd-0-2.p-1.mt-2
+                  .row
+                    .col-xs-12
+                      | !{store.descriptionLong}
       .container-fluid
         .row.pb-2
           .col-xs-12

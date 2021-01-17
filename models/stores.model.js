@@ -23,7 +23,7 @@ const schema = new mongoose.Schema({
     type: String,
     trim: true,
   },
-  description: {
+  seo: {
     type: String,
     trim: true,
   },

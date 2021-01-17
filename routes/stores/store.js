@@ -98,15 +98,13 @@ module.exports = (req, res, next) => {
 
     res.render('pages/stores/index.pug', {
       session: req.user,
-      user: results.user,
       store: results.store,
       places: results.places,
       markers,
       center,
       categories: results.categories,
       products: results.products,
-      title: _.get(appCnf, 'site.title'),
-      menu: 'index',
+      title: results.store.slogan ? `${results.store.name}, ${results.store.slogan}` : results.store.name,
       js: 'store',
       osm: true,
       notMenu: true,

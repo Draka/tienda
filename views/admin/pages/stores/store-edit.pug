@@ -22,18 +22,18 @@ block edit
             label(for='slug') Slug
         .form-group
           .form-control
-            input.input#slogan(type="text" name="slogan" placeholder=' ' required value=store.slogan)
-            label(for='slogan') Slogan
+            input.input#slogan(type="text" name="slogan" placeholder=' ' value=store.slogan)
+            label(for='slogan') Slogan (corto, no mas de 100 carácteres)
         .form-group
           .form-control
-            textarea.input#description(name="description" placeholder=' ' required he) #{store.description}
-            label(for='description') Descripción (corta, no más de 50 palabras)
+            textarea.input#description(name="seo" placeholder=' ' rowspan=5) #{store.seo}
+            label(for='seo') SEO (corta, no más de 50 palabras)
         .form-group.ph-1
-          .mb-1.subtitle Visión
+          .mb-1.subtitle Visión (Se muestra al pie de página en toda la tienda)
           textarea.cke#vision(data-target='#vision' name="vision") !{store.vision}
 
         .form-group.ph-1
-          .mb-1.subtitle Descripción Larga
+          .mb-1.subtitle Descripción Larga (Se muestra al inicio, junto con el mapa)
           textarea.cke#descriptionLong(data-target='#descriptionLong' name="descriptionLong") !{store.descriptionLong}
 
         .form-group

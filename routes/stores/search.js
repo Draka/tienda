@@ -93,11 +93,16 @@ module.exports = (req, res, next) => {
       return next(err);
     }
 
+    const item = {
+      seo: `Encuentra ${req.query.q} en ${results.store.name}. ${results.store.slogan}`,
+    };
+
     res.render('pages/stores/search.pug', {
       session: req.user,
       store: results.store,
       categories: results.categories,
       products: results.products,
+      item,
       title: `Resultado de búsqueda de ${req.query.q}`,
       q: req.query.q,
       count: results.count,
