@@ -12,6 +12,7 @@ block list
           th.b &nbsp;
           th.b.tc P
           th.b Nombre
+          th.b Slug
           th.b Prueba
           th.b Facturación
           th.b Valor
@@ -25,13 +26,14 @@ block list
               +boolean(item.publish)
             td
               a.b(href=`/administracion/super/planes/editar/${item._id}`) #{item.name}
+            td #{item.slug}
             td
               +mes(item.test)
             td
               +mes(item.period)
             td
               | #{formatMoney(item.price || 0)}
-            
+
       tfoot
         tr
           th(colspan="6")
