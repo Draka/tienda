@@ -38,7 +38,6 @@ exports.imageToS3 = (pathImg, key, localImg, convert, cb) => {
       if (!localImg) {
         return cb();
       }
-      console.log(localImg, fileName);
       localImg.mv(fileName, cb);
     }],
     // convierte a otros formatos

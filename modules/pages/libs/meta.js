@@ -1,8 +1,8 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable no-console */
 const pug = require('pug');
-const { modelSlug, modelAllPublish } = require('../../../libs/query.lib');
-const { faqByCategoryID } = require('./query');
+const { modelSlug } = require('../../../libs/query.lib');
+const { faqByCategoryID, modelAllPlans } = require('./query');
 
 function template(data, template) {
   const fn = pug.compileFile(`./modules/pages/views/meta/${template}.pug`, {});
@@ -101,7 +101,7 @@ const meta = (text, cb) => {
           const slugs = match[1].split(',');
           async.auto({
             items: (cb) => {
-              modelAllPublish('Plan', cb);
+              modelAllPlans(cb);
             },
             features: ['items', (results, cb) => {
               const features = {};
