@@ -3,7 +3,7 @@ footer.mt-8
     .container.ph-1
       .row
         .col-md-4.tc.vertical-align-center.mb-3-xs.mb-3-sm.mb-3-md
-          img.h-96p(src=`${appCnf.url.static}tenancy/${appCnf.tenancy}/images/logo-name.svg` alt=`${_.get(appCnf, 'site.name')} logo nombre`)
+          img.h-96p(src=_.get(global.appCnf, 'site.images.logoSquare.svg') alt=`${_.get(appCnf, 'site.name')} logo nombre`)
           .small.pt-1 TIENDAS EN PESOS COLOMBIANOS
         .col-md-8.vertical-align-center
           ul
@@ -17,14 +17,14 @@ footer.mt-8
               a(href='/documentos/terminos-y-condiciones-vendedor') Términos y Condiciones Vendedor
             li.p-0-5
               | Comentarios y dudas:
-              | #{' '} 
+              | #{' '}
               a.b(href=`mailto:${_.get(appCnf, 'site.email.emailInfo')}`) #{_.get(appCnf, 'site.email.emailInfo')}
   .container-fluid.primary-500
     .container.tc.ph-1
       .row
         .col-md-4.mb-1-xs.mb-1-sm.mb-1-md
           img.h-2(src=appCnf.url.static+'images/logo-p4s.svg' alt='p4s logo')
-          .small 
+          .small
             | Apoyado por
             | #{' '}
             a(href='https://p4s.co') p4s
@@ -34,17 +34,17 @@ footer.mt-8
         .col-md-4.mb-1-xs.mb-1-sm.mb-1-md
           img.h-2(src=appCnf.url.static+'images/logo-name.svg' alt='Véndelo Mejor logo blanco')
           .small powered by:
-            | #{' '} 
+            | #{' '}
             a(href='https://vendelomejor.com/') Véndelo Mejor
 
   if !store && _.find(_.get(appCnf, 'site.contacts'), {slug: 'whatsapp'})
-    .m-1.fixed.bottom 
+    .m-1.fixed.bottom
       a(href=`https://wa.me/${_.find(_.get(appCnf, 'site.contacts'), {slug: 'whatsapp'}).value}?text=Hola, tengo una pregunta sobre ${_.get(appCnf, 'site.name')}` title='Whatsapp' target='_blank')
         .t-action-300.bigx2
           i.fab.fa-whatsapp.social
 
   else if store
-    .m-1.fixed.bottom 
+    .m-1.fixed.bottom
       .t-action-300.bigx2.hand#open-modal-whatsapp
         i.fab.fa-whatsapp.social
     #modal-whatsapp.modal.start-hide(tabindex='-1' role='dialog')

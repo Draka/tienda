@@ -54,7 +54,7 @@ if osm
   if osm=='draw'
     link(rel='preload' href=appCnf.url.static+'lib/leaflet/leaflet-geoman.css' as='style')
     link(rel='preload' href=appCnf.url.static+'lib/leaflet/leaflet-geoman.min.js' as='script')
-    
-link(rel='shortcut icon' href=appCnf.url.static+'tenancy/'+appCnf.tenancy+'/images/favicon.png' type='image/x-icon')
-link(rel='icon', type='image/vnd.microsoft.icon', href=appCnf.url.static+'tenancy/'+appCnf.tenancy+'/images/favicon.ico')
+
+link(rel='shortcut icon' href=_.get(global.appCnf, 'site.images.favpng.png') type='image/x-icon')
+link(rel='icon', type='image/vnd.microsoft.icon', href=_.get(global.appCnf, 'site.images.favicon.ico'))
 link(rel='stylesheet', href=appCnf.url.static+'tenancy/'+appCnf.tenancy+'/css/style.min.css?='+appCnf.v)

@@ -22,7 +22,7 @@ const vars = {
     },
     logoEmail: {
       mimetype: ['image/jpeg', 'image/png'],
-      convert: [],
+      convert: ['jpg'],
       ext: 'img',
     },
     social: {

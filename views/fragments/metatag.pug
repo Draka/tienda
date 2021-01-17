@@ -12,9 +12,9 @@ mixin imgSocial
       meta(name='twitter:image' content=_.get(store, 'imageSizes.logo.484x484_jpg'))
       meta(property='og:image' content=_.get(store, 'imageSizes.logo.484x484_jpg'))
     else
-      link(href=appCnf.url.static+'tenancy/'+appCnf.tenancy+'/images/compartir.jpg' rel='image_src')
-      meta(name='twitter:image' content=appCnf.url.static+'tenancy/'+appCnf.tenancy+'/images/compartir.jpg')
-      meta(property='og:image' content=appCnf.url.static+'tenancy/'+appCnf.tenancy+'/images/compartir.jpg')
+      link(href=_.get(global.appCnf, 'site.images.social.img') rel='image_src')
+      meta(name='twitter:image' content=_.get(global.appCnf, 'site.images.social.img'))
+      meta(property='og:image' content=_.get(global.appCnf, 'site.images.social.img'))
 
 
 meta(name='robots' content='index, follow')

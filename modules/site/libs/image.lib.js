@@ -11,8 +11,8 @@ const s3 = new AWS.S3({
 
 exports.imageToS3 = (pathImg, key, localImg, convert, cb) => {
   const nameTemp = util.makeid(10);
-  const fileName = `./tmp/${nameTemp}`;
   const originalExt = _.last(localImg.name.split('.'));
+  const fileName = `./tmp/${nameTemp}`;
 
   async.auto({
     makedir: (cb) => {
@@ -34,10 +34,11 @@ exports.imageToS3 = (pathImg, key, localImg, convert, cb) => {
         cb();
       }
     },
-    copyFile: ['makedir', (_results, cb) => {
+    copyFile: ['makedir', 'makedirLocal', (_results, cb) => {
       if (!localImg) {
         return cb();
       }
+      console.log(localImg, fileName);
       localImg.mv(fileName, cb);
     }],
     // convierte a otros formatos
@@ -66,7 +67,7 @@ exports.imageToS3 = (pathImg, key, localImg, convert, cb) => {
     }],
     uploadSizes: ['sizes', 'makedirLocal', (_results, cb) => {
       if (process.env.NODE_ENV === 'production' || appCnf.s3.forced) {
-        console.log('S3 por tamaños', convert);
+        console.log('S3 por tamaños');
         async.each(convert, (ext, cb) => {
           const fileContent = fs.readFileSync(`./tmp/${nameTemp}.${ext}`);
           // ajustes de s3
@@ -118,7 +119,7 @@ exports.imageToS3 = (pathImg, key, localImg, convert, cb) => {
           StorageClass: 'INTELLIGENT_TIERING',
         };
         // sube el archivo
-        console.log('sube', `${pathImg}/${key}`, params);
+        console.log('sube', `${pathImg}/${key}`);
         s3.upload(params, cb);
       } else {
         cb();
@@ -141,7 +142,7 @@ exports.imageToS3 = (pathImg, key, localImg, convert, cb) => {
         fs.unlink(`./tmp/${nameTemp}.${ext}`, cb);
       }, cb);
     }],
-    deleteOriginal: ['uploadOriginal', 'uploadOriginalLocal', (_results, cb) => {
+    deleteOriginal: ['sizes', 'uploadOriginal', 'uploadOriginalLocal', (_results, cb) => {
       fs.unlink(fileName, cb);
     }],
   }, cb);

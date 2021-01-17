@@ -97,6 +97,11 @@ exports.site = (cb) => {
           if (err) {
             return cb(err);
           }
+          _.each(doc.images, (image, path) => {
+            _.each(image, (url, ext) => {
+              doc.images[path][ext] = `${appCnf.url.static}tenancy/${appCnf.tenancy}/images/${appCnf.s3.folder}/site/${path}/${url}`;
+            });
+          });
           client.set(key, JSON.stringify(doc), 'EX', 3600);
           cb(null, doc);
         });

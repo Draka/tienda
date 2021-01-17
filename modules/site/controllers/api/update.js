@@ -1,5 +1,6 @@
 const modCnf = require('../../modCnf');
 const { imageToS3 } = require('../../libs/image.lib');
+const { site } = require('../../../../libs/query.lib');
 
 module.exports = (req, res, next) => {
   const errors = [];
@@ -89,10 +90,13 @@ module.exports = (req, res, next) => {
       }
     }],
   }, (err, results) => {
-    appCnf.site = results.save;
     if (err) {
       return next(err);
     }
+    // update config
+    site((err, doc) => {
+      global.appCnf.site = doc;
+    });
     if (req.body.redirect) {
       return res.redirect(req.body.redirect);
     }

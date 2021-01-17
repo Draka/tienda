@@ -3,7 +3,7 @@ header
     nav.navbar.primary.shadow.fixed.top
       .container
         a.logo(href='/')
-          img(src=`${appCnf.url.static}tenancy/${appCnf.tenancy}/images/logo-top.svg` alt=`${_.get(appCnf, 'site.name')} logo`)
+          img(src=_.get(global.appCnf, 'site.images.logoTop.svg') alt=`${_.get(appCnf, 'site.name')} logo`)
 
         .expand
           if store
@@ -121,7 +121,7 @@ header
             span.out-screen Menú
         li.expand
           a.logo.justify-content-center(href='/')
-            img(src=`${appCnf.url.static}tenancy/${appCnf.tenancy}/images/logo-top.svg` alt=`${_.get(appCnf, 'site.name')} logo`)
+            img(src=_.get(global.appCnf, 'site.images.logoTop.svg') alt=`${_.get(appCnf, 'site.name')} logo`)
         li
           a.link-shopping-cart.relative.w-4.justify-content-center(href='/carrito')
             i.fas.fa-shopping-cart

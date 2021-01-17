@@ -153,7 +153,6 @@ app.use((err, req, res, next) => {
     res.locals.error = {};
   }
   if (req.originalUrl.split('/')[1] === 'v1') {
-    console.error(err);
     res.status(err.status || 500).send(err);
   } else {
     res.status(err.status || 500).render('error.pug', { error: err });
