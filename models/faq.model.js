@@ -27,6 +27,9 @@ const schema = new mongoose.Schema({
 
 function preUpdate(result, next) {
   client.del(`__faq__${result._id}`);
+  if (result.categoryID) {
+    client.del(`__faqs__categoryID__${result.categoryID}`);
+  }
   if (result.question) {
     result.slug = _.kebabCase(_.deburr(_.get(result, 'question')));
   }

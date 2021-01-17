@@ -2,6 +2,7 @@
 /* eslint-disable no-console */
 const pug = require('pug');
 const { modelSlug, modelAllPublish } = require('../../../libs/query.lib');
+const { faqByCategoryID } = require('./query');
 
 function template(data, template) {
   const fn = pug.compileFile(`./modules/pages/views/meta/${template}.pug`, {});
@@ -97,7 +98,7 @@ const meta = (text, cb) => {
           matchs.push(match);
         }
         async.eachLimit(matchs, 5, (match, cb) => {
-          const show = match[1].split(',');
+          const slugs = match[1].split(',');
           async.auto({
             items: (cb) => {
               modelAllPublish('Plan', cb);
@@ -105,7 +106,7 @@ const meta = (text, cb) => {
             features: ['items', (results, cb) => {
               const features = {};
               _.each(results.items, (item) => {
-                if (show.indexOf(item.slug) !== -1) {
+                if (slugs.indexOf(item.slug) !== -1) {
                   const lines = item.features.split('\n');
                   _.each(lines, (line) => {
                     const parts = line.split('=');
@@ -116,12 +117,45 @@ const meta = (text, cb) => {
               cb(null, features);
             }],
           }, (err, results) => {
-            console.log(results.features);
             text = text.replace(re, template({
               items: results.items,
               features: results.features,
-              show,
             }, 'plans-table'));
+            cb(err, null);
+          });
+        }, cb);
+      } else {
+        cb();
+      }
+    },
+    faqCategory: (cb) => {
+      if (/\[faq-category slug="([a-z0-9-, ]*)"\]/.test(text)) {
+        const re = new RegExp('\\[faq-category slug="([a-z0-9-, ]*)"\\]', 'igm');
+        const matchAll = text.matchAll(re);
+        const matchs = [];
+        for (const match of matchAll) {
+          matchs.push(match);
+        }
+        async.eachLimit(matchs, 5, (match, cb) => {
+          const slug = match[1];
+          async.auto({
+            item: (cb) => {
+              modelSlug('FaqCategory', slug, cb);
+            },
+            items: ['item', (results, cb) => {
+              if (!results.item) {
+                return cb();
+              }
+              faqByCategoryID(results.item._id, cb);
+            }],
+          }, (err, results) => {
+            if (!results.item) {
+              cb(err, null);
+            }
+            text = text.replace(re, template({
+              category: results.item,
+              items: results.items,
+            }, 'faq'));
             cb(err, null);
           });
         }, cb);

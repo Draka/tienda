@@ -66,7 +66,7 @@ exports.imageToS3 = (pathImg, key, localImg, convert, cb) => {
     }],
     uploadSizes: ['sizes', 'makedirLocal', (_results, cb) => {
       if (process.env.NODE_ENV === 'production' || appCnf.s3.forced) {
-        console.log('S3 por tamaños');
+        console.log('S3 por tamaños', convert);
         async.each(convert, (ext, cb) => {
           const fileContent = fs.readFileSync(`./tmp/${nameTemp}.${ext}`);
           // ajustes de s3
