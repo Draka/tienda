@@ -1,5 +1,7 @@
 const { resolve } = require('path');
 const { readdir } = require('fs').promises;
+const { execSync } = require('child_process');
+
 const mime = require('mime-types');
 const fs = require('fs');
 const path = require('path');
@@ -33,6 +35,10 @@ module.exports = (req, res, next) => {
         ].indexOf(ext) === -1) {
           return cb();
         }
+        if (ext === '.js') {
+          execSync(`sed -i.bak 's/pub_test_Utcl6o6rEhg8FHIhmI37vLFI16EjGSCc/pub_prod_f82cASvPOJW8bTjSZrFMYGKmyBqluj4I/g ' ${file}`);
+        }
+
         fs.readFile(file, (err, fileContent) => {
           const pathKey = file.split('/public/')[1];
           const params = {

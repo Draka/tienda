@@ -4,11 +4,9 @@
  */
 
 const tenancy = process.env.TENANCY || 'vendelomejor';
-// eslint-disable-next-line import/no-dynamic-require
-const tenancyConfig = require(`./tenancy/${tenancy}`);
 
 const enviroment = {
-  v: '2.0.6',
+  v: '2.0.7',
   tenancy,
   db: process.env.MONGO_URL || 'mongodb://localhost/tienda',
   redis: {

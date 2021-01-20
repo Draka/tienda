@@ -1,0 +1,31 @@
+extends /modules/admin/views/layout-edit-cmp
+
+block edit
+  form.validate(
+    id="updateProfileForm"
+    action=`${appCnf.url.api}admin/multimedia`
+    method="post"
+    enctype="multipart/form-data"
+    data-error="#form-results")
+
+    .white.br-1.rd-0-2.p-3.mt-2
+      .row
+        .col-xs-12
+          .subtitle Achivo
+          .msg.info.mb-0-5.mt-1
+            .flex
+              i.fas.fa-exclamation.h2.mr-0-25.w-2.tc
+              div Puede subir imágenes de diferentes formatos
+          .form-group
+            .form-control
+              input(type='hidden' name='redirect' value=`/administracion/super/multimedia`)
+              input.input#images(type='file' name='images' placeholder=' ' accept='image/svg+xml,image/png,image/jpeg' multiple)
+              label(for='images') Archivos
+            .remark.action.flex.mb-0-5
+              .h4.mr-1.t-action
+                i.far.fa-file-image
+              | Suba varias imágenes en formato xml, png o jpg de máximo 10 megas de tamaño.
+
+      .row
+        .col-xs-12.tr
+          button.btn.btn--primary.w-100-xs.mt-2-xs(type="submit") Subir Archivos

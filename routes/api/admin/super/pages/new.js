@@ -41,7 +41,6 @@ module.exports = (req, res, next) => {
       cb();
     }],
     create: ['check', (results, cb) => {
-      body.userID = req.user._id;
       const page = new models.Page(body);
       page.save(cb);
     }],

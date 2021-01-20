@@ -1,9 +1,10 @@
 extends /views/layout
 
 block content
-  .container
-    .row
-      .col-xs-12
-        include fragments/breadcrumb
+  if breadcrumbs
+    .container
+      .row
+        .col-xs-12
+          include fragments/breadcrumb
 
   block view

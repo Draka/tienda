@@ -1,0 +1,20 @@
+extends /modules/common/views/layout-index
+
+block view
+  script(type='application/ld+json').
+    {
+      "@context": "http://www.schema.org",
+      "@type": "LocalBusiness",
+      "name": "#{_.get(appCnf, 'site.name')}",
+      "url": "#{appCnf.url.site}",
+      "sameAs": !{JSON.stringify(_.get(appCnf, 'site.sameAs'))},
+      "logo": "#{appCnf.url.static}tenancy/#{appCnf.tenancy}/images/logo-01.png",
+      "image": "#{appCnf.url.static}tenancy/#{appCnf.tenancy}/images/logo-02.png",
+      "description": "#{_.get(appCnf, 'site.description')}",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "Colombia"
+      }
+    }
+  | !{item.html}
+  .mt-2
