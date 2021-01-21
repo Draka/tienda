@@ -5,23 +5,42 @@ block list
     .row
       each item of items
         .col-md-3
-          .white.br-1.rd-0-2.p-1.mb-2
+          .white.br-1.rd-0-2.p-1.mb-2.h-100
             .flex
               .pr-1
                 a(href=`/administracion/super/multimedia/${item._id}/editar` title='Editar')
                   i.fas.fa-pencil-alt
-              .b
+              .w-100.b
                 a(href=`/administracion/super/multimedia/${item._id}/editar`)
                   if item.title
                     #{item.title}
                   else
                     i -- Sin título --
+              .pl-1
+                button.btn-flat.p-0-5.open-modal-action(title='Eliminar'
+                  data-title='¿Desea eliminar la imagen?'
+                  data-cancel='Cancelar'
+                  data-action='Si, Eliminar'
+                  data-method='DELETE'
+                  data-url=`${appCnf.url.api}admin/super/multimedia/${item._id}`
+                  data-page='/administracion/super/multimedia')
+                  i.fas.fa-trash-alt
             .hr.mt-1
             a(href=`/administracion/super/multimedia/${item._id}/editar` title='Editar')
               if item.urlSize
                 +img(item.title, _.get(item, `urlSize.${item.files[0]}`), ['x196','x392'])
               else if item.url
                 +multimedia(item.title, _.get(item, `url.${item.files[0]}`))
+            .hr.mt-1
+            flex
+              b Imágenes:
+              if item.sizes.length
+                each size of item.sizes
+                  button.btn.btn--white-500.small.m-0-5.btn-bbcode-img(data-target=`#bbcode-target-${item.key}` data-bbcode=`[img-m key="${item.key}" size="${size}"]`) #{size}
+              else
+                  button.btn.btn--white-500.small.m-0-5.btn-bbcode-img(data-target=`#bbcode-target-${item.key}` data-bbcode=`[img-m key="${item.key}" size="o"]`) o
+            .hr.mt-1
+              .small.ph-0-5(id=`bbcode-target-${item.key}`)
 
     table.small.table.table--lines.table--striped
       tfoot

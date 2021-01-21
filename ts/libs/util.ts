@@ -15,6 +15,8 @@ export class Util {
     this.lazy();
     this.showDetailOrder();
     this.changeTowns();
+    this.btnBbcodeImg();
+    this.openModalAction();
   }
 
   count() {
@@ -71,6 +73,28 @@ export class Util {
             $target.append($('<option></option>').attr('value', town.name).text(town.name));
           });
         });
+    });
+  }
+
+  btnBbcodeImg() {
+    $('.btn-bbcode-img').on('click', (event) => {
+      const $el = $(event.currentTarget);
+      $($el.data('target')).html($el.data('bbcode'));
+    });
+  }
+
+  openModalAction() {
+    $('.open-modal-action').on('click', (event) => {
+      const $el = $(event.currentTarget);
+      const $modal = $('#modalGeneral');
+      const $form = $('#modalGeneralForm');
+      $form.attr('action', $el.data('url'));
+      $form.attr('method', $el.data('method'));
+      $form.data('page', $el.data('page'));
+      $modal.find('.title').html($el.data('title'));
+      $modal.find('.btn-action').html($el.data('action'));
+      $modal.find('.btn-cancel').html($el.data('cancel'));
+      sclib.modalShow('#modalGeneral');
     });
   }
 }

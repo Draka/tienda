@@ -59,8 +59,6 @@ module.exports = (req, res, next) => {
       },
     ];
 
-    console.log(JSON.stringify(results.items));
-
     res.render('../modules/multimedia/views/super/list.pug', {
       session: req.user,
       items: results.items,

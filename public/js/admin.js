@@ -1,1 +1,603 @@
-var System={functions:{},register:function(t,e,n){System.functions[t]={requires:e,cb:n}},active:function(){$.each(System.functions,function(t,n){t=n.cb(function(t,e){n[t]=e},{id:t});$.each(t.setters,function(t,e){e(System.functions[n.requires[t]])}),t.execute()})}};System.register("libs/edit",[],function(e,t){"use strict";t&&t.id;return{setters:[],execute:function(){function t(){this.token="pk.eyJ1Ijoic3JkcmFrYSIsImEiOiJja2FlZHBmYXUwMHpoMnJudHJnazZsOWY1In0.tAAoQbjhJKq_DdwpTTimrw",this.toolbarOptions=[["bold","italic","underline","strike"],["blockquote","code-block"]],this.cke(),this.mapEdit(),this.mapEditPoint(),this.mapMarkers(),this.addFeature()}t.prototype.cke=function(){var t=$(".cke");t.length&&t.each(function(t,e){ClassicEditor.create(e).then(function(t){t.model.document.on("change:data",function(){$(e).val(t.getData())})}).catch(function(t){console.error(t)})})},t.prototype.mapEdit=function(){var t;$("#map-edit").length&&(t=($("#center").val()||",").split(","),this._mapEdit({latitude:t[1]||4.646876,longitude:t[0]||-74.087547}))},t.prototype._mapEdit=function(t){var e=[t.latitude,t.longitude],n=L.map("map-edit").setView(e,13);L.control.locate({initialZoomLevel:15,locateOptions:{enableHighAccuracy:!0,maxZoom:15},strings:{title:"Localizar mi posición"}}).addTo(n),L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(n);var a=[];try{a=JSON.parse($("#points").val())}catch(t){a=[]}a.length&&(t={type:"FeatureCollection",features:[{type:"Feature",properties:{},geometry:{type:"Polygon",coordinates:[a.map(function(t){return[t.lng,t.lat]})]}}]},(e=L.geoJson(null,{pmIgnore:!1})).addTo(n),e.addData(t),e.on("pm:edit",function(t){t=t.layer._latlngs[0];$("#points").val(JSON.stringify(t))}),e.on("pm:dragend",function(t){t=t.layer._latlngs[0];$("#points").val(JSON.stringify(t))}),e.on("pm:remove",function(){$("#points").val("[]")})),n.pm.addControls({position:"topleft",drawMarker:!1,drawCircleMarker:!1,drawRectangle:!1,drawPolyline:!1,drawCircle:!1,cutPolygon:!1}),n.on("pm:drawstart",function(){var t=n.pm.getGeomanDrawLayers();$.each(t,function(t,e){e.remove()})}),n.on("pm:create",function(t){var e=t.layer._latlngs[0];$("#points").val(JSON.stringify(e)),t.layer.on("pm:ediit",function(t){t=t.layer._latlngs[0];$("#points").val(JSON.stringify(t))}),t.layer.on("pm:dragend",function(t){t=t.layer._latlngs[0];$("#points").val(JSON.stringify(t))}),t.layer.on("pm:remove",function(){$("#points").val("[]")})})},t.prototype.mapEditPoint=function(){var t;$("#map-edit-point").length&&(t=$("#point").val().split(","),this._mapEditPoint({latitude:t[1]||4.646876,longitude:t[0]||-74.087547}))},t.prototype._mapEditPoint=function(t){var e=L.map("map-edit-point").setView([t.latitude,t.longitude],13);L.control.locate({initialZoomLevel:15,locateOptions:{enableHighAccuracy:!0,maxZoom:15},strings:{title:"Localizar mi posición"}}).addTo(e),L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(e);var n=L.marker([t.latitude,t.longitude],{draggable:!0}).addTo(e);n.on("dragend",function(){$("#point").val(n.getLatLng().lng+","+n.getLatLng().lat)}),e.on("locationfound",function(t){$("#point").val(n.getLatLng().lng+","+n.getLatLng().lat),n.setLatLng(t.latlng).bindPopup("Mueva el marcador si es necesario").openPopup()})},t.prototype.mapMarkers=function(){if($("#map-markers").length)try{var t=JSON.parse($("#markers").val());this._mapMarkers(t)}catch(t){this._mapMarkers([])}},t.prototype._mapMarkers=function(t){var e=($("#center").val()||",").split(","),n=L.map("map-markers").setView([e[1]||4.646876,e[0]||-74.087547],11);L.control.locate({initialZoomLevel:15,locateOptions:{enableHighAccuracy:!0,maxZoom:15},strings:{title:"Localizar mi posición"}}).addTo(n),L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(n),t.forEach(function(t){L.marker([t[1],t[0]]).addTo(n)})},t.prototype.addFeature=function(){var t=$(".list-features");t.length&&t.each(function(t,e){function n(){var n="";i.forEach(function(t,e){n+='<div class="form-group flex">',n+='<div class="form-control">',n+='<input type="text" id="i_'+e+'" class="input" placeholder=" " name="features['+e+'][name]" value="'+t.name+'" data-index="'+e+'" data-name="name">',n+='<label for="i_'+e+'">Nombre</label>',n+="</div>",n+='<div class="form-control pl-1">',n+='<input type="text" id="v_'+e+'" class="input" placeholder=" " name="features['+e+'][value]" value="'+t.value+'" data-index="'+e+'" data-name="value">',n+='<label for="v_'+e+'">Valor</label>',n+="</div>",n+="</div>"}),a.html(n),a.find("input").each(function(t,e){var n=$(e);n.on("input",function(){i[n.data("index")][n.data("name")]=n.val()})})}var a=$(e),i=a.data("features");n(),$(a.data("btn")).on("click",function(){i.push({name:"",value:"",slug:""}),n()})})},e("Edit",t)}}}),System.register("libs/vars",["../util/products.d"],function(t,e){"use strict";e&&e.id;return{setters:[function(t){}],execute:function(){function n(){}n.badge=function(t){return'<span class="badge '+{created:"primary",paid:"alert",cancelled:"error",cancelledAdmin:"error",picking:"alert",ready:"info",onway:"info",arrived:"info",missing:"error",completed:"action"}[t]+' inline">'+{created:"Creado",paid:"Pagado",cancelled:"Cancelado",cancelledAdmin:"Cancelado",picking:"Buscando Productos",ready:"Listo Para Envíar",onway:"En Camino",arrived:"Llegó",missing:"No Respondieron",completed:"Completado"}[t]+"</span>"},n.payment=function(t){return'<button class="primary small id_'+t+' w-100">Pagar</button>'},n.statusToDate=function(t,e){t=t.filter(function(t){return t.status===e});return t.length?n.format(t[0].date):""},n.format=function(t){if(!t)return"";var e=new Date;return e.setTime(Date.parse(t)),e.getDate()+" de "+["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"][e.getMonth()]+" de "+e.getFullYear()},n.formatMoney=function(t,e,n,a,i){void 0===e&&(e=0),void 0===n&&(n="$"),void 0===a&&(a=","),void 0===i&&(i=".");var o="\\d(?=(\\d{3})+"+(0<e?"\\D":"$")+")";return n+t.toFixed(Math.max(0,~~e)).replace(".",i).replace(new RegExp(o,"g"),"$&"+a)},n.getParameterByName=function(t,e){void 0===e&&(e=window.location.href),t=t.replace(/[[\]]/g,"\\$&");e=new RegExp("[?&]"+t+"(=([^&#]*)|&|#|$)").exec(e);return e?e[2]?decodeURIComponent(e[2].replace(/\+/g," ")):"":null},n.capitalize=function(t){return t[0].toUpperCase()+t.slice(1)},n.b=$("body"),n.urlSite=n.b.data("urlSite"),n.urlApi=n.b.data("urlApi"),n.urlS3=n.b.data("urlS3"),n.urlS3Images=n.b.data("urlS3Images"),n.imgNoAvailable="/images/imagen_no_disponible.svg",n.store=n.b.data("store"),n.place=n.b.data("defaultPlace"),n.webp=0===document.createElement("canvas").toDataURL("image/webp").indexOf("data:image/webp"),t("Vars",n)}}}),System.register("libs/get_api",["../util/sclib.d","libs/vars"],function(e,t){"use strict";var n;t&&t.id;return{setters:[function(t){},function(t){n=t}],execute:function(){function t(t){this.h={},t&&(this.h={Authorization:"bearer "+t})}t.prototype.gs=function(t,e){return void 0===e&&(e=n.Vars.store),this.g(e+"/"+t)},t.prototype.g=function(t){return sclib.ajax({url:n.Vars.urlApi+t,type:"GET",headers:this.h})},t.prototype.ps=function(t,e){return void 0===e&&(e={}),this.p(n.Vars.store+"/"+t,e)},t.prototype.p=function(t,e){return void 0===e&&(e={}),sclib.ajax({url:n.Vars.urlApi+t,type:"POST",headers:this.h,data:JSON.stringify(e)})},e("GetApi",t)}}}),System.register("libs/session",[],function(e,t){"use strict";t&&t.id;return{setters:[],execute:function(){function t(){var t;this.token=localStorage.getItem("token");try{this.user=JSON.parse(localStorage.getItem("user")),this.token?(null!==(t=null===(t=this.user)||void 0===t?void 0:t.personalInfo)&&void 0!==t&&t.firstname&&$(".userFirstname").html(this.user.personalInfo.firstname.split(" ")[0]),$(".nologin").hide(),$(".login").show()):($(".login").hide(),$(".nologin").show())}catch(t){$(".login").hide(),$(".nologin").show()}}t.checkWebpFeature=function(e,n){var a=new Image;a.onload=function(){var t=0<a.width&&0<a.height;n(e,t)},a.onerror=function(){n(e,!1)},a.src="data:image/webp;base64,"+{lossy:"UklGRiIAAABXRUJQVlA4IBYAAAAwAQCdASoBAAEADsD+JaQAA3AAAAAA",lossless:"UklGRhoAAABXRUJQVlA4TA0AAAAvAAAAEAcQERGIiP4HAA==",alpha:"UklGRkoAAABXRUJQVlA4WAoAAAAQAAAAAAAAAAAAQUxQSAwAAAARBxAR/Q9ERP8DAABWUDggGAAAABQBAJ0BKgEAAQAAAP4AAA3AAP7mtQAAAA==",animation:"UklGRlIAAABXRUJQVlA4WAoAAAASAAAAAAAAAAAAQU5JTQYAAAD/////AABBTk1GJgAAAAAAAAAAAAAAAAAAAGQAAABWUDhMDQAAAC8AAAAQBxAREYiI/gcA"}[e]},e("Session",t)}}}),System.register("libs/util",["libs/session","libs/get_api"],function(e,t){"use strict";var n,a;t&&t.id;return{setters:[function(t){n=t},function(t){a=t}],execute:function(){function t(){this.session=new n.Session,this.session=new n.Session,this.getApi=new a.GetApi(this.session.token),this.count(),this.lazy(),this.showDetailOrder(),this.changeTowns()}t.prototype.count=function(){var a=this;$("[data-count]").each(function(t,e){var n=$(e);a._color(n),n.on("input",function(){a._color(n)})})},t.prototype._color=function(t){var e=t.val().length,n=$(t.data("target"));e>parseInt(t.data("count"),10)?n.parent().addClass("t-error"):n.parent().removeClass("t-error"),n.html(""+e)},t.prototype.lazy=function(){var e=0===document.createElement("canvas").toDataURL("image/webp").indexOf("data:image/webp");$(".lazy").Lazy({beforeLoad:function(t){e&&(t.attr("data-src",t.data("src").replace(".jpg",".webp")),t.data("retina")&&t.attr("data-retina",t.data("retina").replace(".jpg",".webp")))}})},t.prototype.showDetailOrder=function(){$(".btn-next-status").on("click",function(){sclib.modalShow("#modalNextStatus")}),$(".btn-cancel").on("click",function(){sclib.modalShow("#cancelOrder")})},t.prototype.changeTowns=function(){var n=this;$(".department").on("change",function(t){var e=$(t.currentTarget);n.getApi.g("towns/"+e.val()).done(function(t){var n=$(e.data("target"));n.empty(),n.append($("<option></option>").attr("value","").text("--")),$.each(t,function(t,e){n.append($("<option></option>").attr("value",e.name).text(e.name))})})})},e("Util",t)}}}),System.register("admin",["./libs/define","libs/edit","libs/util"],function(t,e){"use strict";var n,a;e&&e.id;return{setters:[function(t){},function(t){n=t},function(t){a=t}],execute:function(){new n.Edit,new a.Util}}}),System.active();
+/**
+ * Aunque no lo crea, este script permite usar la funcionalidad de ts que exporta a un solo archivo
+ * usarse en una página sin cargar módulos, sin complejidad y con menos líneas
+ */
+var System = {
+    functions: {},
+    register: function (name, requires, cb) {
+        System.functions[name] = { requires: requires, cb: cb };
+    },
+    active: function () {
+        $.each(System.functions, function (name, fc) {
+            var m = fc.cb(function (nameClass, fcClass) {
+                fc[nameClass] = fcClass;
+            }, { id: name });
+            $.each(m.setters, function (i, fcs) {
+                fcs(System.functions[fc.requires[i]]);
+            });
+            m.execute();
+        });
+    }
+};
+System.register("libs/edit", [], function (exports_1, context_1) {
+    "use strict";
+    var Edit;
+    var __moduleName = context_1 && context_1.id;
+    return {
+        setters: [],
+        execute: function () {
+            Edit = /** @class */ (function () {
+                function Edit() {
+                    this.token = 'pk.eyJ1Ijoic3JkcmFrYSIsImEiOiJja2FlZHBmYXUwMHpoMnJudHJnazZsOWY1In0.tAAoQbjhJKq_DdwpTTimrw';
+                    this.toolbarOptions = [
+                        ['bold', 'italic', 'underline', 'strike'],
+                        ['blockquote', 'code-block'],
+                    ];
+                    this.cke();
+                    this.mapEdit();
+                    this.mapEditPoint();
+                    this.mapMarkers();
+                    this.addFeature();
+                }
+                Edit.prototype.cke = function () {
+                    var list = $('.cke');
+                    if (list.length) {
+                        list.each(function (_i, el) {
+                            ClassicEditor
+                                .create(el)
+                                .then(function (editor) {
+                                editor.model.document.on('change:data', function () {
+                                    $(el).val(editor.getData());
+                                });
+                            })
+                                .catch(function (error) {
+                                console.error(error);
+                            });
+                        });
+                    }
+                };
+                Edit.prototype.mapEdit = function () {
+                    var list = $('#map-edit');
+                    if (list.length) {
+                        var points = ($('#center').val() || ',').split(',');
+                        this._mapEdit({ latitude: points[1] || 4.646876, longitude: points[0] || -74.087547 });
+                    }
+                };
+                Edit.prototype._mapEdit = function (coords) {
+                    // center of the map
+                    var center = [coords.latitude, coords.longitude];
+                    var map = L.map('map-edit').setView(center, 13);
+                    L.control.locate({
+                        initialZoomLevel: 15,
+                        locateOptions: {
+                            enableHighAccuracy: true,
+                            maxZoom: 15,
+                        },
+                        strings: {
+                            title: 'Localizar mi posición',
+                        },
+                    }).addTo(map);
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                    }).addTo(map);
+                    var points = [];
+                    try {
+                        points = JSON.parse($('#points').val());
+                    }
+                    catch (error) {
+                        points = [];
+                    }
+                    if (points.length) {
+                        var geoJsonData = {
+                            type: 'FeatureCollection',
+                            features: [
+                                {
+                                    type: 'Feature',
+                                    properties: {},
+                                    geometry: {
+                                        type: 'Polygon',
+                                        coordinates: [
+                                            points.map(function (p) { return [p.lng, p.lat]; }),
+                                        ],
+                                    },
+                                },
+                            ],
+                        };
+                        // const geoJsonButton = document.getElementById('test-geojson');
+                        var geoJsonLayer = L.geoJson(null, { pmIgnore: false });
+                        geoJsonLayer.addTo(map);
+                        geoJsonLayer.addData(geoJsonData);
+                        geoJsonLayer.on('pm:edit', function (e) {
+                            var points = e.layer._latlngs[0];
+                            $('#points').val(JSON.stringify(points));
+                        });
+                        geoJsonLayer.on('pm:dragend', function (e) {
+                            var points = e.layer._latlngs[0];
+                            $('#points').val(JSON.stringify(points));
+                        });
+                        geoJsonLayer.on('pm:remove', function () {
+                            $('#points').val('[]');
+                        });
+                    }
+                    map.pm.addControls({
+                        position: 'topleft',
+                        drawMarker: false,
+                        drawCircleMarker: false,
+                        drawRectangle: false,
+                        drawPolyline: false,
+                        drawCircle: false,
+                        cutPolygon: false,
+                    });
+                    map.on('pm:drawstart', function () {
+                        var layers = map.pm.getGeomanDrawLayers();
+                        $.each(layers, function (_i, layer) {
+                            layer.remove();
+                        });
+                    });
+                    map.on('pm:create', function (e) {
+                        var points = e.layer._latlngs[0];
+                        $('#points').val(JSON.stringify(points));
+                        e.layer.on('pm:ediit', function (e) {
+                            var points = e.layer._latlngs[0];
+                            $('#points').val(JSON.stringify(points));
+                        });
+                        e.layer.on('pm:dragend', function (e) {
+                            var points = e.layer._latlngs[0];
+                            $('#points').val(JSON.stringify(points));
+                        });
+                        e.layer.on('pm:remove', function () {
+                            $('#points').val('[]');
+                        });
+                    });
+                };
+                Edit.prototype.mapEditPoint = function () {
+                    var list = $('#map-edit-point');
+                    if (list.length) {
+                        var point = $('#point').val().split(',');
+                        this._mapEditPoint({ latitude: point[1] || 4.646876, longitude: point[0] || -74.087547 });
+                    }
+                };
+                Edit.prototype._mapEditPoint = function (coords) {
+                    var map = L.map('map-edit-point').setView([coords.latitude, coords.longitude], 13);
+                    L.control.locate({
+                        initialZoomLevel: 15,
+                        locateOptions: {
+                            enableHighAccuracy: true,
+                            maxZoom: 15,
+                        },
+                        strings: {
+                            title: 'Localizar mi posición',
+                        },
+                    }).addTo(map);
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                    }).addTo(map);
+                    var marker = L.marker([coords.latitude, coords.longitude], {
+                        draggable: true,
+                    }).addTo(map);
+                    marker.on('dragend', function () {
+                        $('#point').val(marker.getLatLng().lng + "," + marker.getLatLng().lat);
+                    });
+                    function onLocationFound(e) {
+                        $('#point').val(marker.getLatLng().lng + "," + marker.getLatLng().lat);
+                        marker.setLatLng(e.latlng)
+                            .bindPopup('Mueva el marcador si es necesario').openPopup();
+                    }
+                    map.on('locationfound', onLocationFound);
+                };
+                Edit.prototype.mapMarkers = function () {
+                    var list = $('#map-markers');
+                    if (list.length) {
+                        try {
+                            var markers = JSON.parse($('#markers').val());
+                            this._mapMarkers(markers);
+                        }
+                        catch (error) {
+                            this._mapMarkers([]);
+                        }
+                    }
+                };
+                Edit.prototype._mapMarkers = function (coords) {
+                    var center = ($('#center').val() || ',').split(',');
+                    var map = L.map('map-markers').setView([center[1] || 4.646876, center[0] || -74.087547], 11);
+                    L.control.locate({
+                        initialZoomLevel: 15,
+                        locateOptions: {
+                            enableHighAccuracy: true,
+                            maxZoom: 15,
+                        },
+                        strings: {
+                            title: 'Localizar mi posición',
+                        },
+                    }).addTo(map);
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                    }).addTo(map);
+                    coords.forEach(function (i) {
+                        L.marker([i[1], i[0]]).addTo(map);
+                    });
+                };
+                Edit.prototype.addFeature = function () {
+                    var list = $('.list-features');
+                    if (list.length) {
+                        list.each(function (_i, el) {
+                            var $el = $(el);
+                            var fl = $el.data('features');
+                            var fc = function () {
+                                var html = '';
+                                fl.forEach(function (e, i) {
+                                    html += '<div class="form-group flex">';
+                                    html += '<div class="form-control">';
+                                    html += "<input type=\"text\" id=\"i_" + i + "\" class=\"input\" placeholder=\" \" name=\"features[" + i + "][name]\" value=\"" + e.name + "\" data-index=\"" + i + "\" data-name=\"name\">";
+                                    html += "<label for=\"i_" + i + "\">Nombre</label>";
+                                    html += '</div>';
+                                    html += '<div class="form-control pl-1">';
+                                    html += "<input type=\"text\" id=\"v_" + i + "\" class=\"input\" placeholder=\" \" name=\"features[" + i + "][value]\" value=\"" + e.value + "\" data-index=\"" + i + "\" data-name=\"value\">";
+                                    html += "<label for=\"v_" + i + "\">Valor</label>";
+                                    html += '</div>';
+                                    html += '</div>';
+                                });
+                                $el.html(html);
+                                $el.find('input').each(function (_i, el) {
+                                    var $el = $(el);
+                                    $el.on('input', function () {
+                                        fl[$el.data('index')][$el.data('name')] = $el.val();
+                                    });
+                                });
+                            };
+                            fc();
+                            $($el.data('btn')).on('click', function () {
+                                fl.push({ name: '', value: '', slug: '' });
+                                fc();
+                            });
+                        });
+                    }
+                };
+                return Edit;
+            }());
+            exports_1("Edit", Edit);
+        }
+    };
+});
+System.register("libs/vars", ["../util/products.d"], function (exports_2, context_2) {
+    "use strict";
+    var Vars;
+    var __moduleName = context_2 && context_2.id;
+    return {
+        setters: [
+            function (_1) {
+            }
+        ],
+        execute: function () {
+            Vars = /** @class */ (function () {
+                function Vars() {
+                }
+                Vars.badge = function (input) {
+                    var status = {
+                        created: 'Creado',
+                        paid: 'Pagado',
+                        cancelled: 'Cancelado',
+                        cancelledAdmin: 'Cancelado',
+                        picking: 'Buscando Productos',
+                        ready: 'Listo Para Envíar',
+                        onway: 'En Camino',
+                        arrived: 'Llegó',
+                        missing: 'No Respondieron',
+                        completed: 'Completado',
+                    };
+                    var color = {
+                        created: 'primary',
+                        paid: 'alert',
+                        cancelled: 'error',
+                        cancelledAdmin: 'error',
+                        picking: 'alert',
+                        ready: 'info',
+                        onway: 'info',
+                        arrived: 'info',
+                        missing: 'error',
+                        completed: 'action',
+                    };
+                    return "<span class=\"badge " + color[input] + " inline\">" + status[input] + "</span>";
+                };
+                Vars.payment = function (orderID) {
+                    return "<button class=\"primary small id_" + orderID + " w-100\">Pagar</button>";
+                };
+                Vars.statusToDate = function (arr, status) {
+                    var st = arr.filter(function (s) { return s.status === status; });
+                    if (!st.length) {
+                        return '';
+                    }
+                    return Vars.format(st[0].date);
+                };
+                Vars.format = function (str) {
+                    if (!str)
+                        return '';
+                    var days = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+                    var d = new Date();
+                    d.setTime(Date.parse(str));
+                    return d.getDate() + " de " + days[d.getMonth()] + " de " + d.getFullYear();
+                };
+                Vars.formatMoney = function (number, decPlaces, simbol, decSep, thouSep) {
+                    if (decPlaces === void 0) { decPlaces = 0; }
+                    if (simbol === void 0) { simbol = '$'; }
+                    if (decSep === void 0) { decSep = ','; }
+                    if (thouSep === void 0) { thouSep = '.'; }
+                    var re = "\\d(?=(\\d{" + 3 + "})+" + (decPlaces > 0 ? '\\D' : '$') + ")";
+                    // eslint-disable-next-line no-bitwise
+                    var num = number.toFixed(Math.max(0, ~~decPlaces));
+                    return simbol + num.replace('.', thouSep).replace(new RegExp(re, 'g'), "$&" + decSep);
+                };
+                Vars.getParameterByName = function (name, url) {
+                    if (url === void 0) { url = window.location.href; }
+                    name = name.replace(/[[\]]/g, '\\$&');
+                    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)");
+                    var results = regex.exec(url);
+                    if (!results)
+                        return null;
+                    if (!results[2])
+                        return '';
+                    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+                };
+                Vars.capitalize = function (input) {
+                    return input[0].toUpperCase() + input.slice(1);
+                };
+                Vars.b = $('body');
+                Vars.urlSite = Vars.b.data('urlSite');
+                Vars.urlApi = Vars.b.data('urlApi');
+                Vars.urlS3 = Vars.b.data('urlS3');
+                Vars.urlS3Images = Vars.b.data('urlS3Images');
+                Vars.imgNoAvailable = '/images/imagen_no_disponible.svg';
+                Vars.store = Vars.b.data('store');
+                Vars.place = Vars.b.data('defaultPlace');
+                Vars.webp = document.createElement('canvas').toDataURL('image/webp').indexOf('data:image/webp') === 0;
+                return Vars;
+            }());
+            exports_2("Vars", Vars);
+        }
+    };
+});
+System.register("libs/get_api", ["../util/sclib.d", "libs/vars"], function (exports_3, context_3) {
+    "use strict";
+    var vars_1, GetApi;
+    var __moduleName = context_3 && context_3.id;
+    return {
+        setters: [
+            function (_2) {
+            },
+            function (vars_1_1) {
+                vars_1 = vars_1_1;
+            }
+        ],
+        execute: function () {
+            GetApi = /** @class */ (function () {
+                function GetApi(token) {
+                    this.h = {};
+                    if (token) {
+                        this.h = {
+                            Authorization: "bearer " + token,
+                        };
+                    }
+                }
+                /**
+                 * GET: api la ruta de la tienda
+                 * @param path ruta del api
+                 * @param store Opcional, tienda activa
+                 */
+                GetApi.prototype.gs = function (path, store) {
+                    if (store === void 0) { store = vars_1.Vars.store; }
+                    return this.g(store + "/" + path);
+                };
+                GetApi.prototype.g = function (path) {
+                    return sclib.ajax({
+                        url: vars_1.Vars.urlApi + path,
+                        type: 'GET',
+                        headers: this.h,
+                    });
+                };
+                /**
+                 * POST: api la ruta de la tienda
+                 * @param path ruta del api
+                 * @param data Opcional, data
+                 */
+                GetApi.prototype.ps = function (path, data) {
+                    if (data === void 0) { data = {}; }
+                    return this.p(vars_1.Vars.store + "/" + path, data);
+                };
+                GetApi.prototype.p = function (path, data) {
+                    if (data === void 0) { data = {}; }
+                    return sclib.ajax({
+                        url: vars_1.Vars.urlApi + path,
+                        type: 'POST',
+                        headers: this.h,
+                        data: JSON.stringify(data),
+                    });
+                };
+                return GetApi;
+            }());
+            exports_3("GetApi", GetApi);
+        }
+    };
+});
+System.register("libs/session", [], function (exports_4, context_4) {
+    "use strict";
+    var Session;
+    var __moduleName = context_4 && context_4.id;
+    return {
+        setters: [],
+        execute: function () {
+            Session = /** @class */ (function () {
+                function Session() {
+                    var _a, _b;
+                    this.token = localStorage.getItem('token');
+                    try {
+                        this.user = JSON.parse(localStorage.getItem('user'));
+                        if (this.token) {
+                            if ((_b = (_a = this.user) === null || _a === void 0 ? void 0 : _a.personalInfo) === null || _b === void 0 ? void 0 : _b.firstname) {
+                                $('.userFirstname').html(this.user.personalInfo.firstname.split(' ')[0]);
+                            }
+                            $('.nologin').hide();
+                            $('.login').show();
+                        }
+                        else {
+                            $('.login').hide();
+                            $('.nologin').show();
+                        }
+                    }
+                    catch (error) {
+                        $('.login').hide();
+                        $('.nologin').show();
+                    }
+                }
+                Session.checkWebpFeature = function (feature, callback) {
+                    var kTestImages = {
+                        lossy: 'UklGRiIAAABXRUJQVlA4IBYAAAAwAQCdASoBAAEADsD+JaQAA3AAAAAA',
+                        lossless: 'UklGRhoAAABXRUJQVlA4TA0AAAAvAAAAEAcQERGIiP4HAA==',
+                        alpha: 'UklGRkoAAABXRUJQVlA4WAoAAAAQAAAAAAAAAAAAQUxQSAwAAAARBxAR/Q9ERP8DAABWUDggGAAAABQBAJ0BKgEAAQAAAP4AAA3AAP7mtQAAAA==',
+                        animation: 'UklGRlIAAABXRUJQVlA4WAoAAAASAAAAAAAAAAAAQU5JTQYAAAD/////AABBTk1GJgAAAAAAAAAAAAAAAAAAAGQAAABWUDhMDQAAAC8AAAAQBxAREYiI/gcA'
+                    };
+                    var img = new Image();
+                    img.onload = function () {
+                        var result = (img.width > 0) && (img.height > 0);
+                        callback(feature, result);
+                    };
+                    img.onerror = function () {
+                        callback(feature, false);
+                    };
+                    img.src = "data:image/webp;base64," + kTestImages[feature];
+                };
+                return Session;
+            }());
+            exports_4("Session", Session);
+        }
+    };
+});
+/* eslint-disable class-methods-use-this */
+System.register("libs/util", ["libs/session", "libs/get_api"], function (exports_5, context_5) {
+    "use strict";
+    var session_1, get_api_1, Util;
+    var __moduleName = context_5 && context_5.id;
+    return {
+        setters: [
+            function (session_1_1) {
+                session_1 = session_1_1;
+            },
+            function (get_api_1_1) {
+                get_api_1 = get_api_1_1;
+            }
+        ],
+        execute: function () {/* eslint-disable class-methods-use-this */
+            Util = /** @class */ (function () {
+                function Util() {
+                    this.session = new session_1.Session();
+                    this.session = new session_1.Session();
+                    this.getApi = new get_api_1.GetApi(this.session.token);
+                    this.count();
+                    this.lazy();
+                    this.showDetailOrder();
+                    this.changeTowns();
+                    this.btnBbcodeImg();
+                    this.openModalAction();
+                }
+                Util.prototype.count = function () {
+                    var _this = this;
+                    $('[data-count]').each(function (_i, el) {
+                        var $el = $(el);
+                        _this._color($el);
+                        $el.on('input', function () { _this._color($el); });
+                    });
+                };
+                Util.prototype._color = function ($el) {
+                    var l = $el.val().length;
+                    var $t = $($el.data('target'));
+                    if (l > parseInt($el.data('count'), 10)) {
+                        $t.parent().addClass('t-error');
+                    }
+                    else {
+                        $t.parent().removeClass('t-error');
+                    }
+                    $t.html("" + l);
+                };
+                Util.prototype.lazy = function () {
+                    var webp = document.createElement('canvas').toDataURL('image/webp').indexOf('data:image/webp') === 0;
+                    $('.lazy').Lazy({
+                        beforeLoad: function (element) {
+                            if (webp) {
+                                element.attr('data-src', element.data('src').replace('.jpg', '.webp'));
+                                if (element.data('retina')) {
+                                    element.attr('data-retina', element.data('retina').replace('.jpg', '.webp'));
+                                }
+                            }
+                        },
+                    });
+                };
+                Util.prototype.showDetailOrder = function () {
+                    $('.btn-next-status').on('click', function () {
+                        sclib.modalShow('#modalNextStatus');
+                    });
+                    $('.btn-cancel').on('click', function () {
+                        sclib.modalShow('#cancelOrder');
+                    });
+                };
+                Util.prototype.changeTowns = function () {
+                    var _this = this;
+                    $('.department').on('change', function (event) {
+                        var $el = $(event.currentTarget);
+                        _this.getApi.g("towns/" + $el.val())
+                            .done(function (data) {
+                            var $target = $($el.data('target'));
+                            $target.empty(); // remove old options
+                            $target.append($('<option></option>').attr('value', '').text('--'));
+                            $.each(data, function (_i, town) {
+                                $target.append($('<option></option>').attr('value', town.name).text(town.name));
+                            });
+                        });
+                    });
+                };
+                Util.prototype.btnBbcodeImg = function () {
+                    $('.btn-bbcode-img').on('click', function (event) {
+                        var $el = $(event.currentTarget);
+                        $($el.data('target')).html($el.data('bbcode'));
+                    });
+                };
+                Util.prototype.openModalAction = function () {
+                    $('.open-modal-action').on('click', function (event) {
+                        var $el = $(event.currentTarget);
+                        var $modal = $('#modalGeneral');
+                        var $form = $('#modalGeneralForm');
+                        $form.attr('action', $el.data('url'));
+                        $form.attr('method', $el.data('method'));
+                        $form.data('page', $el.data('page'));
+                        $modal.find('.title').html($el.data('title'));
+                        $modal.find('.btn-action').html($el.data('action'));
+                        $modal.find('.btn-cancel').html($el.data('cancel'));
+                        sclib.modalShow('#modalGeneral');
+                    });
+                };
+                return Util;
+            }());
+            exports_5("Util", Util);
+        }
+    };
+});
+System.register("admin", ["./libs/define", "libs/edit", "libs/util"], function (exports_6, context_6) {
+    "use strict";
+    var edit_1, util_1;
+    var __moduleName = context_6 && context_6.id;
+    return {
+        setters: [
+            function (_3) {
+            },
+            function (edit_1_1) {
+                edit_1 = edit_1_1;
+            },
+            function (util_1_1) {
+                util_1 = util_1_1;
+            }
+        ],
+        execute: function () {
+            new edit_1.Edit();
+            new util_1.Util();
+        }
+    };
+});
+System.active();
