@@ -11,9 +11,10 @@ block edit
       .col-xs-12
         .form-group
           .form-control
-            label
-              input.checkbox#active(type="checkbox" name="active" value=true)
-              span Activo
+            label.switch
+              input#active(type="hidden" name="active" value='0')
+              span.check
+              span.caption Activo
         .form-group
           .form-control
             input.input#name(type="text" name="name" placeholder=' ' required)

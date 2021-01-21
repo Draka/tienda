@@ -64,18 +64,20 @@ block edit
         .col-xs-12
           .form-group
             .form-control
-              label
-                input.checkbox#publish(type="checkbox" name="publish" value='1' checked=item.publish)
-                span Publicado
+              label.switch
+                input#publish(type="hidden" name="publish" value=item.publish?'1':'0')
+                span.check
+                span.caption Publicado
           .form-group
             .form-control
               input.input#name(type="text" name="name" placeholder=' ' required value=item.name)
               label(for='name') Nombre
           .form-group
             .form-control
-              label
-                input.checkbox#inventory(type="checkbox" name="inventory" value='1' checked=item.inventory)
-                span Usa Inventario (Stock)
+              label.switch
+                input#inventory(type="hidden" name="inventory" value=item.inventory?'1':'0')
+                span.check
+                span.caption Usa Inventario (Stock)
           .form-group
             .form-control
               input.input#stock(type="number" name="stock" placeholder=' ' value=item.stock)
@@ -141,9 +143,10 @@ block edit
               div Los productos digitales pueden ser licencias, conciertos, obras, clases particulares y cualquier producto que no necesite envío físico.
           .form-group
             .form-control
-              label
-                input.checkbox#digital-is(type="checkbox" name="digital[is]" value='1' checked=item.digital.is)
-                span Es un producto digital
+              label.switch
+                input#digital-is(type="hidden" name="digital[is]" value=item.digital.is?'1':'0')
+                span.check
+                span.caption Es un producto digital
           .form-group.ph-1
             .subtitle.mb-0-5 Mensaje para los clientes cuando compren
             .form-control

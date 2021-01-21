@@ -13,9 +13,10 @@ block edit
         .col-xs-12
           .form-group
             .form-control
-              label
-                input.checkbox#publish(type="checkbox" name="publish" value='1' checked=item.publish)
-                span Publicado
+              label.switch
+                input#publish(type="hidden" name="publish" value=item.publish?'1':'0')
+                span.check
+                span.caption Publicado
           .form-group
             .form-control
               input.input#name(type="text" name="name" placeholder=' ' required value=item.name)

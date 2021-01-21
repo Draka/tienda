@@ -16,7 +16,7 @@ block list
       thead
         tr
           th.b.tc A
-          th.w-100.b Metodo de Envío
+          th.w-100.b Metodo de Pago
       tbody
         each item,i in payments
           tr
@@ -24,7 +24,7 @@ block list
               input(type="hidden" name=`payments[${i}][slug]` value=item.slug)
               label
                 input.checkbox.checkbox--no-margin(type="checkbox" name=`payments[${i}][active]` value='1' checked=item.active)
-                span 
+                span
             td.w-100
               .b #{item.name}
               .small #{item.description}

@@ -13,9 +13,10 @@ block edit
         .col-xs-12
           .form-group
             .form-control
-              label
-                input.checkbox#active(type="checkbox" name="active" value='1')
-                span Activa
+              label.switch
+                input#active(type="hidden" name="active" value='0')
+                span.check
+                span.caption Activa
           .form-group
             .form-control
               select.input#categoryID.department(name='categoryID' required)

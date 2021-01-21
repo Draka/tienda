@@ -15,9 +15,10 @@ block edit
             div Las áreas de cobertura son una zona de un mapa donde se prestará el servicio de envio local proporcionado por el dueño de la tienda.
         .form-group
           .form-control
-            label
-              input.checkbox#active(type="checkbox" name="active" value='1' checked=item.active)
-              span Activo
+            label.switch
+              input#active(type="hidden" name="active" value=item.active?'1':'0')
+              span.check
+              span.caption Activo
         .form-group
           .form-control
             input.input#name(type="text" name="name" placeholder=' ' required value=item.name)
