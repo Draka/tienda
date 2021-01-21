@@ -4,45 +4,19 @@ const schema = new mongoose.Schema({
     type: String,
     trim: true,
   },
-  multimediaID: {
-    type: Number,
+  key: {
+    type: String,
     index: {
       unique: true,
     },
   },
-  type: {
+  mime: {
     type: String,
     trim: true,
   },
-  files: {},
+  files: [String],
+  sizes: [String],
 }, { timestamps: true });
-
-function preSave(next) {
-  const doc = this;
-  if (this.isNew) {
-    models.Inc.findOneAndUpdate({ id: 'multimediaID' }, { $inc: { seq: 1 } }, (error, inc) => {
-      if (error) {
-        return next(error);
-      }
-      if (!inc) {
-        const inc = new models.Inc({ id: 'multimediaID', seq: 1 });
-        inc.save((error) => {
-          if (error) {
-            return next(error);
-          }
-          doc.multimediaID = 0;
-          next();
-        });
-      } else {
-        doc.multimediaID = inc.seq;
-        next();
-      }
-    });
-  } else {
-    next();
-  }
-}
-schema.pre('save', preSave);
 
 function preUpdate(result, next) {
   client.del('__multimedias__');

@@ -36,8 +36,8 @@ module.exports = (req, res, next) => {
       cb();
     }],
     create: ['check', (results, cb) => {
-      const faqCategory = new models.Faq(body);
-      faqCategory.save(cb);
+      const faq = new models.Faq(body);
+      faq.save(cb);
     }],
   }, (err, results) => {
     if (err) {

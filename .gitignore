@@ -62,9 +62,11 @@ typings/
 
 public/tenancy/**/ecommerce
 public/tenancy/**/files
+public/tenancy/**/images
 localhost.*
 myCA.*
 package-lock.json
 tmp/
 .DS_Store
 *.bak
+

@@ -25,6 +25,19 @@ module.exports = (req, res, next) => {
         .lean()
         .exec(cb);
     }],
+    imagenUrl: ['items', (results, cb) => {
+      _.each(results.items, (item, i) => {
+        _.each(item.sizes, (size) => {
+          _.each(item.files, (file) => {
+            _.set(results.items[i], `urlSize.${file}.x${size}`, `${appCnf.url.static}tenancy/${appCnf.tenancy}/images/${appCnf.s3.folder}/multimedia/${item.key}/${size}_${item.key}.${file}`);
+          });
+        });
+        _.each(item.files, (file) => {
+          _.set(results.items[i], `url.${file}`, `${appCnf.url.static}tenancy/${appCnf.tenancy}/images/${appCnf.s3.folder}/multimedia/${item.key}/${item.key}.${file}`);
+        });
+      });
+      cb();
+    }],
     count: ['validate', (_results, cb) => {
       models.Multimedia
         .countDocuments(body)
@@ -46,6 +59,8 @@ module.exports = (req, res, next) => {
       },
     ];
 
+    console.log(JSON.stringify(results.items));
+
     res.render('../modules/multimedia/views/super/list.pug', {
       session: req.user,
       items: results.items,
@@ -56,6 +71,7 @@ module.exports = (req, res, next) => {
       menu: 'super-multimedia',
       xnew: '/administracion/super/multimedia/nuevo',
       breadcrumbs,
+      js: 'admin',
     });
   });
 };

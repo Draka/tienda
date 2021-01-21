@@ -1,8 +1,15 @@
+mixin multimedia(name, image, cssClass)
+  if (image)
+    img.lazy(data-src=image alt=name class=cssClass?cssClass:'w-100')
+  else
+    img.lazy(data-src=`${appCnf.url.static}images/imagen_no_disponible.svg` alt=name class=cssClass?cssClass:'w-100')
+
 mixin img(name, image, size = ['196x196_jpg', '392x392_jpg'], cssClass)
   if (image)
     img.lazy(data-src=image[size[0]] data-retina=image[size[1]] alt=name class=cssClass?cssClass:'w-100')
   else
     img.lazy(data-src=`${appCnf.url.static}images/imagen_no_disponible.svg` alt=name class=cssClass?cssClass:'w-100')
+
 mixin emptyCart
   .row.cart-empty.start-hide
     .col-md-12
@@ -14,8 +21,8 @@ mixin emptyCart
           p Antes de proceder al pago, debe agregar algunos productos a su carrito de compras.
           p Encontrará muchos productos interesantes en nuestra página.
           a.btn.btn--primary(href='/') Inicio
-    
-    
+
+
 doctype html
 html(lang='es')
   head

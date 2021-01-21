@@ -2,33 +2,31 @@ extends /modules/admin/views/layout-list
 
 block list
   if items.length
-    table.small.table.table--lines.table--striped
-      thead
-        tr
-          th.b &nbsp;
-          th
-            .b Categoría
-            .b Pregunta
-            .b Slug
-            .b Respuesta
-      tbody
-        each item of items
-          tr
-            td(rowspan=3).tc
-              a(href=`/administracion/super/faq/${item._id}/editar` title='Ver')
-                i.fas.fa-search
-            td #{_.get(item, 'categoryID.name')}
-          tr
-            td
+    .row
+      each item of items
+        .col-md-3
+          .white.br-1.rd-0-2.p-1.mb-2
+            .flex
+              .pr-1
+                a(href=`/administracion/super/multimedia/${item._id}/editar` title='Editar')
+                  i.fas.fa-pencil-alt
               .b
-                a(href=`/administracion/super/faq/${item._id}/editar`) #{item.question}
-              .i #{item.slug}
-          tr
-            td !{item.answer}
+                a(href=`/administracion/super/multimedia/${item._id}/editar`)
+                  if item.title
+                    #{item.title}
+                  else
+                    i -- Sin título --
+            .hr.mt-1
+            a(href=`/administracion/super/multimedia/${item._id}/editar` title='Editar')
+              if item.urlSize
+                +img(item.title, _.get(item, `urlSize.${item.files[0]}`), ['x196','x392'])
+              else if item.url
+                +multimedia(item.title, _.get(item, `url.${item.files[0]}`))
 
+    table.small.table.table--lines.table--striped
       tfoot
         tr
           th(colspan="5")
             +paginator
   else
-    +noItems('No hay preguntas creadas.')
+    +noItems('No hay archivos multimedia.')
