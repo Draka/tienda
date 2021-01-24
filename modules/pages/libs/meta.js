@@ -236,7 +236,7 @@ const meta = (text, cb) => {
             items: (cb) => {
               getUrlStores(cb);
             },
-            meta: ['item', (results, cb) => {
+            meta: ['items', (results, cb) => {
               if (!results.item || !results.item.active) {
                 return cb(null, '');
               }
