@@ -3,5 +3,5 @@ const index = require('../controllers/common/index');
 
 module.exports = (app) => {
   app.get('/paginas/:slug', view);
-  // app.get('/', index);
+  app.get('/', index);
 };

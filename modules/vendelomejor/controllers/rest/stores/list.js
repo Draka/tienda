@@ -1,17 +1,20 @@
+const { putS3LogoPath } = require('../../../../../libs/put_s3_path.lib');
+
 module.exports = (req, res, next) => {
-  const body = _.pick(req.query, ['question', 'answer']);
+  const body = _.pick(req.query, ['slug']);
 
   const limit = Math.min(Math.max(1, req.query.limit) || 100, 500);
   const page = Math.max(0, req.query.page) || 0;
 
   async.auto({
     validate: (cb) => {
-      body.active = true;
+      body.approve = true;
       body.publish = true;
       if (req.query.q) {
         body.$or = [
-          { question: { $regex: req.query.q, $options: 'i' } },
-          { answer: { $regex: req.query.q, $options: 'i' } },
+          { department: { $regex: req.query.q, $options: 'i' } },
+          { town: { $regex: req.query.q, $options: 'i' } },
+          { primaryActivity: { $regex: req.query.q, $options: 'i' } },
           { slug: { $regex: req.query.q, $options: 'i' } },
         ];
       }
@@ -22,18 +25,15 @@ module.exports = (req, res, next) => {
         .find(body)
         .limit(limit)
         .skip(limit * page)
-        .sort({
-          title: 1,
-        })
-        .populate({
-          path: 'categoryID',
-          select: 'name',
-        })
         .lean()
         .exec(cb);
     }],
+    postFind: ['items', (results, cb) => {
+      putS3LogoPath(results.items);
+      cb();
+    }],
     count: ['validate', (_results, cb) => {
-      models.Faq
+      models.Store
         .countDocuments(body)
         .exec(cb);
     }],
@@ -41,28 +41,21 @@ module.exports = (req, res, next) => {
     if (err) {
       return next(err);
     }
-    const breadcrumbs = [
-      {
-        link: '/administracion',
-        text: 'Administración',
-      },
-      {
-        link: '/administracion/super/faq',
-        text: 'FAQ',
-        active: true,
-      },
-    ];
-
-    res.render('../modules/faq/views/super/faq/list.pug', {
-      session: req.user,
-      items: results.items,
+    res.send({
+      items: results.items.map((i) => _.pick(i, [
+        'name',
+        'slug',
+        'contacts',
+        'slogan',
+        'imageSizes.logo',
+        'department',
+        'town',
+        'primaryActivity',
+        'url',
+      ])),
       limit,
       page,
       count: results.count,
-      title: 'FAQ',
-      menu: 'super-faq',
-      xnew: '/administracion/super/faq/nuevo',
-      breadcrumbs,
     });
   });
 };

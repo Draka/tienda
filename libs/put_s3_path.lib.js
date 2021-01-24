@@ -19,6 +19,7 @@ exports.putS3Path = (items, store) => {
 
 exports.putS3LogoPath = (stores) => {
   _.each(stores, (store) => {
+    store.url = appCnf.site.url + store.slug;
     if (!store.images) {
       return;
     }

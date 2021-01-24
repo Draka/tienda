@@ -38,6 +38,7 @@ module.exports = (req, res, next) => {
       item: results.item,
       title: results.item.title,
       breadcrumbs,
+      js: 'page',
     });
   });
 };

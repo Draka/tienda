@@ -1,9 +1,9 @@
 /* eslint-disable global-require */
 module.exports = (app) => {
-  // if (appCnf.tenancy == 'vendelomejor') {
-  //   app.get('/', require('./landpage'));
-  // }
-  app.get('/', require('./landpage'));
+  if (appCnf.tenancy !== 'vendelomejor') {
+    app.get('/', require('./landpage'));
+  }
+  // app.get('/', require('./landpage'));
 
   app.get('/iniciar-sesion', (req, res) => {
     const breadcrumbs = [

@@ -1,0 +1,27 @@
+mixin img(name, image, size = ['196x196_jpg', '392x392_jpg'], cssClass)
+  if (image)
+    img.lazy(data-src=image[size[0]] data-retina=image[size[1]] alt=name class=cssClass?cssClass:'w-100')
+  else
+    img.lazy(data-src=`${appCnf.url.static}images/imagen_no_disponible.svg` alt=name class=cssClass?cssClass:'w-100')
+
+h2.b.t-primary.tc.mt-2 Nuestras tiendas
+.hr.mt-1.mb-2
+.row.justify-content-center
+.col-sm-10.col-md-8
+  .row
+  each store in items
+    .col-xs-6.col-md-4.ph-1.pw-1-xs.mw-1-sm
+    .relative.br-1.p-1.pb-3.h-100.brt-10.rd-0-5.white
+      .tc
+      a(href=`/${store.slug}`)
+        +img(`Logo de la tienda ${store.name}`, _.get(store, 'imageSizes.logo'))
+      .title.mt-0-5.b #{store.name}
+      .subtitle.pb-1 #{store.seo}
+      each contact in store.contacts
+      if contact.slug == 'whatsapp'
+        a(href=`https://wa.me/${contact.value}?text=Hola, ${store.name} quisiera saber más de tus productos.` title='Whatsapp' target='_blank')
+        .flex.mb-1
+          i.fab.fa-whatsapp
+          .b.ml-0-5 #{contact.value}
+      .absolute.bottom.tc.pb-1.w-100c2
+      a.btn.btn--secondary.w-100(href=`/${store.slug}`) Visitar

@@ -41,6 +41,7 @@ module.exports = (req, res, next) => {
       session: req.user,
       item: results.item,
       title: results.item.title,
+      js: 'page',
     });
   });
 };

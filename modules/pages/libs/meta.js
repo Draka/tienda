@@ -2,7 +2,9 @@
 /* eslint-disable no-console */
 const pug = require('pug');
 const { modelSlug } = require('../../../libs/query.lib');
-const { faqByCategoryID, modelAllPlans } = require('./query');
+const {
+  faqByCategoryID, modelAllPlans, multimediaByKey, getUrlStores,
+} = require('./query');
 
 function template(data, template) {
   const fn = pug.compileFile(`./modules/pages/views/meta/${template}.pug`, {});
@@ -57,7 +59,7 @@ const meta = (text, cb) => {
       } else {
         match[2] = `class="${key}" ${match[2]} `;
       }
-      text = text.replace(match[0], `<div ${match[2]}>`);
+      text = text.replace(match[0], `<div ${_.get(match, 2)}>`);
       re = new RegExp(`\\[\\/${key}\\]`, 'igm');
       text = text.replace(re, '</div>');
     }
@@ -129,8 +131,8 @@ const meta = (text, cb) => {
       }
     },
     faqCategory: (cb) => {
-      if (/\[faq-category slug="([a-z0-9-, ]*)"\]/.test(text)) {
-        const re = new RegExp('\\[faq-category slug="([a-z0-9-, ]*)"\\]', 'igm');
+      if (/\[faq-category slug="([a-z0-9-]*)"\]/.test(text)) {
+        const re = new RegExp('\\[faq-category slug="([a-z0-9-]*)"\\]', 'igm');
         const matchAll = text.matchAll(re);
         const matchs = [];
         for (const match of matchAll) {
@@ -156,6 +158,35 @@ const meta = (text, cb) => {
               category: results.item,
               items: results.items,
             }, 'faq'));
+            cb(err, null);
+          });
+        }, cb);
+      } else {
+        cb();
+      }
+    },
+    imgRes: (cb) => {
+      if (/\[img-res key="([a-zA-Z0-9-]*)" sizes="([x0-9,]*)"\]/.test(text)) {
+        const re = new RegExp('\\[img-res key="([a-z0-9-]*)" sizes="([x0-9,]*)"\\]', 'igm');
+        const matchAll = text.matchAll(re);
+        const matchs = [];
+        for (const match of matchAll) {
+          matchs.push(match);
+        }
+        async.eachLimit(matchs, 5, (match, cb) => {
+          const key = match[1];
+          async.auto({
+            item: (cb) => {
+              multimediaByKey(key, cb);
+            },
+          }, (err, results) => {
+            if (!results.item) {
+              return cb(err, null);
+            }
+            text = text.replace(match[0], template({
+              item: results.item,
+              sizes: match[1].split(','),
+            }, 'img-responsive'));
             cb(err, null);
           });
         }, cb);
@@ -191,6 +222,48 @@ const meta = (text, cb) => {
       } else {
         cb();
       }
+    },
+    stores: (cb) => {
+      if (/\[stores\]/.test(text)) {
+        const re = new RegExp('\\[stores\\]', 'igm');
+        const matchAll = text.matchAll(re);
+        const matchs = [];
+        for (const match of matchAll) {
+          matchs.push(match);
+        }
+        async.eachLimit(matchs, 5, (match, cb) => {
+          async.auto({
+            items: (cb) => {
+              getUrlStores(cb);
+            },
+            meta: ['item', (results, cb) => {
+              if (!results.item || !results.item.active) {
+                return cb(null, '');
+              }
+              // Busca todos los meta para convertir
+              meta(results.item.html, cb);
+            }],
+          }, (err, results) => {
+            if (!results.items) {
+              return cb(err, null);
+            }
+            text = text.replace(match[0], template({
+              items: results.items,
+            }, 'stores'));
+            cb(err, null);
+          });
+        }, cb);
+      } else {
+        cb();
+      }
+    },
+    siteName: (cb) => {
+      text = text.replace(/\[site-name\]/g, _.get(appCnf, 'site.name'));
+      cb();
+    },
+    siteDescription: (cb) => {
+      text = text.replace(/\[site-description\]/g, _.get(appCnf, 'site.description'));
+      cb();
     },
   }, (err) => cb(err, text));
 };

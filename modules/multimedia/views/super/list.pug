@@ -4,7 +4,7 @@ block list
   if items.length
     .row
       each item of items
-        .col-md-3
+        .col-md-3.pb-2
           .white.br-1.rd-0-2.p-1.mb-2.h-100
             .flex
               .pr-1
@@ -36,9 +36,9 @@ block list
               b Imágenes:
               if item.sizes.length
                 each size of item.sizes
-                  button.btn.btn--white-500.small.m-0-5.btn-bbcode-img(data-target=`#bbcode-target-${item.key}` data-bbcode=`[img-m key="${item.key}" size="${size}"]`) #{size}
+                  button.btn.btn--white-500.small.m-0-5.btn-bbcode-img(data-target=`#bbcode-target-${item.key}` data-bbcode=`[img-res key="${item.key}" sizes="${size}"]`) #{size}
               else
-                  button.btn.btn--white-500.small.m-0-5.btn-bbcode-img(data-target=`#bbcode-target-${item.key}` data-bbcode=`[img-m key="${item.key}" size="o"]`) o
+                  button.btn.btn--white-500.small.m-0-5.btn-bbcode-img(data-target=`#bbcode-target-${item.key}` data-bbcode=`[img-res key="${item.key}" sizes="o"]`) o
             .hr.mt-1
               .small.ph-0-5(id=`bbcode-target-${item.key}`)
 

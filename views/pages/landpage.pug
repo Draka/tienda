@@ -40,6 +40,12 @@ block content
                       +img(`Logo de la tienda ${store.name}`, _.get(store, 'imageSizes.logo'))
                   .title.mt-0-5.b #{store.name}
                   .subtitle.pb-1 #{store.seo}
+                  each contact in store.contacts
+                    if contact.slug == 'whatsapp'
+                      a(href=`https://wa.me/${contact.value}?text=Hola, ${store.name} quisiera saber más de tus productos.` title='Whatsapp' target='_blank')
+                        .flex.mb-1
+                          i.fab.fa-whatsapp
+                          .b.ml-0-5 #{contact.value}
                   .absolute.bottom.tc.pb-1.w-100c2
                     a.btn.btn--secondary.w-100(href=`/${store.slug}`) Visitar
 
