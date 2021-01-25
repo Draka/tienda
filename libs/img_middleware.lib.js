@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 const sharp = require('sharp');
 
 const path = require('path');
@@ -23,9 +22,6 @@ module.exports = () => {
               .jpeg({ progressive: true })
               .toFile(`./${st.dir.replace('_home', 'home')}/${size.x}_${st.name}.jpg`, cb);
           }, cb);
-          console.log(
-            `optimized ${d}`,
-          );
         }, cb);
       },
       webp: (cb) => {
@@ -39,9 +35,6 @@ module.exports = () => {
               .webp({ progressive: true })
               .toFile(`./${st.dir.replace('_home', 'home')}/${size.x}_${st.name}.webp`, cb);
           }, cb);
-          console.log(
-            `optimized ${d}`,
-          );
         }, cb);
       },
       pngJpg: (cb) => {
@@ -55,9 +48,6 @@ module.exports = () => {
               .jpeg({ progressive: true })
               .toFile(`./${st.dir.replace('_home', 'home')}/${size.y}_${st.name}.jpg`, cb);
           }, cb);
-          console.log(
-            `optimized ${d}`,
-          );
         }, cb);
       },
       pngWebp: (cb) => {
@@ -71,9 +61,6 @@ module.exports = () => {
               .webp({ progressive: true })
               .toFile(`./${st.dir.replace('_home', 'home')}/${size.y}_${st.name}.webp`, cb);
           }, cb);
-          console.log(
-            `optimized ${d}`,
-          );
         }, cb);
       },
     }, () => {});

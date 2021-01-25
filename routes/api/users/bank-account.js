@@ -90,7 +90,6 @@ module.exports = (req, res, next) => {
               StorageClass: 'INTELLIGENT_TIERING',
             };
             // sube el archivo
-            console.log('sube', `users/${req.user._id}/bank`);
             s3.upload(params, cb);
           } else {
             cb();

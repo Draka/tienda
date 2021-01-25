@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-syntax */
-/* eslint-disable no-console */
+
 const pug = require('pug');
 const { modelSlug } = require('../../../libs/query.lib');
 const {

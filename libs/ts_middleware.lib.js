@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-/* eslint-disable no-console */
+
 const { execSync } = require('child_process');
 
 const path = require('path');

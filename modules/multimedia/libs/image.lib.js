@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 const fs = require('fs');
 const path = require('path');
 const sharp = require('sharp');
@@ -190,7 +189,6 @@ exports.imageToS3 = (pathImg, key, localImg, sizes, cb) => {
       }
 
       if (process.env.NODE_ENV === 'production' || appCnf.s3.forced) {
-        console.log('S3 original');
         const fileContent = fs.readFileSync(fileName);
         // ajustes de s3
         const params = {
@@ -204,7 +202,6 @@ exports.imageToS3 = (pathImg, key, localImg, sizes, cb) => {
           StorageClass: 'INTELLIGENT_TIERING',
         };
         // sube el archivo
-        console.log('sube', `${pathImg}/${key}`);
         s3.upload(params, cb);
       } else {
         cb();

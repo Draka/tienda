@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 const fs = require('fs');
 const sharp = require('sharp');
 const mime = require('mime-types');
@@ -76,7 +75,6 @@ exports.imageToS3 = (pathImg, key, localImg, convert, cb) => {
     }],
     uploadSizes: ['sizes', 'makedirLocal', (_results, cb) => {
       if (process.env.NODE_ENV === 'production' || appCnf.s3.forced) {
-        console.log('S3 por tamaños');
         async.each(convert, (ext, cb) => {
           const fileContent = fs.readFileSync(`./tmp/${nameTemp}.${ext}`);
           // ajustes de s3
@@ -91,7 +89,6 @@ exports.imageToS3 = (pathImg, key, localImg, convert, cb) => {
             StorageClass: 'INTELLIGENT_TIERING',
           };
           // sube el archivo
-          console.log('sube', `${pathImg}/${key}.${ext}`);
           s3.upload(params, cb);
         }, cb);
       } else {
@@ -114,7 +111,6 @@ exports.imageToS3 = (pathImg, key, localImg, convert, cb) => {
       }
 
       if (process.env.NODE_ENV === 'production' || appCnf.s3.forced) {
-        console.log('S3 original');
         const fileContent = fs.readFileSync(fileName);
         // ajustes de s3
         const params = {
@@ -128,7 +124,6 @@ exports.imageToS3 = (pathImg, key, localImg, convert, cb) => {
           StorageClass: 'INTELLIGENT_TIERING',
         };
         // sube el archivo
-        console.log('sube', `${pathImg}/${key}`);
         s3.upload(params, cb);
       } else {
         cb();

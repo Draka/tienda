@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 const http = require('http');
 const https = require('https');
 const fs = require('fs');
@@ -53,10 +52,7 @@ exports.imageToS3 = (pathImg, urlImg, localImg, sizes, saveOriginal, fit, cb) =>
       const file = fs.createWriteStream(fileName);
       let request;
       if (myURL.protocol === 'https:') {
-        console.log(`Descargando archivo ${urlImg}`);
         request = https.get(urlImg, (response) => {
-          // console.log(`Descarga con status: ${response.statusCode}`);
-
           if (response.statusCode !== 200) {
             errors.push({ field: 'url', msg: `Response status was ${response.statusCode}` });
             return cb(listErrors(400, null, errors));
@@ -66,8 +62,6 @@ exports.imageToS3 = (pathImg, urlImg, localImg, sizes, saveOriginal, fit, cb) =>
         });
       } else {
         request = http.get(urlImg, (response) => {
-          // console.log(`Descarga con status: ${response.statusCode}`);
-
           if (response.statusCode !== 200) {
             errors.push({ field: 'url', msg: `Response status was ${response.statusCode}` });
             return cb(listErrors(400, null, errors));
@@ -97,7 +91,6 @@ exports.imageToS3 = (pathImg, urlImg, localImg, sizes, saveOriginal, fit, cb) =>
     }],
     // genera JPG
     sizes: ['download', 'copyFile', (_results, cb) => {
-      console.log('Cortando imagen por tamaños');
       async.each(sizes, (size, cb) => {
         sharp(fileName)
           .flatten({ background: { r: 255, g: 255, b: 255 } })
@@ -113,7 +106,6 @@ exports.imageToS3 = (pathImg, urlImg, localImg, sizes, saveOriginal, fit, cb) =>
     }],
     // genera WEBP
     sizesW: ['download', 'copyFile', (_results, cb) => {
-      console.log('Cortando imagen por tamaños');
       async.each(sizes, (size, cb) => {
         sharp(fileName)
           .flatten({ background: { r: 255, g: 255, b: 255 } })
@@ -128,7 +120,6 @@ exports.imageToS3 = (pathImg, urlImg, localImg, sizes, saveOriginal, fit, cb) =>
       }, cb);
     }],
     original: ['download', 'copyFile', (_results, cb) => {
-      console.log('Imagen original');
       sharp(fileName)
         .flatten({ background: { r: 255, g: 255, b: 255 } })
         .jpeg({ progressive: true })
@@ -136,7 +127,6 @@ exports.imageToS3 = (pathImg, urlImg, localImg, sizes, saveOriginal, fit, cb) =>
     }],
     uploadSizes: ['sizes', 'makedirLocal', (_results, cb) => {
       if (process.env.NODE_ENV === 'production' || appCnf.s3.forced) {
-        console.log('S3 por tamaños');
         async.each(sizes, (size, cb) => {
           const fileContent = fs.readFileSync(`./tmp/${size.x}x${size.y}_${nameTemp}.jpg`);
           // ajustes de s3
@@ -151,7 +141,6 @@ exports.imageToS3 = (pathImg, urlImg, localImg, sizes, saveOriginal, fit, cb) =>
             StorageClass: 'INTELLIGENT_TIERING',
           };
           // sube el archivo
-          console.log('sube', `${pathImg}/${size.x}x${size.y}.jpg`);
           s3.upload(params, cb);
         }, cb);
       } else {
@@ -170,7 +159,6 @@ exports.imageToS3 = (pathImg, urlImg, localImg, sizes, saveOriginal, fit, cb) =>
     }],
     uploadSizesW: ['sizesW', 'makedirLocal', (_results, cb) => {
       if (process.env.NODE_ENV === 'production' || appCnf.s3.forced) {
-        console.log('S3 por tamaños');
         async.each(sizes, (size, cb) => {
           const fileContent = fs.readFileSync(`./tmp/${size.x}x${size.y}_${nameTemp}.webp`);
           // ajustes de s3
@@ -185,7 +173,6 @@ exports.imageToS3 = (pathImg, urlImg, localImg, sizes, saveOriginal, fit, cb) =>
             StorageClass: 'INTELLIGENT_TIERING',
           };
           // sube el archivo
-          console.log('sube', `${pathImg}/${size.x}x${size.y}.webp`);
           s3.upload(params, cb);
         }, cb);
       } else {
@@ -208,7 +195,6 @@ exports.imageToS3 = (pathImg, urlImg, localImg, sizes, saveOriginal, fit, cb) =>
       }
 
       if (process.env.NODE_ENV === 'production' || appCnf.s3.forced) {
-        console.log('S3 original');
         const fileContent = fs.readFileSync(`./tmp/original_${nameTemp}.jpg`);
         // ajustes de s3
         const params = {
@@ -222,7 +208,6 @@ exports.imageToS3 = (pathImg, urlImg, localImg, sizes, saveOriginal, fit, cb) =>
           StorageClass: 'INTELLIGENT_TIERING',
         };
         // sube el archivo
-        console.log('sube', `${pathImg}/original.jpg`);
         s3.upload(params, cb);
       } else {
         cb();
@@ -254,7 +239,6 @@ exports.imageToS3 = (pathImg, urlImg, localImg, sizes, saveOriginal, fit, cb) =>
       fs.unlink(`./tmp/original_${nameTemp}.jpg`, cb);
     }],
     deleteTemp: ['deleteSizes', 'deleteOriginal', (_results, cb) => {
-      console.log('Borrando temporal');
       fs.unlink(fileName, cb);
     }],
   }, cb);

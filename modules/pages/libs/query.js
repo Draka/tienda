@@ -56,7 +56,6 @@ exports.multimediaByKey = (bykey, cb) => {
           if (err) {
             return cb(err);
           }
-          console.log(doc);
           if (doc) {
             _.each(doc.sizes, (size) => {
               _.each(doc.files, (file) => {

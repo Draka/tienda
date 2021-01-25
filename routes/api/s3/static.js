@@ -60,7 +60,6 @@ module.exports = (req, res, next) => {
             StorageClass: 'INTELLIGENT_TIERING',
           };
 
-          console.log('fin', file);
           s3.upload(params, cb);
         });
       }, (err) => {
