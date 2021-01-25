@@ -15,6 +15,7 @@ const shrinkRay = require('shrink-ray-current');
 const redis = require('redis');
 const auth = require('./libs/auth.lib');
 const cache = require('./libs/cache.lib');
+const cacheHtml = require('./libs/cache-html.lib');
 const jsMiddleware = require('./libs/js_middleware.lib');
 const tsMiddleware = require('./libs/ts_middleware.lib');
 const imgMiddleware = require('./libs/img_middleware.lib');
@@ -58,9 +59,8 @@ global.client.on('connect', () => {
     console.log('flush cache', succeeded);
   });
   global.redisMiddleware = cache;
+  global.cacheHtml = cacheHtml;
 });
-
-global.redisMiddleware = cache;
 
 mongoose.Promise = require('bluebird');
 
