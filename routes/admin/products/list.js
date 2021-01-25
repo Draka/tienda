@@ -88,6 +88,7 @@ module.exports = (req, res, next) => {
       menu: 'tienda-productos',
       xnew: `/administracion/tiendas/${req.params.storeID}/productos/nuevo`,
       breadcrumbs,
+      js: 'admin',
     });
   });
 };

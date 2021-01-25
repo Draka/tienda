@@ -2,6 +2,7 @@ const { isArray } = require('lodash');
 const { imageToS3 } = require('../../../../libs/image.lib');
 const { deleteS3 } = require('../../../../libs/delete_s3.lib');
 const query = require('../../../../libs/query.lib');
+const { checkProduct } = require('../../../../modules/site/libs/check-store.lib');
 
 module.exports = (req, res, next) => {
   const errors = [];
@@ -115,7 +116,12 @@ module.exports = (req, res, next) => {
         body.categoryIDs = _.map(results.category, (o) => o._id);
         body.categoryText = _.map(results.category, (o) => o.name);
       }
-      results.query.set(body).save(cb);
+      results.query.set(body);
+      if (results.query.publish) {
+        checkProduct(results.store, results.query, cb);
+      } else {
+        results.query.save(cb);
+      }
     }],
   }, (err, results) => {
     if (err) {

@@ -20,16 +20,92 @@ block list
         tr
           th &nbsp;
           th &nbsp;
+          th &nbsp;
           th.b Logo
           th.b.tc P
           th.b.tc A
           th.b Nombre
           th.b URL
-          th.b Descripción
           th.b Usuario
       tbody
         each item of items
           tr
+            td.tc
+              if (_.map(item.problems, key=>key.alert)).indexOf(true) >= 0
+                .t-alert.open-modal-msg.hand.mh-0-5(
+                  title='Eliminar'
+                  data-title=`Alertas de ${item.name}`
+                  data-close='Cerrar'
+                  data-body=`#amsg_${item._id}`
+                )
+                  i.fas.fa-exclamation-triangle
+                div.hide(id=`amsg_${item._id}`)
+                  .flex
+                    .t-alert.open-modal-msg.bigx2
+                      i.fas.fa-exclamation-triangle
+                    .ml-1
+                      if item.problems.seo.alert
+                        p El texto en SEO debe tener entre 150 y 180 caracteres
+                          | #{' '}
+                          a.small.btn.btn--alert(href=`/administracion/tiendas/${item._id}/editar`) arreglar
+                      if item.problems.deliveries.alert
+                        p El precio del servicio de entrega es mayor a $15.000, si es necesario puede dejarlo sin modificar
+                          | #{' '}
+                          a.small.btn.btn--alert(href=`/administracion/tiendas/${item._id}/opciones-de-entrega/editar`) arreglar
+                      if item.problems.productsImage.alert
+                        p Hay "Productos" sin "imágenes"
+                          | #{' '}
+                          a.small.btn.btn--alert(href=`/administracion/tiendas/${item._id}/productos`) arreglar
+                      if item.problems.productsDelivery.alert
+                        p Hay "Productos" con problemas
+                          | #{' '}
+                          a.small.btn.btn--alert(href=`/administracion/tiendas/${item._id}/productos`) arreglar
+
+              if (_.map(item.problems, key=>key.problem)).indexOf(true) >= 0
+                .t-error.open-modal-msg.hand.mh-0-5(
+                  title='Eliminar'
+                  data-title=`Errores de ${item.name}`
+                  data-close='Cerrar'
+                  data-body=`#emsg_${item._id}`
+                )
+                  i.fas.fa-minus-circle
+                div.hide(id=`emsg_${item._id}`)
+                  .flex
+                    .t-error.open-modal-msg.bigx2
+                      i.fas.fa-minus-circle
+                    .ml-1
+                      if item.problems.imageLogo.problem
+                        p La tienda no tiene un logo
+                          | #{' '}
+                          a.small.btn.btn--error(href=`/administracion/tiendas/${item._id}/imagenes/editar`) arreglar
+                      if item.problems.coveragesAreas.problem
+                        p Debe configurar una zona de covertura
+                          | #{' '}
+                          a.small.btn.btn--error(href=`/administracion/tiendas/${item._id}/zonas-de-coberturas/nuevo`) arreglar
+                      if item.problems.localDelivery.problem
+                        p Para tienda en modo vitrina debe seleccionar "Transporte Local" en "Opciones de Entrega"
+                          | #{' '}
+                          a.small.btn.btn--error(href=`/administracion/tiendas/${item._id}/opciones-de-entrega/editar`) arreglar
+                      if item.problems.deliveries.problem
+                        p Debe seleccionar y configurar una "Opcion de Entrega"
+                          | #{' '}
+                          a.small.btn.btn--error(href=`/administracion/tiendas/${item._id}/opciones-de-entrega/editar`) arreglar
+                      if item.problems.localPayment.problem
+                        p Para tienda en modo vitrina debe seleccionar "Contra-entrega" en "Opciones de Pago"
+                          | #{' '}
+                          a.small.btn.btn--error(href=`/administracion/tiendas/${item._id}/opciones-de-pago/editar`) arreglar
+                      if item.problems.payments.problem
+                        p Debe seleccionar y configurar una "Opcion de Pago"
+                          | #{' '}
+                          a.small.btn.btn--error(href=`/administracion/tiendas/${item._id}/opciones-de-pago/editar`) arreglar
+                      if item.problems.categories.problem
+                        p Debe crear "Categorías" para los "Productos"
+                          | #{' '}
+                          a.small.btn.btn--error(href=`/administracion/tiendas/${item._id}/categorias/nuevo`) arreglar
+                      if item.problems.products.problem
+                        p Debe crear y configurar al menos un "Producto"
+                          | #{' '}
+                          a.small.btn.btn--error(href=`/administracion/tiendas/${item._id}/productos/nuevo`) arreglar
             td.tc
               a(href=`/administracion/super/tiendas/${item._id}` title='Ver')
                 i.fas.fa-search
@@ -45,11 +121,10 @@ block list
               +boolean(item.approve)
             td
               a.b(href=`/administracion/super/tiendas/${item._id}`) #{item.name}
+              .small #{item.slogan}
             td
               a(href=`${appCnf.url.site}${item.slug}` target='_blank') #{`${appCnf.url.site}${item.slug}`}
             td
-              | #{item.description}
-            td 
               a.b(href=`/administracion/super/usuarios/${item.userID._id}`) #{item.userID.personalInfo.name}
               div #{item.userID.email}
       tfoot

@@ -22,6 +22,7 @@ block list
     table.small.table.table--lines.table--striped
       thead
         tr
+          th.b &nbsp;
           th.b Imágenes
           th.b.tc P
           th.b.tc D
@@ -32,11 +33,50 @@ block list
           th.b Precio
           th.b Inventario (Stock)
           th.b Descripción
-          th.tc(colspan=3)
+          th.tc(colspan=2)
             i.fas.fa-cog
       tbody
         each item of items
           tr
+            td.tc
+              if (_.map(item.problems, key=>key.alert)).indexOf(true) >= 0
+                .t-alert.open-modal-msg.hand.mh-0-5(
+                  title='Eliminar'
+                  data-title=`Alertas de ${item.name}`
+                  data-close='Cerrar'
+                  data-body=`#amsg_${item._id}`
+                )
+                  i.fas.fa-exclamation-triangle
+                div.hide(id=`amsg_${item._id}`)
+                  .flex
+                    .t-alert.open-modal-msg.bigx2
+                      i.fas.fa-exclamation-triangle
+                    .ml-1
+                      if item.problems.images.alert
+                        p El producto no tiene imágenes
+                          | #{' '}
+                          a.small.btn.btn--alert(href=`/administracion/tiendas/${store._id}/productos/${item._id}/editar`) arreglar
+              if (_.map(item.problems, key=>key.problem)).indexOf(true) >= 0
+                .t-error.open-modal-msg.hand.mh-0-5(
+                  title='Eliminar'
+                  data-title=`Errores de ${item.name}`
+                  data-close='Cerrar'
+                  data-body=`#emsg_${item._id}`
+                )
+                  i.fas.fa-minus-circle
+                div.hide(id=`emsg_${item._id}`)
+                  .flex
+                    .t-error.open-modal-msg.bigx2
+                      i.fas.fa-minus-circle
+                    .ml-1
+                      if item.problems.digital.problem
+                        p Es un producto digital, debe seleccionar y configurar en su tienda "Producto Virtual" en "Opciones de entrega"
+                          | #{' '}
+                          a.small.btn.btn--error(href=`/administracion/tiendas/${store._id}/opciones-de-entrega/editar`) arreglar
+                      if item.problems.dimensions.problem
+                        p Si tiene las formas de entrega Encomienda Nacional y Encomienda Local, el producto debe tene Peso, Largo, Altura y Ancho
+                          | #{' '}
+                          a.small.btn.btn--error(href=`/administracion/tiendas/${store._id}/productos/${item._id}/editar`) arreglar
             td
               .flex
                 each image,i in item.imagesSizes
@@ -76,9 +116,9 @@ block list
             td.tc
               a.btn-flat.p-0-5.rd-0-2(href=`/administracion/tiendas/${store._id}/productos/${item._id}/editar` title='Editar')
                 i.fas.fa-pencil-alt
-            td.tc
-              button.btn-flat.p-0-5.rd-0-2(data-id=item._id title='Eliminar')
-                i.fas.fa-trash-alt
+            //- td.tc
+            //-   button.btn-flat.p-0-5.rd-0-2(data-id=item._id title='Eliminar')
+            //-     i.fas.fa-trash-alt
       tfoot
         tr
           th(colspan="13")

@@ -1,4 +1,5 @@
 const { imageToS3 } = require('../../../../libs/image.lib');
+const { checkStore } = require('../../../../modules/site/libs/check-store.lib');
 
 module.exports = (req, res, next) => {
   const errors = [];
@@ -23,6 +24,7 @@ module.exports = (req, res, next) => {
     'department',
     'town',
     'primaryActivity',
+    'showcase',
   ]);
   if (req.body.lat && req.body.lng) {
     body['location.type'] = 'Point';
@@ -117,7 +119,12 @@ module.exports = (req, res, next) => {
       }, cb);
     }],
     save: ['uploadFile', (results, cb) => {
-      results.query.set(body).save(cb);
+      results.query.set(body);
+      if (results.query.publish) {
+        checkStore(results.query, cb);
+      } else {
+        results.query.save(cb);
+      }
     }],
   }, (err, results) => {
     if (err) {

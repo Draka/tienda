@@ -126,7 +126,9 @@ module.exports = (req, res, next) => {
     }
 
     const item = {
-      seo: `Encuentra ${results.category.name} en ${results.store.name}. ${results.store.slogan}`,
+      seo: results.category
+        ? `Encuentra ${results.category.name} en ${results.store.name}. ${results.store.slogan}`
+        : `Encuentra los mejores productos en ${results.store.name}. ${results.store.slogan}`,
     };
 
     res.render('pages/stores/category.pug', {

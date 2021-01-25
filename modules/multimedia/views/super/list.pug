@@ -17,13 +17,15 @@ block list
                   else
                     i -- Sin título --
               .pl-1
-                button.btn-flat.p-0-5.open-modal-action(title='Eliminar'
-                  data-title='¿Desea eliminar la imagen?'
-                  data-cancel='Cancelar'
-                  data-action='Si, Eliminar'
-                  data-method='DELETE'
-                  data-url=`${appCnf.url.api}admin/super/multimedia/${item._id}`
-                  data-page='/administracion/super/multimedia')
+                button.btn-flat.p-0-5.open-modal-action(
+                    title='Eliminar'
+                    data-title='¿Desea eliminar la imagen?'
+                    data-cancel='Cancelar'
+                    data-action='Si, Eliminar'
+                    data-method='DELETE'
+                    data-url=`${appCnf.url.api}admin/super/multimedia/${item._id}`
+                    data-page='/administracion/super/multimedia'
+                  )
                   i.fas.fa-trash-alt
             .hr.mt-1
             a(href=`/administracion/super/multimedia/${item._id}/editar` title='Editar')

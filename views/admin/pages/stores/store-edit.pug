@@ -10,6 +10,19 @@ block edit
               input#publish(type="hidden" name="publish" value=store.publish?'1':'0')
               span.check
               span.caption Publicado
+        .remark.action.flex.mb-2
+          .h4.mr-1.t-action
+            i.far.fa-file-image.h1
+          div
+            p Activa esta opción si no quieres usar métodos de pago online.
+            p Deberás configurar una zona de covertura, donde puedas entregar tus productos.
+            p Deberás usar un método de envío con pagos contra entrega, nosotros indicaremos al cliente que nunca pague por adelantado.
+        .form-group
+          .form-control
+            label.switch
+              input#showcase(type="hidden" name="showcase" value=store.showcase?'1':'0')
+              span.check
+              span.caption Vitrina
         .form-group
           .form-control
             input.input#name(type="text" name="name" placeholder=' ' required value=store.name)
@@ -28,7 +41,7 @@ block edit
         .form-group
           .form-control
             textarea.input#description(name="seo" placeholder=' ' rowspan=5) #{store.seo}
-            label(for='seo') SEO (corta, no más de 50 palabras)
+            label(for='seo') SEO (corta, entre 150 y 180 caracteres)
         .form-group.ph-1
           .mb-1.subtitle Visión (Se muestra al pie de página en toda la tienda)
           textarea.cke#vision(data-target='#vision' name="vision") !{store.vision}

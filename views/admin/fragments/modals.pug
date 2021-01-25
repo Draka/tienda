@@ -1,6 +1,6 @@
-#modalGeneral.modal.start-hide(tabindex='-1' role='dialog')
+#modalAction.modal.start-hide(tabindex='-1' role='dialog')
   .modal-dialog(role='document')
-    form#modalGeneralForm.col-xs-12.validate-rest(action='' data-page='' method='' data-error="#general-form-results")
+    form#modalActionForm.col-xs-12.validate-rest(action='' data-page='' method='' data-error="#general-form-results")
       .modal-content
         .modal-header
           .title.b
@@ -13,3 +13,17 @@
           button.close-modal.btn.btn--white.btn-cancel(type='button')
           | #{' '}
           button.btn.btn--primary.btn-action(type='submit')
+
+#modalMsg.modal.start-hide(tabindex='-1' role='dialog')
+  .modal-dialog(role='document')
+    .modal-content
+      .modal-header
+        .title.b
+        button.close.close-modal.btn-flat(type='button' data-dismiss='modal' aria-label='Cerrar')
+          span(aria-hidden='true')
+            i.fas.fa-times
+      .modal-body
+        .msg.error#general-form-results
+        .body
+      .modal-footer.tr
+        button.close-modal.btn.btn--primary(type='button')

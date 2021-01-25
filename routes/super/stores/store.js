@@ -60,6 +60,7 @@ module.exports = (req, res, next) => {
       title: 'Aprobar Tiendas',
       menu: 'super-tiendas',
       breadcrumbs,
+      js: 'admin',
     });
   });
 };

@@ -50,6 +50,10 @@ const schema = new mongoose.Schema({
     default: false,
     index: true,
   },
+  showcase: {
+    type: Boolean,
+    default: false,
+  },
   publish: {
     type: Boolean,
     default: false,
@@ -131,6 +135,42 @@ const schema = new mongoose.Schema({
   primaryActivity: {
     type: String,
     trim: true,
+  },
+  problems: {
+    imageLogo: {
+      problem: Boolean,
+    },
+    seo: {
+      alert: Boolean,
+    },
+    coveragesAreas: {
+      problem: Boolean,
+    },
+    localDelivery: {
+      problem: Boolean,
+    },
+    deliveries: {
+      problem: Boolean,
+      alert: Boolean,
+    },
+    localPayment: {
+      problem: Boolean,
+    },
+    payments: {
+      problem: Boolean,
+    },
+    categories: {
+      problem: Boolean,
+    },
+    products: {
+      problem: Boolean,
+    },
+    productsImage: {
+      alert: Boolean,
+    },
+    productsDelivery: {
+      alert: Boolean,
+    },
   },
 }, { timestamps: true });
 

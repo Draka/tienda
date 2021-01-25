@@ -1,4 +1,5 @@
 const query = require('../../../../libs/query.lib');
+const { checkProduct } = require('../../../../modules/site/libs/check-store.lib');
 
 module.exports = (req, res, next) => {
   const errors = [];
@@ -80,7 +81,11 @@ module.exports = (req, res, next) => {
       }
       body.storeID = req.params.storeID;
       const product = new models.Product(body);
-      product.save(cb);
+      if (product.publish) {
+        checkProduct(results.store, product, cb);
+      } else {
+        product.save(cb);
+      }
     }],
   }, (err, results) => {
     if (err) {

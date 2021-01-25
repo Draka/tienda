@@ -17,6 +17,7 @@ export class Util {
     this.changeTowns();
     this.btnBbcodeImg();
     this.openModalAction();
+    this.openModalMsg();
   }
 
   count() {
@@ -86,15 +87,26 @@ export class Util {
   openModalAction() {
     $('.open-modal-action').on('click', (event) => {
       const $el = $(event.currentTarget);
-      const $modal = $('#modalGeneral');
-      const $form = $('#modalGeneralForm');
+      const $modal = $('#modalAction');
+      const $form = $('#modalActionForm');
       $form.attr('action', $el.data('url'));
       $form.attr('method', $el.data('method'));
       $form.data('page', $el.data('page'));
       $modal.find('.title').html($el.data('title'));
       $modal.find('.btn-action').html($el.data('action'));
       $modal.find('.btn-cancel').html($el.data('cancel'));
-      sclib.modalShow('#modalGeneral');
+      sclib.modalShow('#modalAction');
+    });
+  }
+
+  openModalMsg() {
+    $('.open-modal-msg').on('click', (event) => {
+      const $el = $(event.currentTarget);
+      const $modal = $('#modalMsg');
+      $modal.find('.title').html($el.data('title'));
+      $modal.find('.btn--primary').html($el.data('close'));
+      $modal.find('.body').html($($el.data('body')).html());
+      sclib.modalShow('#modalMsg');
     });
   }
 }

@@ -70,6 +70,7 @@ module.exports = (req, res, next) => {
       menu: 'tiendas',
       xnew: '/administracion/tiendas/nuevo',
       breadcrumbs,
+      js: 'admin',
     });
   });
 };

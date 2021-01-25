@@ -165,6 +165,17 @@ const schema = new mongoose.Schema({
     default: 0,
     required: true,
   },
+  problems: {
+    images: {
+      alert: Boolean,
+    },
+    digital: {
+      problem: Boolean,
+    },
+    dimensions: {
+      problem: Boolean,
+    },
+  },
 }, { timestamps: true });
 
 function preUpdate(result, next) {
@@ -183,6 +194,12 @@ function preUpdate(result, next) {
       e.slug = _.kebabCase(_.deburr(e.name));
     });
   }
+  // if (result.problems.digital.problem) {
+  //   result.publish = false;
+  // }
+  // if (result.problems.dimensions.problem) {
+  //   result.publish = false;
+  // }
   next();
 }
 schema.post('validate', preUpdate);

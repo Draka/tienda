@@ -18,11 +18,11 @@ block view
         th.nowrap.ellipsis URL
         td.w-100 #{appCnf.url.site}#{store.slug}
       tr
+        th.nowrap.ellipsis Slogan
+        td.w-100 #{store.slogan}
+      tr
         th.nowrap.ellipsis SEO
         td.w-100 #{store.seo}
-      tr
-        th.nowrap.ellipsis Descripción
-        td.w-100 #{store.description}
       tr
         th.nowrap.ellipsis Visión
         td.w-100
@@ -31,3 +31,12 @@ block view
         th.nowrap.ellipsis Descripción Larga
         td.w-100
           .h-230p.scroll !{store.descriptionLong}
+      tr
+        th.nowrap.ellipsis Departamento
+        td.w-100 #{store.department}
+      tr
+        th.nowrap.ellipsis Municipio
+        td.w-100 #{store.town}
+      tr
+        th.nowrap.ellipsis Actividad primaria
+        td.w-100 #{store.primaryActivity}
