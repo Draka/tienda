@@ -46,7 +46,7 @@ module.exports = (data, user, cb) => {
     },
     try: ['sqs', (results, cb) => {
       cb();
-      if (process.env.NODE_ENV === 'production') {
+      if (!data.noNow && process.env.NODE_ENV === 'production') {
         https.get(appCnf.s3.urlExSQS, () => {});
       }
     }],
