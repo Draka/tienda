@@ -1,3 +1,5 @@
+const { treeSlugCategory } = require('../../../libs/query.lib');
+
 module.exports = (req, res, next) => {
   const errors = [];
   const fbody = {};
@@ -6,7 +8,11 @@ module.exports = (req, res, next) => {
   });
   const body = _.pick(fbody, [
     'name',
+    'categoryID',
   ]);
+  if (typeof req.body.categoryID !== 'undefined' && !body.categoryID) {
+    body.categoryID = null;
+  }
   async.auto({
     validate: (cb) => {
       if (!_.trim(body.name)) {
@@ -18,18 +24,21 @@ module.exports = (req, res, next) => {
       cb();
     },
     query: ['validate', (_results, cb) => {
-      models.FaqCategory
-        .findById(req.params.faqCategoryID)
+      models.HelpCategory
+        .findById(req.params.helpCategoryID)
         .exec(cb);
     }],
     save: ['query', (results, cb) => {
       if (!results.query) {
-        errors.push({ field: 'faq-category', msg: 'No existe la Categoría.' });
+        errors.push({ field: 'help-category', msg: 'No existe la Categoría.' });
       }
       if (errors.length) {
         return cb(listErrors(400, null, errors));
       }
       results.query.set(body).save(cb);
+    }],
+    fix: ['save', (results, cb) => {
+      treeSlugCategory({}, cb);
     }],
   }, (err, results) => {
     if (err) {

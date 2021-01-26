@@ -5,12 +5,21 @@ module.exports = (req, res, next) => {
     _.set(fbody, k, v);
   });
   const body = _.pick(fbody, [
-    'name',
+    'categoryID',
+    'active',
+    'question',
+    'answer',
   ]);
+  if (typeof req.body.active !== 'undefined' && !body.active) {
+    body.active = false;
+  }
+  if (typeof req.body.publish !== 'undefined' && !body.publish) {
+    body.publish = false;
+  }
   async.auto({
     validate: (cb) => {
-      if (!_.trim(body.name)) {
-        errors.push({ field: 'name', msg: 'Escribe un nombre de Categoría válido.' });
+      if (!_.trim(body.question)) {
+        errors.push({ field: 'question', msg: 'Escribe una Pregunta válida.' });
       }
       if (errors.length) {
         return cb(listErrors(400, null, errors));
@@ -18,13 +27,13 @@ module.exports = (req, res, next) => {
       cb();
     },
     query: ['validate', (_results, cb) => {
-      models.FaqCategory
-        .findById(req.params.faqCategoryID)
+      models.Help
+        .findById(req.params.helpID)
         .exec(cb);
     }],
     save: ['query', (results, cb) => {
       if (!results.query) {
-        errors.push({ field: 'faq-category', msg: 'No existe la Categoría.' });
+        errors.push({ field: 'help', msg: 'No existe la Pregunta.' });
       }
       if (errors.length) {
         return cb(listErrors(400, null, errors));

@@ -1,0 +1,27 @@
+extends /modules/admin/views/layout-edit-cmp
+
+block edit
+  form.validate-rest(
+    id="updateProfileForm"
+    action=`${appCnf.url.api}admin/super/help-categories/${item._id}`
+    method="put"
+    data-page=`/administracion/super/ayuda-categorias`
+    data-error="#form-results")
+    .white.br-1.rd-0-2.p-3
+      .msg.error#form-results
+      .row
+        .col-xs-12
+          .form-group
+            .form-control
+              select#categoryID.input(name='categoryID')
+                option(value="") --
+                each category of items
+                  option(value=category._id selected=item.categoryID && item.categoryID.toString()==category._id.toString()) #{category.name}
+              label.nowrap(for='categoryID') Categoría Padre
+          .form-group
+            .form-control
+              input.input#name(type="text" name="name" placeholder=' ' required value=item.name)
+              label(for='name') Nombre
+      .row
+        .col-xs-12.tr
+          button.btn.btn--primary.w-100-xs.mt-2-xs(type="submit") Guardar Categoría

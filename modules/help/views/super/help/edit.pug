@@ -1,0 +1,37 @@
+extends /modules/admin/views/layout-edit-cmp
+
+block edit
+  form.validate-rest(
+    id="updateProfileForm"
+    action=`${appCnf.url.api}admin/super/help/${item._id}`
+    method="put"
+    data-page=`/administracion/super/ayuda`
+    data-error="#form-results")
+    .white.br-1.rd-0-2.p-3
+      .msg.error#form-results
+      .row
+        .col-xs-12
+          .form-group
+            .form-control
+              label.switch
+                input#active(type="hidden" name="active" value=item.active?'1':'0')
+                span.check
+                span.caption Activa
+          .form-group
+            .form-control
+              select.input#categoryID.department(name='categoryID' required)
+                option(value='') --
+                each category in categories
+                  option(value=category._id selected=category._id==item.categoryID.toString()) #{category.name}
+              label.nowrap(for='categoryID') Categoría
+          .form-group
+            .form-control
+              input.input#question(type="text" name="question" placeholder=' ' required value=item.question)
+              label(for='question') Pregunta no olvide los signos... ¿?
+          .form-group.ph-1
+            .subtitle.mb-0-5 Respuesta
+            .form-control
+              textarea.cke#answer(name="answer" placeholder=' ') #{item.answer}
+      .row
+        .col-xs-12.tr
+          button.btn.btn--primary.w-100-xs.mt-2-xs(type="submit") Guardar Pregunta

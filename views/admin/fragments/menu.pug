@@ -47,6 +47,17 @@ nav
           a.item(href=`/administracion/super/faq-categorias`) FAQ Categorías
         li.navigation__item(class=menu=='super-faq'?'navigation--active':'')
           a.item(href=`/administracion/super/faq`) FAQ Preguntas
+    if appCnf.tenancy=='vendelomejor'
+      .expandable
+        .expandable__header
+          .expandable__icon
+            i.fas.fa-angle-down.fa-fw
+          .expandable__title General
+        ul.expandable__body.navigation
+          li.navigation__item(class=menu=='super-ayuda-categorias'?'navigation--active':'')
+            a.item(href=`/administracion/super/ayuda-categorias`) Ayuda Categorías
+          li.navigation__item(class=menu=='super-ayuda'?'navigation--active':'')
+            a.item(href=`/administracion/super/ayuda`) Ayuda Preguntas
     .hr.mh-1
 
   .expandable

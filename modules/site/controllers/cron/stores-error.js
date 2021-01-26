@@ -26,10 +26,12 @@ module.exports = (req, res, next) => {
           to: { email: store.userID.email, name: store.userID.personalInfo.name },
           subject: 'Completa la información de tu tienda',
           template: 'msg-general',
-          msg: `<p>El equipo de ${appCnf.site.name} agradece el uso de su aplicación.</p>`
-          + '<p>Con nuestro compromiso de tener una calidad de tiendas publicadas hemos encontrado unos errores que debe ser corregidos en brevedad.</p>'
-          + `<p>Ingrese a ${appCnf.site.url} en la lista de tiendas, aparecerá en un icono rojo los problemas y una explicación de como corregirlos.</p>`
-          + `<p>Si tiene dudas puede contactar directamente a Whatsapp: ${(_.find(appCnf.site.contacts, { slug: 'whatsapp' })).value}.</p>`,
+          msg: `<p>Desde el equipo de ${appCnf.site.name} agradecemos el uso de nuestra aplicación.</p>`
+          + `<p>Hemos encontrado algunos errores que deben ser corregidos en brevedad. Por favor, Ingresa a ${appCnf.site.url}`
+          + ' y en la lista de tiendas aparecerá con un ícono rojo los problemas encontrados y una explicación de cómo puedes corregirlos.</p>'
+          + `<p>En ${appCnf.site.name} estamos comprometidos con la calidad de las tiendas aliadas que trabajan con nosotros,`
+          + ' recuerda que si tienes dudas adicionales, puedes contactarnos directamente por WhatsApp en el número'
+          + ` ${(_.find(appCnf.site.contacts, { slug: 'whatsapp' })).value}.</p>`,
         },
         { _id: store.userID._id },
         cb);

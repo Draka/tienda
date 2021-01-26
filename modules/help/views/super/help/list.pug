@@ -1,0 +1,27 @@
+extends /modules/admin/views/layout-list
+
+block list
+  if items.length
+    .row
+      each item of items
+        .col-md-6
+          .white.br-1.rd-0-2.p-3.mb-2
+            .mb-1 #{_.get(item, 'categoryID.name')}
+            .flex
+              .pr-1
+                a(href=`/administracion/super/ayuda/${item._id}/editar` title='Ver')
+                  i.fas.fa-pencil-alt
+              .b
+                .title
+                  a(href=`/administracion/super/ayuda/${item._id}/editar`) #{item.question}
+                .i #{item.slug}
+            .hr.mt-1
+            div !{item.answer}
+
+    table.small.table.table--lines.table--striped
+      tfoot
+        tr
+          th(colspan="5")
+            +paginator
+  else
+    +noItems('No hay preguntas creadas.')
