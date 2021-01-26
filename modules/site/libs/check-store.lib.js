@@ -45,7 +45,7 @@ exports.checkStore = (store, cb) => {
             if (delivery.value > 15000) {
               _.set(store, 'problems.deliveries.alert', true);
             }
-            // si tienen transporte local pero no zona de covertura
+            // si tienen transporte local pero no zona de cobertura
             if (!results.coveragesAreas) {
               _.set(store, 'problems.coveragesAreas.problem', true);
             }
@@ -64,7 +64,7 @@ exports.checkStore = (store, cb) => {
           if (delivery.value > 15000) {
             _.set(store, 'problems.deliveries.alert', true);
           }
-          // si tienen transporte local pero no zona de covertura
+          // si tienen transporte local pero no zona de cobertura
           if (delivery.slug === 'transporte-local' && !results.coveragesAreas) {
             _.set(store, 'problems.coveragesAreas.problem', true);
           }
@@ -86,7 +86,7 @@ exports.checkStore = (store, cb) => {
             if (!payment.active) {
               _.set(store, 'problems.localPayment.problem', true);
             }
-            // si tienen transporte local pero no zona de covertura
+            // si tienen transporte local pero no zona de cobertura
             if (!results.coveragesAreas) {
               _.set(store, 'problems.coveragesAreas.problem', true);
             }
@@ -101,7 +101,7 @@ exports.checkStore = (store, cb) => {
         if (payment.active) {
           // debe haber un metodo de entrega
           some = true;
-          // si tienen transporte local pero no zona de covertura
+          // si tienen transporte local pero no zona de cobertura
           if (payment.slug === 'contra-entrega' && !results.coveragesAreas) {
             _.set(store, 'problems.coveragesAreas.problem', true);
           }

@@ -130,7 +130,7 @@ module.exports = (req, res, next) => {
               cb(null, inArea);
             }, (_err, results) => {
               if (results.lastIndexOf(true) === -1) {
-                errors.push({ field: 'delivery', msg: __('No puede atender su solicitud por estar fuera de su covertura') });
+                errors.push({ field: 'delivery', msg: __('No puede atender su solicitud por estar fuera de su cobertura') });
                 return cb(listErrors(400, null, errors));
               }
               cb(null, true);
