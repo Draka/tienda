@@ -39,6 +39,7 @@ function preUpdate(result, next) {
   if (result.slug) {
     result.slug = _.kebabCase(_.deburr(result.slug));
     client.del(`__page__${result.slug}`);
+    client.del(`__page_render__${result.slug}`);
   }
   if (result.title && !result.slug) {
     result.slug = _.kebabCase(_.deburr(result.title));
