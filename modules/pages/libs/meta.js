@@ -212,7 +212,7 @@ const _meta = (text, cb) => {
                 return cb(null, '');
               }
               // Busca todos los meta para convertir
-              meta(results.item.html, cb);
+              _meta(results.item.html, cb);
             }],
           }, (err, results) => {
             text = text.replace(match[0], results.meta);
@@ -241,7 +241,7 @@ const _meta = (text, cb) => {
                 return cb(null, '');
               }
               // Busca todos los meta para convertir
-              meta(results.item.html, cb);
+              _meta(results.item.html, cb);
             }],
           }, (err, results) => {
             if (!results.items) {
@@ -270,15 +270,15 @@ const _meta = (text, cb) => {
 
 const meta = (page, text, cb) => {
   const key = `__page_render__${page}`;
-  client.get(key, (_err, text) => {
-    if (text && process.env.NODE_ENV === 'production') {
-      cb(null, text);
+  client.get(key, (_err, reply) => {
+    if (reply) {
+      cb(null, reply);
     } else {
       _meta(text, (err, text) => {
         if (err) {
           return cb(err);
         }
-        client.set(key, JSON.stringify(text), 'EX', 3600);
+        client.set(key, text, 'EX', 3600);
         cb(null, text);
       });
     }
