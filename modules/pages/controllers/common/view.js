@@ -11,7 +11,7 @@ module.exports = (req, res, next) => {
         return cb(listErrors(404, null, [{ field: 'pageID', msg: 'No existe la Página' }]));
       }
       // Busca todos los meta para convertir
-      meta(results.item.html, cb);
+      meta(req.params.slug, results.item.html, cb);
     }],
   }, (err, results) => {
     if (err) {

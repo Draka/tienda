@@ -13,7 +13,7 @@ h2.b.t-primary.tc.mt-2 Algunas de Nuestras tiendas
         .col-xs-6.col-md-3.ph-1.pw-1-xs.mw-1-sm
           .relative.br-1.p-1.pb-3.h-100.brt-10.rd-0-5.white
             .tc
-              a(href=`/${store.slug}`)
+              a(href=store.url)
                 +img(`Logo de la tienda ${store.name}`, _.get(store, 'imageSizes.logo'))
             .title.mt-0-5.b #{store.name}
             .subtitle.pb-1 #{store.seo}

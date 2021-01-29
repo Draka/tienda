@@ -39,7 +39,7 @@ const simples = [
   'p',
 ];
 
-const meta = (text, cb) => {
+const _meta = (text, cb) => {
   // return parse(text);
 
   let re;
@@ -266,6 +266,23 @@ const meta = (text, cb) => {
       cb();
     },
   }, (err) => cb(err, text));
+};
+
+const meta = (page, text, cb) => {
+  const key = `__page_render__${page}`;
+  client.get(key, (_err, text) => {
+    if (text && process.env.NODE_ENV === 'production') {
+      cb(null, text);
+    } else {
+      _meta(text, (err, text) => {
+        if (err) {
+          return cb(err);
+        }
+        client.set(key, JSON.stringify(text), 'EX', 3600);
+        cb(null, text);
+      });
+    }
+  });
 };
 
 module.exports = meta;
