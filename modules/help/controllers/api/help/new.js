@@ -7,16 +7,18 @@ module.exports = (req, res, next) => {
   const body = _.pick(fbody, [
     'categoryID',
     'active',
-    'question',
-    'answer',
+    'order',
+    'title',
+    'seo',
+    'text',
   ]);
   if (typeof req.body.active !== 'undefined' && !body.active) {
     body.active = false;
   }
   async.auto({
     validate: (cb) => {
-      if (!_.trim(body.question)) {
-        errors.push({ field: 'question', msg: 'Escribe una Pregunta válida.' });
+      if (!_.trim(body.title)) {
+        errors.push({ field: 'title', msg: 'Escribe un Título válida.' });
       }
       if (errors.length) {
         return cb(listErrors(400, null, errors));
@@ -25,12 +27,12 @@ module.exports = (req, res, next) => {
     },
     query: ['validate', (_results, cb) => {
       models.Help
-        .findOne({ slug: _.kebabCase(_.deburr(body.question)) })
+        .findOne({ slug: _.kebabCase(_.deburr(body.title)) })
         .exec(cb);
     }],
     check: ['query', (results, cb) => {
       if (results.query) {
-        errors.push({ field: 'slug', msg: 'Ya existe una Pregunta con el mismo slug.' });
+        errors.push({ field: 'slug', msg: 'Ya existe un Título con el mismo slug.' });
         return cb(listErrors(409, null, errors));
       }
       cb();

@@ -16,6 +16,10 @@ header
         ul.flex
           li
             a(href='/paginas/precios') Precios
+          li
+            a(href='/ayuda') Ayuda
+          li
+            a(href='/usuario/vendedor') Vender
         if !session
           ul.flex
             li
@@ -135,6 +139,10 @@ header
       ul.list(role='menu')
         li(role='menuitem')
           a(href='/paginas/precios') Precios
+        li(role='menuitem')
+          a(href='/ayuda') Ayuda
+        li(role='menuitem')
+          a(href='/usuario/vendedor') Vender
       if !session
         ul.list(role='menu')
           li(role='menuitem')

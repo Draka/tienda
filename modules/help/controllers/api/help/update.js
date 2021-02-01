@@ -7,8 +7,10 @@ module.exports = (req, res, next) => {
   const body = _.pick(fbody, [
     'categoryID',
     'active',
-    'question',
-    'answer',
+    'order',
+    'title',
+    'seo',
+    'text',
   ]);
   if (typeof req.body.active !== 'undefined' && !body.active) {
     body.active = false;
@@ -18,8 +20,8 @@ module.exports = (req, res, next) => {
   }
   async.auto({
     validate: (cb) => {
-      if (!_.trim(body.question)) {
-        errors.push({ field: 'question', msg: 'Escribe una Pregunta válida.' });
+      if (!_.trim(body.title)) {
+        errors.push({ field: 'title', msg: 'Escribe un Título válida.' });
       }
       if (errors.length) {
         return cb(listErrors(400, null, errors));
@@ -33,7 +35,7 @@ module.exports = (req, res, next) => {
     }],
     save: ['query', (results, cb) => {
       if (!results.query) {
-        errors.push({ field: 'help', msg: 'No existe la Pregunta.' });
+        errors.push({ field: 'help', msg: 'No existe el Título.' });
       }
       if (errors.length) {
         return cb(listErrors(400, null, errors));

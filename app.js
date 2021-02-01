@@ -151,11 +151,12 @@ app.use((err, req, res, next) => {
   res.locals.message = err.message;
   if (process.env.NODE_ENV === 'production') {
     res.locals.error = {};
+    err.stack = '';
   }
   if (req.originalUrl.split('/')[1] === 'v1') {
     res.status(err.status || 500).send(err);
   } else {
-    res.status(err.status || 500).render('error.pug', { error: err });
+    res.status(err.status || 500).render('error.pug', { error: err, session: req.user });
   }
 });
 

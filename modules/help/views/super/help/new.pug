@@ -26,12 +26,23 @@ block edit
               label.nowrap(for='categoryID') Categoría
           .form-group
             .form-control
-              input.input#question(type="text" name="question" placeholder=' ' required)
-              label(for='question') Pregunta no olvide los signos... ¿?
-          .form-group.ph-1
-            .subtitle.mb-0-5 Respuesta
+              input.input#order(type="number" name="order" placeholder=' ' value=50)
+              label(for='order') Orden
+          .form-group
             .form-control
-              textarea.cke#answer(name="answer" placeholder=' ')
+              input.input#title(type="text" name="title" placeholder=' ' required)
+              label(for='title') Título
+          .form-group
+            .form-control
+              textarea.input#seo(name="seo" placeholder=' ' data-count="180" data-target="#count-short-seo")
+              label(for='seo') Texto Seo
+            .small No más de 180 caracteres. Lleva #{' '}
+              spam#count-short-description
+              | #{' '}caracteres
+          .form-group.ph-1
+            .subtitle.mb-0-5 Texo
+            .form-control
+              textarea.cke#text(name="text" placeholder=' ')
       .row
         .col-xs-12.tr
-          button.btn.btn--primary.w-100-xs.mt-2-xs(type="submit") Nueva Pregunta
+          button.btn.btn--primary.w-100-xs.mt-2-xs(type="submit") Nuevo Tópico

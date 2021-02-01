@@ -5,7 +5,7 @@ function categoryTree(categoryID, cb) {
     })
     .select('_id name')
     .sort({
-      name: 1,
+      order: 1,
     })
     .lean()
     .exec((err, docs) => {

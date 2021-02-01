@@ -4,7 +4,15 @@ const schema = new mongoose.Schema({
     ref: `${appCnf.dbPrefix}help-categories`,
     index: true,
   },
+  order: {
+    type: Number,
+    default: 50,
+  },
   name: {
+    type: String,
+    trim: true,
+  },
+  description: {
     type: String,
     trim: true,
   },

@@ -27,7 +27,7 @@ const enviroment = {
   url: {
     api: process.env.URL_API || '/v1/', // url del sitio
     site: process.env.URL_SITE || 'http://localhost:3000/', // url del sitio
-    static: process.env.URL_STATIC || 'https://localhost:3001/', // url de css, js, iconos, deberia ser un s3 pero en local puede ser la misma maquina
+    static: process.env.URL_STATIC || 'http://localhost:3000/', // url de css, js, iconos, deberia ser un s3 pero en local puede ser la misma maquina
   },
   files: process.env.FILES || 'local',
   site: {},

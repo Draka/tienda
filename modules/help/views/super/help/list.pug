@@ -13,10 +13,10 @@ block list
                   i.fas.fa-pencil-alt
               .b
                 .title
-                  a(href=`/administracion/super/ayuda/${item._id}/editar`) #{item.question}
+                  a(href=`/administracion/super/ayuda/${item._id}/editar`) #{item.title}
                 .i #{item.slug}
             .hr.mt-1
-            div !{item.answer}
+            div !{item.text}
 
     table.small.table.table--lines.table--striped
       tfoot

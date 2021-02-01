@@ -9,7 +9,11 @@ const schema = new mongoose.Schema({
     index: true,
     default: false,
   },
-  question: {
+  order: {
+    type: Number,
+    default: 50,
+  },
+  title: {
     type: String,
     trim: true,
   },
@@ -18,7 +22,12 @@ const schema = new mongoose.Schema({
     trim: true,
     index: true,
   },
-  answer: {
+  seo: {
+    type: String,
+    trim: true,
+    index: true,
+  },
+  text: {
     type: String,
     trim: true,
     index: true,
@@ -31,7 +40,7 @@ function preUpdate(result, next) {
     client.del(`__helps__categoryID__${result.categoryID}`);
   }
   if (result.question) {
-    result.slug = _.kebabCase(_.deburr(_.get(result, 'question')));
+    result.slug = _.kebabCase(_.deburr(_.get(result, 'title')));
   }
   next();
 }

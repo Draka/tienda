@@ -10,6 +10,10 @@ const helpEdit = require('../controllers/super/help/edit');
 const helpApiUpdate = require('../controllers/api/help/update');
 const helpApiNew = require('../controllers/api/help/new');
 
+const landpage = require('../controllers/common/landpage');
+
+const commonCategoryList = require('../controllers/api/common/category/list');
+
 module.exports = (app) => {
   app.get('/administracion/super/ayuda-categorias', checkAuthAdmin, helpCategoryList);
   app.get('/administracion/super/ayuda-categorias/nuevo', checkAuthAdmin, helpCategoryNew);
@@ -22,4 +26,11 @@ module.exports = (app) => {
   app.get('/administracion/super/ayuda/:helpID/editar', checkAuthAdmin, helpEdit);
   app.post('/v1/admin/super/help', checkAuthAdmin, helpApiNew);
   app.put('/v1/admin/super/help/:helpID', checkAuthAdmin, helpApiUpdate);
+
+  app.get('/ayuda', landpage);
+
+  app.get('/v1/help/categories', commonCategoryList);
+  app.get('/v1/help/categories/:categoryID', commonCategoryList);
+  app.get('/v1/help/categories/:categoryID/questions', commonCategoryList);
+  app.get('/v1/help/categories/:categoryID/questions/:questionID', commonCategoryList);
 };

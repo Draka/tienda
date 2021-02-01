@@ -46,6 +46,7 @@ const vars = {
     'cerrar-sesion',
     'carrito',
     'v1',
+    'ayuda',
   ],
   payments: [
     {
