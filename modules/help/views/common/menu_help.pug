@@ -1,0 +1,15 @@
+nav.mt-2
+  .pw-1
+    .title TÓPICOS
+  .mh-2
+    each category in tree
+      .expandable
+        .expandable__header
+          .expandable__icon
+            i.fas.fa-angle-down.fa-fw
+          .expandable__title
+            a.item(href='/ayuda/topico/'+category.slugLong) #{category.name}
+        ul.expandable__body.navigation
+          each sub in category.categories
+            li.navigation__item(class=menu==sub.slugLong?'navigation--active':'')
+              a.item(href='/ayuda/topico/'+sub.slugLong) #{sub.name}

@@ -18,4 +18,3 @@ exports.FaqCategory = require('./faq-categories.model');
 exports.Faq = require('./faq.model');
 exports.Multimedia = require('./multimedias.model');
 exports.HelpCategory = require('./help-categories.model');
-exports.Help = require('./help.model');

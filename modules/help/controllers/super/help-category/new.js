@@ -38,6 +38,7 @@ module.exports = (req, res, next) => {
       menu: 'super-help-categorias',
       breadcrumbs,
       js: 'admin',
+      cke: true,
     });
   });
 };

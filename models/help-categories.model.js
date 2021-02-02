@@ -16,6 +16,10 @@ const schema = new mongoose.Schema({
     type: String,
     trim: true,
   },
+  text: {
+    type: String,
+    trim: true,
+  },
   slug: {
     type: String,
     trim: true,

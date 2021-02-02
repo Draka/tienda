@@ -1,0 +1,33 @@
+extends /modules/common/views/layout-index
+
+block view
+
+  .container-fluid.white-500.ph-2
+    .container
+      .row
+        .col-md-12
+          .h2.tc.mb-1 ¿En qué podemos ayudarte?
+          form.flex(class="search" action=`/ayuda/buscar`)
+            label.out-screen(for='query-help') Buscar
+            input#query-help.input--simple.w-100.ph-0-5.pw-1(type="text" name="q" placeholder='Buscar en la ayuda' required value=q)
+            button.btn.btn--secondary
+              i.fas.fa-search
+              span.out-screen Buscar en la ayuda
+  .stub
+    .stub__left.white.brr-1.hide-xs
+      include ./menu_help.pug
+    .stub__right.w-100-xs
+
+      .container
+        .row
+          .col-sm-12
+            h1.mh-1 #{item.name}
+            .hr.mb-1
+            div !{item.text}
+            if item.subs.length
+              .title.b En esta categoría
+              ul.mb-2
+              each subitem in item.subs
+                li
+                  a(href=`/ayuda/itemo/${subitem.slug}`) #{subitem.name}
+

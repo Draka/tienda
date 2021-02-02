@@ -28,8 +28,15 @@ block edit
               label(for='name') Nombre
           .form-group
             .form-control
-              textarea.input#description(name="description" placeholder=' ') #{item.description}
+              textarea.input#description(name="description" placeholder=' ' data-count="180" data-target="#count-short-description") #{item.description}
               label(for='description') Descripción
+            .small No más de 180 caracteres. Lleva #{' '}
+              spam#count-short-description
+              | #{' '}caracteres
+          .form-group.ph-1
+            .subtitle.mb-0-5 Texo
+            .form-control
+              textarea.cke#text(name="text" placeholder=' ') #{item.text}
       .row
         .col-xs-12.tr
           button.btn.btn--primary.w-100-xs.mt-2-xs(type="submit") Guardar Categoría

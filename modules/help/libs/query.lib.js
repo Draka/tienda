@@ -3,7 +3,7 @@ function categoryTree(categoryID, cb) {
     .find({
       categoryID,
     })
-    .select('_id name')
+    .select('_id name slugLong')
     .sort({
       order: 1,
     })

@@ -28,7 +28,7 @@ block view
               each subtopic in topic.subs
                 .col-md-6.ph-1.pw-1-xs.mw-1-sm
                   .relative.br-1.p-1.h-100.brt-10.rd-0-5.white
-                    a(href=`/ayuda/topico/${subtopic.slug}`)
+                    a(href=`/ayuda/topico/${subtopic.slugLong}`)
                       h3.mb-1 #{subtopic.name}
                       div #{subtopic.description}
 

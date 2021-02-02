@@ -46,6 +46,10 @@ else
                   .icon.bigx2.ml-0-5
                     a(href=contact.value title='Twitter' target='_blank')
                       i.fab.fa-twitter-square
+                else if contact.slug == 'instagram'
+                  .icon.bigx2.ml-0-5
+                    a(href=contact.value title='Instagram' target='_blank')
+                      i.fab.fa-instagram-square
                 else if contact.slug == 'whatsapp'
                   .icon.bigx2.ml-0-5
                     a(href=`https://wa.me/${contact.value}?text=Hola, ${store.name} quisiera saber más de tus productos.` title='Whatsapp' target='_blank')

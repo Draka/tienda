@@ -2,27 +2,13 @@ const { api } = require('../../libs/api.lib');
 
 module.exports = (req, res, next) => {
   async.auto({
-    topics: (cb) => {
+    items: (cb) => {
       api('categories', cb);
     },
   }, (err, results) => {
     if (err) {
       return next(err);
     }
-    const items = [];
-
-    _.each(results.topics, (topic) => {
-      if (!topic.categoryID) {
-        topic.subs = [];
-        items.push(topic);
-      }
-    });
-    _.each(results.topics, (topic) => {
-      const sub = _.find(items, { _id: topic.categoryID });
-      if (sub) {
-        sub.subs.push(topic);
-      }
-    });
 
     const breadcrumbs = [
       {
@@ -40,13 +26,10 @@ module.exports = (req, res, next) => {
       seo: 'Centro de ayuda para instalar y configurar tu tienda online.',
     };
 
-    console.log(items);
-
     res.render('../modules/help/views/common/landpage.pug', {
       session: req.user,
       item,
-      items,
-      categories: results.categories,
+      items: results.items,
       title: 'Centro de Ayuda',
       breadcrumbs,
       js: 'page',

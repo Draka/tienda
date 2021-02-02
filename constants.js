@@ -30,6 +30,7 @@ const vars = {
   socialMedia: [
     ['facebook', 'Facebook', 'url', '', 'fab fa-facebook-square'],
     ['twitter', 'Twitter', 'url', '', 'fab fa-twitter-square'],
+    ['instagram', 'Instagram', 'url', '', 'fab fa-instagram-square'],
     ['whatsapp', 'Whatsapp', 'text', { cellphone: 'cellphone' }, 'fab fa-whatsapp-square'],
     ['email', 'Correo Electrónico', 'email', '', 'fas fa-envelope'],
     ['web', 'Página Web', 'url', '', 'fas fa-globe'],

@@ -10,6 +10,7 @@ module.exports = (req, res, next) => {
     'order',
     'name',
     'description',
+    'text',
     'categoryID',
   ]);
   if (typeof req.body.categoryID !== 'undefined' && !body.categoryID) {

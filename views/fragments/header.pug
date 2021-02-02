@@ -13,7 +13,7 @@ header
               button.btn.btn--secondary
                 i.fas.fa-search
                 span.out-screen #{__('Bucar productos')}
-        ul.flex
+        ul.flex.menu
           li
             a(href='/paginas/precios') Precios
           li
@@ -21,7 +21,7 @@ header
           li
             a(href='/usuario/vendedor') Vender
         if !session
-          ul.flex
+          ul.flex.menu
             li
               a.btn.btn--secondary(href='/registro') Registro
             li
@@ -57,7 +57,7 @@ header
                   a.item(href='/cerrar-sesion')
                     i.fas.fa-sign-out-alt
                     | #{' '}Cerrar Sesión
-        ul.flex
+        ul.flex.menu
           li.w-4
             a.link-shopping-cart.relative.w-4.justify-content-center(href='/carrito')
               i.fas.fa-shopping-cart
