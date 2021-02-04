@@ -53,6 +53,8 @@ module.exports = (req, res, next) => {
         description: delivery.description,
         payments: delivery.payments,
         value: _.get(d, 'value') || 0,
+        virtualDelivery: delivery.virtualDelivery,
+        personalDelivery: delivery.personalDelivery,
       };
     });
 

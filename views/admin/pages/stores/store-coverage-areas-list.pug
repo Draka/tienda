@@ -13,6 +13,7 @@ block list
           th.tc
             i.far.fa-map
           th.w-100.b Nombre
+          th.w-100.b Costo
           th.tc(colspan=2)
             i.fas.fa-cog
       tbody
@@ -24,6 +25,7 @@ block list
               img.h-96p(src=item.image)
             td.w-100
               a.b(href=`/administracion/tiendas/${store._id}/zonas-de-coberturas/${item._id}/editar`) #{item.name}
+            td.tr.b.t-secondary #{formatMoney(item.price || 0)}
             td.tc
               a.btn-flat.p-0-5.rd-0-2(href=`/administracion/tiendas/${store._id}/zonas-de-coberturas/${item._id}/editar` title='Editar')
                 i.fas.fa-pencil-alt

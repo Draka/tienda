@@ -29,8 +29,11 @@ block edit
               label(for='title') Título
           .form-group
             .form-control
-              input.input#seo(type="text" name="seo" placeholder=' ')
+              input.input#seo(type="text" name="seo" data-count="180" data-target="#count-short-description" placeholder=' ')
               label(for='seo') SEO (corta, entre 150 y 180 caracteres)
+            .small No más de 180 caracteres. Lleva #{' '}
+              spam#count-short-description
+              | #{' '}caracteres
           .form-group
             .form-control
               input.input#slug(type="text" name="slug" placeholder=' ')

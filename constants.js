@@ -89,7 +89,7 @@ const vars = {
     {
       name: 'Producto Virtual',
       slug: 'virtual-product',
-      description: 'No se necesita un evío físico, los detalles de la compra se enviarán por correo',
+      description: 'No se necesita un envío físico, los detalles de la compra se enviarán por correo',
       payments: ['wompi'],
       virtualDelivery: true,
       personalDelivery: false,
@@ -98,6 +98,7 @@ const vars = {
   tenancyUrl: {
     vendelomejor: 'https://vendelomejor.com/',
     marketsabana: 'https://marketsabana.com/',
+    buenaventa: 'https://buenaventa.co/',
   },
 };
 _.forEach(vars, (v, i) => {

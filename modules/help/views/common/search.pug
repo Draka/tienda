@@ -1,0 +1,27 @@
+extends /modules/common/views/layout-index
+
+block view
+
+  .container
+    h1.mb-1 Resultados de la búsqueda
+
+  .container-fluid.white-500.ph-2
+    .container
+      .row
+        .col-md-12
+          form.flex(class="search" action=`/ayuda/buscar`)
+            label.out-screen(for='query-help') Buscar
+            input#query-help.input--simple.w-100.ph-0-5.pw-1(type="text" name="q" placeholder='Buscar en la ayuda' required value=q)
+            button.btn.btn--secondary
+              i.fas.fa-search
+              span.out-screen Buscar en la ayuda
+
+
+  .container
+    .row
+      .col-sm-12.mb-2
+        each topic in items
+          .mh-1
+            a.title.mh-1(href='/ayuda/topico/'+topic.slugLong) #{topic.name}
+            .subtitle #{topic.description}
+

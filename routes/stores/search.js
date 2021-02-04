@@ -4,6 +4,11 @@ const { putS3Path } = require('../../libs/put_s3_path.lib');
 const { isAvailable } = require('../../libs/util.lib');
 
 module.exports = (req, res, next) => {
+  // Salta a otra url
+  if (global.forbidden.indexOf(req.params.storeSlug) >= 0) {
+    return next('route');
+  }
+
   const query = {
     publish: 1,
     $and: [

@@ -22,6 +22,9 @@ module.exports = (req, res, next) => {
         .exec(cb);
     }],
     subquery: ['query', (results, cb) => {
+      if (req.query.q) {
+        return cb();
+      }
       async.each(results.query, (item, cb) => {
         models.HelpCategory
           .find({ categoryID: item._id })

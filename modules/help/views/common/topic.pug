@@ -20,7 +20,7 @@ block view
 
       .container
         .row
-          .col-sm-12
+          .col-sm-12.pb-2
             h1.mh-1 #{item.name}
             .hr.mb-1
             div !{item.text}
@@ -29,5 +29,5 @@ block view
               ul.mb-2
               each subitem in item.subs
                 li
-                  a(href=`/ayuda/itemo/${subitem.slug}`) #{subitem.name}
+                  a(href=`/ayuda/topico/${subitem.slugLong}`) #{subitem.name}
 

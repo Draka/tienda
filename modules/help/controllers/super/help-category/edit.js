@@ -45,7 +45,7 @@ module.exports = (req, res, next) => {
       session: req.user,
       item: results.item,
       items: results.items,
-      title: 'Editar Ayuda Categoría',
+      title: `Editar - ${results.item.name}`,
       menu: 'super-help-categorias',
       breadcrumbs,
       js: 'admin',

@@ -16,6 +16,10 @@ const schema = new mongoose.Schema({
     trim: true,
     required: true,
   },
+  price: {
+    type: Number,
+    default: 0,
+  },
   points: {
     type: String,
     trim: true,

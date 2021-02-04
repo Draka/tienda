@@ -1,6 +1,5 @@
 /* eslint-disable no-mixed-operators */
 /* eslint-disable no-bitwise */
-import '../util/mapbox.d';
 
 import { Vars } from './vars';
 import { GetApi } from './get_api';
@@ -10,6 +9,7 @@ import { ShowMsg } from './show_msg';
 import { Product } from './product';
 import { CartList } from './cart_list';
 
+declare const L: any;
 export class Cart {
   stores!: StoresInterface;
 
@@ -233,30 +233,31 @@ export class Cart {
     const address = Cart.getAddressJSON();
     if (address.form) {
       $.each(address.form, (_i, v) => {
-        $(`input[name="${v.name}"]`).val(v.value);
+        $(`[name="${v.name}"]`).val(v.value);
       });
     }
     if (address.address) {
-      $('.user-address').html(`${address.city} - ${address.address}`);
+      $('.user-address').html(address.address);
     } else {
       $('.user-address').html('<div class="msg error">Proporcione una dirección para continuar</div>');
     }
 
     $('#addressForm').data('post', Cart.checkAddress);
-    $('#mapForm .back').click(() => {
+    $('#mapForm .back').on('click', () => {
       $('#addressForm').show();
       $('#mapForm').hide();
     });
     $('#mapForm').data('post', () => {
       const address = Cart.setAddressJSON($('#addressJSON').val());
       sclib.modalHide('#address');
-      $('.user-address').html(`${address.city} - ${address.address}`);
+      $('.user-address').html(address.address);
       const cartList = new CartList();
       cartList.showStepAddress();
     });
   }
 
   static checkAddress(data: any) {
+    $('#map-container').html('<div id="map" class="w-100 h-460p"></div>');
     const address = {
       city: $('#addressForm input[name="city"]').val(),
       address: data.address,
@@ -271,36 +272,38 @@ export class Cart {
     $('#addressForm').hide();
     $('#mapForm').show();
 
-    mapboxgl.accessToken = 'pk.eyJ1Ijoic3JkcmFrYSIsImEiOiJja2FlZHBmYXUwMHpoMnJudHJnazZsOWY1In0.tAAoQbjhJKq_DdwpTTimrw';
-    const map = new mapboxgl.Map({
-      container: 'map',
-      style: 'mapbox://styles/mapbox/streets-v11',
-      center: [data.location.lng, data.location.lat],
-      zoom: 16,
+    const coords = [data.location.lat || 4.646876, data.location.lng || -74.087547];
+    const map = L.map('map').setView(coords, 16);
+    L.control.locate({
+      initialZoomLevel: 16,
+      locateOptions: {
+        enableHighAccuracy: true,
+        maxZoom: 16,
+      },
+      strings: {
+        title: 'Localizar mi posición',
+      },
+    }).addTo(map);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    }).addTo(map);
+
+    const marker = L.marker(coords, {
+      draggable: true,
+    }).addTo(map);
+
+    marker.on('dragend', () => {
+      address.location = marker.getLatLng();
+      $('#addressJSON').val(JSON.stringify(address));
     });
 
-    const marker = new mapboxgl.Marker({
-      draggable: true,
-    }).setLngLat([data.location.lng, data.location.lat])
-      .addTo(map);
-
-    function onDragEnd() {
-      const lngLat = marker.getLngLat();
-      address.location = lngLat;
+    function onLocationFound(e) {
+      address.location = e.latlng;
       $('#addressJSON').val(JSON.stringify(address));
+      marker.setLatLng(e.latlng)
+        .bindPopup('Mueva el marcador si es necesario').openPopup();
     }
 
-    marker.on('dragend', onDragEnd);
-    if (!data.ok) {
-      const geocoder = new MapboxGeocoder({
-        accessToken: mapboxgl.accessToken,
-        marker: false,
-        mapboxgl,
-      });
-      geocoder.on('result', (e:any) => {
-        marker.setLngLat(e.result.center);
-      });
-      map.addControl(geocoder);
-    }
+    map.on('locationfound', onLocationFound);
   }
 }

@@ -6,6 +6,7 @@ const helpCategoryApiNew = require('../controllers/api/help-category/new');
 
 const landpage = require('../controllers/common/landpage');
 const topic = require('../controllers/common/topic');
+const search = require('../controllers/common/search');
 
 const commonCategoryList = require('../controllers/api/common/category/list');
 const commonCategoryTree = require('../controllers/api/common/category/tree');
@@ -19,6 +20,7 @@ module.exports = (app) => {
 
   app.get('/ayuda', landpage);
   app.get('/ayuda/topico/:slugLong', topic);
+  app.get('/ayuda/buscar', search);
 
   app.get('/v1/help/categories', commonCategoryList);
   app.get('/v1/help/tree', commonCategoryTree);

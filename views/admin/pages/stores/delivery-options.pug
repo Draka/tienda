@@ -19,5 +19,10 @@ block list
           td.w-100
             .b #{item.name}
             .small #{item.description}
-          td.tr
-            .b.t-secondary #{formatMoney(item.value || 0)}
+          td.tr.nowrap
+            if item.personalDelivery
+              a(href=`/administracion/tiendas/${store._id}/zonas-de-coberturas`) Ver en Zonas
+            else if item.virtualDelivery
+              .b.t-secondary  #{formatMoney(0)}
+            else
+              .b.t-secondary  #{formatMoney(item.value || 0)}

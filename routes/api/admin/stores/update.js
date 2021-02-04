@@ -33,10 +33,11 @@ module.exports = (req, res, next) => {
   if (body.deliveries) {
     body.deliveries = _.map(global.deliveries, (delivery) => {
       const d = _.find(body.deliveries, { slug: delivery.slug });
+      const val = _.get(d, 'value') || 0;
       return {
         slug: delivery.slug,
         active: _.get(d, 'active') || false,
-        value: _.get(d, 'value') || 0,
+        value: delivery.virtualDelivery || delivery.personalDelivery ? 0 : val,
       };
     });
   }

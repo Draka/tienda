@@ -12,8 +12,9 @@ block edit
         .msg.info.mb-0-5
           .flex
             i.fas.fa-exclamation.h2.mr-0-25.w-2.tc
-            p Las áreas de cobertura son una zona de un mapa donde se prestará el servicio de envio local proporcionado por el dueño de la tienda.
-            p No configure una zona de cobertura del tamaño de un departamento o páis
+            div
+              p Las áreas de cobertura son una zona de un mapa donde se prestará el servicio de envio local proporcionado por el dueño de la tienda.
+              p No configure una zona de cobertura del tamaño de un departamento o páis
         .form-group
           .form-control
             label.switch
@@ -24,6 +25,10 @@ block edit
           .form-control
             input.input#name(type="text" name="name" placeholder=' ' required value=item.name)
             label(for='name') Nombre del área de cobertura
+        .form-group
+          .form-control
+            input.input#price(type="number" name="price" min=0 placeholder=' ' required value=item.price)
+            label(for='price') Precio de entrega en esta Zona
         .form-group
           .form-control
             .subtitle Mapa

@@ -22,6 +22,7 @@ block list
         each item,i in deliveries
           tr
             td.tc
+              input(type="hidden" name=`deliveries[${i}][slug]` value=item.slug)
               label
                 input.checkbox.checkbox--no-margin(type="checkbox" name=`deliveries[${i}][active]` value='1' checked=item.active)
                 span
@@ -29,8 +30,11 @@ block list
               .b #{item.name}
               .small #{item.description}
             td.tc
-              input(type="hidden" name=`deliveries[${i}][slug]` value=item.slug)
-              input.input.tr(type="number" min=0 name=`deliveries[${i}][value]` placeholder=' ' required value=item.value)
+              if item.virtualDelivery || item.personalDelivery
+                | No aplica
+              else
+                input.input.tr(type="number" min=0 name=`deliveries[${i}][value]` placeholder=' ' required value=item.value)
+
 
     .row
       .col-xs-12.tr

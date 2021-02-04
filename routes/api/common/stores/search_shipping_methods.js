@@ -52,18 +52,21 @@ module.exports = (req, res, next) => {
             longitude: point.lng,
           })),
         );
-        cb(null, inArea);
+        cb(null, { inArea, area });
       }, (_err, results) => {
-        cb(null, results.lastIndexOf(true) >= 0);
+        results = _.orderBy(results, ['area.price'], ['desc']);
+        cb(null, _.find(results, { inArea: true }));
       });
     }],
   }, (err, results) => {
     if (err) {
       return next(err);
     }
+    // Precio de la zona
+    _.set(_.find(results.selectMethods, { slug: 'transporte-local' }), 'price', _.get(results, 'inArea.area.price') || 0);
     res.send({
       shippingMethods: results.selectMethods,
-      inArea: results.inArea,
+      inArea: _.get(results, 'inArea.inArea') || false,
     });
   });
 };

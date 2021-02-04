@@ -78,6 +78,7 @@ module.exports = (req, res, next) => {
       menu: 'tienda-categorias',
       xnew: `/administracion/tiendas/${req.params.storeID}/categorias/nuevo`,
       breadcrumbs,
+      js: 'admin',
     });
   });
 };

@@ -11,7 +11,7 @@ module.exports = (req, res, next) => {
       session: req.user,
       title: __('Carrito de compras -> Confirmar Dirección'),
       js: 'cart',
-      mapbox: true,
+      osm: true,
     });
   });
 };

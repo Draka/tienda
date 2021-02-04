@@ -3,6 +3,7 @@ module.exports = (req, res, next) => {
   const body = _.pick(req.body, [
     'active',
     'name',
+    'price',
     'points',
   ]);
   async.auto({

@@ -40,8 +40,11 @@ block edit
             label(for='slogan') Slogan (corto, no mas de 100 carácteres)
         .form-group
           .form-control
-            textarea.input#description(name="seo" placeholder=' ' rowspan=5) #{store.seo}
-            label(for='seo') SEO (corta, entre 150 y 180 caracteres)
+            textarea.input#description(name="seo" placeholder=' ' rowspan=5 data-count="180" data-target="#count-short-description") #{store.seo}
+            label(for='seo') Descripción (corta, entre 150 y 180 caracteres)
+          .small No más de 180 caracteres. Lleva #{' '}
+            spam#count-short-description
+            | #{' '}caracteres
         .form-group.ph-1
           .mb-1.subtitle Visión (Se muestra al pie de página en toda la tienda)
           textarea.cke#vision(data-target='#vision' name="vision") !{store.vision}

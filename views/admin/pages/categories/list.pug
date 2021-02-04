@@ -17,7 +17,15 @@ block list
               a.btn-flat.p-0-5.rd-0-2(href=`/administracion/tiendas/${store._id}/categorias/${item._id}/editar` title='Editar')
                 i.fas.fa-pencil-alt
             td.tc
-              button.btn-flat.p-0-5.rd-0-2(data-id=item._id title='Eliminar')
+              button.btn-flat.p-0-5.open-modal-action(
+                  title='Eliminar'
+                  data-title='¿Desea eliminar la categoría?'
+                  data-cancel='Cancelar'
+                  data-action='Si, Eliminar'
+                  data-method='DELETE'
+                  data-url=`${appCnf.url.api}admin/stores/${store._id}/categories/${item._id}`
+                  data-page=`/administracion/tiendas/${store._id}/categorias`
+                )
                 i.fas.fa-trash-alt
   else
     .white.br-1.rd-0-2.p-3

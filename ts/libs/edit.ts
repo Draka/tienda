@@ -142,7 +142,7 @@ export class Edit {
   mapEditPoint() {
     const list = $('#map-edit-point');
     if (list.length) {
-      const point = (<string>$('#point').val()).split(',');
+      const point = (<string>$('#point').val(), ',').split(',');
       this._mapEditPoint({ latitude: point[1] || 4.646876, longitude: point[0] || -74.087547 });
     }
   }

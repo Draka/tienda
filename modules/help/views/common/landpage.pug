@@ -20,9 +20,10 @@ block view
 
   .container
     .row.justify-content-center
-      .col-sm-10.col-md-8
+      .col-sm-10.col-md-8.mb-2
         each topic in items
-          h2.tc.mh-1 #{topic.name}
+          h2.tc.mh-1
+            a(href=`/ayuda/topico/${topic.slugLong}`) #{topic.name}
           if topic.subs
             .row
               each subtopic in topic.subs

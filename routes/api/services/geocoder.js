@@ -4,6 +4,8 @@ module.exports = (req, res, next) => {
   const country = _.lowerCase(decodeURI(req.query.country || ''));
   const city = _.lowerCase(decodeURI(req.query.city || ''));
   const address = decodeURI(`${_.trim(req.query.streetType)} ${_.trim(req.query.street, '-# ')} ${_.trim(req.query.corner, '-# ')} ${_.trim(req.query.number, '-# ')}`);
+  const completeAddress = `${_.trim(req.query.streetType)} ${_.trim(req.query.street)} #${_.trim(req.query.corner)}-${_.trim(req.query.number)}, `
+  + `${_.trim(req.query.neighborhood)}, ${_.trim(req.query.extra)}, ${_.trim(req.query.city)}, ${_.trim(req.query.country)}`;
   async.auto({
     historial: (cb) => {
       // consulta historial
@@ -62,11 +64,12 @@ module.exports = (req, res, next) => {
     }
     if (results.addresses) {
       results.addresses.ok = true;
+      results.addresses.address = completeAddress;
       res.send(results.addresses);
     } else {
       res.send({
         location: { lat: 4.592972563357392, lng: -74.08177719752672 },
-        address,
+        address: completeAddress,
         ok: false,
       });
     }
