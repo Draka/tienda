@@ -6,6 +6,11 @@ header
           img(src=_.get(global.appCnf, 'site.images.logoTop.svg') alt=`${_.get(appCnf, 'site.name')} logo`)
 
         .expand
+        ul.flex.menu
+          li
+            a(href='/paginas/precios') Precios
+          li
+            a(href='/ayuda') Ayuda
         .login.relative
           a.dropdown(aria-controls='menu-login')
             span
@@ -23,7 +28,7 @@ header
 
   .show-xs
     nav.navbar.primary.shadow.fixed.top
-      ul.flex.w-100
+      ul.flex.menu.w-100
         li
           a.sidenav-action.w-4.justify-content-center(href='#' data-target='#mobile-menu')
             i.fas.fa-bars
@@ -35,24 +40,30 @@ header
   nav#mobile-menu.sidenav
     .sidenav-body
       .white-500.w-100.flex.h-3
+        .w-100.title.tc.b Inicio
+      ul.list(role='menu')
+        li(role='menuitem')
+          a(href='/paginas/precios') Precios
+        li(role='menuitem')
+          a(href='/ayuda') Ayuda
+      .white-500.w-100.flex.h-3
         .w-100.title.tc.b Cuenta
-      .nologin
+      if session
         ul.list(role='menu')
           li(role='menuitem')
-            a(href='/iniciar-sesion') Iniciar Sesión
+            a(href='/usuario')
+              i.far.fa-address-card
+              | #{' '}Ver Cuenta
           li(role='menuitem')
-            a(href='/registro') Registro
+            a(href='/usuario/pedidos')
+              i.fas.fa-shopping-bag
+              | #{' '}Pedidos
+          li(role='menuitem')
+            a(href='/cerrar-sesion')
+              i.fas.fa-sign-out-alt
+              | #{' '}Cerrar Sesión
 
-      ul.list.login(role='menu')
-        li(role='menuitem')
-          a(href='/perfil')
-            i.far.fa-address-card
-            | #{' '}Perfil
-        li(role='menuitem')
-          a(href='/pedidos')
-            i.fas.fa-shopping-bag
-            | #{' '}Pedidos
-        li(role='menuitem')
-          a(href='/cerrar-sesion')
-            i.fas.fa-sign-out-alt
-            | #{' '}Cerrar Sesión
+      .white-500.w-100.flex.h-3
+        .w-100.title.tc.b Administrador
+      .pl-1
+        include menu.pug

@@ -135,7 +135,7 @@ header
   nav#mobile-menu.sidenav
     .sidenav-body
       .white-500.w-100.flex.h-3
-        .w-100.title.tc.b Cuenta
+        .w-100.title.tc.b Inicio
       ul.list(role='menu')
         li(role='menuitem')
           a(href='/paginas/precios') Precios
@@ -143,6 +143,20 @@ header
           a(href='/ayuda') Ayuda
         li(role='menuitem')
           a(href='/usuario/vendedor') Vender
+      if account
+        .white-500.w-100.flex.h-3
+          .w-100.title.tc.b Cuenta
+        ul.list(role='menu')
+          li(role='menuitem')
+            a.item(href='/usuario') Ver mis datos
+          li(role='menuitem')
+            a.item(href='/usuario/correo') Cambiar correo electrónico
+          li(role='menuitem')
+            a.item(href='/usuario/contrasena') Cambiar mi contraseña
+          if !session.admin && !session.adminStore
+            li.hr
+            li(role='menuitem')
+              a.item(href='/usuario/vendedor') Volverme vendedor
       if !session
         ul.list(role='menu')
           li(role='menuitem')
@@ -150,17 +164,26 @@ header
           li(role='menuitem')
             a(href='/registro') Registro
       else
+        .white-500.w-100.flex.h-3
+          .w-100.title.tc.b Usuario
         ul.list(role='menu')
+          if session && (session.admin || session.adminStore)
+            li(role='menuitem')
+              a.item(href='/administracion/tiendas')
+                i.fas.fa-store
+                | #{' '}Administar Tiendas
+            li.hr
           li(role='menuitem')
-            a(href='/usuario')
+            a.item(href='/usuario')
               i.far.fa-address-card
               | #{' '}Ver Cuenta
           li(role='menuitem')
-            a(href='/usuario/pedidos')
+            a.item(href='/usuario/pedidos')
               i.fas.fa-shopping-bag
               | #{' '}Pedidos
+          li.hr
           li(role='menuitem')
-            a(href='/cerrar-sesion')
+            a.item(href='/cerrar-sesion')
               i.fas.fa-sign-out-alt
               | #{' '}Cerrar Sesión
 

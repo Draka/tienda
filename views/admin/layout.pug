@@ -22,13 +22,13 @@ html(lang='es')
         iframe(src='https://www.googletagmanager.com/ns.html?id='+appCnf.gtm height='0' width='0' style='display:none;visibility:hidden')
 
     .stub
-      .stub__left.white.brr-1
+      .stub__left.white.brr-1.hide-xs
         nav.navbar.primary.fixed.shadow
           .container
             | Admin
         .container.pt-5
           include fragments/menu.pug
-      .stub__right
+      .stub__right.w-100-xs
         include fragments/header.pug
         .container.left.navbar-fixed.ph-1
           block content

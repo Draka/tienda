@@ -1,8 +1,6 @@
 nav
   .expandable
     .expandable__header
-      .expandable__icon
-        i.fas.fa-angle-down.fa-fw
       .expandable__title Cuenta
     ul.expandable__body.navigation
       li.navigation__item(class=menu=='informacion-personal'?'navigation--active':'')
@@ -17,8 +15,6 @@ nav
   if session && session.admin
     .expandable
       .expandable__header
-        .expandable__icon
-          i.fas.fa-angle-down.fa-fw
         .expandable__title Administración
       ul.expandable__body.navigation
         li.navigation__item(class=menu=='super-tiendas'?'navigation--active':'')
@@ -29,8 +25,6 @@ nav
           a.item(href=`/administracion/super/tiendas/pedidos`) Pedidos
     .expandable
       .expandable__header
-        .expandable__icon
-          i.fas.fa-angle-down.fa-fw
         .expandable__title #{_.get(appCnf, 'site.name')}
       ul.expandable__body.navigation
         li.navigation__item(class=menu=='super-site-config'?'navigation--active':'')
@@ -50,8 +44,6 @@ nav
     if appCnf.tenancy=='vendelomejor' || process.env.NODE_ENV !== 'production'
       .expandable
         .expandable__header
-          .expandable__icon
-            i.fas.fa-angle-down.fa-fw
           .expandable__title General
         ul.expandable__body.navigation
           li.navigation__item(class=menu=='super-ayuda-categorias'?'navigation--active':'')
@@ -60,8 +52,6 @@ nav
 
   .expandable
     .expandable__header
-      .expandable__icon
-        i.fas.fa-angle-down.fa-fw
       .expandable__title Tienda
     ul.expandable__body.navigation
       li.navigation__item(class=menu=='tienda-nueva'?'navigation--active':'')
@@ -85,8 +75,6 @@ nav
   if _.get(session, 'options.storeSelect')
     .expandable
       .expandable__header
-        .expandable__icon
-          i.fas.fa-angle-down.fa-fw
         .expandable__title Sedes
       ul.expandable__body.navigation
         li.navigation__item(class=menu=='tienda-sedes'?'navigation--active':'')
@@ -96,8 +84,6 @@ nav
 
     .expandable
       .expandable__header
-        .expandable__icon
-          i.fas.fa-angle-down.fa-fw
         .expandable__title Categorías
       ul.expandable__body.navigation
         li.navigation__item(class=menu=='tienda-categorias-nuevo'?'navigation--active':'')
@@ -107,8 +93,6 @@ nav
 
     .expandable
       .expandable__header
-        .expandable__icon
-          i.fas.fa-angle-down.fa-fw
         .expandable__title Productos
       ul.expandable__body.navigation
         li.navigation__item(class=menu=='tienda-productos-nuevo'?'navigation--active':'')
@@ -118,8 +102,6 @@ nav
 
     .expandable
       .expandable__header
-        .expandable__icon
-          i.fas.fa-angle-down.fa-fw
         .expandable__title Pedidos
       ul.expandable__body.navigation
         li.navigation__item(class=menu=='pedidos-lista'?'navigation--active':'')
