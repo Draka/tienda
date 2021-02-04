@@ -72,32 +72,25 @@ module.exports = (req, res, next) => {
       };
     });
   }
+  const adminQuery = {
+    _id: req.params.storeID,
+    userID: req.user._id,
+  };
   async.auto({
     validate: (cb) => {
-      if (body.deliveriesCompaniesIDs) {
-        if (body.deliveriesCompaniesIDs[0]._id) {
-          body.deliveriesCompaniesIDs = _.uniqBy(body.deliveriesCompaniesIDs, '_id');
-        } else {
-          body.deliveriesCompaniesIDs = _.uniq(body.deliveriesCompaniesIDs);
-        }
-      }
-      if (body.paymentsMethodsIDs) {
-        if (body.paymentsMethodsIDs[0]._id) {
-          body.paymentsMethodsIDs = _.uniqBy(body.paymentsMethodsIDs, '_id');
-        } else {
-          body.paymentsMethodsIDs = _.uniq(body.paymentsMethodsIDs);
-        }
+      if (req.user.admin) {
+        delete adminQuery.userID;
       }
       cb();
     },
     query: ['validate', (_results, cb) => {
       models.Store
-        .findById(req.params.storeID)
+        .findOne(adminQuery)
         .exec(cb);
     }],
     uploadFile: ['query', (results, cb) => {
       if (!results.query) {
-        errors.push({ field: 'store', msg: 'No existe el producto.' });
+        errors.push({ field: 'store', msg: 'No existe la tienda.' });
       }
       if (errors.length) {
         return cb(listErrors(400, null, errors));

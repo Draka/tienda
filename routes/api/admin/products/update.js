@@ -32,6 +32,10 @@ module.exports = (req, res, next) => {
     'height',
     'width',
   ]);
+  const adminQuery = {
+    _id: req.params.storeID,
+    userID: req.user._id,
+  };
   if (typeof req.body.publish !== 'undefined' && !body.publish) {
     body.publish = false;
   }
@@ -49,11 +53,14 @@ module.exports = (req, res, next) => {
       if (errors.length) {
         return cb(listErrors(400, null, errors));
       }
+      if (req.user.admin) {
+        delete adminQuery.userID;
+      }
       cb();
     },
     store: ['validate', (_results, cb) => {
       models.Store
-        .findOne({ _id: req.params.storeID, userID: req.user._id })
+        .findOne(adminQuery)
         .exec(cb);
     }],
     check: ['store', (results, cb) => {
