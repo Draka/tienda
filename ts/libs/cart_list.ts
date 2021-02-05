@@ -239,8 +239,10 @@ export class CartList {
           this.getApi.p(`stores/${i}/services/search-shipping-methods`, Cart.getAddressJSON())
             .done((data: any) => {
               let m = '';
+              let area = false;
               $.each(data.shippingMethods, (k, methods) => {
                 if ((data.inArea && methods.personalDelivery) || !methods.personalDelivery) {
+                  area = true;
                   m += `<div class="mt-1 mb-1 ml-1 small"><label data-payments='${JSON.stringify(methods.payments)}'>`
                   + `<input id="r-shipping-methods-${i}-${<string>k}" type="radio" class="radio" name="shipping-methods-${i}" `
                   + `value="${methods.slug}" data-price="${methods.price}" ${k === 0 ? 'checked="checked"' : ''}>`
@@ -249,6 +251,12 @@ export class CartList {
                   + '</div>';
                 }
               });
+              if (!area) {
+                m = '<div class="remark error mh-2">La tienda no tiene cobertura a la dirección de entrega proporcionada.</div>';
+                $el.find(`#step-store-${i} .shipping-methods`).html(m);
+                $el.find(`#step-store-${i} .payments-methods`).html('');
+                return;
+              }
               $el.find(`#step-store-${i} .shipping-methods`).html(m)
                 .find('label').on('click', (event) => {
                   const list = $(event.currentTarget).data('payments');
@@ -272,18 +280,17 @@ export class CartList {
       if (this.checkAddress() && !address.address) {
         return sclib.modalShow('#address');
       }
-      const errors: Array<string> = [];
-      $('.errors-cart2').html('');
+      const errors: Array<any> = [];
       $.each(this.cart.stores, (i, store) => {
         if (Object.keys(store.cart).length === 0) {
           return;
         }
         if (!$(`input[name="shipping-methods-${i}"]:checked`).val()) {
-          errors.push(`Seleccione el Método de Envío para <b>${store.name}</b>`);
+          errors.push({ msg: `Seleccione el Método de Envío para <b>${store.name}</b>` });
         }
         this.cart.stores[i].shipping = $(`input[name="shipping-methods-${i}"]:checked`).val();
         if (!$(`input[name="payments-methods-${i}"]:checked`).val()) {
-          errors.push(`Seleccione el Método de Pago para <b>${store.name}</b>`);
+          errors.push({ msg: `Seleccione el Método de Pago para <b>${store.name}</b>` });
         }
         this.cart.stores[i].payment = $(`input[name="payments-methods-${i}"]:checked`).val();
       });
@@ -291,13 +298,9 @@ export class CartList {
       //   errors.push('Debes aceptar <b>la Política de privacidad y los Términos de uso*</b>');
       // }
       if (errors.length) {
-        $.each(errors, (i, error) => {
-          $('.errors-cart2').append(`<div class="msg error">${error}</div>`);
-        });
-        ShowMsg.show(errors);
+        ShowMsg.show(errors, 'error');
         return;
       }
-      $('.errors-cart2').hide();
 
       // Manda a back
       this.getApi.p('orders', {

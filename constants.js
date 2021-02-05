@@ -48,6 +48,7 @@ const vars = {
     'carrito',
     'v1',
     'ayuda',
+    'lib',
   ],
   payments: [
     {
