@@ -1,0 +1,35 @@
+extends /modules/common/views/layout-index
+
+block view
+
+  .container
+    h1.mb-1 Centro de ayuda
+
+  .container-fluid.white-500.ph-2
+    .container
+      .row
+        .col-md-12
+          h2.tc.mb-1 ¿En qué podemos ayudarte?
+          form.flex(class="search" action=`/ayuda/buscar`)
+            label.out-screen(for='query-email') Buscar
+            input#query-email.input--simple.w-100.ph-0-5.pw-1(type="text" name="q" placeholder='Buscar en la ayuda' required value=q)
+            button.btn.btn--secondary
+              i.fas.fa-search
+              span.out-screen Buscar en la ayuda
+
+
+  .container
+    .row.justify-content-center
+      .col-sm-10.col-md-8.mb-2
+        each topic in items
+          h2.tc.mh-1
+            a(href=`/ayuda/topico/${topic.slugLong}`) #{topic.name}
+          if topic.subs
+            .row
+              each subtopic in topic.subs
+                .col-md-6.ph-1.pw-1-xs.mw-1-sm
+                  .relative.br-1.p-1.h-100.brt-10.rd-0-5.white
+                    a(href=`/ayuda/topico/${subtopic.slugLong}`)
+                      h3.mb-1 #{subtopic.name}
+                      div #{subtopic.description}
+

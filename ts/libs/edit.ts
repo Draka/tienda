@@ -25,7 +25,51 @@ export class Edit {
     if (list.length) {
       list.each((_i, el) => {
         ClassicEditor
-          .create(el)
+          .create(el, {
+
+            toolbar: {
+              items: [
+                'heading',
+                '|',
+                'fontColor',
+                'bold',
+                'italic',
+                'strikethrough',
+                'link',
+                'bulletedList',
+                'numberedList',
+                '|',
+                'indent',
+                'outdent',
+                '|',
+                'imageInsert',
+                'blockQuote',
+                'insertTable',
+                'horizontalLine',
+                'undo',
+                'redo',
+              ],
+            },
+            language: 'es',
+            image: {
+              toolbar: [
+                'imageTextAlternative',
+                'imageStyle:full',
+                'imageStyle:side',
+                'linkImage',
+              ],
+            },
+            table: {
+              contentToolbar: [
+                'tableColumn',
+                'tableRow',
+                'mergeTableCells',
+                'tableCellProperties',
+                'tableProperties',
+              ],
+            },
+            licenseKey: '',
+          })
           .then((editor) => {
             editor.model.document.on('change:data', () => {
               $(el).val(editor.getData());

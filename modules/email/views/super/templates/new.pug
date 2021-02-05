@@ -1,0 +1,28 @@
+extends /modules/admin/views/layout-edit-cmp
+
+block edit
+  form.validate-rest(
+    id="updateProfileForm"
+    action=`${appCnf.url.api}admin/super/emails-templates`
+    method="post"
+    data-page=`/administracion/super/emails-plantillas`
+    data-error="#form-results")
+    .white.br-1.rd-0-2.p-3
+      .msg.error#form-results
+      .row
+        .col-xs-12
+          .form-group
+            .form-control
+              input.input#name(type="text" name="name" placeholder=' ' required)
+              label(for='name') Nombre
+          .form-group
+            .form-control
+              textarea.input#description(name="description" placeholder=' ')
+              label(for='description') Descripción
+          .form-group.ph-1
+            .subtitle.mb-0-5 Texo
+            .form-control
+              textarea.cke#text(name="text" placeholder=' ')
+      .row
+        .col-xs-12.tr
+          button.btn.btn--primary.w-100-xs.mt-2-xs(type="submit") Crear Plantilla

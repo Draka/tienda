@@ -1,0 +1,28 @@
+extends /modules/admin/views/layout-list
+
+block list
+  if items.length
+    table.small.table.table--lines.table--striped
+      thead
+        tr
+          th.b &nbsp;
+          th.b Nombre
+          th.b Descripción
+          th.b Ver
+      tbody
+        each item of items
+          tr
+            td.tc
+              a(href=`/administracion/super/emails-plantillas/${item._id}/editar` title='Ver')
+                i.fas.fa-pencil-alt
+            td
+              a.b(href=`/administracion/super/emails-plantillas/${item._id}/editar`) #{item.name}
+            td #{item.description}
+            td #{item.slug}
+
+      tfoot
+        tr
+          th(colspan="5")
+            +paginator
+  else
+    +noItems('No hay Plantillas creadas.')

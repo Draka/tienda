@@ -8,14 +8,14 @@ block view
         .col-md-12
           .h2.tc.mb-1 ¿En qué podemos ayudarte?
           form.flex(class="search" action=`/ayuda/buscar`)
-            label.out-screen(for='query-help') Buscar
-            input#query-help.input--simple.w-100.ph-0-5.pw-1(type="text" name="q" placeholder='Buscar en la ayuda' required value=q)
+            label.out-screen(for='query-email') Buscar
+            input#query-email.input--simple.w-100.ph-0-5.pw-1(type="text" name="q" placeholder='Buscar en la ayuda' required value=q)
             button.btn.btn--secondary
               i.fas.fa-search
               span.out-screen Buscar en la ayuda
   .stub
     .stub__left.white.brr-1.hide-xs
-      include ./menu_help.pug
+      include ./menu_email.pug
     .stub__right.w-100-xs
 
       .container
