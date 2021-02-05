@@ -1,3 +1,5 @@
+const { imagenUrl } = require('../../libs/image.lib');
+
 module.exports = (req, res, next) => {
   const body = _.pick(req.query, ['title', 'multimediaID']);
 
@@ -26,17 +28,7 @@ module.exports = (req, res, next) => {
         .exec(cb);
     }],
     imagenUrl: ['items', (results, cb) => {
-      _.each(results.items, (item, i) => {
-        _.each(item.sizes, (size) => {
-          _.each(item.files, (file) => {
-            _.set(results.items[i], `urlSize.${file}.x${size}`, `${appCnf.url.static}tenancy/${appCnf.tenancy}/images/${appCnf.s3.folder}/multimedia/${item.key}/${size}_${item.key}.${file}`);
-          });
-        });
-        _.each(item.files, (file) => {
-          _.set(results.items[i], `url.${file}`, `${appCnf.url.static}tenancy/${appCnf.tenancy}/images/${appCnf.s3.folder}/multimedia/${item.key}/${item.key}.${file}`);
-        });
-      });
-      cb();
+      imagenUrl(results.items, cb);
     }],
     count: ['validate', (_results, cb) => {
       models.Multimedia
@@ -58,7 +50,6 @@ module.exports = (req, res, next) => {
         active: true,
       },
     ];
-
     res.render('../modules/multimedia/views/super/list.pug', {
       session: req.user,
       items: results.items,

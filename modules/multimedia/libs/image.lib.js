@@ -289,3 +289,25 @@ const deleteS3 = (file, cb) => {
   }
 };
 exports.deleteS3 = deleteS3;
+
+exports.imagenUrl = (items, cb) => {
+  _.each(items, (item, i) => {
+    _.each(item.sizes, (size) => {
+      _.each(item.files, (file) => {
+        _.set(
+          items[i],
+          `urlSize.${file}.${size}`,
+          `${appCnf.url.static}tenancy/${appCnf.tenancy}/images/${appCnf.s3.folder}/multimedia/${item.key}/${size}_${item.key}.${file}`,
+        );
+      });
+    });
+    _.each(item.files, (file) => {
+      _.set(
+        items[i],
+        `url.${file}`,
+        `${appCnf.url.static}tenancy/${appCnf.tenancy}/images/${appCnf.s3.folder}/multimedia/${item.key}/${item.sizes.length ? 'default_' : ''}${item.key}.${file}`,
+      );
+    });
+  });
+  cb(null, items);
+};

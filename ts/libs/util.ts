@@ -80,7 +80,7 @@ export class Util {
   btnBbcodeImg() {
     $('.btn-bbcode-img').on('click', (event) => {
       const $el = $(event.currentTarget);
-      $($el.data('target')).html($el.data('bbcode'));
+      $($el.data('target')).html(`<div>${$el.data('bbcode')}</div><div>${$el.data('linkhtml')}<div>`);
     });
   }
 

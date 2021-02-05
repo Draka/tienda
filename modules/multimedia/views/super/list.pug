@@ -30,7 +30,7 @@ block list
             .hr.mt-1
             a(href=`/administracion/super/multimedia/${item._id}/editar` title='Editar')
               if item.urlSize
-                +img(item.title, _.get(item, `urlSize.${item.files[0]}`), ['x196','x392'])
+                +img(item.title, _.get(item, `urlSize.${item.files[0]}`), ['196','392'])
               else if item.url
                 +multimedia(item.title, _.get(item, `url.${item.files[0]}`))
             .hr.mt-1
@@ -38,9 +38,17 @@ block list
               b Imágenes:
               if item.sizes.length
                 each size of item.sizes
-                  button.btn.btn--white-500.small.m-0-5.btn-bbcode-img(data-target=`#bbcode-target-${item.key}` data-bbcode=`[img-res key="${item.key}" sizes="${size}"]`) #{size}
+                  button.btn.btn--white-500.small.m-0-5.btn-bbcode-img(
+                    data-target=`#bbcode-target-${item.key}`
+                    data-bbcode=`[img-res key="${item.key}" sizes="${size}"]`
+                    data-linkhtml=_.get(item, `url.${item.files[0]}`)
+                    ) #{size}
               else
-                  button.btn.btn--white-500.small.m-0-5.btn-bbcode-img(data-target=`#bbcode-target-${item.key}` data-bbcode=`[img-res key="${item.key}" sizes="o"]`) o
+                  button.btn.btn--white-500.small.m-0-5.btn-bbcode-img(
+                    data-target=`#bbcode-target-${item.key}`
+                    data-bbcode=`[img-res key="${item.key}" sizes="o"]`
+                    data-linkhtml=_.get(item, `url.${item.files[0]}`)
+                    ) o
             .hr.mt-1
               .small.ph-0-5(id=`bbcode-target-${item.key}`)
 

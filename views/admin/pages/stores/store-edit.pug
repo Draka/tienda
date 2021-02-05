@@ -45,13 +45,14 @@ block edit
           .small No más de 180 caracteres. Lleva #{' '}
             spam#count-short-description
             | #{' '}caracteres
-        .form-group.ph-1
-          .mb-1.subtitle Visión (Se muestra al pie de página en toda la tienda)
-          textarea.cke#vision(data-target='#vision' name="vision") !{store.vision}
 
         .form-group.ph-1
-          .mb-1.subtitle Descripción Larga (Se muestra al inicio, junto con el mapa)
-          textarea.cke#descriptionLong(data-target='#descriptionLong' name="descriptionLong") !{store.descriptionLong}
+          .mb-1.subtitle Descripción Larga (Se muestra en la página principal de la tienda)
+          textarea.cke-user#descriptionLong(data-target='#descriptionLong' name="descriptionLong") !{store.descriptionLong}
+
+        .form-group.ph-1
+          .mb-1.subtitle Pie de página
+          textarea.cke-user#vision(data-target='#vision' name="vision") !{store.vision}
 
         .form-group
           .form-control

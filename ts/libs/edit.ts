@@ -5,12 +5,273 @@ declare const L: any;
 declare const ClassicEditor: any;
 
 export class Edit {
-  token = 'pk.eyJ1Ijoic3JkcmFrYSIsImEiOiJja2FlZHBmYXUwMHpoMnJudHJnazZsOWY1In0.tAAoQbjhJKq_DdwpTTimrw'
+  itemsAdmin = [
+    'heading',
+    '|',
+    'bold',
+    'italic',
+    'underline',
+    'strikethrough',
+    'link',
+    'bulletedList',
+    'numberedList',
+    '|',
+    'indent',
+    'outdent',
+    '|',
+    'imageInsert',
+    'insertTable',
+    'mediaEmbed',
+    'blockQuote',
+    '|',
+    'alignment',
+    'fontBackgroundColor',
+    'fontColor',
+    'fontSize',
+    'fontFamily',
+    'horizontalLine',
+    '|',
+    'htmlEmbed',
+    'removeFormat',
+    '|',
+    'code',
+    'codeBlock',
+    '|',
+    'subscript',
+    'superscript',
+    '|',
+    'undo',
+    'redo',
+  ]
 
-  toolbarOptions = [
-    ['bold', 'italic', 'underline', 'strike'],
-    ['blockquote', 'code-block'],
-  ];
+  itemsUser = [
+    'heading',
+    '|',
+    'bold',
+    'italic',
+    'underline',
+    'strikethrough',
+    'link',
+    'bulletedList',
+    'numberedList',
+    '|',
+    'indent',
+    'outdent',
+    '|',
+    'imageInsert',
+    'insertTable',
+    'mediaEmbed',
+    'blockQuote',
+    '|',
+    'alignment',
+    'fontBackgroundColor',
+    'fontColor',
+    'horizontalLine',
+    '|',
+    'removeFormat',
+    '|',
+    'undo',
+    'redo',
+  ]
+
+  heading = {
+    options: [
+      { model: 'paragraph', title: 'Parrafo', class: 'ck-heading_paragraph' },
+      {
+        model: 'heading2', view: 'h2', title: 'Encabezado 2', class: 'ck-heading_heading2',
+      },
+      {
+        model: 'heading3', view: 'h3', title: 'Encabezado 3', class: 'ck-heading_heading3',
+      },
+      {
+        model: 'heading4', view: 'h4', title: 'Encabezado 4', class: 'ck-heading_heading4',
+      },
+      {
+        model: 'title',
+        view: {
+          name: 'div',
+          classes: 'title',
+        },
+        title: 'Título',
+      },
+      {
+        model: 'subtitle',
+        view: {
+          name: 'div',
+          classes: 'subtitle',
+        },
+        title: 'Subtítulo',
+      },
+      {
+        model: 'big',
+        view: {
+          name: 'div',
+          classes: 'big',
+        },
+        title: 'Grande',
+      },
+      {
+        model: 'bigx2',
+        view: {
+          name: 'div',
+          classes: 'bigx2',
+        },
+        title: 'Muy Grande',
+      },
+      {
+        model: 'small',
+        view: {
+          name: 'div',
+          classes: 'small',
+        },
+        title: 'Pequeño',
+      },
+      {
+        model: 'social',
+        view: {
+          name: 'div',
+          classes: 'social',
+        },
+        title: 'Social',
+      },
+      {
+        model: 'remark-error',
+        view: {
+          name: 'div',
+          classes: 'remark error',
+        },
+        title: 'Remark - error',
+      },
+      {
+        model: 'remark-info',
+        view: {
+          name: 'div',
+          classes: 'remark info',
+        },
+        title: 'Remark - info',
+      },
+      {
+        model: 'remark-action',
+        view: {
+          name: 'div',
+          classes: 'remark action',
+        },
+        title: 'Remark - action',
+      },
+      {
+        model: 'remark-primary',
+        view: {
+          name: 'div',
+          classes: 'remark primary',
+        },
+        title: 'Remark - primary',
+      },
+      {
+        model: 'remark-secondary',
+        view: {
+          name: 'div',
+          classes: 'remark secondary',
+        },
+        title: 'Remark - secondary',
+      },
+      {
+        model: 'msg-error',
+        view: {
+          name: 'div',
+          classes: 'msg error',
+        },
+        title: 'Mensaje - error',
+      },
+      {
+        model: 'msg-info',
+        view: {
+          name: 'div',
+          classes: 'msg info',
+        },
+        title: 'Mensaje - info',
+      },
+      {
+        model: 'msg-action',
+        view: {
+          name: 'div',
+          classes: 'msg action',
+        },
+        title: 'Mensaje - action',
+      },
+      {
+        model: 'msg-primary',
+        view: {
+          name: 'div',
+          classes: 'msg primary',
+        },
+        title: 'Mensaje - primary',
+      },
+      {
+        model: 'msg-secondary',
+        view: {
+          name: 'div',
+          classes: 'msg secondary',
+        },
+        title: 'Mensaje - secondary',
+      },
+    ],
+  }
+
+  optionsAdmin = {
+    toolbar: {
+      items: this.itemsAdmin,
+    },
+    language: 'es',
+    image: {
+      toolbar: [
+        'imageTextAlternative',
+        'imageStyle:full',
+        'imageStyle:side',
+        'linkImage',
+      ],
+    },
+    table: {
+      contentToolbar: [
+        'tableColumn',
+        'tableRow',
+        'mergeTableCells',
+        'tableCellProperties',
+        'tableProperties',
+      ],
+    },
+    heading: this.heading,
+    htmlEmbed: {
+      showPreviews: true,
+    },
+    simpleUpload: {
+      uploadUrl: '/v1/admin/super/multimedia',
+    },
+  }
+
+  optionsUser = {
+    toolbar: {
+      items: this.itemsUser,
+    },
+    language: 'es',
+    image: {
+      toolbar: [
+        'imageTextAlternative',
+        'imageStyle:full',
+        'imageStyle:side',
+        'linkImage',
+      ],
+    },
+    table: {
+      contentToolbar: [
+        'tableColumn',
+        'tableRow',
+        'mergeTableCells',
+        'tableCellProperties',
+        'tableProperties',
+      ],
+    },
+    heading: this.heading,
+  }
 
   constructor() {
     this.cke();
@@ -21,55 +282,17 @@ export class Edit {
   }
 
   cke() {
-    const list = $('.cke');
+    const list = $('.cke-admin,.cke-user');
     if (list.length) {
       list.each((_i, el) => {
+        let options = {};
+        if ($(el).hasClass('cke-admin')) {
+          options = this.optionsAdmin;
+        } else {
+          options = this.optionsUser;
+        }
         ClassicEditor
-          .create(el, {
-
-            toolbar: {
-              items: [
-                'heading',
-                '|',
-                'fontColor',
-                'bold',
-                'italic',
-                'strikethrough',
-                'link',
-                'bulletedList',
-                'numberedList',
-                '|',
-                'indent',
-                'outdent',
-                '|',
-                'imageInsert',
-                'blockQuote',
-                'insertTable',
-                'horizontalLine',
-                'undo',
-                'redo',
-              ],
-            },
-            language: 'es',
-            image: {
-              toolbar: [
-                'imageTextAlternative',
-                'imageStyle:full',
-                'imageStyle:side',
-                'linkImage',
-              ],
-            },
-            table: {
-              contentToolbar: [
-                'tableColumn',
-                'tableRow',
-                'mergeTableCells',
-                'tableCellProperties',
-                'tableProperties',
-              ],
-            },
-            licenseKey: '',
-          })
+          .create(el, options)
           .then((editor) => {
             editor.model.document.on('change:data', () => {
               $(el).val(editor.getData());

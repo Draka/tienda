@@ -1,8 +1,11 @@
-const { imageToS3 } = require('../../../libs/image.lib');
+const { imageToS3, imagenUrl } = require('../../../libs/image.lib');
 const { makeid } = require('../../../../../libs/util.lib');
 const modCnf = require('../../../modCnf');
 
 module.exports = (req, res, next) => {
+  if (req.files.upload) {
+    req.files.images = req.files.upload;
+  }
   async.auto({
     validate: (cb) => {
       cb();
@@ -14,7 +17,7 @@ module.exports = (req, res, next) => {
       if (!_.isArray(req.files.images)) {
         req.files.images = [req.files.images];
       }
-      async.eachLimit(req.files.images, 5, (file, cb) => {
+      async.mapLimit(req.files.images, 5, (file, cb) => {
         const key = makeid(12);
         const originalExt = _.last(file.name.split('.'));
         async.auto({
@@ -45,6 +48,21 @@ module.exports = (req, res, next) => {
         }, cb);
       }, cb);
     }],
+    imagenUrl: ['uploadFile', (results, cb) => {
+      imagenUrl(_.map(results.uploadFile, (f) => f.save.toObject()), cb);
+    }],
+    urls: ['imagenUrl', (results, cb) => {
+      const first = _.first(results.imagenUrl);
+      if (first.sizes.length) {
+        return cb(null,
+          {
+            urls: first.urlSize[first.files[0]],
+          });
+      }
+      cb(null, {
+        url: first.url[first.files[0]],
+      });
+    }],
   }, (err, results) => {
     if (err) {
       return next(err);
@@ -52,6 +70,6 @@ module.exports = (req, res, next) => {
     if (req.body.redirect) {
       return res.redirect(req.body.redirect);
     }
-    res.status(201).send(results.save);
+    res.status(201).send(results.urls);
   });
 };
