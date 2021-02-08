@@ -1,3 +1,6 @@
+const inlineCss = require('inline-css');
+const fs = require('fs');
+
 module.exports = (req, res, next) => {
   const errors = [];
   const fbody = {};
@@ -34,7 +37,32 @@ module.exports = (req, res, next) => {
       }
       cb();
     }],
-    create: ['check', (results, cb) => {
+    toHTML: ['check', (results, cb) => {
+      const options = {
+        url: appCnf.url.site,
+        applyTableAttributes: true,
+        removeHtmlSelectors: true,
+      };
+      // open layout
+      fs.readFile('./modules/email/views/hbs/layout.hbs', 'utf8', (err, data) => {
+        if (err) {
+          return cb(err);
+        }
+        const text = data
+          .replace('{{%urlStatic%}}', appCnf.url.static)
+          .replace('{{%tenancy%}}', appCnf.tenancy)
+          .replace('{{%v%}}', appCnf.v)
+          .replace('{{%content%}}', body.text);
+
+        inlineCss(text, options)
+          .then(
+            (html) => cb(null, html),
+            (err) => cb(err),
+          );
+      });
+    }],
+    create: ['toHTML', (results, cb) => {
+      body.html = results.toHTML;
       const emailTemplate = new models.EmailTemplate(body);
       emailTemplate.save(cb);
     }],

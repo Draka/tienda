@@ -95,6 +95,7 @@ exports.getUrlStores = (cb) => {
               if (response.statusCode !== 200) {
                 // eslint-disable-next-line no-console
                 console.error(`${url} Response status was ${response.statusCode}`);
+                return cb(null, []);
               }
               let body = '';
               response.on('data', (chunk) => {
