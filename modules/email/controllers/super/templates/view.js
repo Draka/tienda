@@ -13,7 +13,6 @@ module.exports = (req, res, next) => {
       }
       const template = Handlebars.compile(results.item.html);
       const data = {
-        subject: results.query.subject,
         source: {
           name: _.get(appCnf, 'site.email.title'),
           email: _.get(appCnf, 'site.email.emailInfo'),
