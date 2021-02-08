@@ -34,7 +34,7 @@ module.exports = (req, res, next) => {
         v: appCnf.v,
       };
       results.item.html = template(data);
-      const subject = Handlebars.compile(results.item.html);
+      const subject = Handlebars.compile(results.item.subject);
       results.item.subject = subject(data);
       cb();
     }],
