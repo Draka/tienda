@@ -1,3 +1,5 @@
+const Handlebars = require('handlebars');
+
 module.exports = (req, res, next) => {
   async.auto({
     item: (cb) => {
@@ -9,6 +11,31 @@ module.exports = (req, res, next) => {
       if (!results.item) {
         return cb(listErrors(404, null, [{ field: 'emailTemplateID', msg: 'No existe la Plantilla' }]));
       }
+      const template = Handlebars.compile(results.item.html);
+      const data = {
+        subject: results.query.subject,
+        source: {
+          name: _.get(appCnf, 'site.email.title'),
+          email: _.get(appCnf, 'site.email.emailInfo'),
+        },
+        replyToAddresses: [
+          _.get(appCnf, 'site.email.emailNoreply'),
+        ],
+        site: {
+          name: _.get(appCnf, 'site.name'),
+          urlSite: appCnf.url.site,
+          urlStatic: appCnf.url.static,
+          info: _.get(appCnf, 'site.email.emailInfo'),
+          title: _.get(appCnf, 'site.email.title'),
+          color: _.get(appCnf, 'site.color'),
+          logoEmail: _.get(appCnf, 'site.images.logoEmail.jpg'),
+        },
+        tenancy: appCnf.tenancy,
+        v: appCnf.v,
+      };
+      results.item.html = template(data);
+      const subject = Handlebars.compile(results.item.html);
+      results.item.subject = subject(data);
       cb();
     }],
   }, (err, results) => {
