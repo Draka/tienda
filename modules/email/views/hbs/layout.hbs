@@ -1,0 +1,88 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>{{subject}}</title>
+  <link rel="stylesheet" href="{{%urlStatic%}}tenancy/{{%tenancy%}}/css/style.min.css?={{%v%}}">
+  <style>
+    center {
+      width: 100%;
+      table-layout: fixed;
+    }
+
+    table {
+      border-collapse: collapse;
+      border-spacing: 0;
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      background-color: #ffffff;
+    }
+
+    img {
+      border: 0;
+      width: 100%;
+    }
+
+    td {
+      font-size: 14px;
+    }
+    figure {
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<div>
+  <center style="background-color:#e4e3e4">
+    <div style="width:600px;margin:0 auto">
+      <table style="background-color:#e4e3e4;color:#5a5a5a;">
+        <tr>
+          <td class="ph-2">
+            <table>
+              <tr>
+                <td>
+                  <table>
+                    <tr>
+                      <td class="tc">
+                        <a target="_blank" href="{{site.urlSite}}">
+                          <img src="{{site.logoEmail}}" alt="{{site.name}}" style="display:block;width:auto;height:100px" />
+                        </a>
+                      </td>
+                    </tr>
+                  </table>
+                  <table style="border-top:3px solid #ffa500">
+                    <tr>
+                      <td class="pw-2">
+                        {{%content%}}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <table style="border-top:1px #ddd solid">
+                          <tr>
+                            <td class="ph-2 pw-4">
+                              <p>
+                                Dudas y comentarios por favor escribir a <a
+                                  href="mailto:{{source.email}}">{{source.email}}</a>
+                              </p>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </center>
+</div>
+<div style="display:none;white-space:nowrap;font:15px courier;line-height:0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</div>

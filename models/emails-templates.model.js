@@ -7,7 +7,15 @@ const schema = new mongoose.Schema({
     type: String,
     trim: true,
   },
+  subject: {
+    type: String,
+    trim: true,
+  },
   text: {
+    type: String,
+    trim: true,
+  },
+  html: {
     type: String,
     trim: true,
   },

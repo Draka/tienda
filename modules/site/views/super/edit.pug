@@ -180,3 +180,22 @@ block edit
       .row
         .col-xs-12.tr
           button.btn.btn--primary.w-100-xs.mt-2-xs(type="submit") Subir imágenes
+
+  .white.br-1.rd-0-2.p-3.mt-2
+    form.validate-rest(id="formSite2" action=`${appCnf.url.api}admin/super/config` method="put" data-page=`/administracion/super/configuracion` data-error="#form-results-2")
+      .msg.error#form-results-2
+      .row
+        .col-xs-12
+          h2.mb-1 Colores
+          .form-group
+            .form-control
+              input.input#color-primary(type="color" name="color[primary]" placeholder=' ' required value=_.get(item, 'color.primary'))
+              label(for='color-primary') Color Primario
+          .form-group
+            .form-control
+              input.input#color-secondary(type="color" name="color[secondary]" placeholder=' ' required value=_.get(item, 'color.secondary'))
+              label(for='color-secondary') Color Secundario
+
+      .row
+        .col-xs-12.tr
+          button.btn.btn--primary.w-100-xs.mt-2-xs(type="submit") Guardar Cambios

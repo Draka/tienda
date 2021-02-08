@@ -17,6 +17,14 @@ block edit
               label(for='name') Nombre
           .form-group
             .form-control
+              input.input#slug(type="text" name="slug" placeholder=' ' value=item.slug)
+              label(for='slug') Slug
+          .form-group
+            .form-control
+              input.input#subject(type="text" name="subject" placeholder=' ' required value=item.subject)
+              label(for='subject') Sujeto
+          .form-group
+            .form-control
               textarea.input#description(name="description" placeholder=' ') #{item.description}
               label(for='description') Descripción
           .form-group.ph-1

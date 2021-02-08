@@ -28,10 +28,12 @@ module.exports = (req, res, next) => {
       async.mapLimit(results.getSQS.Messages, 5, (msg, cb) => {
         async.auto({
           mail: (cb) => {
+            const data = JSON.parse(_.get(msg, 'MessageAttributes.Data.StringValue') || '{}');
+            data.tenancy = _.get(msg, 'MessageAttributes.Tenancy.StringValue');
             mailer(
-              JSON.parse(_.get(msg, 'MessageAttributes.Data.StringValue') || '{}'),
+              data,
               _.get(msg, 'MessageAttributes.UserID.StringValue'),
-              _.get(msg, 'MessageAttributes.Tenancy.StringValue'),
+              '',
               cb,
             );
           },

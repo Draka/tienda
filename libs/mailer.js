@@ -1,5 +1,6 @@
 const pug = require('pug');
 const utf8 = require('utf8');
+const { htmlToText } = require('html-to-text');
 
 const ses = new AWS.SES({
   accessKeyId: appCnf.s3.accessKeyId,
@@ -7,14 +8,15 @@ const ses = new AWS.SES({
   region: 'us-east-1',
 });
 
-function template(data, tenancy) {
-  const fn = pug.compileFile(`./views/tenancy/${tenancy || appCnf.tenancy}/email/${data.template}.pug`, {});
+function template(data) {
+  const fn = pug.compileFile(`./views/tenancy/${data.tenancy || appCnf.tenancy}/email/${data.template}.pug`, {});
   const html = fn(data);
   return html;
 }
-module.exports = (data, userID, tenancy, cb) => {
-  data.tenancy = tenancy;
-  const html = template(data);
+module.exports = (data, userID, html, cb) => {
+  if (!html) {
+    html = template(data);
+  }
   const params = {
     Destination: { /* required */
       ToAddresses: [
@@ -29,7 +31,9 @@ module.exports = (data, userID, tenancy, cb) => {
         },
         Text: {
           Charset: 'UTF-8',
-          Data: html.replace(/(<([^>]+)>)/ig, ''),
+          Data: htmlToText(html, {
+            wordwrap: 130,
+          }),
         },
       },
       Subject: {
@@ -51,7 +55,7 @@ module.exports = (data, userID, tenancy, cb) => {
       ).catch(cb);
     },
     register: ['send', (results, cb) => {
-      const mail = new models.Mail({
+      const mail = new models.Email({
         userID,
         template: data.template,
         subject: data.subject,
@@ -62,7 +66,7 @@ module.exports = (data, userID, tenancy, cb) => {
     }],
   }, (err, results) => {
     if (err) {
-      const mail = new models.Mail({
+      const mail = new models.Email({
         userID,
         template: data.template,
         subject: data.subject,

@@ -63,6 +63,16 @@ const schema = new mongoose.Schema({
     type: String,
     trim: true,
   }],
+  color: {
+    primary: {
+      type: String,
+      trim: true,
+    },
+    secondary: {
+      type: String,
+      trim: true,
+    },
+  },
 }, { timestamps: true });
 
 function preUpdate(result, next) {

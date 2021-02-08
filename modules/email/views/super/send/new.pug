@@ -1,0 +1,37 @@
+extends /modules/admin/views/layout-edit-cmp
+
+block edit
+  form.validate-rest(
+    id="updateProfileForm"
+    action=`${appCnf.url.api}admin/super/emails-sends`
+    method="post"
+    data-page=`/administracion/super/emails-plantillas`
+    data-error="#form-results")
+    .white.br-1.rd-0-2.p-3
+      .msg.error#form-results
+      .row
+        .col-xs-12
+          .form-group
+            .form-control
+              select.input#template(name='template' required)
+                option(value='') --
+                each template in templates
+                  option(value=template._id) #{template.name} - #{template.description}
+              label.nowrap(for='template') Plantilla
+          .form-group
+            .form-control
+              label.switch
+                input#test(type="hidden" name="test" value=1)
+                span.check
+                span.caption Prueba
+          .form-group
+            .form-control
+              textarea.input#emails(name="emails" placeholder=' ')
+              label(for='emails') Correos, separados por ","
+          .form-group
+            .form-control
+              textarea.input.h-170p#data(name="data" placeholder=' ') {}
+              label(for='data') Datos en JSON
+      .row
+        .col-xs-12.tr
+          button.btn.btn--primary.w-100-xs.mt-2-xs(type="submit") Crear Plantilla

@@ -1,3 +1,6 @@
+const inlineCss = require('inline-css');
+const fs = require('fs');
+
 module.exports = (req, res, next) => {
   const errors = [];
   const fbody = {};
@@ -7,13 +10,11 @@ module.exports = (req, res, next) => {
   const body = _.pick(fbody, [
     'order',
     'name',
+    'slug',
     'description',
     'text',
-    'categoryID',
+    'subject',
   ]);
-  if (typeof req.body.categoryID !== 'undefined' && !body.categoryID) {
-    body.categoryID = null;
-  }
   async.auto({
     validate: (cb) => {
       if (!_.trim(body.name)) {
@@ -29,13 +30,38 @@ module.exports = (req, res, next) => {
         .findById(req.params.emailTemplateID)
         .exec(cb);
     }],
-    save: ['query', (results, cb) => {
+    toHTML: ['query', (results, cb) => {
       if (!results.query) {
-        errors.push({ field: 'email-category', msg: 'No existe la Plantilla.' });
+        errors.push({ field: '_id', msg: 'No existe la Plantilla.' });
       }
       if (errors.length) {
         return cb(listErrors(400, null, errors));
       }
+      const options = {
+        url: appCnf.url.site,
+        applyTableAttributes: true,
+        removeHtmlSelectors: true,
+      };
+      // open layout
+      fs.readFile('./modules/email/views/hbs/layout.hbs', 'utf8', (err, data) => {
+        if (err) {
+          return cb(err);
+        }
+        const text = data
+          .replace('{{%urlStatic%}}', appCnf.url.static)
+          .replace('{{%tenancy%}}', appCnf.tenancy)
+          .replace('{{%v%}}', appCnf.v)
+          .replace('{{%content%}}', body.text);
+
+        inlineCss(text, options)
+          .then(
+            (html) => cb(null, html),
+            (err) => cb(err),
+          );
+      });
+    }],
+    save: ['toHTML', (results, cb) => {
+      body.html = results.toHTML;
       results.query.set(body).save(cb);
     }],
   }, (err, results) => {

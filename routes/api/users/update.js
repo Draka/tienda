@@ -47,6 +47,12 @@ module.exports = (req, res, next) => {
             date: new Date(),
           };
         }
+        if (body.acceptance.adult) {
+          body.acceptance.adult = {
+            check: true,
+            date: new Date(),
+          };
+        }
       }
       if (errors.length) {
         return cb(listErrors(400, null, errors));

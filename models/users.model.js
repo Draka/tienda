@@ -159,6 +159,10 @@ const schema = new mongoose.Schema({
       date: Date,
       check: Boolean,
     },
+    adult: {
+      date: Date,
+      check: Boolean,
+    },
   },
   check: {
     email: {

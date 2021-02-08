@@ -22,6 +22,6 @@ const schema = new mongoose.Schema({
   },
   s3: {},
 }, { timestamps: true });
-const Model = mongoose.model(`${appCnf.dbPrefix}mails`, schema);
+const Model = mongoose.model(`${appCnf.dbPrefix}emails`, schema);
 
 module.exports = Model;

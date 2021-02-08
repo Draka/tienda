@@ -7,13 +7,11 @@ module.exports = (req, res, next) => {
   const body = _.pick(fbody, [
     'order',
     'name',
+    'slug',
     'description',
     'text',
-    'categoryID',
+    'subject',
   ]);
-  if (typeof req.body.categoryID !== 'undefined' && !body.categoryID) {
-    body.categoryID = null;
-  }
   async.auto({
     validate: (cb) => {
       if (!_.trim(body.name)) {

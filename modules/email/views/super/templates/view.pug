@@ -1,0 +1,11 @@
+extends /modules/admin/views/layout-view-cmd
+
+block view
+  .white.br-1.rd-0-2.p-3
+    .row
+      .col-xs-12
+        .title #{item.name}
+        .subtitle.mt-0-5 #{item.description}
+        .hr.mh-0-5
+        .b.mb-1 #{item.subject}
+        .br-1.p-1 !{item.html}
