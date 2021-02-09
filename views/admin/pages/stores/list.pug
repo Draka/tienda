@@ -35,7 +35,7 @@ block list
             td.tc
               if (_.map(item.problems, key=>key.alert)).indexOf(true) >= 0
                 .t-alert.open-modal-msg.hand.mh-0-5(
-                  title='Eliminar'
+                  title='Alertas'
                   data-title=`Alertas de ${item.name}`
                   data-close='Cerrar'
                   data-body=`#amsg_${item._id}`
@@ -65,7 +65,7 @@ block list
 
               if (_.map(item.problems, key=>key.problem)).indexOf(true) >= 0
                 .t-error.open-modal-msg.hand.mh-0-5(
-                  title='Eliminar'
+                  title='Errores'
                   data-title=`Errores de ${item.name}`
                   data-close='Cerrar'
                   data-body=`#emsg_${item._id}`

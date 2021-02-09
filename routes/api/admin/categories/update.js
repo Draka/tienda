@@ -34,6 +34,10 @@ module.exports = (req, res, next) => {
   if (typeof req.body.categoryID !== 'undefined' && !body.categoryID) {
     body.categoryID = null;
   }
+  const adminQuery = {
+    _id: req.params.storeID,
+    userID: req.user._id,
+  };
   async.auto({
     validate: (cb) => {
       if (body.name && !_.trim(body.name)) {
@@ -42,11 +46,14 @@ module.exports = (req, res, next) => {
       if (errors.length) {
         return cb(listErrors(400, null, errors));
       }
+      if (req.user.admin) {
+        delete adminQuery.userID;
+      }
       cb();
     },
     store: ['validate', (_results, cb) => {
       models.Store
-        .findOne({ _id: req.params.storeID, userID: req.user._id })
+        .findOne(adminQuery)
         .exec(cb);
     }],
     check: ['store', (results, cb) => {
