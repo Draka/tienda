@@ -57,6 +57,7 @@ module.exports = (req, res, next) => {
       title: 'Pedidos',
       menu: 'super-pedidos-lista',
       breadcrumbs,
+      js: 'admin',
     });
   });
 };

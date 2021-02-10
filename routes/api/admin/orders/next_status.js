@@ -4,18 +4,16 @@ module.exports = (req, res, next) => {
   const errors = [];
   const body = {
     _id: req.params.orderID,
-    status: req.body.status,
   };
 
   async.auto({
     validate: (cb) => {
-      if (['paid', 'picking', 'ready', 'onway', 'arrived', 'missing'].indexOf(req.body.status) === -1) {
-        errors.push({ field: 'order', msg: __('No se puede cambiar el estado') });
-        return cb(listErrors(404, null, errors));
-      }
       cb();
     },
     stores: ['validate', (results, cb) => {
+      if (req.user.admin) {
+        return cb(null, []);
+      }
       models.Store
         .find({ userID: req.user._id })
         .lean()
@@ -23,6 +21,9 @@ module.exports = (req, res, next) => {
     }],
     order: ['stores', (results, cb) => {
       body.storeID = { $in: _.map(results.stores, '_id') };
+      if (req.user.admin) {
+        delete body.storeID;
+      }
       models.Order
         .findOne(body)
         .exec(cb);
@@ -30,6 +31,11 @@ module.exports = (req, res, next) => {
     save: ['order', (results, cb) => {
       if (!results.order) {
         errors.push({ field: 'order', msg: __('El pedido no existe') });
+        return cb(listErrors(404, null, errors));
+      }
+
+      if (['paid', 'picking', 'ready', 'onway', 'arrived', 'missing'].indexOf(results.order.status) === -1) {
+        errors.push({ field: 'order', msg: __('No se puede cambiar el estado') });
         return cb(listErrors(404, null, errors));
       }
       if (results.order.status === 'paid') {
@@ -46,10 +52,24 @@ module.exports = (req, res, next) => {
           userID: req.user._id,
         });
         results.order.save(cb);
-      } else if (results.order.status === 'ready') {
+      } else if (results.order.status === 'ready' || results.order.status === 'missing') {
         results.order.status = 'onway';
         results.order.statuses.push({
           status: 'onway',
+          userID: req.user._id,
+        });
+        results.order.save(cb);
+      } else if (results.order.status === 'onway') {
+        results.order.status = 'arrived';
+        results.order.statuses.push({
+          status: 'arrived',
+          userID: req.user._id,
+        });
+        results.order.save(cb);
+      } else if (results.order.status === 'arrived' && (['missing', 'completed'].indexOf(req.params.status) >= 0)) {
+        results.order.status = req.params.status;
+        results.order.statuses.push({
+          status: req.params.status,
           userID: req.user._id,
         });
         results.order.save(cb);

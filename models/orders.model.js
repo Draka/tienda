@@ -10,7 +10,12 @@ const schema = new mongoose.Schema({
   store: {
     slug: String,
     name: String,
-    image: String,
+    images: {
+      logo: {
+        type: String,
+        trim: true,
+      },
+    },
   },
   userID: {
     type: mongoose.Schema.Types.ObjectId,

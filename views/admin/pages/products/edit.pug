@@ -133,10 +133,10 @@ block edit
               div Este campo indica la fechas en las que estará disponible un producto para la venta, no es necesario escribir las dos fechas.
           .form-group.flex
             .form-control
-              input.input#available-0(type="date" name="available[start]" placeholder='dd/mm/aaaa' value=moment(item.available.start).format('YYYY-MM-DD'))
+              input.input#available-0(type="date" name="available[start]" placeholder='dd/mm/aaaa' value=item.available.start?moment(item.available.start).format('YYYY-MM-DD'):null)
               label.nowrap(for='available-0') Desde
             .form-control.pl-1
-              input.input#available-1(type="date" name="available[end]" placeholder='dd/mm/aaaa' value=moment(item.available.end).format('YYYY-MM-DD'))
+              input.input#available-1(type="date" name="available[end]" placeholder='dd/mm/aaaa' value=item.available.end?moment(item.available.end).format('YYYY-MM-DD'):null)
               label(for='available-1') Hasta
 
     .white.br-1.rd-0-2.p-3.mt-2

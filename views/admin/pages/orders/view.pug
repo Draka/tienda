@@ -56,7 +56,7 @@ block list
                   td.b.number-order #{order.orderID}
                 tr
                   td.b.mt-1-xs Estado:
-                  td.mt-1-xs.subtitle.status 
+                  td.mt-1-xs.subtitle.status
                     | !{badge(order.status)}
                     if order.status == 'cancelled' || order.status == 'cancelledAdmin'
                       div
@@ -92,22 +92,80 @@ block list
                 tr
                   td.b.mt-1-xs Forma de Pago:
                   td.mt-1-xs.cellphone #{order.payment.name}
-            if ['paid','picking','ready'].indexOf(order.status) >= 0
-              .row
-                .col-xs-6.tr.bigx2.vertical-align-center
-                  i.fas.fa-angle-double-right
-                .col-md-6.vertical-align-center
-                  button.btn.btn--error.small.w-100.btn-next-status(
-                    id='id_'+order.orderID 
-                    data-order=order._id) 
-                      | Cambiar a:
-                      | #{' '}
-                      if order.status == 'paid'
-                        | #{statusText('picking')}
-                      if order.status == 'picking'
-                        | #{statusText('ready')}
-                      if order.status == 'ready'
-                        | #{statusText('onway')}
+
+            .row
+              .col-xs-4.tr.bigx2.vertical-align-center
+                i.fas.fa-angle-double-right
+
+              if order.status == 'paid'
+                .col-md-8.vertical-align-center
+                  button.btn.btn--error.small.w-100.open-modal-action(
+                    title=`¿Desea cambiar el estado a ${statusText('picking')}?`
+                    data-title=`¿Desea cambiar el estado a ${statusText('picking')}?`
+                    data-cancel='Cancelar'
+                    data-action=`Si, cambiar a "${statusText('picking')}"`
+                    data-method='PUT'
+                    data-url=`${appCnf.url.api}admin/orders/${order._id}/next-status/picking`
+                    data-page=`/administracion/tiendas/pedidos/${order.orderID}`
+                  ) Cambiar a: #{statusText('picking')}
+
+              if order.status == 'picking'
+                .col-md-8.vertical-align-center
+                  button.btn.btn--error.small.w-100.open-modal-action(
+                    title=`¿Desea cambiar el estado a ${statusText('ready')}?`
+                    data-title=`¿Desea cambiar el estado a ${statusText('ready')}?`
+                    data-cancel='Cancelar'
+                    data-action=`Si, cambiar a "${statusText('ready')}"`
+                    data-method='PUT'
+                    data-url=`${appCnf.url.api}admin/orders/${order._id}/next-status/ready`
+                    data-page=`/administracion/tiendas/pedidos/${order.orderID}`
+                  ) Cambiar a: #{statusText('ready')}
+
+              if order.status == 'ready' || order.status == 'missing'
+                .col-md-8.vertical-align-center
+                  button.btn.btn--error.small.w-100.open-modal-action(
+                    title=`¿Desea cambiar el estado a ${statusText('onway')}?`
+                    data-title=`¿Desea cambiar el estado a ${statusText('onway')}?`
+                    data-cancel='Cancelar'
+                    data-action=`Si, cambiar a "${statusText('onway')}"`
+                    data-method='PUT'
+                    data-url=`${appCnf.url.api}admin/orders/${order._id}/next-status/onway`
+                    data-page=`/administracion/tiendas/pedidos/${order.orderID}`
+                  ) Cambiar a: #{statusText('onway')}
+
+              if order.status == 'onway'
+                .col-md-8.vertical-align-center
+                  button.btn.btn--error.small.w-100.open-modal-action(
+                    title=`¿Desea cambiar el estado a ${statusText('arrived')}?`
+                    data-title=`¿Desea cambiar el estado a ${statusText('arrived')}?`
+                    data-cancel='Cancelar'
+                    data-action=`Si, cambiar a "${statusText('arrived')}"`
+                    data-method='PUT'
+                    data-url=`${appCnf.url.api}admin/orders/${order._id}/next-status/arrived`
+                    data-page=`/administracion/tiendas/pedidos/${order.orderID}`
+                  ) Cambiar a: #{statusText('arrived')}
+
+              if order.status == 'arrived'
+                .col-md-8.vertical-align-center
+                  button.btn.btn--error.small.w-100.open-modal-action(
+                    title=`¿Desea cambiar el estado a ${statusText('missing')}?`
+                    data-title=`¿Desea cambiar el estado a ${statusText('missing')}?`
+                    data-cancel='Cancelar'
+                    data-action=`Si, cambiar a "${statusText('missing')}"`
+                    data-method='PUT'
+                    data-url=`${appCnf.url.api}admin/orders/${order._id}/next-status/missing`
+                    data-page=`/administracion/tiendas/pedidos/${order.orderID}`
+                  ) Cambiar a: #{statusText('missing')}
+
+                  button.btn.btn--action.small.w-100.open-modal-action.mt-0-25(
+                    title=`¿Desea cambiar el estado a ${statusText('completed')}?`
+                    data-title=`¿Desea cambiar el estado a ${statusText('completed')}?`
+                    data-cancel='Cancelar'
+                    data-action=`Si, cambiar a "${statusText('completed')}"`
+                    data-method='PUT'
+                    data-url=`${appCnf.url.api}admin/orders/${order._id}/next-status/completed`
+                    data-page=`/administracion/tiendas/pedidos/${order.orderID}`
+                  ) Cambiar a: #{statusText('completed')}
 
 
   .row
@@ -133,7 +191,7 @@ block list
                 td.tr #{formatMoney(product.price)}
                 td.tr #{product.quantity}
                 td.tr.t-secondary.b #{formatMoney(product.price*product.quantity)}
-            
+
           tfoot
             tr
               td.b(colspan='4') Subtotal
@@ -172,37 +230,3 @@ block list
               tr
                 td.b Total
                 td.tr.big.t-secondary.b #{formatMoney(order.order.total)}
-
-  #modalNextStatus.modal.start-hide(tabindex='-1' role='dialog')
-    .modal-dialog(role='document')
-      form#modalNextStatusForm.col-xs-12.validate-rest(action=`${appCnf.url.api}admin/orders/${order._id}/next-status` data-page=`/administracion/tiendas/pedidos/${order.orderID}` method="put" data-error="#form-results")
-        .modal-content
-          .modal-header
-            .title.b 
-            | ¿Desea cambiar el estado a
-            | #{' '}
-            if order.status == 'paid'
-              | #{statusText('picking')}
-            if order.status == 'picking'
-              | #{statusText('ready')}
-            if order.status == 'ready'
-              | #{statusText('onway')}
-            | ?
-            input#orderID(type="hidden" name="status" value=order.status)
-            button.close.close-modal.btn-flat(type='button' data-dismiss='modal' aria-label='Cerrar')
-              span(aria-hidden='true')
-                i.fas.fa-times
-          .modal-body
-            .msg.error#form-results
-          .modal-footer.tr
-            button.close-modal.btn.btn--white(type='button') NO, salir
-            | #{' '}
-            button.btn.btn--primary(type='submit')
-              | SI, Cambiar a "
-              if order.status == 'paid'
-                | #{statusText('picking')}
-              if order.status == 'picking'
-                | #{statusText('ready')}
-              if order.status == 'ready'
-                | #{statusText('onway')}
-              | "

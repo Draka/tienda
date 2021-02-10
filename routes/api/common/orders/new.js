@@ -61,13 +61,14 @@ module.exports = (req, res, next) => {
             }
             const delivery = _.find(global.deliveries, { slug: d.slug });
             cb(null, {
-              slug: delivery.slug,
-              active: _.get(d, 'active') || false,
               name: delivery.name,
+              slug: delivery.slug,
               description: delivery.description,
-              payments: delivery.payments,
-              value: _.get(d, 'value') || 0,
+              price: _.get(d, 'value') || 0,
+              virtualDelivery: delivery.virtualDelivery,
               personalDelivery: delivery.personalDelivery,
+              payments: delivery.payments,
+              active: _.get(d, 'active') || false,
             });
           }],
           payment: ['store', (results, cb) => {
@@ -127,12 +128,16 @@ module.exports = (req, res, next) => {
                   longitude: point.lng,
                 })),
               );
-              cb(null, inArea);
-            }, (_err, results) => {
-              if (results.lastIndexOf(true) === -1) {
-                errors.push({ field: 'delivery', msg: __('No puede atender su solicitud por estar fuera de su cobertura') });
+              cb(null, { inArea, area });
+            }, (_err, xresults) => {
+              xresults = _.orderBy(xresults, ['area.price'], ['desc']);
+              const isArea = _.find(xresults, { inArea: true });
+              if (!isArea) {
+                errors.push({ field: 'delivery', msg: __('No puede atender la solicitud por estar fuera de cobertura') });
                 return cb(listErrors(400, null, errors));
               }
+              // pone el precio en el envio
+              results.delivery.price = isArea.area.price;
               cb(null, true);
             });
           }],
@@ -181,7 +186,7 @@ module.exports = (req, res, next) => {
               store: {
                 slug: order.store.slug,
                 name: order.store.name,
-                image: order.store.image,
+                images: { logo: order.store.image },
               },
               // Id del navegador, para evitar una misma orden varias veces
               browserUUID: body.cartID,
@@ -197,8 +202,8 @@ module.exports = (req, res, next) => {
               order: {
                 items: items.length,
                 subtotal: _.sumBy(items, (o) => o.price * o.quantity),
-                shipping: order.delivery.value,
-                total: (_.sumBy(items, (o) => o.price * o.quantity) + order.delivery.value),
+                shipping: order.delivery.price,
+                total: (_.sumBy(items, (o) => o.price * o.quantity) + order.delivery.price),
               },
               delivery: {
                 name: order.delivery.name,

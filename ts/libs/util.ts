@@ -13,7 +13,6 @@ export class Util {
     this.getApi = new GetApi(this.session.token);
     this.count();
     this.lazy();
-    this.showDetailOrder();
     this.changeTowns();
     this.btnBbcodeImg();
     this.openModalAction();
@@ -50,15 +49,6 @@ export class Util {
           }
         }
       },
-    });
-  }
-
-  showDetailOrder() {
-    $('.btn-next-status').on('click', () => {
-      sclib.modalShow('#modalNextStatus');
-    });
-    $('.btn-cancel').on('click', () => {
-      sclib.modalShow('#cancelOrder');
     });
   }
 
