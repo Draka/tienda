@@ -1,40 +1,50 @@
-extends ../../layout-edit-cmp
+extends /modules/admin/views/layout-edit-cmp
 
 block edit
-  form.validate(
-    id="updateProfileForm"
-    action=`${appCnf.url.api}admin/stores/${store._id}/products/${item._id}`
-    method="post"
-    enctype="multipart/form-data"
-    data-error="#form-results")
+  .white.br-1.rd-0-2.pw-2.pt-1.pb-2
+    .tabs.tabs--lines.scroll.nowrap.mb-1
+      a.item.active(data-tab='#p1') Tipo de producto
+      a.item(data-tab='#p2') Datos Principales
+      a.item(data-tab='#p3') Imágenes
+      a.item(data-tab='#p4') Imágenes
+      a.item(data-tab='#p5') Colores
 
-    .white.br-1.rd-0-2.p-3.mt-2
-      .row
-        .col-xs-12
-          .subtitle Imágenes
-          .msg.info.mb-0-5.mt-1
-            .flex
-              i.fas.fa-exclamation.h2.mr-0-25.w-2.tc
-              div Las mejores imágenes son con fondo en blanco.
-          .form-group
-            .form-control
-              input(type='hidden' name='redirect' value=`/administracion/tiendas/${store._id}/productos/${item._id}/editar`)
-              input.input#images(type='file' name='images' placeholder=' ' accept='image/png, image/jpeg' multiple)
-              label(for='images') Imágenes del producto
-            .remark.action.flex.mb-0-5
-              .h4.mr-1.t-action
-                i.far.fa-file-image
-              | Suba varias imágenes en formato png o jpg de máximo 10 megas de tamaño.
-          .hr.mh-1
-          .subtitle.mb-0-5 También puede copiar url de imágenes.
-          .form-group
-            .form-control
-              textarea.input.h-170p.nowrap#urlFiles(name="urlFiles" placeholder=' ')
-              label(for='urlFiles') Una url de imagen por línea
+    .tabs-content
+      .tab.active#p1
 
-      .row
-        .col-xs-12.tr
-          button.btn.btn--primary.w-100-xs.mt-2-xs(type="submit") Subir Imágenes
+        form.validate(
+          id="updateProfileForm"
+          action=`${appCnf.url.api}admin/stores/${store._id}/products/${item._id}`
+          method="post"
+          enctype="multipart/form-data"
+          data-error="#form-results")
+
+          .row
+            .col-xs-12
+              .subtitle Imágenes
+              .msg.info.mb-0-5.mt-1
+                .flex
+                  i.fas.fa-exclamation.h2.mr-0-25.w-2.tc
+                  div Las mejores imágenes son con fondo en blanco.
+              .form-group
+                .form-control
+                  input(type='hidden' name='redirect' value=`/administracion/tiendas/${store._id}/productos/${item._id}/editar`)
+                  input.input#images(type='file' name='images' placeholder=' ' accept='image/png, image/jpeg' multiple)
+                  label(for='images') Imágenes del producto
+                .remark.action.flex.mb-0-5
+                  .h4.mr-1.t-action
+                    i.far.fa-file-image
+                  | Suba varias imágenes en formato png o jpg de máximo 10 megas de tamaño.
+              .hr.mh-1
+              .subtitle.mb-0-5 También puede copiar url de imágenes.
+              .form-group
+                .form-control
+                  textarea.input.h-170p.nowrap#urlFiles(name="urlFiles" placeholder=' ')
+                  label(for='urlFiles') Una url de imagen por línea
+
+          .row
+            .col-xs-12.tr
+              button.btn.btn--primary.w-100-xs.mt-2-xs(type="submit") Subir Imágenes
 
 
   form.validate-rest(

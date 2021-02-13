@@ -34,7 +34,7 @@ export class ShowMsg {
           document.location.href = window.location.origin + window.location.pathname;
         }, timeShow);
       }
-      const msg = $(`<div class="msg ${alert} p-1 trn-3 op-0">`);
+      const msg = $(`<div class="msg ${alert} ab-2 fixed p-1 center op-1">`);
       const close = $('<button class="btn-flat p-1 absolute ar-2" data-dismiss="modal" aria-label="Cerrar">')
         .html('<span aria-hidden="true"><i class="fas fa-times"></i></span>')
         .on('click', () => {

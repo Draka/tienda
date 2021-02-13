@@ -1,201 +1,209 @@
-extends /modules/common/views/layout-edit-cmp
+extends /modules/admin/views/layout-edit-cmp
 
 block edit
-  .white.br-1.rd-0-2.p-3.mt-2
-    form.validate-rest(id="formSite1" action=`${appCnf.url.api}admin/super/config` method="put" data-page=`/administracion/super/configuracion` data-error="#form-results-1")
-      .msg.error#form-results-1
-      .row
-        .col-xs-12
-          h2.mb-1 Principales datos
-          .form-group
-            .form-control
-              input.input#name(type="text" name="name" placeholder=' ' required value=item.name)
-              label(for='name') Nombre del portal
-          .form-group
-            .form-control
-              input.input#title(type="text" name="title" placeholder=' ' required value=item.title)
-              label(for='title') Título de la página principal
-          .form-group
-            .form-control
-              textarea.input#description(name="description" placeholder=' ' required) #{item.description}
-              label(for='description') Descripción (corta, no más de 50 palabras)
-          .form-group
-            .form-control
-              input.input#url(type="url" name="url" placeholder=' ' required value=item.url)
-              label(for='url') URL del sitio
-
-      .row
-        .col-xs-12.tr
-          button.btn.btn--primary.w-100-xs.mt-2-xs(type="submit") Guardar Cambios
-
-  .white.br-1.rd-0-2.p-3.mt-2
-    form.validate-rest(id="formSite2" action=`${appCnf.url.api}admin/super/config` method="put" data-page=`/administracion/super/configuracion` data-error="#form-results-2")
-      .msg.error#form-results-2
-      .row
-        .col-xs-12
-          h2.mb-1 Correo electrónco
-          .form-group
-            .form-control
-              input.input#email-1(type="text" name="email[title]" placeholder=' ' required value=_.get(item, 'email.title'))
-              label(for='email-1') Título de los correos
-          .form-group
-            .form-control
-              input.input#email-2(type="text" name="email[emailNoreply]" placeholder='no-reply@dominio.com' required value=_.get(item, 'email.emailNoreply'))
-              label(for='email-2') Correo para respuesta transaccionales
-          .form-group
-            .form-control
-              input.input#email-3(type="text" name="email[emailInfo]" placeholder='info@dominio.com' required value=_.get(item, 'email.emailInfo'))
-              label(for='email-3') Correo para envío
-
-      .row
-        .col-xs-12.tr
-          button.btn.btn--primary.w-100-xs.mt-2-xs(type="submit") Guardar Cambios
+  .white.br-1.rd-0-2.pw-2.pt-1.pb-2
+    .tabs.tabs--lines.scroll.nowrap.mb-1
+      a.item.active(data-tab='#p1') Principales datos
+      a.item(data-tab='#p2') Correo electrónco
+      a.item(data-tab='#p3') Redes Sociales
+      a.item(data-tab='#p4') Imágenes
+      a.item(data-tab='#p5') Colores
 
 
-  .white.br-1.rd-0-2.p-3.mt-2
-    form.validate-rest(id="formSite2" action=`${appCnf.url.api}admin/super/config` method="put" data-page=`/administracion/super/configuracion` data-error="#form-results-2")
-      .msg.error#form-results-2
-      .row
-        .col-xs-12
-          h2.mb-1 Redes Sociales
-          each social, key in socialMedia
-            .form-group
-              .form-control
-                input.input(type="hidden" name=`contacts[${key}][slug]` value=social[0])
-                input.input(
-                  id=`contacts-${social[0]}`
-                  type=social[2]
-                  name=`contacts[${key}][value]`
-                  placeholder=' '
-                  value=item.contacts ? (item.contacts.find(i=>i.slug==social[0])||{}).value : ''
-                  )&attributes(social[3])
-                label(for=`contacts-${social[0]}`) #{social[1]}
+    .tabs-content
+      .tab.active#p1
+        form.validate-rest(id="formSite1" action=`${appCnf.url.api}admin/super/config` method="put" data-page=`/administracion/super/configuracion` data-error="#form-results-1")
+          .msg.error#form-results-1
+          .row
+            .col-xs-12
+              h2.mb-1 Principales datos
+              .form-group
+                .form-control
+                  input.input#name(type="text" name="name" placeholder=' ' required value=item.name)
+                  label(for='name') Nombre del portal
+              .form-group
+                .form-control
+                  input.input#title(type="text" name="title" placeholder=' ' required value=item.title)
+                  label(for='title') Título de la página principal
+              .form-group
+                .form-control
+                  textarea.input#description(name="description" placeholder=' ' required) #{item.description}
+                  label(for='description') Descripción (corta, no más de 50 palabras)
+              .form-group
+                .form-control
+                  input.input#url(type="url" name="url" placeholder=' ' required value=item.url)
+                  label(for='url') URL del sitio
 
-      .row
-        .col-xs-12.tr
-          button.btn.btn--primary.w-100-xs.mt-2-xs(type="submit") Guardar Cambios
+          .row
+            .col-xs-12.tr
+              button.btn.btn--primary.w-100-xs(type="submit") Guardar Cambios
+
+      .tab#p2
+        form.validate-rest(id="formSite2" action=`${appCnf.url.api}admin/super/config` method="put" data-page=`/administracion/super/configuracion` data-error="#form-results-2")
+          .msg.error#form-results-2
+          .row
+            .col-xs-12
+              h2.mb-1 Correo electrónco
+              .form-group
+                .form-control
+                  input.input#email-1(type="text" name="email[title]" placeholder=' ' required value=_.get(item, 'email.title'))
+                  label(for='email-1') Título de los correos
+              .form-group
+                .form-control
+                  input.input#email-2(type="text" name="email[emailNoreply]" placeholder='no-reply@dominio.com' required value=_.get(item, 'email.emailNoreply'))
+                  label(for='email-2') Correo para respuesta transaccionales
+              .form-group
+                .form-control
+                  input.input#email-3(type="text" name="email[emailInfo]" placeholder='info@dominio.com' required value=_.get(item, 'email.emailInfo'))
+                  label(for='email-3') Correo para envío
+
+          .row
+            .col-xs-12.tr
+              button.btn.btn--primary.w-100-xs(type="submit") Guardar Cambios
+
+      .tab#p3
+        form.validate-rest(id="formSite2" action=`${appCnf.url.api}admin/super/config` method="put" data-page=`/administracion/super/configuracion` data-error="#form-results-2")
+          .msg.error#form-results-2
+          .row
+            .col-xs-12
+              h2.mb-1 Redes Sociales
+              each social, key in socialMedia
+                .form-group
+                  .form-control
+                    input.input(type="hidden" name=`contacts[${key}][slug]` value=social[0])
+                    input.input(
+                      id=`contacts-${social[0]}`
+                      type=social[2]
+                      name=`contacts[${key}][value]`
+                      placeholder=' '
+                      value=item.contacts ? (item.contacts.find(i=>i.slug==social[0])||{}).value : ''
+                      )&attributes(social[3])
+                    label(for=`contacts-${social[0]}`) #{social[1]}
+
+          .row
+            .col-xs-12.tr
+              button.btn.btn--primary.w-100-xs(type="submit") Guardar Cambios
+
+      .tab#p4
+        form.validate(
+          id="form"
+          action=`${appCnf.url.api}admin/super/config`
+          method="post"
+          enctype="multipart/form-data"
+          data-error="#form-results")
+
+          .row
+            .col-xs-12
+              input(type='hidden' name='redirect' value=`/administracion/super/configuracion`)
+              img(src=_.get(item, 'images.favicon.ico') style="max-height: 100px;")
+              .form-group
+                .form-control
+                  input.input#favicon(type='file' name='favicon' placeholder=' ' accept='image/vnd.microsoft.icon')
+                  label
+                    .title(for='favicon') Favicon.ico
+              .remark.action.flex.mb-2
+                .h4.mr-1.t-action
+                  i.far.fa-file-image.h1
+                div
+                  .big 42x42 .ico
+                  p Es la imagen que se muestra en la pestaña del navegador
+
+              .hr.mb-1
+              img(src=_.get(item, 'images.favpng.png') style="max-height: 100px;")
+              .form-group
+                .form-control
+                  input.input#favpng(type='file' name='favpng' placeholder=' ' accept='image/png')
+                  label
+                    .title(for='favpng') Favicon.png
+              .remark.action.flex.mb-2
+                .h4.mr-1.t-action
+                  i.far.fa-file-image.h1
+                div
+                  .big 130x130 .png
+                  p Es la imagen que se muestra en la pestaña del navegador, la usan los celulares.
+
+              .hr.mb-1
+              .black.p-1
+                img(src=_.get(item, 'images.logoTop.svg') style="max-height: 100px;")
+              .form-group
+                .form-control
+                  input.input#logoTop(type='file' name='logoTop' placeholder=' ' accept='image/svg+xml')
+                  label
+                    .title(for='logoTop') Logo
+              .remark.action.flex.mb-2
+                .h4.mr-1.t-action
+                  i.far.fa-file-image.h1
+                div
+                  .big .svg
+                  p SVG, debe verse sobre el fondo oscuro del menú, es un logo tipo horizontal.
+                  p Ideal solo incluir el logo y el texto a la derecha.
+
+              .hr.mb-1
+              .black.p-1
+                img(src=_.get(item, 'images.logoSquare.svg') style="max-height: 100px;")
+              .form-group
+                .form-control
+                  input.input#logoSquare(type='file' name='logoSquare' placeholder=' ' accept='image/svg+xml')
+                  label
+                    .title(for='logoSquare') Logo Cuadrado
+              .remark.action.flex.mb-2
+                .h4.mr-1.t-action
+                  i.far.fa-file-image.h1
+                div
+                  .big .svg
+                  p SVG, debe verse sobre el fondo oscuro del pie de página, es un logo tipo cuadrado.
+                  p Ideal solo incluir el logo son texto.
+
+              .hr.mb-1
+              img(src=_.get(item, 'images.logoEmail.jpg') style="max-height: 100px;")
+              .form-group
+                .form-control
+                  input.input#logoEmail(type='file' name='logoEmail' placeholder=' ' accept='image/jpeg,image/png')
+                  label
+                    .title(for='logoEmail') Logo para correos
+              .remark.action.flex.mb-2
+                .h4.mr-1.t-action
+                  i.far.fa-file-image.h1
+                div
+                  .big (min: 100, max: 400)x100 .png .jpg
+                  p Suba una imagen de preferencia jpg de fondo blanco.
+                  p Su logo debe verse en un fondo blanco.
+
+              .hr.mb-1
+              img(src=_.get(item, 'images.social.img') style="max-height: 100px;")
+              .form-group
+                .form-control
+                  input.input#social(type='file' name='social' placeholder=' ' accept='image/jpeg,image/png')
+                  label
+                    .title(for='social') Logo para redes sociales
+              .remark.action.flex.mb-2
+                .h4.mr-1.t-action
+                  i.far.fa-file-image.h1
+                div
+                  .big 1200x630 .png .jpg
+                  p Suba una imagen de preferencia jpg.
+                  p Esta imagen se usará cuando se comparta la URL de su portal de tiendas.
 
 
-  .white.br-1.rd-0-2.p-3.mt-2
-    form.validate(
-      id="form"
-      action=`${appCnf.url.api}admin/super/config`
-      method="post"
-      enctype="multipart/form-data"
-      data-error="#form-results")
+          .row
+            .col-xs-12.tr
+              button.btn.btn--primary.w-100-xs(type="submit") Subir imágenes
 
-      .row
-        .col-xs-12
-          input(type='hidden' name='redirect' value=`/administracion/super/configuracion`)
-          img(src=_.get(item, 'images.favicon.ico') style="max-height: 100px;")
-          .form-group
-            .form-control
-              input.input#favicon(type='file' name='favicon' placeholder=' ' accept='image/vnd.microsoft.icon')
-              label
-                .title(for='favicon') Favicon.ico
-          .remark.action.flex.mb-2
-            .h4.mr-1.t-action
-              i.far.fa-file-image.h1
-            div
-              .big 42x42 .ico
-              p Es la imagen que se muestra en la pestaña del navegador
+      .tab#p5
+        form.validate-rest(id="formSite2" action=`${appCnf.url.api}admin/super/config` method="put" data-page=`/administracion/super/configuracion` data-error="#form-results-2")
+          .msg.error#form-results-2
+          .row
+            .col-xs-12
+              h2.mb-1 Colores
+              .form-group
+                .form-control
+                  input.input#color-primary(type="color" name="color[primary]" placeholder=' ' required value=_.get(item, 'color.primary'))
+                  label(for='color-primary') Color Primario
+              .form-group
+                .form-control
+                  input.input#color-secondary(type="color" name="color[secondary]" placeholder=' ' required value=_.get(item, 'color.secondary'))
+                  label(for='color-secondary') Color Secundario
 
-          .hr.mb-1
-          img(src=_.get(item, 'images.favpng.png') style="max-height: 100px;")
-          .form-group
-            .form-control
-              input.input#favpng(type='file' name='favpng' placeholder=' ' accept='image/png')
-              label
-                .title(for='favpng') Favicon.png
-          .remark.action.flex.mb-2
-            .h4.mr-1.t-action
-              i.far.fa-file-image.h1
-            div
-              .big 130x130 .png
-              p Es la imagen que se muestra en la pestaña del navegador, la usan los celulares.
-
-          .hr.mb-1
-          .black.p-1
-            img(src=_.get(item, 'images.logoTop.svg') style="max-height: 100px;")
-          .form-group
-            .form-control
-              input.input#logoTop(type='file' name='logoTop' placeholder=' ' accept='image/svg+xml')
-              label
-                .title(for='logoTop') Logo
-          .remark.action.flex.mb-2
-            .h4.mr-1.t-action
-              i.far.fa-file-image.h1
-            div
-              .big .svg
-              p SVG, debe verse sobre el fondo oscuro del menú, es un logo tipo horizontal.
-              p Ideal solo incluir el logo y el texto a la derecha.
-
-          .hr.mb-1
-          .black.p-1
-            img(src=_.get(item, 'images.logoSquare.svg') style="max-height: 100px;")
-          .form-group
-            .form-control
-              input.input#logoSquare(type='file' name='logoSquare' placeholder=' ' accept='image/svg+xml')
-              label
-                .title(for='logoSquare') Logo Cuadrado
-          .remark.action.flex.mb-2
-            .h4.mr-1.t-action
-              i.far.fa-file-image.h1
-            div
-              .big .svg
-              p SVG, debe verse sobre el fondo oscuro del pie de página, es un logo tipo cuadrado.
-              p Ideal solo incluir el logo son texto.
-
-          .hr.mb-1
-          img(src=_.get(item, 'images.logoEmail.jpg') style="max-height: 100px;")
-          .form-group
-            .form-control
-              input.input#logoEmail(type='file' name='logoEmail' placeholder=' ' accept='image/jpeg,image/png')
-              label
-                .title(for='logoEmail') Logo para correos
-          .remark.action.flex.mb-2
-            .h4.mr-1.t-action
-              i.far.fa-file-image.h1
-            div
-              .big (min: 100, max: 400)x100 .png .jpg
-              p Suba una imagen de preferencia jpg de fondo blanco.
-              p Su logo debe verse en un fondo blanco.
-
-          .hr.mb-1
-          img(src=_.get(item, 'images.social.img') style="max-height: 100px;")
-          .form-group
-            .form-control
-              input.input#social(type='file' name='social' placeholder=' ' accept='image/jpeg,image/png')
-              label
-                .title(for='social') Logo para redes sociales
-          .remark.action.flex.mb-2
-            .h4.mr-1.t-action
-              i.far.fa-file-image.h1
-            div
-              .big 1200x630 .png .jpg
-              p Suba una imagen de preferencia jpg.
-              p Esta imagen se usará cuando se comparta la URL de su portal de tiendas.
-
-
-      .row
-        .col-xs-12.tr
-          button.btn.btn--primary.w-100-xs.mt-2-xs(type="submit") Subir imágenes
-
-  .white.br-1.rd-0-2.p-3.mt-2
-    form.validate-rest(id="formSite2" action=`${appCnf.url.api}admin/super/config` method="put" data-page=`/administracion/super/configuracion` data-error="#form-results-2")
-      .msg.error#form-results-2
-      .row
-        .col-xs-12
-          h2.mb-1 Colores
-          .form-group
-            .form-control
-              input.input#color-primary(type="color" name="color[primary]" placeholder=' ' required value=_.get(item, 'color.primary'))
-              label(for='color-primary') Color Primario
-          .form-group
-            .form-control
-              input.input#color-secondary(type="color" name="color[secondary]" placeholder=' ' required value=_.get(item, 'color.secondary'))
-              label(for='color-secondary') Color Secundario
-
-      .row
-        .col-xs-12.tr
-          button.btn.btn--primary.w-100-xs.mt-2-xs(type="submit") Guardar Cambios
+          .row
+            .col-xs-12.tr
+              button.btn.btn--primary.w-100-xs(type="submit") Guardar Cambios
