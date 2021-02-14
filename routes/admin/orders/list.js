@@ -28,6 +28,7 @@ module.exports = (req, res, next) => {
     }],
     orders: ['stores', (results, cb) => {
       body.storeID = { $in: _.map(results.stores, '_id') };
+      console.log('XXXXX', body);
       models.Order
         .find(body)
         .limit(limit)
