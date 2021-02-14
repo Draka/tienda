@@ -9,7 +9,6 @@ module.exports = (req, res, next) => {
 
   async.auto({
     validate: (cb) => {
-      body.userID = req.user._id;
       body.status = {
         $in: ['paid', 'cancelled', 'cancelledAdmin', 'picking', 'ready', 'onway', 'arrived', 'missing', 'completed'],
       };
@@ -28,7 +27,6 @@ module.exports = (req, res, next) => {
     }],
     orders: ['stores', (results, cb) => {
       body.storeID = { $in: _.map(results.stores, '_id') };
-      console.log('XXXXX', body);
       models.Order
         .find(body)
         .limit(limit)

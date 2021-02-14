@@ -19,7 +19,6 @@ module.exports = (req, res, next) => {
       cb(null, req.user);
     },
     items: ['validate', (results, cb) => {
-      console.log('XXXXX', body);
       models.Store
         .find(body)
         .limit(limit)
