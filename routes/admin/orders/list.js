@@ -2,7 +2,7 @@ const { putS3LogoPath } = require('../../../libs/put_s3_path.lib');
 const reference = require('../../../libs/reference.lib');
 
 module.exports = (req, res, next) => {
-  const body = _.pick(req.query, ['name']);
+  const body = _.pick(req.query, ['orderID']);
 
   const limit = Math.min(Math.max(1, req.query.limit) || 20, 500);
   const page = Math.max(0, req.query.page) || 0;
@@ -13,11 +13,11 @@ module.exports = (req, res, next) => {
       body.status = {
         $in: ['paid', 'cancelled', 'cancelledAdmin', 'picking', 'ready', 'onway', 'arrived', 'missing', 'completed'],
       };
-      if (req.query.q) {
-        body.$or = [
-          { slug: { $regex: req.query.q, $options: 'i' } },
-        ];
-      }
+      // if (req.query.q) {
+      //   body.$or = [
+      //     { orderID: { $regex: req.query.q, $options: 'i' } },
+      //   ];
+      // }
       return cb();
     },
     stores: ['validate', (results, cb) => {
