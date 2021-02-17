@@ -7,16 +7,24 @@ module.exports = (req, res, next) => {
   const page = Math.max(0, req.query.page) || 0;
 
   async.auto({
+    validate: (cb) => {
+      if (req.query.q) {
+        body.$or = [
+          { slug: { $regex: req.query.q, $options: 'i' } },
+        ];
+      }
+      return cb();
+    },
     user: (cb) => {
       cb(null, req.user);
     },
-    items: ['user', (results, cb) => {
+    items: ['validate', (results, cb) => {
       models.Store
         .find(body)
         .limit(limit)
         .skip(limit * page)
         .sort({
-          sku: 1,
+          name: 1,
         })
         .populate({
           path: 'userID',
@@ -29,7 +37,7 @@ module.exports = (req, res, next) => {
       putS3LogoPath(results.items);
       cb();
     }],
-    count: ['user', (_results, cb) => {
+    count: ['validate', (_results, cb) => {
       models.Store
         .countDocuments(body)
         .exec(cb);
