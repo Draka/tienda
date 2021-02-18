@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+Disallow: /registro-confirmacion
+Disallow: /recuperar-contrasena-confirmacion
+Disallow: /perfil
+Disallow: /editar-perfil
+Disallow: /cambiar-contrasena
+Disallow: /cerrar-sesion
+Disallow: /detalle
+Disallow: /cancelar-confirmacion
+Disallow: /404
+Disallow: /carrito
+Disallow: /carrito-direccion
+Disallow: /carrito-resumen

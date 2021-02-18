@@ -23,26 +23,12 @@ block edit
               label(for='name') Nombre
           .form-group
             .form-control
-              label.switch
-                input#inventory(type="hidden" name="inventory" value='0')
-                span.check
-                span.caption Usa Inventario (Stock)
-          .form-group
-            .form-control
-              input.input#stock(type="number" name="stock" placeholder=' ')
-              label(for='stock') Inventario (Stock, Existencias)
-          .form-group
-            .form-control
               input.input#price(type="number" name="price" placeholder=' ' required)
               label(for='price') Precio
           .form-group
             .form-control
               input.input#sku(type="text" name="sku" placeholder=' ' required)
               label(for='sku') SKU
-          .form-group
-            .form-control
-              input.input#ean(type="text" name="ean" placeholder=' ')
-              label(for='ean') UPC, EAN
           .form-group
             .form-control
               input.input#brandText(type="text" name="brandText" placeholder=' ')
@@ -61,84 +47,6 @@ block edit
             .small No más de 160 caracteres. Lleva #{' '}
               spam#count-short-description
               | #{' '}caracteres
-          .form-group.ph-1
-            .subtitle.mb-0-5 Descripción larga
-            .form-control
-              textarea.cke-user#longDescription(name="longDescription" placeholder=' ')
-
-    .white.br-1.rd-0-2.p-3.mt-2
-      .row
-        .col-xs-12
-          .subtitle Disponible
-          .msg.info.mb-0-5.mt-1
-            .flex
-              i.fas.fa-exclamation.h2.mr-0-25.w-2.tc
-              div Este campo indica la fechas en las que estará disponible un producto para la venta, no es necesario escribir las dos fechas.
-          .form-group.flex
-            .form-control
-              input.input#available-0(type="date" name="available[start]" placeholder='dd/mm/aaaa')
-              label.nowrap(for='available-0') Desde
-            .form-control.pl-1
-              input.input#available-1(type="date" name="available[end]" placeholder='dd/mm/aaaa')
-              label(for='available-1') Hasta
-
-    .white.br-1.rd-0-2.p-3.mt-2
-      .row
-        .col-xs-12
-          .subtitle Digital
-          .msg.info.mb-0-5.mt-1
-            .flex
-              i.fas.fa-exclamation.h2.mr-0-25.w-2.tc
-              div Los productos digitales pueden ser licencias, conciertos, obras, clases particulares y cualquier producto que no necesite envío físico.
-          .form-group
-            .form-control
-              label.switch
-                input.checkbox#digital-is(type="hidden" name="digital[is]" value='0')
-                span.check
-                span.caption Es un producto digital
-          .form-group.ph-1
-            .subtitle.mb-0-5 Mensaje para los clientes cuando compren
-            .form-control
-              textarea.cke-user#digital-msg(name="digital[msg]" placeholder=' ')
-            span Puede incluir url, correo, teléfono o cualquier otro recurso.
-
-    .white.br-1.rd-0-2.p-3.mt-2
-      .row
-        .col-xs-12
-          .subtitle Características
-          .msg.info.mb-0-5.mt-1
-            .flex
-              i.fas.fa-exclamation.h2.mr-0-25.w-2.tc
-              div Escriba características del producto, tales como: peso, altura, color, etc.
-          button.btn.btn--secondary.add(type="button") Agregar carácteristica
-          .hr.mh-1
-          .list-features(data-btn=".add" data-features="[]")
-
-    .white.br-1.rd-0-2.p-3.mt-2
-      .row
-        .col-xs-12
-          .subtitle Medidas del producto, empacado
-          .msg.info.mb-0-5.mt-1
-            .flex
-              i.fas.fa-exclamation.h2.mr-0-25.w-2.tc
-              div
-                | Estas son las medidas del producto empacado, no son las mismas del producto afuera de su caja, son usadas para calcular el valor del transporte mediante mensajería.
-          .form-group
-            .form-control
-              input.input#weight(type="number" name="weight" placeholder=' ' min=0 value=0)
-              label(for='weight') Peso (en gramos)
-          .form-group
-            .form-control
-              input.input#length(type="number" name="length" placeholder=' ' min=0 value=0)
-              label(for='length') Largo (en centímetros)
-          .form-group
-            .form-control
-              input.input#height(type="number" name="height" placeholder=' ' min=0 value=0)
-              label(for='height') Altura (en centímetros)
-          .form-group
-            .form-control
-              input.input#width(type="number" name="width" placeholder=' ' min=0 value=0)
-              label(for='width') Ancho (en centímetros)
 
       .row
         .col-xs-12.tr

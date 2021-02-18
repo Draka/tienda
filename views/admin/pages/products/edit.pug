@@ -212,13 +212,18 @@ block edit
         )
           .row
             .col-xs-12
-              .subtitle.b.mt-1 Características
-              .msg.info.mb-0-5.mt-1
+              .subtitle.b.mt-1 Código de barras
+              .hr.mt-0-5.mb-1
               .form-group
                 .form-control
                   input.input#ean(type="text" name="ean" placeholder=' ' value=item.ean)
                   label(for='ean') UPC, EAN
-              .form-group
+
+          .row
+            .col-xs-12
+              .subtitle.b.mt-2 Características
+              .hr.mt-0-5.mb-1
+              .msg.info.mb-0-5.mt-1
                 .flex
                   i.fas.fa-exclamation.h2.mr-0-25.w-2.tc
                   div Escriba características del producto, tales como: peso, altura, color, etc.
@@ -229,6 +234,7 @@ block edit
           .row
             .col-xs-12
               .subtitle.b.mt-2 Digital
+              .hr.mt-0-5.mb-1
               .msg.info.mb-0-5.mt-1
                 .flex
                   i.fas.fa-exclamation.h2.mr-0-25.w-2.tc
@@ -260,6 +266,7 @@ block edit
           .row
             .col-xs-12
               .subtitle.b.mt-1 Medidas del producto, empacado
+              .hr.mt-0-5.mb-1
               .msg.info.mb-0-5.mt-1
                 .flex
                   i.fas.fa-exclamation.h2.mr-0-25.w-2.tc

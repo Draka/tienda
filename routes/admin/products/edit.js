@@ -86,6 +86,7 @@ module.exports = (req, res, next) => {
       breadcrumbs,
       cke: true,
       js: 'admin',
+      back: `/administracion/tiendas/${req.params.storeID}/productos`,
     });
   });
 };
