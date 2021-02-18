@@ -6,7 +6,7 @@
 const tenancy = process.env.TENANCY || 'vendelomejor';
 
 const enviroment = {
-  v: '2.0.17',
+  v: '2.0.18',
   tenancy,
   db: process.env.MONGO_URL || 'mongodb://localhost/tienda',
   redis: {
