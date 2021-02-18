@@ -2,23 +2,22 @@ extends /modules/admin/views/layout-edit-cmp
 
 block edit
 
-  .msg.error#form-results.a
+  .msg.error#form-results
 
   .white.br-1.rd-0-2.pw-2.pt-1.pb-2
     .tabs.tabs--lines.scroll.nowrap.mb-1
       a.item.active(data-tab='#p1') Tienda
       a.item(data-tab='#p2') Datos Principales
-      a.item(data-tab='#p3') Imágenes
-      a.item(data-tab='#p4') Imágenes
-      a.item(data-tab='#p5') Colores
+      a.item(data-tab='#p3') Descripción
+      a.item(data-tab='#p4') Región
 
     .tabs-content
       .tab.active#p1
-
         form.validate-rest(
           action=`${appCnf.url.api}admin/stores/${store._id}`
           method="put"
           data-ok='Cambios guardados'
+          data-ok-color='action'
           data-error="#form-results"
         )
 
@@ -80,81 +79,94 @@ block edit
             .col-xs-12.tr
               button.btn.btn--primary.w-100-xs(type="submit") Guardar Cambios
 
-  form.validate-rest(id="updateProfileForm" action=`${appCnf.url.api}admin/stores/${store._id}` method="put" data-page=`/administracion/tiendas/${store._id}` data-error="#form-results")
-    .row
-      .col-xs-12
-        .form-group
-          .form-control
-            label.switch
-              input#publish(type="hidden" name="publish" value=store.publish?'1':'0')
-              span.check
-              span.caption Publicado
-        .remark.action.flex.mb-2
-          .h4.mr-1.t-action
-            i.far.fa-file-image.h1
-          div
-            p Activa esta opción si no quieres usar métodos de pago online.
-            p Deberás configurar una zona de cobertura, donde puedas entregar tus productos.
-            p Deberás usar un método de envío con pagos contra entrega, nosotros indicaremos al cliente que nunca pague por adelantado.
-        .form-group
-          .form-control
-            label.switch
-              input#showcase(type="hidden" name="showcase" value=store.showcase?'1':'0')
-              span.check
-              span.caption Vitrina
-        .form-group
-          .form-control
-            input.input#name(type="text" name="name" placeholder=' ' required value=store.name)
-            label(for='name') Nombre de la tienda
-        .form-group.flex
-          .form-control
-            .nowrap.ellipsis #{appCnf.url.site}
-            label.nowrap URL
-          .form-control.w-100.pl-1
-            input.input#slug(type="text" name="slug" placeholder=' ' value=store.slug slug)
-            label(for='slug') Slug
-        .form-group
-          .form-control
-            input.input#slogan(type="text" name="slogan" placeholder=' ' value=store.slogan)
-            label(for='slogan') Slogan (corto, no mas de 100 carácteres)
-        .form-group
-          .form-control
-            textarea.input#description(name="seo" placeholder=' ' data-count="180" data-target="#count-short-description") #{store.seo}
-            label(for='seo') Descripción (corta, entre 150 y 180 caracteres)
-          .small No más de 180 caracteres. Lleva #{' '}
-            spam#count-short-description
-            | #{' '}caracteres
+      .tab#p2
+        form.validate-rest(
+          action=`${appCnf.url.api}admin/stores/${store._id}`
+          method="put"
+          data-ok='Cambios guardados'
+          data-ok-color='action'
+          data-error="#form-results"
+        )
+          .row
+            .col-xs-12
+              .form-group
+                .form-control
+                  input.input#name(type="text" name="name" placeholder=' ' required value=store.name)
+                  label(for='name') Nombre de la tienda
+              .form-group.flex
+                .form-control
+                  .nowrap.ellipsis #{appCnf.url.site}
+                  label.nowrap URL
+                .form-control.w-100.pl-1
+                  input.input#slug(type="text" name="slug" placeholder=' ' value=store.slug slug)
+                  label(for='slug') Slug
+              .form-group
+                .form-control
+                  input.input#slogan(type="text" name="slogan" placeholder=' ' value=store.slogan)
+                  label(for='slogan') Slogan (corto, no mas de 100 carácteres)
+              .form-group
+                .form-control
+                  textarea.input#description(name="seo" placeholder=' ' data-count="180" data-target="#count-short-description") #{store.seo}
+                  label(for='seo') Descripción (corta, entre 150 y 180 caracteres)
+                .small No más de 180 caracteres. Lleva #{' '}
+                  spam#count-short-description
+                  | #{' '}caracteres
 
-        .form-group.ph-1
-          .mb-1.subtitle Descripción Larga (Se muestra en la página principal de la tienda)
-          textarea.cke-user#descriptionLong(data-target='#descriptionLong' name="descriptionLong") !{store.descriptionLong}
+          .row
+            .col-xs-12.tr
+              button.btn.btn--primary.w-100-xs(type="submit") Guardar Cambios
 
-        .form-group.ph-1
-          .mb-1.subtitle Pie de página
-          textarea.cke-user#vision(data-target='#vision' name="vision") !{store.vision}
+      .tab#p3
+        form.validate-rest(
+          action=`${appCnf.url.api}admin/stores/${store._id}`
+          method="put"
+          data-ok='Cambios guardados'
+          data-ok-color='action'
+          data-error="#form-results"
+        )
+          .row
+            .col-xs-12
+              .form-group.ph-1
+                .mb-1.subtitle Descripción Larga (Se muestra en la página principal de la tienda)
+                textarea.cke-user#descriptionLong(data-target='#descriptionLong' name="descriptionLong") !{store.descriptionLong}
 
-        .form-group
-          .form-control
-            select.input#department.department(name='department' required data-target='#town')
-              option(value='') --
-              each department in departments
-                option(value=department.slug selected=store.department==department.slug) #{department.name}
-            label.nowrap(for='department') Departamento
-        .form-group
-          .form-control
-            select.input#town(name='town' required)
-              option(value='') --
-              each town in towns
-                option(value=town.slug selected=store.town==town.name) #{town.name}
-            label.nowrap(for='town') Municipio
-        .form-group
-          .form-control
-            input.input#primaryActivity(type="text" name="primaryActivity" placeholder='Restaurantes, Transporte, Servicios...' required value=store.primaryActivity)
-            label(for='primaryActivity') Actividad primaria
+              .form-group.ph-1
+                .mb-1.subtitle Pie de página
+                textarea.cke-user#vision(data-target='#vision' name="vision") !{store.vision}
 
+          .row
+            .col-xs-12.tr
+              button.btn.btn--primary.w-100-xs(type="submit") Guardar Cambios
 
-    .row
-      .col-xs-12.tr
-        a.btn.btn--secondary.w-100-xs(href=`/administracion/tiendas/${store._id}`) Cancelar
-        | #{' '}
-        button.btn.btn--primary.w-100-xs.mt-2-xs(type="submit") Guardar Tienda
+      .tab#p4
+        form.validate-rest(
+          action=`${appCnf.url.api}admin/stores/${store._id}`
+          method="put"
+          data-ok='Cambios guardados'
+          data-ok-color='action'
+          data-error="#form-results"
+        )
+          .row
+            .col-xs-12
+              .form-group
+                .form-control
+                  select.input#department.department(name='department' required data-target='#town')
+                    option(value='') --
+                    each department in departments
+                      option(value=department.slug selected=store.department==department.slug) #{department.name}
+                  label.nowrap(for='department') Departamento
+              .form-group
+                .form-control
+                  select.input#town(name='town' required)
+                    option(value='') --
+                    each town in towns
+                      option(value=town.slug selected=store.town==town.name) #{town.name}
+                  label.nowrap(for='town') Municipio
+              .form-group
+                .form-control
+                  input.input#primaryActivity(type="text" name="primaryActivity" placeholder='Restaurantes, Transporte, Servicios...' required value=store.primaryActivity)
+                  label(for='primaryActivity') Actividad primaria
+
+          .row
+            .col-xs-12.tr
+              button.btn.btn--primary.w-100-xs(type="submit") Guardar Cambios

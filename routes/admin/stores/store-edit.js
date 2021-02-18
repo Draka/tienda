@@ -57,6 +57,7 @@ module.exports = (req, res, next) => {
       js: 'admin',
       departments,
       towns: _.orderBy(_.filter(towns, { departmentSlug: results.store.department }), 'name'),
+      back: `/administracion/tiendas/${req.params.storeID}`,
     });
   });
 };

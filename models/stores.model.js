@@ -5,6 +5,10 @@ const schema = new mongoose.Schema({
     ref: `${appCnf.dbPrefix}users`,
     index: true,
   },
+  mode: {
+    type: String,
+    trim: true,
+  },
   name: {
     type: String,
     trim: true,

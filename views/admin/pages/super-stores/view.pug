@@ -4,13 +4,20 @@ block view
   table.small.table.table--lines
     tbody
       tr
+        th.nowrap.ellipsis Aprobado
+        td.w-100
+          +boolean(store.approve)
+      tr
         th.nowrap.ellipsis Publicado
         td.w-100
           +boolean(store.publish)
       tr
-        th.nowrap.ellipsis Aprobado
+        th.nowrap.ellipsis Vitrina
         td.w-100
-          +boolean(store.approve)
+          +boolean(store.showcase)
+      tr
+        th.nowrap.ellipsis Modo
+        td.w-100 #{store.mode=='restaurant'?'Restaurante':'Tienda'}
       tr
         th.nowrap.ellipsis Nombre
         td.w-100 #{store.name}
