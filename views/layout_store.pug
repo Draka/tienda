@@ -14,33 +14,39 @@ mixin simpleProduct(store, product)
       brandText: product.brandText,
       price: product.price,
       store: store.slug
-    }) 
+    })
     data-pos=pos+1)
     a(href='/'+store.slug+'/productos/'+product.sku)
       +img(product.name, _.first(product.imagesSizes), ['196x196_jpg', '392x392_jpg'])
     if product.brandText
       .t-white-700.small.mb-1 #{product.brandText}
     .t-primary.tc.b.small #{product.name}
-    .t-secondary.b.big #{formatMoney(product.price)}
-    .t-action.small.mb-4
-      if product.inventory
-        if product.stock == 0
-          | Agotado
-        else if product.stock < 10
-          | En stock, Pocas unidades
-        else
-          | En stock
-      else
-        | En stock
+      //- remover en vitrina
+      if !store.showcase
+        .t-secondary.b.big #{formatMoney(product.price)}
+        .t-action.small.mb-4
+          if product.inventory
+            if product.stock == 0
+              | Agotado
+            else if product.stock < 10
+              | En stock, Pocas unidades
+            else
+              | En stock
+          else
+            | En stock
 
-    .absolute.w-100c2.ab-1
-      if (product.publish && product.isAvailable) && ((product.inventory && product.stock) > 0 || !product.inventory)
-        button.btn.btn--secondary.w-100.add
-          i.fas.fa-cart-plus
-          | #{' '}
-          | Agregar
+        .absolute.w-100c2.ab-1
+          if (product.publish && product.isAvailable) && ((product.inventory && product.stock) > 0 || !product.inventory)
+            button.btn.btn--secondary.w-100.add
+              i.fas.fa-cart-plus
+              | #{' '}
+              | Agregar
+          else
+            a.btn.btn--secondary-500.w-100.ab-0(href='/'+store.slug+'/productos/'+product.sku) Ver
       else
-        a.btn.btn--secondary-0-500.w-100.ab-0(href='/'+store.slug+'/productos/'+product.sku) Ver
+        .mb-4
+        .absolute.w-100c2.ab-1
+          a.btn.btn--secondary.w-100.ab-0(href='/'+store.slug+'/productos/'+product.sku) Ver
 
 doctype html
 html(lang='es')

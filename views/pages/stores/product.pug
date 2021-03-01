@@ -1,21 +1,25 @@
 extends ../../layout_store
 
 mixin product(product)
-  if !(product.publish && product.isAvailable)
-    .msg.mb-1.error
-      i.fas.fa-exclamation-triangle
-      | #{' '}
-      | No disponible
-  else if product.inventory && product.stock == 0
-    .msg.mb-1.error
-      i.fas.fa-exclamation-triangle
-      | #{' '}
-      | Agotado
-  else if product.inventory && product.stock < 10
-    .msg.mb-1.alert
-      i.fas.fa-info-circle
-      | #{' '}
-      | Pocas unidades
+  //- remover en vitrina
+  if !store.showcase
+
+    if !(product.publish && product.isAvailable)
+      .msg.mb-1.error
+        i.fas.fa-exclamation-triangle
+        | #{' '}
+        | No disponible
+    else if product.inventory && product.stock == 0
+      .msg.mb-1.error
+        i.fas.fa-exclamation-triangle
+        | #{' '}
+        | Agotado
+    else if product.inventory && product.stock < 10
+      .msg.mb-1.alert
+        i.fas.fa-info-circle
+        | #{' '}
+        | Pocas unidades
+
   h2.t-primary #{product.name}
   .mt-1.small
     if (product.brandText)
@@ -30,37 +34,38 @@ mixin product(product)
     a(href=`https://twitter.com/share?text=${product.name}&amp;url=${appCnf.url.site}${originalUrl}` _target='_blank' title='Compartir en twitter' rel="noopener")
       i.fab.fa-twitter
   .hr.mh-1
-
-  .flex
-    .small.t-primary.mr-5
-      | PRECIO:
-    .social.t-secondary
-      | #{formatMoney(product.price)}
-      .message
-  .t-action.small.mb-1
-    if product.inventory
-      if product.stock == 0
-        | Agotado
-      else if product.stock < 10
-        | En stock, Pocas unidades
+  //- remover en vitrina
+  if !store.showcase
+    .flex
+      .small.t-primary.mr-5
+        | PRECIO:
+      .social.t-secondary
+        | #{formatMoney(product.price)}
+        .message
+    .t-action.small.mb-1
+      if product.inventory
+        if product.stock == 0
+          | Agotado
+        else if product.stock < 10
+          | En stock, Pocas unidades
+        else
+          | En stock
       else
         | En stock
-    else
-      | En stock
-  if (product.publish && product.isAvailable) && ((product.inventory && product.stock) > 0 || !product.inventory)
-    .quantity.flex.mt-1
-      .box-controls.flex
-        button.btn.btn--primary.small.mr-0-5.minus
-          i.fas.fa-minus
-          span.out-screen Disminuir cantidad
-        .value.w-48p.mr-0-5.tc.b.p-0-25.br-1.rd-0-2.h-100(id='value_'+product.sku)
-          | 0
-        button.btn.btn--primary.small.mr-0-5.plus
-          i.fas.fa-plus
-          span.out-screen Aumentar cantidad
-      button.btn.btn--primary.small.add AÑADIR AL CARRITO
-  if (_.get(product, 'digital.is'))
-    .remark.info.mh-1 Producto de transmisión por internet
+    if (product.publish && product.isAvailable) && ((product.inventory && product.stock) > 0 || !product.inventory)
+      .quantity.flex.mt-1
+        .box-controls.flex
+          button.btn.btn--primary.small.mr-0-5.minus
+            i.fas.fa-minus
+            span.out-screen Disminuir cantidad
+          .value.w-48p.mr-0-5.tc.b.p-0-25.br-1.rd-0-2.h-100(id='value_'+product.sku)
+            | 0
+          button.btn.btn--primary.small.mr-0-5.plus
+            i.fas.fa-plus
+            span.out-screen Aumentar cantidad
+        button.btn.btn--primary.small.add AÑADIR AL CARRITO
+    if (_.get(product, 'digital.is'))
+      .remark.info.mh-1 Producto de transmisión por internet
   .product-description.mt-2.mb-2
     | !{product.shortDescription.replace("\n",'<br>')}
 
@@ -226,7 +231,7 @@ block content
             brandText: product.brandText,
             price: product.price,
             store: store.slug
-          }) 
+          })
           style='top: 100px')
           +product(product)
 
