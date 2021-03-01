@@ -15,7 +15,7 @@ module.exports = (req, res, next) => {
     },
     store: ['validate', (_results, cb) => {
       models.Store
-        .findOne({ _id: req.params.storeID, userID: req.user._id })
+        .findOne(adminQuery)
         .exec(cb);
     }],
     check: ['store', (results, cb) => {
@@ -32,7 +32,7 @@ module.exports = (req, res, next) => {
     }],
     check2: ['query', (results, cb) => {
       if (!results.query) {
-        errors.push(adminQuery);
+        errors.push({ field: 'categories', msg: 'No existe la Categoría.' });
       }
       if (errors.length) {
         return cb(listErrors(400, null, errors));
