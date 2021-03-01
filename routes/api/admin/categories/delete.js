@@ -41,18 +41,17 @@ module.exports = (req, res, next) => {
     }],
     productsToNull: ['check2', (results, cb) => {
       models.Product
-        .update({ categoryID: req.params.categoryID }, { categoryID: null }, { multi: true })
+        .updateMany({ categoryID: req.params.categoryID }, { categoryID: null })
         .exec(cb);
     }],
     categoryToNull: ['check2', (results, cb) => {
       models.Category
-        .update({ categoryID: req.params.categoryID }, { categoryID: null }, { multi: true })
+        .updateMany({ categoryID: req.params.categoryID }, { categoryID: null })
         .exec(cb);
     }],
     delete: ['check2', (results, cb) => {
-      models.Category
-        .findByIdAndDelete(req.params.categoryID)
-        .exec(cb);
+      results.query
+        .remove(cb);
     }],
     fix: ['delete', (results, cb) => {
       treeSlugCategory({ storeID: req.params.storeID }, cb);

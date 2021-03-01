@@ -39,6 +39,15 @@ function preUpdate(result, next) {
 }
 
 schema.post('validate', preUpdate);
+
+schema.post('remove', (result) => {
+  client.del(`__category__${result._id}`);
+  client.del(`__category_tree__${result.storeID}`);
+  if (result.slugLong) {
+    client.del(`__category__${result.storeID}__${result.slugLong}`);
+  }
+});
+
 schema.index({ storeID: 1, categoryID: 1, slug: 1 }, { unique: true });
 const Model = mongoose.model(`${appCnf.dbPrefix}categories`, schema);
 
