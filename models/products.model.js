@@ -176,6 +176,10 @@ const schema = new mongoose.Schema({
       problem: Boolean,
     },
   },
+  amzUrl: {
+    type: String,
+    trim: true,
+  },
 }, { timestamps: true });
 
 function preUpdate(result, next) {

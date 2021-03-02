@@ -28,7 +28,8 @@
         "lang": true,
         "configStore": true,
         "AWS": true,
-        "redisMiddleware": true
+        "redisMiddleware": true,
+        "document": true
     },
     "rules": {
         "max-len": ["error", {

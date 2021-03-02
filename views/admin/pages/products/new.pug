@@ -1,6 +1,32 @@
 extends ../../layout-edit-cmp
 
 block edit
+  if store.aws
+    form.validate-rest(
+      id="updateProfileForm"
+      action=`${appCnf.url.api}amz/name`
+      method="post"
+      data-post='amz'
+      data-error="#form-results")
+      .white.br-1.rd-0-2.p-3.mb-2
+        .msg.error#form-results
+        .row
+          .col-xs-12
+            .big.b
+              | TRM:
+              | #{' '}
+              span.b.t-secondary #{formatMoney(_.get(appCnf.site, 'trm.cop') || 0)}
+          .col-xs-12
+            .form-group
+              .form-control
+                textarea.input#url(name="url" placeholder=' ' rows=5)
+                label(for='url') URL Amazon de EU
+
+        .row
+          .col-xs-12.tr
+            button.btn.btn--primary.w-100-xs.mt-2-xs(type="submit") Traer de Amazon
+
+
   form.validate-rest(
     id="updateProfileForm"
     action=`${appCnf.url.api}admin/stores/${store._id}/products`
@@ -11,6 +37,7 @@ block edit
       .msg.error#form-results
       .row
         .col-xs-12
+          input.input#amzUrl(type="hidden" name="amzUrl")
           .form-group
             .form-control
               label.switch

@@ -73,6 +73,15 @@ const schema = new mongoose.Schema({
       trim: true,
     },
   },
+  trm: {
+    date: {
+      type: String,
+      trim: true,
+    },
+    cop: {
+      type: Number,
+    },
+  },
 }, { timestamps: true });
 
 function preUpdate(result, next) {
