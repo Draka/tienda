@@ -59,7 +59,15 @@ exports.getUrlPage = (url, cb) => {
           }
         },
         amz: ['trm', async (_results) => {
-          const browser = await puppeteer.launch();
+          const browser = await puppeteer.launch({
+            headless: true,
+            args: [
+              '--disable-gpu',
+              '--disable-dev-shm-usage',
+              '--no-sandbox',
+              '--disable-setuid-sandbox',
+            ],
+          });
           const page = await browser.newPage();
           await page.goto(url);
           let title = await page.evaluate(() => document.title);
