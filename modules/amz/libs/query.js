@@ -4,7 +4,8 @@
 
 const https = require('https');
 const cheerio = require('cheerio');
-const puppeteer = require('puppeteer');
+const puppeteer = require('puppeteer-extra');
+const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 
 exports.getUrlPage = (url, cb) => {
   const key = `__url_amz__${url}`;
@@ -59,6 +60,7 @@ exports.getUrlPage = (url, cb) => {
           }
         },
         amz: ['trm', async (_results) => {
+          puppeteer.use(StealthPlugin());
           const browser = await puppeteer.launch({
             headless: true,
             args: [

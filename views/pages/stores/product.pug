@@ -178,7 +178,7 @@ block content
           if (product.imagesSizes.length > 1)
             .mt-1.flex.oa
               each image in product.imagesSizes
-                .p-0-5.white.br-1.rd-0-2.mr-1
+                .p-0-5.white.br-1.rd-0-2.mr-1.hand.scroll-click(data-target='.carousel-list')
                   +img(product.name, image, ['96x96_jpg', '196x196_jpg'], 'h-96p')
 
         .show-xs.white.br-1.rd-0-2.p-1.mt-1
@@ -194,9 +194,19 @@ block content
         .white.br-1.rd-0-2.p-1.mt-1
           .t-primary.title
             | Compra
-          ul.list-ul.mt-0-5
-            li Una vez que se ha enviado su producto, generalmente demora de 2 a 5 días hábiles en ciudades principales.
-            li Puede pedir devolver su pago hasta 14 días después de la compra y que su producto no haya llegado o no sea lo que ha pedido.
+          ul.mt-0-5
+            if _.get(store,'messages.deliveryTime')
+              li !{_.get(store,'messages.deliveryTime')}
+            else
+              li Una vez que se ha enviado su producto, generalmente demora de 2 a 5 días hábiles en ciudades principales.
+
+            if _.get(store,'messages.rightOfWithdrawal')
+              li !{_.get(store,'messages.rightOfWithdrawal')}
+            else
+              li Puede pedir devolver su pago hasta 14 días después de la compra y que su producto no haya llegado o no sea lo que ha pedido.
+
+            if _.get(store,'messages.warranty')
+              li !{_.get(store,'messages.warranty')}
 
         .white.br-1.rd-0-2.p-1.mt-1
           .t-primary.title

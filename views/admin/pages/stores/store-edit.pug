@@ -10,6 +10,7 @@ block edit
       a.item(data-tab='#p2') Datos Principales
       a.item(data-tab='#p3') Descripción
       a.item(data-tab='#p4') Región
+      a.item(data-tab='#p5') Mensajes
 
     .tabs-content
       .tab.active#p1
@@ -166,6 +167,33 @@ block edit
                 .form-control
                   input.input#primaryActivity(type="text" name="primaryActivity" placeholder='Restaurantes, Transporte, Servicios...' required value=store.primaryActivity)
                   label(for='primaryActivity') Actividad primaria
+
+          .row
+            .col-xs-12.tr
+              button.btn.btn--primary.w-100-xs(type="submit") Guardar Cambios
+
+      .tab#p5
+        form.validate-rest(
+          action=`${appCnf.url.api}admin/stores/${store._id}`
+          method="put"
+          data-ok='Cambios guardados'
+          data-ok-color='action'
+          data-error="#form-results"
+        )
+          .row
+            .col-xs-12
+              .form-group
+                .form-control
+                  textarea.input#deliveryTime(name="messages.deliveryTime" placeholder=' ' rows=8) #{_.get(store,'messages.deliveryTime')}
+                  label(for='deliveryTime') Tiempo de entrega
+              .form-group
+                .form-control
+                  textarea.input#rightOfWithdrawal(name="messages.rightOfWithdrawal" placeholder=' ' rows=8) #{_.get(store,'messages.rightOfWithdrawal')}
+                  label(for='rightOfWithdrawal') Derecho al retracto
+              .form-group
+                .form-control
+                  textarea.input#warranty(name="messages.warranty" placeholder=' ' rows=8) #{_.get(store,'messages.warranty')}
+                  label(for='warranty') Garantía
 
           .row
             .col-xs-12.tr

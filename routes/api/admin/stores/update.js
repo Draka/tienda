@@ -26,6 +26,7 @@ module.exports = (req, res, next) => {
     'primaryActivity',
     'showcase',
     'mode',
+    'messages',
   ]);
   if (req.body.lat && req.body.lng) {
     body['location.type'] = 'Point';

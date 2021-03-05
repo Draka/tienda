@@ -69,4 +69,4 @@ package-lock.json
 tmp/
 .DS_Store
 *.bak
-
+public/m*.png

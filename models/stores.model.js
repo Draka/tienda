@@ -180,6 +180,20 @@ const schema = new mongoose.Schema({
       alert: Boolean,
     },
   },
+  messages: {
+    deliveryTime: {
+      type: String,
+      trim: true,
+    },
+    rightOfWithdrawal: {
+      type: String,
+      trim: true,
+    },
+    warranty: {
+      type: String,
+      trim: true,
+    },
+  },
 }, { timestamps: true });
 
 function preUpdate(result, next) {

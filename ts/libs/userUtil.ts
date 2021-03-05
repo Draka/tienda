@@ -13,6 +13,16 @@ export class Util {
     this.getApi = new GetApi(this.session.token);
     this.lazy();
     this.showDetailOrder();
+    this.scrollClick();
+  }
+
+  scrollClick() {
+    $('.scroll-click').on('click', (event) => {
+      const $el = $(event.currentTarget);
+      const pl = $($el.data('target'));
+      const ll = pl.find('> ul li').first().width();
+      pl.scrollLeft(ll * $el.index());
+    });
   }
 
   lazy() {
