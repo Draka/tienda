@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+
 require('./constants');
 global.appCnf = require('./appCnf');
 

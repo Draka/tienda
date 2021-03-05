@@ -149,27 +149,6 @@ exports.store = (id, cb) => {
   });
 };
 
-// Todas las areas de cobertura de una tienda
-exports.coveragesAreas = (storeID, cb) => {
-  const key = `__coverages-areas__${storeID}`;
-  client.get(key, (_err, reply) => {
-    if (reply && process.env.NODE_ENV === 'production') {
-      cb(null, JSON.parse(reply));
-    } else {
-      models.CoverageArea
-        .find({ storeID })
-        .lean()
-        .exec((err, doc) => {
-          if (err) {
-            return cb(err);
-          }
-          client.set(key, JSON.stringify(doc), 'EX', 3600);
-          cb(null, doc);
-        });
-    }
-  });
-};
-
 exports.place = (id, cb) => {
   const key = `__place__${id}`;
   client.get(key, (_err, reply) => {

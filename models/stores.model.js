@@ -54,7 +54,7 @@ const schema = new mongoose.Schema({
     default: false,
     index: true,
   },
-  aws: {
+  amz: {
     type: Boolean,
     default: false,
   },

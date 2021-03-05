@@ -1,7 +1,7 @@
 extends ../../layout-edit-cmp
 
 block edit
-  if store.aws
+  if store.amz
     form.validate-rest(
       id="updateProfileForm"
       action=`${appCnf.url.api}amz/name`
@@ -12,19 +12,15 @@ block edit
         .msg.error#form-results
         .row
           .col-xs-12
-            .big.b
-              | TRM:
-              | #{' '}
-              span.b.t-secondary #{formatMoney(_.get(appCnf.site, 'trm.cop') || 0)}
-          .col-xs-12
             .form-group
               .form-control
-                textarea.input#url(name="url" placeholder=' ' rows=5)
-                label(for='url') URL Amazon de EU
+                textarea.input#url(name="url" placeholder=' ' rows=7)
+                label(for='url') URL Amazon de EEUU
 
         .row
           .col-xs-12.tr
             button.btn.btn--primary.w-100-xs.mt-2-xs(type="submit") Traer de Amazon
+
 
 
   form.validate-rest(
@@ -35,9 +31,62 @@ block edit
     data-error="#form-results")
     .white.br-1.rd-0-2.p-3
       .msg.error#form-results
+
+      if store.amz
+        .row
+          .col-xs-12
+            input.input#amzUrl(type="hidden" name="amz.url")
+
+            input.input#urlFiles(type="hidden" name="urlFiles")
+            input.input#inventory(type="hidden" name="inventory")
+            input.input#stock(type="hidden" name="stock")
+
+
+        .row
+          .col-xs-12
+            .form-group.flex
+              .form-control
+                input.input.tr.b.t-secondary#amzTrm(type="number" name="amz.trm" placeholder=' ' value=_.get(appCnf.site, 'trm.cop') || 0 readonly=true)
+                label(for='amzTrm') TRM
+              .form-control.pl-1
+                input.input.tr#amzUsd(type="number" name="amz.usd" placeholder=' ' value=0 step=".01")
+                label(for='amzUsd') USD
+            .form-group.flex
+              .form-control
+                input.input.tr#amzIncPrice(type="number" name="amz.incPrice" placeholder=' ' value=10)
+                label(for='amzIncPrice') Incremento Precio (%)
+              .form-control.pl-1
+                input.input.tr#amzIncWeight(type="number" name="amz.incWeight" placeholder=' ' value=12000)
+                label(for='amzIncWeight') Incremento Peso
+              .form-control.pl-1
+                input.input.tr#amzIncDimensions(type="number" name="amz.incDimensions" placeholder=' ' value=12000)
+                label(for='amzIncDimensions') Incremento Volumen
+
+            .form-group.flex
+              .form-control
+                input.input.tr#weight(type="number" name="weight" placeholder=' ' min=0 value=0)
+                label(for='weight') Peso (en gramos)
+              .b (g)
+            .form-group.flex
+              .form-control
+                input.input.tr#length(type="number" name="length" placeholder=' ' min=0 value=0)
+                label(for='length') Largo (en centímetros)
+              .b (cm) &times;
+              .form-control.pl-1
+                input.input.tr#height(type="number" name="height" placeholder=' ' min=0 value=0)
+                label(for='height') Altura (en centímetros)
+              .b (cm) &times;
+              .form-control.pl-1
+                input.input.tr#width(type="number" name="width" placeholder=' ' min=0 value=0)
+                label(for='width') Ancho (en centímetros)
+              .b (cm)
+
       .row
         .col-xs-12
-          input.input#amzUrl(type="hidden" name="amzUrl")
+          .hr.mh-2
+
+      .row
+        .col-xs-12
           .form-group
             .form-control
               label.switch
@@ -74,6 +123,10 @@ block edit
             .small No más de 160 caracteres. Lleva #{' '}
               spam#count-short-description
               | #{' '}caracteres
+          .form-group.ph-1
+            .subtitle.mb-0-5 Descripción larga
+            .form-control
+              textarea.cke-user#longDescription(name="longDescription" placeholder=' ' rows=10)
 
       .row
         .col-xs-12.tr

@@ -176,9 +176,26 @@ const schema = new mongoose.Schema({
       problem: Boolean,
     },
   },
-  amzUrl: {
-    type: String,
-    trim: true,
+  amz: {
+    url: {
+      type: String,
+      trim: true,
+    },
+    incPrice: {
+      type: Number,
+    },
+    incWeight: {
+      type: Number,
+    },
+    incDimensions: {
+      type: Number,
+    },
+    trm: {
+      type: Number,
+    },
+    usd: {
+      type: Number,
+    },
   },
 }, { timestamps: true });
 

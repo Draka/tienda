@@ -11,6 +11,7 @@ declare global {
 
 new Edit();
 new Util();
+Amz.actions();
 
 window.showMsg = ShowMsg.show;
 window.amz = Amz.putName;

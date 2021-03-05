@@ -3,7 +3,11 @@
 /* eslint-disable max-len */
 declare const L: any;
 declare const ClassicEditor: any;
-
+declare global {
+  // eslint-disable-next-line camelcase
+  interface Window { ckeditors: any}
+}
+window.ckeditors = [];
 export class Edit {
   itemsAdmin = [
     'heading',
@@ -294,6 +298,7 @@ export class Edit {
         ClassicEditor
           .create(el, options)
           .then((editor) => {
+            window.ckeditors.push(editor);
             editor.model.document.on('change:data', () => {
               $(el).val(editor.getData());
             });

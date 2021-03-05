@@ -67,8 +67,7 @@ block edit
         form.validate-rest(
           action=`${appCnf.url.api}admin/stores/${store._id}/products/${item._id}`
           method="put"
-          data-ok='Cambios guardados'
-          data-ok-color='action'
+          data-page=`/administracion/tiendas/${store._id}/productos/${item._id}`
           data-error="#form-results"
         )
           .row

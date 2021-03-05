@@ -8,7 +8,7 @@ const sqs = new AWS.SQS({
 
 module.exports = (data, user, cb) => {
   if (process.env.NODE_ENV !== 'production') {
-    return cb();
+    // return cb();
   }
   async.auto({
     sqs: (cb) => {

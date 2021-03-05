@@ -1,5 +1,6 @@
 const query = require('../../../../libs/query.lib');
 const { checkProduct } = require('../../../../modules/site/libs/check-store.lib');
+const { imageToS3 } = require('../../../../libs/image.lib');
 
 module.exports = (req, res, next) => {
   const errors = [];
@@ -27,7 +28,7 @@ module.exports = (req, res, next) => {
     'length',
     'height',
     'width',
-    'amzUrl',
+    'amz',
   ]);
   const adminQuery = {
     _id: req.params.storeID,
@@ -94,6 +95,29 @@ module.exports = (req, res, next) => {
       } else {
         product.save(cb);
       }
+    }],
+    urlFile: ['create', (results, cb) => {
+      if (!req.body.urlFiles) {
+        return cb();
+      }
+      req.body.urlFiles = req.body.urlFiles.split('\n');
+
+      async.eachLimit(req.body.urlFiles, 10, (urlImg, cb) => {
+        urlImg = _.trim(urlImg);
+        if (!urlImg) {
+          return cb();
+        }
+        let cimg;
+        do {
+          cimg = _.random(10000, 99999);
+        } while (results.create.images.indexOf(cimg) !== -1);
+        results.create.images.push(cimg);
+        const pathImg = `${req.params.storeID}/products/${results.create._id}/${cimg}`;
+        imageToS3(pathImg, urlImg, null, global.imagesSizes, true, 'contain', cb);
+      }, (err) => {
+        if (err) return cb(err);
+        results.create.save(cb);
+      });
     }],
   }, (err, results) => {
     if (err) {

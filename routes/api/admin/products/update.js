@@ -31,7 +31,7 @@ module.exports = (req, res, next) => {
     'length',
     'height',
     'width',
-    'amzUrl',
+    'amz',
   ]);
   const adminQuery = {
     _id: req.params.storeID,

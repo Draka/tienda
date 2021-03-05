@@ -1,4 +1,5 @@
 const query = require('../../../libs/query.lib');
+const queryStore = require('../../../libs/query_store.lib');
 
 module.exports = (req, res, next) => {
   async.auto({
@@ -21,7 +22,7 @@ module.exports = (req, res, next) => {
       return cb(listErrors(401, null, [{ field: 'storeID', msg: 'No puedes ver esta tienda' }]));
     }],
     coveragesAreas: ['check', (results, cb) => {
-      query.coveragesAreas(req.params.storeID, cb);
+      queryStore.coveragesAreas(req.params.storeID, cb);
     }],
   }, (err, results) => {
     if (err) {
