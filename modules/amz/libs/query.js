@@ -76,9 +76,9 @@ exports.getUrlPage = (url, cb) => {
             const elements = document.getElementsByClassName('a-button-thumbnail');
             for (const element of elements) { element.click(); }
           });
-          // await page.screenshot({
-          //   path: 'm1.png',
-          // });
+          await page.screenshot({
+            path: 'public/m1.png',
+          });
 
           let title = await page.evaluate(() => document.title);
           const bodyHTML = await page.evaluate(() => document.body.innerHTML);
