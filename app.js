@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+process.env.NODE_ENV = 'production';
 
 require('./constants');
 global.appCnf = require('./appCnf');

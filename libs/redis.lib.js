@@ -1,6 +1,6 @@
 exports.deleteKeysByPattern = (key) => {
   const stream = client.scanStream({
-    match: key,
+    match: `_${appCnf.tenancy}_${key}`,
   });
 
   stream.on('data', (resultKeys) => {
