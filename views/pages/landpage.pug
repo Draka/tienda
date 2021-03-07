@@ -25,29 +25,35 @@ block content
           .p-3.mh-5.a-black-20.rd-0-5
             .bigx2.b-category #{_.get(appCnf, 'site.name')}
             .subtitle.b El espacio para que des a conocer los productos de tu emprendimiento
-  if stores.length
-    .container
-      h2.b.t-primary.tc.mt-2 Nuestras tiendas
-      .hr.mt-1.mb-2
-      .row.justify-content-center
-        .col-sm-10.col-md-8
-          .row
-            each store in stores
-              .col-xs-6.col-md-4.ph-1.pw-1-xs.mw-1-sm
-                .relative.br-1.p-1.pb-3.h-100.brt-10.rd-0-5.white
-                  .tc
-                    a(href=`/${store.slug}`)
-                      +img(`Logo de la tienda ${store.name}`, _.get(store, 'imageSizes.logo'))
-                  .title.mt-0-5.b #{store.name}
-                  .subtitle.pb-1 #{store.slogan}
-                  //- each contact in store.contacts
-                  //-   if contact.slug == 'whatsapp'
-                  //-     a(href=`https://wa.me/${contact.value}?text=Hola, ${store.name} quisiera saber más de tus productos.` title='Whatsapp' target='_blank')
-                  //-       .flex.mb-1
-                  //-         i.fab.fa-whatsapp
-                  //-         .b.ml-0-5 #{contact.value}
-                  .absolute.bottom.tc.pb-1.w-100c2
-                    a.btn.btn--secondary.w-100(href=`/${store.slug}`) Visitar
+  .container
+    h2.b.t-primary.tc.mt-2 Nuestras tiendas
+    .hr.mt-1.mb-2
+    .row.justify-content-center
+      .col-sm-10.col-md-8
+        .row
+          .col-md-12.big
+            form.flex(class="search" action=`/tiendas/buscar`)
+              label.out-screen(for='query-d') Buscar
+              input#query-d.input--simple.w-100.rdtl-50.rdbl-50.ph-0-25.pw-1(type="text" name="q" placeholder='Buscar tiendas' required value=q)
+              button.btn.btn--secondary
+                i.fas.fa-search
+                span.out-screen Buscar tiendas
+        each item in items
+          if item.stores.length
+            .row
+              .col-md-12
+                h2.b.t-primary.mt-1 #{item.activity}
+                .hr.mt-1
+              each store in item.stores
+                .col-xs-6.col-md-4.ph-1.pw-1-xs.mw-1-sm
+                  .relative.br-1.p-1.pb-3.h-100.brt-10.rd-0-5.white
+                    .tc
+                      a(href=`/${store.slug}`)
+                        +img(`Logo de la tienda ${store.name}`, _.get(store, 'imageSizes.logo'))
+                    .title.mt-0-5.b #{store.name}
+                    .subtitle.pb-1 #{store.slogan}
+                    .absolute.bottom.tc.pb-1.w-100c2
+                      a.btn.btn--secondary.w-100(href=`/${store.slug}`) Visitar
 
   include ../fragments/landpage-invite.pug
 

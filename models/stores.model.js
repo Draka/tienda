@@ -1,4 +1,6 @@
 /* eslint-disable no-param-reassign */
+const { deleteKeysByPattern } = require('../libs/redis.lib');
+
 const schema = new mongoose.Schema({
   userID: {
     type: mongoose.Schema.Types.ObjectId,
@@ -143,6 +145,12 @@ const schema = new mongoose.Schema({
   primaryActivity: {
     type: String,
     trim: true,
+    enum: global.activities,
+    default: _.last(global.activities),
+  },
+  secondaryActivity: {
+    type: String,
+    trim: true,
   },
   problems: {
     imageLogo: {
@@ -197,11 +205,9 @@ const schema = new mongoose.Schema({
 }, { timestamps: true });
 
 function preUpdate(result, next) {
-  client.del('__stores__');
-  client.del(`__store__${result._id}`);
+  deleteKeysByPattern('__store*');
   if (result.slug) {
     result.slug = _.kebabCase(_.deburr(result.slug));
-    client.del(`__store__${result.slug}`);
   }
   if (result.name && !result.slug) {
     result.slug = _.kebabCase(_.deburr(result.name));

@@ -36,8 +36,15 @@ block edit
             label.nowrap(for='town') Municipio
         .form-group
           .form-control
-            input.input#primaryActivity(type="text" name="primaryActivity" placeholder='Restaurantes, Transporte, Servicios...' required)
-            label(for='primaryActivity') Actividad primaria
+            select.input#primaryActivity(name='primaryActivity' required data-target='#town')
+              option(value='') --
+              each activity in activities
+                option(value=activity) #{activity}
+            label.nowrap(for='primaryActivity') Actividad primaria
+        .form-group
+          .form-control
+            input.input#secondaryActivity(type="text" name="secondaryActivity" placeholder=' ' required)
+            label(for='secondaryActivity') Actividad secundaria
     .row
       .col-xs-12.tr
         button.btn.btn--primary.w-100-xs.mt-2-xs(type="submit") Crear Tienda

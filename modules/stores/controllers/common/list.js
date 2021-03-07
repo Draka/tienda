@@ -1,12 +1,12 @@
-const { putS3LogoPath } = require('../../libs/put_s3_path.lib');
-const queryStore = require('../../libs/query_store.lib');
+const { putS3LogoPath } = require('../../../../libs/put_s3_path.lib');
+const queryStore = require('../../../../libs/query_store.lib');
 
 module.exports = (req, res, next) => {
   async.auto({
-    user: (cb) => {
-      cb(null, req.user);
+    validate: (cb) => {
+      cb();
     },
-    items: ['user', (results, cb) => {
+    items: ['validate', (results, cb) => {
       async.mapLimit(global.activities, 10, (activity, cb) => {
         async.auto({
           activity: (cb) => {
@@ -22,19 +22,35 @@ module.exports = (req, res, next) => {
         }, cb);
       }, cb);
     }],
-
   }, (err, results) => {
     if (err) {
       return next(err);
     }
 
-    res.render('pages/landpage.pug', {
+    const breadcrumbs = [
+      {
+        link: '/',
+        text: 'Inicio',
+      },
+      {
+        link: '/tiendas',
+        text: 'Tiendas',
+        active: true,
+      },
+    ];
+
+    const item = {
+      seo: 'Lista de tiendas disponibles para visitar y comprar',
+    };
+
+    res.render('../modules/stores/views/common/list.pug', {
       session: req.user,
-      user: results.user,
+      item,
       items: results.items,
-      title: _.get(appCnf, 'site.title'),
-      menu: 'index',
+      title: 'Tiendas',
+      breadcrumbs,
       js: 'page',
+      q: req.query.q,
     });
   });
 };

@@ -63,6 +63,8 @@ exports.getUrlPage = (url, cb) => {
           puppeteer.use(StealthPlugin());
           const browser = await puppeteer.launch({
             headless: true,
+            userDataDir: './tmp',
+            defaultViewport: { width: 1920, height: 1080 },
             args: [
               '--disable-gpu',
               '--disable-dev-shm-usage',
@@ -72,81 +74,116 @@ exports.getUrlPage = (url, cb) => {
             ],
           });
           const page = await browser.newPage();
+          // await page.setDefaultNavigationTimeout(0);
           await page.goto(url);
           await page.once('load');
-          await page.evaluate(() => {
-            const elements = document.getElementsByClassName('a-button-thumbnail');
-            for (const element of elements) { element.click(); }
-          });
-          await page.screenshot({
-            path: 'public/m1.png',
-          });
 
-          let title = await page.evaluate(() => document.title);
-          const bodyHTML = await page.evaluate(() => document.body.innerHTML);
-          const $ = cheerio.load(bodyHTML);
+          const text = '33122';
+          try {
+            await page.waitForFunction(
+              (text) => document.querySelector('body').innerText.includes(text),
+              {},
+              text,
+            );
+          } catch (e) {
+            await page.evaluate(() => {
+              document.getElementById('nav-global-location-data-modal-action').click();
+            });
 
-          // precio
-          let price = $('#price #priceblock_ourprice').text() || '0';
-          price = parseFloat(_.trim(price.replace('$', '').replace('US', '')));
-          // titulo
-          title = _.trim(_.get(_.split(title, ':'), '1'));
-          // marca
-          let brandText = _.trim($('#bylineInfo').text().replace(/(Visita la tienda de)|(Marca:)/, ''));
-          // descripción
-          const longDescription = `<ul>${$('#feature-bullets').find('ul').html()}</ul>`;
-          // imagenes
-          const images = [];
-          $('#main-image-container').find('ul li.image img').each((i, img) => {
-            images.push($(img).attr('src').replace(/._.*_/, ''));
-          });
-          // dimensiones
-          const details = [];
-          $('#productDetails_detailBullets_sections1').find('tr').each((i, obj) => {
-            details.push(_.trim($(obj).text()));
-          });
-          $('#productDetails_techSpec_section_1').find('tr').each((i, obj) => {
-            details.push(_.trim($(obj).text()));
-          });
-          let dimensions = [0, 0, 0];
-          let weight = 0;
-          _.each(details, (d) => {
-            if (d.search(/dimensiones del producto/i) >= 0) {
-              dimensions = _.trim(_.first(_.last(d.split('\n')).split(';')));
-              if (dimensions.search('pulgadas') >= 0) {
-                dimensions = dimensions.replace(/pulgadas/i, '').split('x').map((d) => Math.ceil(parseFloat(_.trim(d)) * 2.54));
-              } else {
-                dimensions = [0, 0, 0];
+            await page.waitForSelector('#GLUXZipUpdateInput');
+            await page.type('#GLUXZipUpdateInput', '33122', { delay: 20 });
+            await page.click('#GLUXZipUpdate input');
+
+            await page.evaluate(() => document.querySelector('#GLUXConfirmClose').click());
+          }
+
+          try {
+            await page.evaluate(() => {
+              const elements = document.getElementById('altImages').getElementsByClassName('a-button-thumbnail');
+              for (const element of elements) { element.click(); }
+            });
+
+            let title = await page.evaluate(() => document.title);
+            const bodyHTML = await page.evaluate(() => document.body.innerHTML);
+            const $ = cheerio.load(bodyHTML);
+            await page.screenshot({
+              path: 'public/m1.png',
+            });
+
+            // precio
+            let price = $('#price #priceblock_ourprice').text() || '0';
+            price = parseFloat(_.trim(price.replace('$', '').replace('US', '')));
+            // titulo
+            title = _.trim(_.get(_.split(title, ':'), '1'));
+            // marca
+            let brandText = _.trim($('#bylineInfo').text().replace(/(Visita la tienda de)|(Marca:)/, ''));
+            // descripción
+            const longDescription = `<ul>${$('#feature-bullets').find('ul').html()}</ul>`;
+            // imagenes
+            const images = [];
+            $('#main-image-container').find('ul li.image img').each((i, img) => {
+              images.push($(img).attr('src').replace(/._.*_/, ''));
+            });
+            // dimensiones
+            const details = [];
+            $('#productDetails_detailBullets_sections1').find('tr').each((i, obj) => {
+              details.push(_.trim($(obj).text()));
+            });
+            $('#productDetails_techSpec_section_1').find('tr').each((i, obj) => {
+              details.push(_.trim($(obj).text()));
+            });
+            let dimensions = [0, 0, 0];
+            let weight = 0;
+            _.each(details, (d) => {
+              if (d.search(/dimensiones del producto/i) >= 0) {
+                dimensions = _.trim(_.first(_.last(d.split('\n')).split(';')));
+                if (dimensions.search('pulgadas') >= 0) {
+                  dimensions = dimensions.replace(/pulgadas/i, '').split('x').map((d) => Math.ceil(parseFloat(_.trim(d)) * 2.54));
+                } else {
+                  dimensions = [0, 0, 0];
+                }
               }
-            }
-            if (d.search(/peso del producto/i) >= 0) {
-              weight = _.trim(_.last(d.split('\n')));
-              if (weight.search('pounds') >= 0) {
-                weight = Math.ceil(parseFloat(_.trim(weight.replace(/pounds/i, ''))));
-              } else if (weight.search('onzas') >= 0) {
-                weight = Math.ceil(parseFloat(_.trim(weight.replace(/pounds/i, ''))) / 16);
-              } else {
-                weight = 0;
+              if (d.search(/peso del producto/i) >= 0) {
+                weight = _.trim(_.last(d.split('\n')));
+                if (weight.search('pounds') >= 0) {
+                  weight = Math.ceil(parseFloat(_.trim(weight.replace(/pounds/i, ''))));
+                } else if (weight.search('onzas') >= 0) {
+                  weight = Math.ceil(parseFloat(_.trim(weight.replace(/pounds/i, ''))) / 16);
+                } else {
+                  weight = 0;
+                }
+                weight *= 454;
               }
-              weight *= 454;
-            }
-            if (!brandText && d.search(/fabricante/i) >= 0) {
-              brandText = _.trim(_.last(d.split('\n')));
-            }
-          });
-          await browser.close();
+              if (!brandText && d.search(/fabricante/i) >= 0) {
+                brandText = _.trim(_.last(d.split('\n')));
+              }
+            });
+            await browser.close();
 
-          return {
-            title,
-            trm: appCnf.site.trm.cop,
-            price,
-            brandText,
-            longDescription,
-            images,
-            // details,
-            dimensions,
-            weight,
-          };
+            return {
+              title,
+              trm: appCnf.site.trm.cop,
+              price,
+              brandText,
+              longDescription,
+              images,
+              // details,
+              dimensions,
+              weight,
+            };
+          } catch (e) {
+            await browser.close();
+            return {
+              title: '',
+              trm: appCnf.site.trm.cop,
+              price: 0,
+              brandText: '',
+              longDescription: '',
+              images: [],
+              dimensions: [0, 0, 0],
+              weight: 0,
+            };
+          }
         }],
       }, cb);
     }

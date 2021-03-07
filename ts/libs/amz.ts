@@ -57,8 +57,8 @@ export class Amz {
       const w = parseFloat(<string>$('#width').val());
 
       const pcop = (usd * trm) * (incPrice / 100 + 1);
-      const pw = incW * Math.ceil(we / 454);
-      const pd = ((l * h * w) / 1000) * incD;
+      const pw = (incW * trm) * Math.ceil(we / 454);
+      const pd = ((l * h * w) / 1000) * (incD * trm);
 
       const price = Math.ceil((pcop + pw + pd) / 1000) * 1000;
       $('#price').val(price);

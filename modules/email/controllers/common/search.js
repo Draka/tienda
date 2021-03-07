@@ -27,7 +27,7 @@ module.exports = (req, res, next) => {
     ];
 
     const item = {
-      seo: 'Usa el formulario de buscar o su campo de texto para navegar y encontrrar tópicos de nuestra sección de ayuda',
+      seo: 'Usa el formulario de buscar o su campo de texto para navegar y encontrar tópicos de nuestra sección de ayuda',
     };
 
     res.render('../modules/email/views/common/search.pug', {

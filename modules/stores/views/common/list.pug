@@ -1,0 +1,38 @@
+extends /modules/common/views/layout-index
+
+block view
+
+  .container
+    h1.mb-1 Nuestras tiendas
+
+  .container-fluid.white-500.ph-2
+    .container
+      .row
+        .col-md-12
+          form.flex(class="search" action=`/tiendas/buscar`)
+            label.out-screen(for='query-help') Buscar
+            input#query-help.input--simple.w-100.ph-0-5.pw-1(type="text" name="q" placeholder='Buscar tiendas' required value=q)
+            button.btn.btn--secondary
+              i.fas.fa-search
+              span.out-screen Buscar tiendas
+
+
+  .container
+    .row.justify-content-center
+      .col-sm-10.col-md-8
+        each item in items
+          if item.stores.length
+            .row
+              .col-md-12
+                h2.b.t-primary.mt-1 #{item.activity}
+                .hr.mt-1
+              each store in item.stores
+                .col-xs-6.col-md-4.ph-1.pw-1-xs.mw-1-sm
+                  .relative.br-1.p-1.pb-3.h-100.brt-10.rd-0-5.white
+                    .tc
+                      a(href=`/${store.slug}`)
+                        +img(`Logo de la tienda ${store.name}`, _.get(store, 'imageSizes.logo'))
+                    .title.mt-0-5.b #{store.name}
+                    .subtitle.pb-1 #{store.slogan}
+                    .absolute.bottom.tc.pb-1.w-100c2
+                      a.btn.btn--secondary.w-100(href=`/${store.slug}`) Visitar

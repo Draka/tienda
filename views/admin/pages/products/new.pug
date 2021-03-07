@@ -37,7 +37,6 @@ block edit
           .col-xs-12
             input.input#amzUrl(type="hidden" name="amz.url")
 
-            input.input#urlFiles(type="hidden" name="urlFiles")
             input.input#inventory(type="hidden" name="inventory")
             input.input#stock(type="hidden" name="stock")
 
@@ -56,10 +55,10 @@ block edit
                 input.input.tr#amzIncPrice(type="number" name="amz.incPrice" placeholder=' ' value=10)
                 label(for='amzIncPrice') Incremento Precio (%)
               .form-control.pl-1
-                input.input.tr#amzIncWeight(type="number" name="amz.incWeight" placeholder=' ' value=12000)
+                input.input.tr#amzIncWeight(type="number" name="amz.incWeight" placeholder=' ' value=3.5 step=".01")
                 label(for='amzIncWeight') Incremento Peso
               .form-control.pl-1
-                input.input.tr#amzIncDimensions(type="number" name="amz.incDimensions" placeholder=' ' value=12000)
+                input.input.tr#amzIncDimensions(type="number" name="amz.incDimensions" placeholder=' ' value=0 step=".01")
                 label(for='amzIncDimensions') Incremento Volumen
 
             .form-group.flex
@@ -80,6 +79,10 @@ block edit
                 input.input.tr#width(type="number" name="width" placeholder=' ' min=0 value=0)
                 label(for='width') Ancho (en centímetros)
               .b (cm)
+            .form-group
+              .form-control
+                textarea.input#urlFiles(name="urlFiles" placeholder=' ' rows=8)
+                label(for='urlFiles') URL's de imagenes
 
       .row
         .col-xs-12

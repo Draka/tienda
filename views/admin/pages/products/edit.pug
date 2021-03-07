@@ -4,8 +4,8 @@ block edit
 
   .msg.error#form-results
 
-  .white.br-1.rd-0-2.pw-2.pt-1.pb-2
-    .tabs.tabs--lines.scroll.nowrap.mb-1
+  .white.br-1.rd-0-2.pw-2.pt-1.pb-1.mb-1
+    .tabs.tabs--lines.scroll.nowrap
       //- a.item.active(data-tab='#p1') Tipo de producto
       a.item.active(data-tab='#p2') Datos Principales
       a.item(data-tab='#p3') Imágenes
@@ -13,11 +13,14 @@ block edit
       a.item(data-tab='#p5') Inventario y Disponibilidad
       a.item(data-tab='#p6') Características
       a.item(data-tab='#p7') Medidas
+      //- a.item(data-tab='#p8') Grupo
 
-    .tabs-content
-      //- .tab#p1
 
-      .tab.active#p2
+  .tabs-content
+    //- .tab#p1
+
+    .tab.active#p2
+      .white.br-1.rd-0-2.pw-2.pt-1.pb-2.mb-1
         form.validate-rest(
           action=`${appCnf.url.api}admin/stores/${store._id}/products/${item._id}`
           method="put"
@@ -63,13 +66,14 @@ block edit
             .col-xs-12.tr
               button.btn.btn--primary.w-100-xs(type="submit") Guardar Cambios
 
-      .tab#p3
-        form.validate-rest(
-          action=`${appCnf.url.api}admin/stores/${store._id}/products/${item._id}`
-          method="put"
-          data-page=`/administracion/tiendas/${store._id}/productos/${item._id}`
-          data-error="#form-results"
-        )
+    .tab#p3
+      form.validate-rest(
+        action=`${appCnf.url.api}admin/stores/${store._id}/products/${item._id}`
+        method="put"
+        data-page=`/administracion/tiendas/${store._id}/productos/${item._id}/editar`
+        data-error="#form-results"
+      )
+        .white.br-1.rd-0-2.pw-2.pt-1.pb-2.mb-1
           .row
             .col-xs-12
               .subtitle.b.mt-1 Eliminar imágenes
@@ -79,29 +83,37 @@ block edit
                   tr
                     th.b Eliminar?
                     th.b Imagen
+                    th.b(colspan=2) Orden
                 tbody
                   each image,i in item.imagesSizes
                     tr
                       td
+                        input(type="hidden" name=`images[]` value=item.images[i])
                         label.nowrap
                           input.checkbox(type="checkbox" name=`imagesDeleted[${i}]` value=item.images[i])
                           span Eliminar
                       td.w-100
                         img(src=image['96x96_jpg'])
+                      td
+                        .btn-flat.p-0-5.rd-0-2.w-2.tc.move-up
+                          i.w-100.fas.fa-long-arrow-alt-up
+                      td
+                        .btn-flat.p-0-5.rd-0-2.w-2.tc.move-down
+                          i.fas.fa-long-arrow-alt-down
 
           .row
             .col-xs-12.tr
-              button.btn.btn--primary.w-100-xs(type="submit") Eliminar imágenes seleccionadas
+              button.btn.btn--primary.w-100-xs(type="submit") Actualizar imágenes
 
 
-        form.validate(
-          id="updateProfileForm"
-          action=`${appCnf.url.api}admin/stores/${store._id}/products/${item._id}`
-          method="post"
-          enctype="multipart/form-data"
-          data-error="#form-results"
-        )
-
+      form.validate(
+        id="updateProfileForm"
+        action=`${appCnf.url.api}admin/stores/${store._id}/products/${item._id}`
+        method="post"
+        enctype="multipart/form-data"
+        data-error="#form-results"
+      )
+        .white.br-1.rd-0-2.pw-2.pt-1.pb-2.mb-1
           input(type='hidden' name='redirect' value=`/administracion/tiendas/${store._id}/productos/${item._id}/editar#p3`)
 
           .row
@@ -120,8 +132,22 @@ block edit
                   .h4.mr-1.t-action
                     i.far.fa-file-image
                   | Suba varias imágenes en formato png o jpg de máximo 10 megas de tamaño.
-              .hr.mh-1
-              .subtitle.mb-0-5 También puede copiar url de imágenes.
+          .row
+            .col-xs-12.tr
+              button.btn.btn--primary.w-100-xs.mt-2-xs(type="submit") Subir Imágenes
+
+
+      form.validate-rest(
+        action=`${appCnf.url.api}admin/stores/${store._id}/products/${item._id}`
+        method="put"
+        data-page=`/administracion/tiendas/${store._id}/productos/${item._id}`
+        data-error="#form-results"
+      )
+        .white.br-1.rd-0-2.pw-2.pt-1.pb-2.mb-1
+          .row
+            .col-xs-12
+              .subtitle.b.mt-2 También puede copiar url de imágenes.
+              .hr.mt-0-5.mb-1
               .form-group
                 .form-control
                   textarea.input.h-170p.nowrap#urlFiles(name="urlFiles" placeholder=' ')
@@ -131,7 +157,8 @@ block edit
             .col-xs-12.tr
               button.btn.btn--primary.w-100-xs.mt-2-xs(type="submit") Subir Imágenes
 
-      .tab#p4
+    .tab#p4
+      .white.br-1.rd-0-2.pw-2.pt-1.pb-2.mb-1
         form.validate-rest(
           action=`${appCnf.url.api}admin/stores/${store._id}/products/${item._id}`
           method="put"
@@ -159,7 +186,8 @@ block edit
             .col-xs-12.tr
               button.btn.btn--primary.w-100-xs(type="submit") Guardar Cambios
 
-      .tab#p5
+    .tab#p5
+      .white.br-1.rd-0-2.pw-2.pt-1.pb-2.mb-1
         form.validate-rest(
           action=`${appCnf.url.api}admin/stores/${store._id}/products/${item._id}`
           method="put"
@@ -201,7 +229,8 @@ block edit
             .col-xs-12.tr
               button.btn.btn--primary.w-100-xs(type="submit") Guardar Cambios
 
-      .tab#p6
+    .tab#p6
+      .white.br-1.rd-0-2.pw-2.pt-1.pb-2.mb-1
         form.validate-rest(
           action=`${appCnf.url.api}admin/stores/${store._id}/products/${item._id}`
           method="put"
@@ -254,7 +283,8 @@ block edit
             .col-xs-12.tr
               button.btn.btn--primary.w-100-xs(type="submit") Guardar Cambios
 
-      .tab#p7
+    .tab#p7
+      .white.br-1.rd-0-2.pw-2.pt-1.pb-2.mb-1
         form.validate-rest(
           action=`${appCnf.url.api}admin/stores/${store._id}/products/${item._id}`
           method="put"

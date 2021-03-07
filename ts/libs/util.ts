@@ -17,6 +17,24 @@ export class Util {
     this.btnBbcodeImg();
     this.openModalAction();
     this.openModalMsg();
+    this.moveRow();
+  }
+
+  moveRow() {
+    $('.move-up,.move-down,.move-top,.move-bottom').on('click', (event) => {
+      const $el = $(event.currentTarget);
+      const row = $el.parents('tr:first');
+      if ($el.is('.move-up')) {
+        row.insertBefore(<any>(row.prev()));
+      } else if ($el.is('.move-down')) {
+        row.insertAfter(<any>(row.next()));
+      } else if ($el.is('.move-top')) {
+        // row.insertAfter($("table tr:first"));
+        row.insertBefore($('table tr:first'));
+      } else {
+        row.insertAfter($('table tr:last'));
+      }
+    });
   }
 
   count() {

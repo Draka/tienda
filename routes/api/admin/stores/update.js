@@ -24,6 +24,7 @@ module.exports = (req, res, next) => {
     'department',
     'town',
     'primaryActivity',
+    'secondaryActivity',
     'showcase',
     'mode',
     'messages',

@@ -1,0 +1,50 @@
+extends /modules/common/views/layout-index
+
+block view
+
+  .container
+    h1.mb-1 Resultados de la búsqueda
+
+  .container-fluid.white-500.ph-2
+    .container
+      .row
+        .col-md-12
+          form.flex(class="search" action=`/tiendas/buscar`)
+            label.out-screen(for='query-help') Buscar
+            input#query-help.input--simple.w-100.ph-0-5.pw-1(type="text" name="q" placeholder='Buscar tiendas' required value=q)
+            button.btn.btn--secondary
+              i.fas.fa-search
+              span.out-screen Buscar tiendas
+
+
+  .container
+    .row.justify-content-center
+      .col-sm-10.col-md-8.mb-2
+        .row
+          each store in stores
+            .col-xs-6.col-md-4.ph-1.pw-1-xs.mw-1-sm
+              .relative.br-1.p-1.pb-3.h-100.brt-10.rd-0-5.white
+                .tc
+                  a(href=`/${store.slug}`)
+                    +img(`Logo de la tienda ${store.name}`, _.get(store, 'imageSizes.logo'))
+                .title.mt-0-5.b #{store.name}
+                .subtitle.pb-1 #{store.slogan}
+                //- each contact in store.contacts
+                //-   if contact.slug == 'whatsapp'
+                //-     a(href=`https://wa.me/${contact.value}?text=Hola, ${store.name} quisiera saber más de tus productos.` title='Whatsapp' target='_blank')
+                //-       .flex.mb-1
+                //-         i.fab.fa-whatsapp
+                //-         .b.ml-0-5 #{contact.value}
+                .absolute.bottom.tc.pb-1.w-100c2
+                  a.btn.btn--secondary.w-100(href=`/${store.slug}`) Visitar
+
+        .row
+          .col-md-12
+            .pagination.justify-content-right
+              a.item(href=`?page=0`)
+                i.fas.fa-chevron-left
+                - var n = 0;
+                while n < Math.ceil(count/limit)
+                  a.item(href=`?page=${n++}`)= n
+              a.item(href=`?page=${Math.ceil(count/limit) - (count % limit == 0 ? 0 : 1)}`)
+                i.fas.fa-chevron-right

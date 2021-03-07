@@ -18,6 +18,26 @@ exports.stores = (cb) => {
   });
 };
 
+exports.storesByPrimaryActivity = (primaryActivity, cb) => {
+  const key = `__stores__primaryActivity__${primaryActivity}`;
+  client.get(key, (_err, reply) => {
+    if (reply && process.env.NODE_ENV === 'production') {
+      cb(null, JSON.parse(reply));
+    } else {
+      models.Store
+        .find({ publish: true, approve: true, primaryActivity })
+        .lean()
+        .exec((err, docs) => {
+          if (err) {
+            return cb(err);
+          }
+          client.set(key, JSON.stringify(docs), 'EX', 3600);
+          cb(null, docs);
+        });
+    }
+  });
+};
+
 exports.coveragesAreas = (storeID, cb) => {
   const key = `__coverages-areas__${storeID}`;
   client.get(key, (_err, reply) => {

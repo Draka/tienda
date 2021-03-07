@@ -13,7 +13,7 @@ const sassMiddleware = require('node-sass-middleware');
 const shrinkRay = require('shrink-ray-current');
 
 // Cache
-const redis = require('redis');
+const Redis = require('ioredis');
 const auth = require('./libs/auth.lib');
 const cache = require('./libs/cache.lib');
 const cacheHtml = require('./libs/cache-html.lib');
@@ -32,34 +32,27 @@ global.mapImg = mapImg;
 global.statusText = statusText;
 global.statusIcon = statusIcon;
 
-global.client = redis.createClient({
-  prefix: `_${appCnf.tenancy}_`,
-  retry_strategy(options) {
-    if (options.error && options.error.code === 'ECONNREFUSED') {
-      // End reconnecting on a specific error and flush all commands with
-      // a individual error
-      return new Error('The server refused the connection');
-    }
-    if (options.total_retry_time > 1000 * 60 * 60) {
-      // End reconnecting after a specific timeout and flush all commands
-      // with a individual error
-      return new Error('Retry time exhausted');
-    }
-    if (options.attempt > 10) {
-      // End reconnecting with built in error
-      return undefined;
-    }
-    // reconnect after
-    return Math.min(options.attempt * 100, 3000);
+global.client = new Redis(appCnf.redis.url, {
+  keyPrefix: `_${appCnf.tenancy}_`,
+  retryStrategy(times) {
+    const delay = Math.min(times * 50, 2000);
+    return delay;
   },
-  url: appCnf.redis.url,
+  reconnectOnError(err) {
+    const targetError = 'READONLY';
+    if (err.message.includes(targetError)) {
+      // Only reconnect when the error contains "READONLY"
+      return true; // or `return 1;`
+    }
+  },
 });
-global.client.on('connect', () => {
-  console.log('redis connected');
+global.client.connect(() => {
+  console.log(`redis connected to: ${appCnf.redis.url}`);
   global.client.flushall('ASYNC', (err, succeeded) => {
     console.log('flush cache', succeeded);
   });
 });
+
 global.redisMiddleware = cache;
 global.cacheHtml = cacheHtml;
 
@@ -77,7 +70,7 @@ const dbOptions = {
 };
 mongoose.connect(appCnf.db, dbOptions).then(
   () => {
-    console.log('MongoDB open');
+    console.log(`MongoDB connected to: ${appCnf.db}`);
 
     // Genera scripts
     tsMiddleware();

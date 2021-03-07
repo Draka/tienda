@@ -4,16 +4,17 @@ block edit
 
   .msg.error#form-results
 
-  .white.br-1.rd-0-2.pw-2.pt-1.pb-2
-    .tabs.tabs--lines.scroll.nowrap.mb-1
+  .white.br-1.rd-0-2.pw-2.pt-1.pb-1.mb-1
+    .tabs.tabs--lines.scroll.nowrap
       a.item.active(data-tab='#p1') Tienda
       a.item(data-tab='#p2') Datos Principales
       a.item(data-tab='#p3') Descripción
       a.item(data-tab='#p4') Región
       a.item(data-tab='#p5') Mensajes
 
-    .tabs-content
-      .tab.active#p1
+  .tabs-content
+    .tab.active#p1
+      .white.br-1.rd-0-2.pw-2.pt-1.pb-2.mb-1
         form.validate-rest(
           action=`${appCnf.url.api}admin/stores/${store._id}`
           method="put"
@@ -80,7 +81,8 @@ block edit
             .col-xs-12.tr
               button.btn.btn--primary.w-100-xs(type="submit") Guardar Cambios
 
-      .tab#p2
+    .tab#p2
+      .white.br-1.rd-0-2.pw-2.pt-1.pb-2.mb-1
         form.validate-rest(
           action=`${appCnf.url.api}admin/stores/${store._id}`
           method="put"
@@ -117,7 +119,8 @@ block edit
             .col-xs-12.tr
               button.btn.btn--primary.w-100-xs(type="submit") Guardar Cambios
 
-      .tab#p3
+    .tab#p3
+      .white.br-1.rd-0-2.pw-2.pt-1.pb-2.mb-1
         form.validate-rest(
           action=`${appCnf.url.api}admin/stores/${store._id}`
           method="put"
@@ -139,7 +142,8 @@ block edit
             .col-xs-12.tr
               button.btn.btn--primary.w-100-xs(type="submit") Guardar Cambios
 
-      .tab#p4
+    .tab#p4
+      .white.br-1.rd-0-2.pw-2.pt-1.pb-2.mb-1
         form.validate-rest(
           action=`${appCnf.url.api}admin/stores/${store._id}`
           method="put"
@@ -165,14 +169,22 @@ block edit
                   label.nowrap(for='town') Municipio
               .form-group
                 .form-control
-                  input.input#primaryActivity(type="text" name="primaryActivity" placeholder='Restaurantes, Transporte, Servicios...' required value=store.primaryActivity)
-                  label(for='primaryActivity') Actividad primaria
+                  select.input#primaryActivity(name='primaryActivity' required data-target='#town')
+                    option(value='') --
+                    each activity in activities
+                      option(value=activity selected=store.primaryActivity==activity) #{activity}
+                  label.nowrap(for='primaryActivity') Actividad primaria
+              .form-group
+                .form-control
+                  input.input#secondaryActivity(type="text" name="secondaryActivity" placeholder=' ' required value=store.secondaryActivity)
+                  label(for='secondaryActivity') Actividad secundaria
 
           .row
             .col-xs-12.tr
               button.btn.btn--primary.w-100-xs(type="submit") Guardar Cambios
 
-      .tab#p5
+    .tab#p5
+      .white.br-1.rd-0-2.pw-2.pt-1.pb-2.mb-1
         form.validate-rest(
           action=`${appCnf.url.api}admin/stores/${store._id}`
           method="put"

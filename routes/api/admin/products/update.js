@@ -32,6 +32,7 @@ module.exports = (req, res, next) => {
     'height',
     'width',
     'amz',
+    'images',
   ]);
   const adminQuery = {
     _id: req.params.storeID,
@@ -127,6 +128,12 @@ module.exports = (req, res, next) => {
       }, cb);
     }],
     deleteS3: ['query', (results, cb) => {
+      // ordena imagenes sin borrar
+      if (results.query) {
+        results.query.images = _.union(body.images || [], results.query.images);
+        delete body.images;
+      }
+
       if (!results.query || !body.imagesDeleted) {
         return cb();
       }

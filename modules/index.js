@@ -6,6 +6,7 @@ const multimedia = require('./multimedia/routes');
 const help = require('./help/routes');
 const email = require('./email/routes');
 const amz = require('./amz/routes');
+const stores = require('./stores/routes');
 
 module.exports = (app) => {
   site(app);
@@ -16,4 +17,5 @@ module.exports = (app) => {
   help(app);
   email(app);
   amz(app);
+  stores(app);
 };

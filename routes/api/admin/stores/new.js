@@ -6,6 +6,7 @@ module.exports = (req, res, next) => {
     'department',
     'town',
     'primaryActivity',
+    'secondaryActivity',
   ]);
   async.auto({
     validate: (cb) => {

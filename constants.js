@@ -49,6 +49,7 @@ const vars = {
     'v1',
     'ayuda',
     'lib',
+    'tiendas',
   ],
   payments: [
     {
@@ -101,6 +102,19 @@ const vars = {
     marketsabana: 'https://marketsabana.com/',
     buenaventa: 'https://buenaventa.co/',
   },
+  activities: [
+    'Actividades Virtuales',
+    'Alimentos',
+    'Comercio',
+    'Libros',
+    'Ropa y Accesorios',
+    'Salud y Bienestar',
+    'Servicios',
+    'Supermecados',
+    'Transporte',
+    'Zapatería',
+    'Otros',
+  ],
 };
 _.forEach(vars, (v, i) => {
   global[i] = v;
