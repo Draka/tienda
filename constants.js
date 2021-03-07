@@ -50,6 +50,8 @@ const vars = {
     'ayuda',
     'lib',
     'tiendas',
+    'flush',
+    'status',
   ],
   payments: [
     {
