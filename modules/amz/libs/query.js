@@ -6,6 +6,7 @@ const https = require('https');
 const cheerio = require('cheerio');
 const puppeteer = require('puppeteer-extra');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
+const { site } = require('../../../libs/query.lib');
 
 exports.getUrlPage = (url, cb) => {
   const key = `__url_amz__${url}`;
@@ -51,8 +52,10 @@ exports.getUrlPage = (url, cb) => {
                 }).save(cb);
               }],
               site: ['save', (results, cb) => {
-                global.appCnf.site = results.save;
-                cb();
+                site((err, doc) => {
+                  global.appCnf.site = doc;
+                  cb();
+                });
               }],
             }, cb);
           } else {
