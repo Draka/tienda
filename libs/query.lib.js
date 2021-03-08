@@ -102,6 +102,7 @@ exports.site = (cb) => {
               doc.images[path][ext] = `${appCnf.url.static}tenancy/${appCnf.tenancy}/images/${appCnf.s3.folder}/site/${path}/${url}`;
             });
           });
+          console.log(doc);
           client.set(key, JSON.stringify(doc), 'EX', 3600);
           cb(null, doc);
         });
