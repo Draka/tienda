@@ -5,8 +5,8 @@ exports.deleteKeysByPattern = (key) => {
 
   stream.on('data', (resultKeys) => {
     console.log(resultKeys);
-    if (resultKeys.length) {
-      client.del(resultKeys);
-    }
+    _.each(resultKeys, (k) => {
+      client.unlink(k);
+    });
   });
 };
