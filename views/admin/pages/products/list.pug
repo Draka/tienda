@@ -110,7 +110,7 @@ block list
                             | #{' '}
                             a.small.btn.btn--error(href=`/administracion/tiendas/${store._id}/productos/${item._id}/editar`) arreglar
               td
-                .flex
+                .flex-wrap
                   each image,i in item.imagesSizes
                     img.m-0-25(src=image['48x48_jpg'])
 
@@ -135,6 +135,8 @@ block list
                 | !{item.categoryText.join(' <i class="fas fa-chevron-right"></i> ')}
               td.tr
                 .b.t-secondary #{formatMoney(item.price || 0)}
+                if (item.amz && item.amz.usd)
+                  .b.t-primary #{formatMoney(item.amz.usd || 0, 2, 'USD$')}
               td.tr
                 if item.inventory
                   | #{item.stock}
