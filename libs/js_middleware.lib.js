@@ -1,8 +1,13 @@
+/* eslint-disable global-require */
+/* eslint-disable no-console */
 const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
 module.exports = (options) => {
+  if (process.env.NODE_ENV === 'production') {
+    return;
+  }
   // const { detect } = require('detect-browser');
 
   const isDirectory = (source) => fs.lstatSync(source).isDirectory();
@@ -13,7 +18,7 @@ module.exports = (options) => {
     _.forEach(getDirectories(src), (d) => {
       treeFolders(d);
       if (fs.existsSync(`${d}/jss.json`)) {
-        // eslint-disable-next-line global-require
+        // eslint-disable-next-line import/no-dynamic-require
         const conf1 = require(`${d}/jss.json`);
         // eslint-disable-next-line no-param-reassign
         options.tmp = options.tmp || 'tmp';
@@ -29,8 +34,4 @@ module.exports = (options) => {
     });
   }
   treeFolders(options.src);
-
-  return (req, res, next) => {
-    next();
-  };
 };

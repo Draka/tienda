@@ -74,6 +74,13 @@ mongoose.connect(appCnf.db, dbOptions).then(
     // Genera scripts
     tsMiddleware();
     imgMiddleware();
+    jsMiddleware({
+      src: path.join(__dirname, 'public'),
+      tmp: 'tmp',
+      js: 'sources',
+      sourceMap: true,
+      debug: true,
+    });
   },
   (err) => {
     console.log('MongoDB error', err);
@@ -116,13 +123,6 @@ app.use(sassMiddleware({
   dest: path.join(__dirname, 'public'),
   indentedSyntax: true, // true = .sass and false = .scss
   sourceMap: true,
-}));
-app.use(jsMiddleware({
-  src: path.join(__dirname, 'public'),
-  tmp: 'tmp',
-  js: 'sources',
-  sourceMap: true,
-  debug: true,
 }));
 app.use(express.static(path.join(__dirname, `public/tenancy${appCnf.tenancy}`)));
 app.use(express.static(path.join(__dirname, 'public')));
