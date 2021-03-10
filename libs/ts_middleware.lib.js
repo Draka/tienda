@@ -8,6 +8,9 @@ const fs = require('fs');
 const getFiles = (source) => fs.readdirSync(source).map((name) => path.join(source, name)).filter((xsource) => path.extname(xsource) === '.ts');
 
 module.exports = () => {
+  if (process.env.NODE_ENV === 'production') {
+    return;
+  }
   async.each(getFiles('./ts'), (d, cb) => {
     if (1 && process.env.NODE_ENV !== 'production') {
       execSync(
