@@ -2,7 +2,8 @@ const query = require('../../../libs/query.lib');
 const { putS3Path } = require('../../../libs/put_s3_path.lib');
 
 module.exports = (req, res, next) => {
-  const body = _.pick(req.query, ['name']);
+  let body = _.pick(req.query, ['name', 'categoryIDs']);
+  body = _.pickBy(body, (o) => o);
 
   const limit = Math.min(Math.max(1, req.query.limit) || 20, 500);
   const page = Math.max(0, req.query.page) || 0;
@@ -52,6 +53,14 @@ module.exports = (req, res, next) => {
         .countDocuments(body)
         .exec(cb);
     }],
+    tree: ['store', (results, cb) => {
+      query.categoryTree(req.params.storeID, cb);
+    }],
+    categories: ['tree', (results, cb) => {
+      const items = [];
+      query.treePush(results.tree, items);
+      cb(null, items);
+    }],
   }, (err, results) => {
     if (err) {
       return next(err);
@@ -81,9 +90,11 @@ module.exports = (req, res, next) => {
       user: results.user,
       store: results.store,
       items: results.items,
+      categories: results.categories,
       limit,
       page,
       count: results.count,
+      q: req.query,
       title: 'Productos',
       menu: 'tienda-productos',
       xnew: `/administracion/tiendas/${req.params.storeID}/productos/nuevo`,

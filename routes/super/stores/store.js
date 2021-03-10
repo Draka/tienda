@@ -65,6 +65,7 @@ module.exports = (req, res, next) => {
       limit,
       page,
       count: results.count,
+      q: req.query.q,
       title: 'Aprobar Tiendas',
       menu: 'super-tiendas',
       breadcrumbs,

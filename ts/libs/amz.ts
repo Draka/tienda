@@ -1,3 +1,5 @@
+import { Vars } from './vars';
+
 export class Amz {
   // genera sku aleatorio
 
@@ -57,11 +59,14 @@ export class Amz {
       const w = parseFloat(<string>$('#width').val());
 
       const pcop = (usd * trm) * (incPrice / 100 + 1);
-      const pw = (incW * trm) * Math.ceil(we / 454);
+      const pw = (incW * Math.ceil(we / 454)) * trm;
       const pd = ((l * h * w) / 1000) * (incD * trm);
 
       const price = Math.ceil((pcop + pw + pd) / 1000) * 1000;
       $('#price').val(price);
+      $('.parts').html(`<div>(${trm} &times; ${usd}) &times; ${incPrice}% = ${Vars.formatMoney(pcop)}</div>`
+      + `<div>(${incW} &times; ${Math.ceil(we / 454)}) &times; ${trm} = ${Vars.formatMoney(pw)}</div>`
+      + `<div>(${l} &times; ${h} &times; ${w}) &times; (${incD} &times; ${trm}) = ${Vars.formatMoney(pd)}</div>`);
     });
   }
 }

@@ -9,6 +9,27 @@ block list
         li Si ya ha publicado un producto y no quiere venderlo más, es mejor dejarlo como no disponible.
         li Solo puede subir imágenes cuando un producto ya ha sido creado o usando el método de cargar archivo.
 
+  .white.br-1.rd-0-2.pw-2.pt-1.pb-2.mb-1
+    form.validate.mh-2(action=``)
+      .row
+        .col-md-12
+          .form-group
+            .form-control
+              select#categoryID.input(name='categoryIDs')
+                option(value="") --
+                each category of categories
+                  option(value=category._id selected=q.categoryIDs==category._id.toString()) #{category.name}
+              label.nowrap(for='categoryIDs') Categoría
+
+        .col-md-8
+          label.out-screen(for='query-d') Buscar
+          input#query-d.input--simple.w-100.h-100.ph-0-25.pw-1(type="text" name="q" placeholder='Buscar' value=q.q)
+        .col-md-4
+          button.btn.btn--secondary.w-100
+            i.fas.fa-search
+            | #{' '}
+            | Buscar
+
   if items.length
     .remark
       b P
@@ -19,117 +40,119 @@ block list
       | #{' '}
       b I
       | #{' '} = Uso de Inventario (Stock)
-    table.small.table.table--lines.table--striped
-      thead
-        tr
-          th.b &nbsp;
-          th.b Imágenes
-          th.b.tc P
-          th.b.tc D
-          th.b.tc I
-          th.b SKU
-          th.b Nombre
-          th.b Categoría
-          th.b Precio
-          th.b Inventario (Stock)
-          th.b Descripción
-          th.tc(colspan=2)
-            i.fas.fa-cog
-      tbody
-        each item of items
-          tr
-            td.tc
-              if (_.map(item.problems, key=>key.alert)).indexOf(true) >= 0
-                .t-alert.open-modal-msg.hand.mh-0-5(
-                  title='Alertas'
-                  data-title=`Alertas de ${item.name}`
-                  data-close='Cerrar'
-                  data-body=`#amsg_${item._id}`
-                )
-                  i.fas.fa-exclamation-triangle
-                div.hide(id=`amsg_${item._id}`)
-                  .flex
-                    .t-alert.open-modal-msg.bigx2
-                      i.fas.fa-exclamation-triangle
-                    .ml-1
-                      if item.problems.images.alert
-                        p El producto no tiene imágenes
-                          | #{' '}
-                          a.small.btn.btn--alert(href=`/administracion/tiendas/${store._id}/productos/${item._id}/editar`) arreglar
-              if (_.map(item.problems, key=>key.problem)).indexOf(true) >= 0
-                .t-error.open-modal-msg.hand.mh-0-5(
-                  title='Errores'
-                  data-title=`Errores de ${item.name}`
-                  data-close='Cerrar'
-                  data-body=`#emsg_${item._id}`
-                )
-                  i.fas.fa-minus-circle
-                div.hide(id=`emsg_${item._id}`)
-                  .flex
-                    .t-error.open-modal-msg.bigx2
-                      i.fas.fa-minus-circle
-                    .ml-1
-                      if item.problems.digital.problem
-                        p Es un producto digital, debe seleccionar y configurar en su tienda "Producto Virtual" en "Opciones de entrega"
-                          | #{' '}
-                          a.small.btn.btn--error(href=`/administracion/tiendas/${store._id}/opciones-de-entrega/editar`) arreglar
-                      if item.problems.dimensions.problem
-                        p Si tiene las formas de entrega Encomienda Nacional y Encomienda Local, el producto debe tene Peso, Largo, Altura y Ancho
-                          | #{' '}
-                          a.small.btn.btn--error(href=`/administracion/tiendas/${store._id}/productos/${item._id}/editar`) arreglar
-            td
-              .flex
-                each image,i in item.imagesSizes
-                  img.m-0-25(src=image['48x48_jpg'])
 
-            td.tc
-              +boolean(item.publish)
-            td.tc
-              +boolean(item.digital.is)
-            td.tc
-              +boolean(item.inventory)
-            td
-              | #{item.sku}
-            td
-              a.b(href=`/administracion/tiendas/${store._id}/productos/${item._id}/editar`) #{item.name}
-              if item.available
-                if item.available.start
-                  .nowrap
-                    i Inicio: #{moment.tz(item.available.start, global.tz).format('DD-MM-YYYY HH:mm:ss [-5 GMT]')}
-                if item.available.end
-                  .nowrap
-                    i Fin: #{moment.tz(item.available.end, global.tz).format('DD-MM-YYYY HH:mm:ss [-5 GMT]')}
-            td
-              | !{item.categoryText.join(' <i class="fas fa-chevron-right"></i> ')}
-            td.tr
-              .b.t-secondary #{formatMoney(item.price || 0)}
-            td.tr
-              if item.inventory
-                | #{item.stock}
-              else
-                | -
-            td
-              | #{item.shortDescription}
-            td.tc
-              a.btn-flat.p-0-5.rd-0-2(href=`/${store.slug}/productos/${item.sku}` title='Ver' target="_blank")
-                i.fas.fa-external-link-alt
-            td.tc
-              a.btn-flat.p-0-5.rd-0-2(href=`/administracion/tiendas/${store._id}/productos/${item._id}/editar` title='Editar')
-                i.fas.fa-pencil-alt
-            //- td.tc
-            //-   button.btn-flat.p-0-5.rd-0-2(data-id=item._id title='Eliminar')
-            //-     i.fas.fa-trash-alt
-      tfoot
-        tr
-          th(colspan="13")
-            .pagination.justify-content-right
-              a.item(href=`?page=0`)
-                i.fas.fa-chevron-left
-                - var n = 0;
-                while n < Math.ceil(count/limit)
-                  a.item(href=`?page=${n++}`)= n
-              a.item(href=`?page=${Math.ceil(count/limit) - (count % limit == 0 ? 0 : 1)}`)
-                i.fas.fa-chevron-right
+    .scroll
+      table.small.table.table--lines.table--striped
+        thead
+          tr
+            th.tc(colspan=2)
+              i.fas.fa-cog
+            th.b &nbsp;
+            th.b Imágenes
+            th.b.tc P
+            th.b.tc D
+            th.b.tc I
+            th.b SKU
+            th.b Nombre
+            th.b Categoría
+            th.b Precio
+            th.b Inventario (Stock)
+            th.b Descripción
+        tbody
+          each item of items
+            tr
+              td.tc
+                a.btn-flat.p-0-5.rd-0-2(href=`/${store.slug}/productos/${item.sku}` title='Ver' target="_blank")
+                  i.fas.fa-external-link-alt
+              td.tc
+                a.btn-flat.p-0-5.rd-0-2(href=`/administracion/tiendas/${store._id}/productos/${item._id}/editar` title='Editar')
+                  i.fas.fa-pencil-alt
+              //- td.tc
+              //-   button.btn-flat.p-0-5.rd-0-2(data-id=item._id title='Eliminar')
+              //-     i.fas.fa-trash-alt
+              td.tc
+                if (_.map(item.problems, key=>key.alert)).indexOf(true) >= 0
+                  .t-alert.open-modal-msg.hand.mh-0-5(
+                    title='Alertas'
+                    data-title=`Alertas de ${item.name}`
+                    data-close='Cerrar'
+                    data-body=`#amsg_${item._id}`
+                  )
+                    i.fas.fa-exclamation-triangle
+                  div.hide(id=`amsg_${item._id}`)
+                    .flex
+                      .t-alert.open-modal-msg.bigx2
+                        i.fas.fa-exclamation-triangle
+                      .ml-1
+                        if item.problems.images.alert
+                          p El producto no tiene imágenes
+                            | #{' '}
+                            a.small.btn.btn--alert(href=`/administracion/tiendas/${store._id}/productos/${item._id}/editar`) arreglar
+                if (_.map(item.problems, key=>key.problem)).indexOf(true) >= 0
+                  .t-error.open-modal-msg.hand.mh-0-5(
+                    title='Errores'
+                    data-title=`Errores de ${item.name}`
+                    data-close='Cerrar'
+                    data-body=`#emsg_${item._id}`
+                  )
+                    i.fas.fa-minus-circle
+                  div.hide(id=`emsg_${item._id}`)
+                    .flex
+                      .t-error.open-modal-msg.bigx2
+                        i.fas.fa-minus-circle
+                      .ml-1
+                        if item.problems.digital.problem
+                          p Es un producto digital, debe seleccionar y configurar en su tienda "Producto Virtual" en "Opciones de entrega"
+                            | #{' '}
+                            a.small.btn.btn--error(href=`/administracion/tiendas/${store._id}/opciones-de-entrega/editar`) arreglar
+                        if item.problems.dimensions.problem
+                          p Si tiene las formas de entrega Encomienda Nacional y Encomienda Local, el producto debe tene Peso, Largo, Altura y Ancho
+                            | #{' '}
+                            a.small.btn.btn--error(href=`/administracion/tiendas/${store._id}/productos/${item._id}/editar`) arreglar
+              td
+                .flex
+                  each image,i in item.imagesSizes
+                    img.m-0-25(src=image['48x48_jpg'])
+
+              td.tc
+                +boolean(item.publish)
+              td.tc
+                +boolean(item.digital.is)
+              td.tc
+                +boolean(item.inventory)
+              td
+                | #{item.sku}
+              td
+                a.b(href=`/administracion/tiendas/${store._id}/productos/${item._id}/editar`) #{item.name}
+                if item.available
+                  if item.available.start
+                    .nowrap
+                      i Inicio: #{moment.tz(item.available.start, global.tz).format('DD-MM-YYYY HH:mm:ss [-5 GMT]')}
+                  if item.available.end
+                    .nowrap
+                      i Fin: #{moment.tz(item.available.end, global.tz).format('DD-MM-YYYY HH:mm:ss [-5 GMT]')}
+              td
+                | !{item.categoryText.join(' <i class="fas fa-chevron-right"></i> ')}
+              td.tr
+                .b.t-secondary #{formatMoney(item.price || 0)}
+              td.tr
+                if item.inventory
+                  | #{item.stock}
+                else
+                  | -
+              td
+                | #{item.shortDescription}
+        tfoot
+          tr
+            th(colspan="13")
+              .pagination.justify-content-right
+                a.item(href=`?page=0`)
+                  i.fas.fa-chevron-left
+                  - var n = 0;
+                  while n < Math.ceil(count/limit)
+                    a.item(href=`?page=${n++}`)= n
+                a.item(href=`?page=${Math.ceil(count/limit) - (count % limit == 0 ? 0 : 1)}`)
+                  i.fas.fa-chevron-right
   else
     .white.br-1.rd-0-2.p-3
       .remark.info.flex.mb-0-5

@@ -6,18 +6,56 @@ block edit
 
   .white.br-1.rd-0-2.pw-2.pt-1.pb-1.mb-1
     .tabs.tabs--lines.scroll.nowrap
-      //- a.item.active(data-tab='#p1') Tipo de producto
+      if store.amz
+        a.item(data-tab='#p1') Amazon
       a.item.active(data-tab='#p2') Datos Principales
       a.item(data-tab='#p3') Imágenes
       a.item(data-tab='#p4') Descripción
       a.item(data-tab='#p5') Inventario y Disponibilidad
       a.item(data-tab='#p6') Características
       a.item(data-tab='#p7') Medidas
-      //- a.item(data-tab='#p8') Grupo
+      a.item(data-tab='#p8') Grupo
 
 
   .tabs-content
-    //- .tab#p1
+    if store.amz
+      .tab#p1
+        .white.br-1.rd-0-2.pw-2.pt-1.pb-2.mb-1
+          form.validate-rest(
+            action=`${appCnf.url.api}admin/stores/${store._id}/products/${item._id}`
+            method="put"
+            data-ok='Cambios guardados'
+            data-ok-color='action'
+            data-error="#form-results"
+          )
+            .row
+              .col-xs-12
+                .subtitle.b.mt-1 Amazon
+                .hr.mt-0-5.mb-1
+                .form-group
+                  .form-control
+                    textarea.input#amzUrl(name="amz.url" placeholder=' ' rows=7) #{_.get(item, 'amz.url')}
+                    label(for='amzUrl') URL Amazon de EEUU
+                .form-group.flex
+                  .form-control
+                    input.input.tr.b.t-secondary#amzTrm(type="number" name="amz.trm" placeholder=' ' value=_.get(item, 'amz.trm') || 0 readonly=true)
+                    label(for='amzTrm') TRM
+                  .form-control.pl-1
+                    input.input.tr#amzUsd(type="number" name="amz.usd" placeholder=' ' value=_.get(item, 'amz.usd') step=".01")
+                    label(for='amzUsd') USD
+                .form-group.flex
+                  .form-control
+                    input.input.tr#amzIncPrice(type="number" name="amz.incPrice" placeholder=' ' value=_.get(item, 'amz.incPrice'))
+                    label(for='amzIncPrice') Incremento Precio (%)
+                  .form-control.pl-1
+                    input.input.tr#amzIncWeight(type="number" name="amz.incWeight" placeholder=' ' value=_.get(item, 'amz.incWeight') step=".01")
+                    label(for='amzIncWeight') Incremento Peso
+                  .form-control.pl-1
+                    input.input.tr#amzIncDimensions(type="number" name="amz.incDimensions" placeholder=' ' value=_.get(item, 'amz.incDimensions') step=".01")
+                    label(for='amzIncDimensions') Incremento Volumen
+            .row
+              .col-xs-12.tr
+                button.btn.btn--primary.w-100-xs(type="submit") Guardar Cambios
 
     .tab.active#p2
       .white.br-1.rd-0-2.pw-2.pt-1.pb-2.mb-1
@@ -255,9 +293,9 @@ block edit
                 .flex
                   i.fas.fa-exclamation.h2.mr-0-25.w-2.tc
                   div Escriba características del producto, tales como: peso, altura, color, etc.
-              button.btn.btn--secondary.add(type="button") Agregar carácteristica
+              button.btn.btn--secondary.add-feature(type="button") Agregar carácteristica
               .hr.mh-1
-              .list-features(data-btn=".add" data-features=JSON.stringify(item.features))
+              .list-features(data-btn=".add-feature" data-features=JSON.stringify(item.features))
 
           .row
             .col-xs-12
@@ -317,6 +355,31 @@ block edit
                 .form-control
                   input.input#width(type="number" name="width" placeholder=' ' min=0 value=item.width)
                   label(for='width') Ancho (en centímetros)
+
+          .row
+            .col-xs-12.tr
+              button.btn.btn--primary.w-100-xs(type="submit") Guardar Cambios
+
+    .tab#p8
+      .white.br-1.rd-0-2.pw-2.pt-1.pb-2.mb-1
+        form.validate-rest(
+          action=`${appCnf.url.api}admin/stores/${store._id}/products/${item._id}`
+          method="put"
+          data-ok='Cambios guardados'
+          data-ok-color='action'
+          data-error="#form-results"
+        )
+          .row
+            .col-xs-12
+              .subtitle.b.mt-2 Grupos de productos
+              .hr.mt-0-5.mb-1
+              .msg.info.mb-0-5.mt-1
+                .flex
+                  i.fas.fa-exclamation.h2.mr-0-25.w-2.tc
+                  div Escriba características para agrupar y los sku de los productos separados por comas ","
+              button.btn.btn--secondary.add-group(type="button") Agregar grupo
+              .hr.mh-1
+              .list-groups(data-btn=".add-group" data-groups=JSON.stringify(item.groups))
 
           .row
             .col-xs-12.tr

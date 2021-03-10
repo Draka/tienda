@@ -66,6 +66,7 @@ module.exports = (req, res, next) => {
       limit,
       page,
       count: results.count,
+      q: req.query.q,
       title: 'Tiendas',
       menu: 'tiendas',
       xnew: '/administracion/tiendas/nuevo',

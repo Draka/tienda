@@ -27,6 +27,10 @@ module.exports = (req, res, next) => {
           storeID: req.params.storeID,
           _id: req.params.productID,
         })
+        .populate({
+          path: 'groups.productIDs',
+          select: 'name,sku,features',
+        })
         .exec(cb);
     }],
     postFind: ['item', (results, cb) => {

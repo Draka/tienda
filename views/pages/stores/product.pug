@@ -66,6 +66,12 @@ mixin product(product)
         button.btn.btn--primary.small.add AÑADIR AL CARRITO
     if (_.get(product, 'digital.is'))
       .remark.info.mh-1 Producto de transmisión por internet
+  if product.groups
+    .mh-1
+      each group in product.groups
+        .b.mb-0-5 #{group.feature}:
+        each productID in group.productIDs
+          a.btn.btn--white.mr-0-5.mb-0-5(href=`/${store.slug}/productos/${productID.sku}`) #{_.find(productID.features, 'slug', group.featureSlug).value}
   .product-description.mt-2.mb-2
     | !{product.shortDescription.replace("\n",'<br>')}
 

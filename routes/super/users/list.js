@@ -55,6 +55,7 @@ module.exports = (req, res, next) => {
       limit,
       page,
       count: results.count,
+      q: req.query.q,
       title: 'Usuarios',
       menu: 'super-usuarios-lista',
       breadcrumbs,

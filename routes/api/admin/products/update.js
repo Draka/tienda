@@ -152,7 +152,56 @@ module.exports = (req, res, next) => {
       }
       query.up([], req.body.categoryID._id || req.body.categoryID, cb);
     }],
-    save: ['category', 'deleteS3', (results, cb) => {
+    groups: ['query', (results, cb) => {
+      if (!results.query) {
+        errors.push({ field: 'store', msg: 'No existe el producto.' });
+      }
+      if (errors.length) {
+        return cb(listErrors(400, null, errors));
+      }
+      if (!body.groups || !_.isArray(body.groups)) {
+        return cb();
+      }
+      const groupsF = body.groups;
+      body.groups = [];
+      async.eachLimit(groupsF, 5, (group, cb) => {
+        let skus = group.sku.split(',').map((i) => _.trim(i));
+        skus.push(results.query.sku);
+        const skuF = [];
+        const productIDs = [];
+        skus = _.uniq(skus);
+        async.eachLimit(skus, 5, (sku, cb) => {
+          async.auto({
+            product: (cb) => {
+              models.Product
+                .findOne({
+                  sku,
+                  storeID: req.params.storeID,
+                })
+                .lean()
+                .select('_id')
+                .exec(cb);
+            },
+            add: ['product', (resultsInt, cb) => {
+              if (resultsInt.product) {
+                skuF.push(sku);
+                productIDs.push(resultsInt.product._id);
+              }
+              cb();
+            }],
+          }, cb);
+        }, (err) => {
+          if (err) return cb(err);
+          body.groups.push({
+            feature: group.feature,
+            sku: skuF.join(','),
+            productIDs,
+          });
+          cb();
+        });
+      }, cb);
+    }],
+    save: ['category', 'deleteS3', 'groups', (results, cb) => {
       if (results.category) {
         body.categoryIDs = _.map(results.category, (o) => o._id);
         body.categoryText = _.map(results.category, (o) => o.name);

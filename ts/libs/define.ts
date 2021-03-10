@@ -13,12 +13,12 @@ const System: any = {
         (nameClass: string, fcClass: any) => {
           fc[nameClass] = fcClass;
         },
-        { id: name }
+        { id: name },
       );
       $.each(m.setters, (i, fcs) => {
         fcs(System.functions[fc.requires[i]]);
       });
       m.execute();
     });
-  }
+  },
 };

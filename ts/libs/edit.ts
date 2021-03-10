@@ -283,6 +283,7 @@ export class Edit {
     this.mapEditPoint();
     this.mapMarkers();
     this.addFeature();
+    this.addGroups();
   }
 
   cke() {
@@ -520,6 +521,46 @@ export class Edit {
 
         $($el.data('btn')).on('click', () => {
           fl.push({ name: '', value: '', slug: '' });
+          fc();
+        });
+      });
+    }
+  }
+
+  addGroups() {
+    const list = $('.list-groups');
+    if (list.length) {
+      list.each((_i, el) => {
+        const $el = $(el);
+        const fl:Array<any> = $el.data('groups');
+
+        const fc = () => {
+          let html = '';
+          fl.forEach((e, i) => {
+            html += '<div class="form-group flex">';
+            html += '<div class="form-control">';
+            html += `<input type="text" id="g_${i}" class="input" placeholder=" " name="groups[${i}][feature]" value="${e.feature}" data-index="${i}" data-name="feature">`;
+            html += `<label for="g_${i}">Característica</label>`;
+            html += '</div>';
+            html += '<div class="form-control pl-1 w-100">';
+            html += `<input type="text" id="s_${i}" class="input" placeholder=" " name="groups[${i}][sku]" value="${e.sku}" data-index="${i}" data-name="sku">`;
+            html += `<label for="s_${i}">SKU's</label>`;
+            html += '</div>';
+            html += '</div>';
+          });
+
+          $el.html(html);
+          $el.find('input').each((_i, el) => {
+            const $el = $(el);
+            $el.on('input', () => {
+              fl[$el.data('index')][$el.data('name')] = $el.val();
+            });
+          });
+        };
+        fc();
+
+        $($el.data('btn')).on('click', () => {
+          fl.push({ sku: '', feature: '' });
           fc();
         });
       });

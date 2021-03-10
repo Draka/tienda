@@ -11,6 +11,10 @@ exports.productBySKU = (storeID, sku, cb) => {
           path: 'categoryIDs',
           select: 'name slugLong',
         })
+        .populate({
+          path: 'groups.productIDs',
+          select: 'name sku features',
+        })
         .lean()
         .exec((err, doc) => {
           if (err) {

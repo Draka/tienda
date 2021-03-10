@@ -117,26 +117,22 @@ const schema = new mongoose.Schema({
     },
   },
   groups: [{
-    name: {
+    feature: {
       type: String,
       trim: true,
     },
-    products: [
-      {
-        meta: {
-          type: String,
-          trim: true,
-        },
-        aux: {
-          type: String,
-          trim: true,
-        },
-        productID: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: `${appCnf.dbPrefix}products`,
-        },
-      },
-    ],
+    featureSlug: {
+      type: String,
+      trim: true,
+    },
+    sku: {
+      type: String,
+      trim: true,
+    },
+    productIDs: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: `${appCnf.dbPrefix}products`,
+    }],
   }],
   fix: {
     type: Number,
@@ -209,6 +205,11 @@ function preUpdate(result, next) {
   }
   if (result.sku) {
     result.sku = _.kebabCase(_.deburr(_.get(result, 'sku')));
+  }
+  if (result.groups) {
+    result.groups.forEach((e) => {
+      e.featureSlug = _.kebabCase(_.deburr(e.feature));
+    });
   }
   if (result.features) {
     result.features.forEach((e) => {
