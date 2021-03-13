@@ -14,6 +14,14 @@ export class Util {
     this.lazy();
     this.showDetailOrder();
     this.scrollClick();
+    this.figure();
+  }
+
+  figure() {
+    $('help figure.image_resized').css({
+      width: '50%',
+      minWidth: '320px',
+    });
   }
 
   scrollClick() {
