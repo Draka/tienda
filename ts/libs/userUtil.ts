@@ -18,7 +18,7 @@ export class Util {
   }
 
   figure() {
-    $('help figure.image_resized').css({
+    $('.help figure.image_resized').css({
       width: '50%',
       minWidth: '320px',
     });
