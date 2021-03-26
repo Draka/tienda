@@ -45,14 +45,14 @@ block edit
           .col-xs-12
             .form-group.flex
               .form-control
-                input.input.tr.b.t-secondary#amzTrm(type="number" name="amz.trm" placeholder=' ' value=_.get(appCnf.site, 'trm.cop') || 0 readonly=true)
+                input.input.tr.b.t-secondary#amzTrm(type="number" name="amz.trm" placeholder=' ' value=_.get(appCnf.site, 'trm.cop') || 0)
                 label(for='amzTrm') TRM
               .form-control.pl-1
                 input.input.tr#amzUsd(type="number" name="amz.usd" placeholder=' ' value=0 step=".01")
                 label(for='amzUsd') USD
             .form-group.flex
               .form-control
-                input.input.tr#amzIncPrice(type="number" name="amz.incPrice" placeholder=' ' value=10)
+                input.input.tr#amzIncPrice(type="number" name="amz.incPrice" placeholder=' ' value=15)
                 label(for='amzIncPrice') Incremento Precio (%)
               .form-control.pl-1
                 input.input.tr#amzIncWeight(type="number" name="amz.incWeight" placeholder=' ' value=3.5 step=".01")

@@ -17,6 +17,7 @@ exports.getUrlPage = (url, cb) => {
       const d = moment.tz(global.tz).format('YYYY-MM-DD');
       async.auto({
         trm: (cb) => {
+          return cb();
           if (_.get(appCnf.site, 'trm.date') !== d) {
             async.auto({
               trm: (cb) => {
