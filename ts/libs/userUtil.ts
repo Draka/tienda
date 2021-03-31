@@ -22,6 +22,18 @@ export class Util {
       width: '50%',
       minWidth: '320px',
     });
+
+    $('oembed[url]').each((_i, el) => {
+      const ael = document.createElement('a');
+      ael.href = $(el).attr('url');
+      const urlParams = new URLSearchParams(ael.search);
+      const url = `//${ael.host}/embed/${urlParams.get('v')}`;
+
+      $(el).html(`<iframe width="100%" height="315" src="${url}" `
+      + 'title="YouTube video player" frameborder="0" '
+      + 'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" '
+      + 'allowfullscreen></iframe>');
+    });
   }
 
   scrollClick() {

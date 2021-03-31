@@ -39,7 +39,7 @@ block list
             th.b Departamento - Ciudad
             th.b Actividad Primaria
             th.b URL
-            th.tc
+            th.tc(colspan=2)
               i.fas.fa-cog
         tbody
           each item of items
@@ -142,12 +142,21 @@ block list
               td.tc
                 a.btn-flat.p-0-5.rd-0-2(href=`/administracion/tiendas/${item._id}/editar` title='Editar')
                   i.fas.fa-pencil-alt
-              //- td.tc
-              //-   button.btn-flat.p-0-5.rd-0-2(data-id=item._id title='Eliminar')
-              //-     i.fas.fa-trash-alt
+              td.tc
+                button.btn-flat.p-0-5.open-modal-action(
+                    title='Eliminar'
+                    data-title='¿Desea eliminar la tienda?'
+                    data-cancel='Cancelar'
+                    data-action='Si, Eliminar'
+                    data-method='DELETE'
+                    data-confirm='eliminar'
+                    data-url=`${appCnf.url.api}admin/stores/${item._id}`
+                    data-page='/administracion/tiendas'
+                  )
+                  i.fas.fa-trash-alt
         tfoot
           tr
-            th(colspan="10")
+            th(colspan="11")
               .pagination.justify-content-right
                 a.item(href=`?page=0`)
                   i.fas.fa-chevron-left

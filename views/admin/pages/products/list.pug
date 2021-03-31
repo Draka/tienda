@@ -45,7 +45,7 @@ block list
       table.small.table.table--lines.table--striped
         thead
           tr
-            th.tc(colspan=2)
+            th.tc(colspan=3)
               i.fas.fa-cog
             th.b &nbsp;
             th.b Imágenes
@@ -67,9 +67,18 @@ block list
               td.tc
                 a.btn-flat.p-0-5.rd-0-2(href=`/administracion/tiendas/${store._id}/productos/${item._id}/editar` title='Editar')
                   i.fas.fa-pencil-alt
-              //- td.tc
-              //-   button.btn-flat.p-0-5.rd-0-2(data-id=item._id title='Eliminar')
-              //-     i.fas.fa-trash-alt
+              td.tc
+                button.btn-flat.p-0-5.open-modal-action(
+                    title='Eliminar'
+                    data-title='¿Desea eliminar el producto?'
+                    data-cancel='Cancelar'
+                    data-action='Si, Eliminar'
+                    data-method='DELETE'
+                    data-confirm='eliminar'
+                    data-url=`${appCnf.url.api}admin/stores/${store._id}/products/${item._id}`
+                    data-page=`/administracion/tiendas/${store._id}/productos`
+                  )
+                  i.fas.fa-trash-alt
               td.tc
                 if (_.map(item.problems, key=>key.alert)).indexOf(true) >= 0
                   .t-alert.open-modal-msg.hand.mh-0-5(

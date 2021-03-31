@@ -1,7 +1,12 @@
 const query = require('../../../libs/query.lib');
-const queryStore = require('../../../libs/query_store.lib');
 
 module.exports = (req, res, next) => {
+  const body = _.pick(req.query, ['name']);
+
+  const limit = Math.min(Math.max(1, req.query.limit) || 20, 500);
+  const page = Math.max(0, req.query.page) || 0;
+
+  body.storeID = req.params.storeID;
   async.auto({
     user: (cb) => {
       cb(null, req.user);
@@ -21,8 +26,21 @@ module.exports = (req, res, next) => {
       }
       return cb(listErrors(401, null, [{ field: 'storeID', msg: 'No puedes ver esta tienda' }]));
     }],
-    coveragesAreas: ['check', (results, cb) => {
-      queryStore.coveragesAreas(req.params.storeID, cb);
+    items: ['check', (results, cb) => {
+      models.CoverageArea
+        .find(body)
+        .limit(limit)
+        .skip(limit * page)
+        .sort({
+          sku: 1,
+        })
+        .lean()
+        .exec(cb);
+    }],
+    count: ['check', (_results, cb) => {
+      models.Place
+        .countDocuments(body)
+        .exec(cb);
     }],
   }, (err, results) => {
     if (err) {
@@ -52,7 +70,7 @@ module.exports = (req, res, next) => {
       session: req.user,
       user: results.user,
       store: results.store,
-      items: results.coveragesAreas.map((i) => {
+      items: results.items.map((i) => {
         let points = [];
 
         try {
@@ -83,6 +101,7 @@ module.exports = (req, res, next) => {
       menu: 'tienda-zonas-de-coberturas',
       xnew: `/administracion/tiendas/${req.params.storeID}/zonas-de-coberturas/nuevo`,
       breadcrumbs,
+      js: 'admin',
     });
   });
 };

@@ -83,6 +83,7 @@ module.exports = (req, res, next) => {
       menu: 'tienda-sedes',
       xnew: `/administracion/tiendas/${req.params.storeID}/sedes/nuevo`,
       breadcrumbs,
+      js: 'admin',
     });
   });
 };

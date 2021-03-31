@@ -34,6 +34,7 @@ block list
             th &nbsp;
             th &nbsp;
             th &nbsp;
+            th &nbsp;
             th.b Logo
             th.b.tc P
             th.b.tc A
@@ -123,6 +124,18 @@ block list
                 a(href=`/administracion/super/tiendas/${item._id}` title='Ver')
                   i.fas.fa-search
               td.tc
+                button.btn-flat.p-0-5.open-modal-action(
+                    title='Eliminar'
+                    data-title='¿Desea eliminar la tienda?'
+                    data-cancel='Cancelar'
+                    data-action='Si, Eliminar'
+                    data-method='DELETE'
+                    data-confirm='eliminar'
+                    data-url=`${appCnf.url.api}admin/stores/${item._id}`
+                    data-page='/administracion/super/tiendas'
+                  )
+                  i.fas.fa-trash-alt
+              td.tc
                 a.btn.btn--secondary.small(href=`/administracion/tiendas/${item._id}/seleccionar` title='Seleccionar')
                   | Seleccionar
               td.tc
@@ -142,7 +155,7 @@ block list
                 div #{item.userID.email}
         tfoot
           tr
-            th(colspan="9")
+            th(colspan="10")
               .pagination.justify-content-right
                 a.item(href=`?page=0`)
                   i.fas.fa-chevron-left

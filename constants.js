@@ -108,6 +108,7 @@ const vars = {
     'Actividades Virtuales',
     'Alimentos',
     'Comercio',
+    'Estética',
     'Libros',
     'Ropa y Accesorios',
     'Salud y Bienestar',
