@@ -150,9 +150,11 @@ block list
                 .small #{item.slogan}
               td
                 a(href=`${appCnf.url.site}${item.slug}` target='_blank') #{`${appCnf.url.site}${item.slug}`}
+                div.b #{item.primaryActivity} - #{item.secondaryActivity}
               td
                 a.b(href=`/administracion/super/usuarios/${item.userID._id}`) #{item.userID.personalInfo.name}
                 div #{item.userID.email}
+                a(href=`https://wa.me/${item.userID.personalInfo.allCellphone || item.userID.personalInfo.cellphone}?text=Hola` title='Whatsapp' target='_blank') #{item.userID.personalInfo.allCellphone || item.userID.personalInfo.cellphone}
         tfoot
           tr
             th(colspan="10")

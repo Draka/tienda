@@ -139,6 +139,7 @@ block list
                 | #{item.primaryActivity}
               td
                 a(href=`${appCnf.url.site}${item.slug}` target='_blank') #{`${appCnf.url.site}${item.slug}`}
+                div.b #{item.primaryActivity} - #{item.secondaryActivity}
               td.tc
                 a.btn-flat.p-0-5.rd-0-2(href=`/administracion/tiendas/${item._id}/editar` title='Editar')
                   i.fas.fa-pencil-alt
