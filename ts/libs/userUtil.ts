@@ -27,8 +27,12 @@ export class Util {
       const ael = document.createElement('a');
       ael.href = $(el).attr('url');
       const urlParams = new URLSearchParams(ael.search);
-      const url = `//${ael.host}/embed/${urlParams.get('v')}`;
-
+      let url = '';
+      if (ael.host === 'youtube.com' || ael.host === 'www.youtube.com') {
+        url = `//${ael.host}/embed/${urlParams.get('v')}`;
+      } else if (ael.host === 'youtu.be') {
+        url = `//www.youtube.com/embed${ael.pathname}`;
+      }
       $(el).html(`<iframe width="100%" height="315" src="${url}" `
       + 'title="YouTube video player" frameborder="0" '
       + 'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" '
