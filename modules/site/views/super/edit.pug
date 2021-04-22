@@ -203,6 +203,13 @@ block edit
                 .form-control
                   input.input#color-secondary(type="color" name="color[secondary]" placeholder=' ' required value=_.get(item, 'color.secondary'))
                   label(for='color-secondary') Color Secundario
+              .form-group
+                .form-control
+                  select.input#header(name='header' required)
+                    option(value='') --
+                    each color in colors
+                      option(value=color.value selected=color.value==item.header) #{color.name}
+                  label.nowrap(for='header') Cabecera
 
           .row
             .col-xs-12.tr

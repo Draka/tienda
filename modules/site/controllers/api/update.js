@@ -20,6 +20,7 @@ module.exports = (req, res, next) => {
     'images',
     'sameAs',
     'color',
+    'header',
   ]);
 
   if (body.contacts) {

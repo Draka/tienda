@@ -177,6 +177,24 @@ const vars = {
     'Zapatería',
     'Otros',
   ],
+  colors: [
+    {
+      name: 'Color Primario',
+      value: 'primary',
+    },
+    {
+      name: 'Color Secundario',
+      value: 'secondary',
+    },
+    {
+      name: 'Blanco',
+      value: 'white',
+    },
+    {
+      name: 'Negro',
+      value: 'black',
+    },
+  ],
 };
 _.forEach(vars, (v, i) => {
   global[i] = v;

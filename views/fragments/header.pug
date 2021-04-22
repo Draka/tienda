@@ -1,6 +1,6 @@
 header
   .hide-xs
-    nav.navbar.primary.shadow.fixed.top
+    nav.navbar.shadow.fixed.top(class=_.get(global.appCnf,'site.header')?global.appCnf.site.header:'primary')
       .container
         a.logo(href='/')
           img(src=_.get(global.appCnf, 'site.images.logoTop.svg') alt=`${_.get(appCnf, 'site.name')} logo`)
@@ -117,7 +117,7 @@ header
                     a.item(href='/usuario/vendedor') Volverme vendedor
 
   .show-xs
-    nav.navbar.primary.shadow.fixed.top
+    nav.navbar.shadow.fixed.top(class=_.get(global.appCnf,'site.header')?global.appCnf.site.header:'primary')
       ul.flex.menu.w-100
         li
           a.sidenav-action.w-4.justify-content-center(href='#' data-target='#mobile-menu')

@@ -8,7 +8,6 @@ const s3 = new AWS.S3({
 
 module.exports = (req, res, next) => {
   const errors = [];
-  let firstStatus = '';
   async.auto({
     validate: (cb) => {
       cb();
@@ -31,7 +30,6 @@ module.exports = (req, res, next) => {
         errors.push({ field: 'reference', msg: 'Esta orden no necesita pago' });
         return cb(listErrors(400, null, errors));
       }
-      firstStatus = results.query.status;
       cb();
     }],
     uploadFile: ['check', (results, cb) => {

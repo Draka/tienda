@@ -73,6 +73,10 @@ const schema = new mongoose.Schema({
       trim: true,
     },
   },
+  header: {
+    type: String,
+    trim: true,
+  },
   trm: {
     date: {
       type: String,
