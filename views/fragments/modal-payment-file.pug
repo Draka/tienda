@@ -1,0 +1,30 @@
+#paymentFileOrder.modal.start-hide(tabindex='-1' role='dialog')
+  .modal-dialog(role='document')
+    form#paymentFileOrderForm.col-xs-12.validate(
+          action=`${appCnf.url.api}orders`
+          method='post'
+          enctype='multipart/form-data'
+          data-page=`/usuario/ordenes`
+          data-error='#form-results')
+      .modal-content
+        input#redirect(type='hidden' name='redirect')
+        .modal-header
+          .title.b Subir comprobante de pago
+          button.close.close-modal.btn-flat(type='button' data-dismiss='modal' aria-label='Cerrar')
+            span(aria-hidden='true')
+              i.fas.fa-times
+        .modal-body
+          .msg.error#form-results
+          .row
+            .col-xs-12
+              .title#paymentName
+              .mt-0-5#paymentInstructions
+              .mh-0-5#paymentFields
+              .form-group
+                .form-control
+                  input.input#file(type='file' name='file' placeholder=' ' required accept='application/pdf, image/jpeg, image/png')
+                  label(for='file') Archivo de comprobante de pago
+        .modal-footer.tr
+          button.close-modal.btn.btn--secondary(type='button') Salir
+          | #{' '}
+          button.btn.btn--primary(type='submit') Confirmar pago

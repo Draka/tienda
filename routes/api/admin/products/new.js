@@ -63,7 +63,7 @@ module.exports = (req, res, next) => {
     }],
     query: ['validate', (_results, cb) => {
       models.Product
-        .findOne({ sku: body.sku, storeID: req.params.storeID })
+        .findOne({ sku: _.kebabCase(_.deburr(body.sku)), storeID: req.params.storeID })
         .exec(cb);
     }],
     check: ['store', 'query', (results, cb) => {
@@ -122,6 +122,9 @@ module.exports = (req, res, next) => {
   }, (err, results) => {
     if (err) {
       return next(err);
+    }
+    if (req.body.redirect) {
+      return res.redirect(req.body.redirect);
     }
     res.status(201).send(results.create);
   });

@@ -52,7 +52,7 @@ block content
             | Pago y Seguridad
           .t-secondary.subtitle.mt-2
             | Métodos de Pago
-          .flex.mt-2
+          .flex.flex-wrap.mt-2
             .tc.mr-4
               img.h-48p(src=appCnf.url.static+'images/pagos/ico_tarjetas.svg' alt='pago tarjetas de crédito')
               .b.small Todas las tarjetas
@@ -72,11 +72,21 @@ block content
                   h2 Pedido ##{order.orderID} de: #{order.store.name}
                 .col-md-4
                   if order.status === 'created' && order.payment.pse
-                    button.btn.btn--primary.small.w-100.payment(
-                      id='id_'+order.orderID 
-                      data-order=order._id) Pagar #{formatMoney(order.order.total)}
+                    if order.payment.slug == 'wompi'
+                      button.btn.btn--alert.small.w-100.ph-0-5.rd-50.mt-0-5-sm.mt-0-5-xs.payment--wompi(
+                        id='id_'+order.orderID
+                        data-order=order._id) Pagar #{formatMoney(order.order.total)}
+                    else
+                      button.btn.btn--alert.small.w-100.ph-0-5.rd-50.mt-0-5-sm.mt-0-5-xs.payment--file(
+                        style="height: auto;"
+                        data-id=order._id
+                        data-orderid=order.orderID
+                        data-payment=JSON.stringify(_.pick(order.payment,['fields','info']))
+                        )
+                          b #{_.get(_.find(payments,{slug:order.payment.slug}),'name')}
+                          .title Pagar #{formatMoney(order.order.total)}
                   if order.status === 'picking' && !order.payment.pse
-                    button.btn.btn--info.small.w-100 Pago contra entrega
+                    button.btn.btn--alert.small.w-100.ph-0-5.rd-50.mt-0-5-sm.mt-0-5-xs Pago contra entrega
               table.hide-xs.small.table.table--lines
                 thead
                   tr
@@ -94,7 +104,7 @@ block content
                       td.tr #{formatMoney(product.price)}
                       td.tr #{product.quantity}
                       td.tr.t-secondary.b #{formatMoney(product.price*product.quantity)}
-                  
+
                 tfoot
                   tr
                     td.b(colspan='4') Subtotal
@@ -135,3 +145,4 @@ block content
                       td.tr.big.t-secondary.b #{formatMoney(order.order.total)}
 
 
+  include ../../fragments/modal-payment-file.pug

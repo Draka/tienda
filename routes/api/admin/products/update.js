@@ -1,4 +1,3 @@
-const { isArray } = require('lodash');
 const { imageToS3 } = require('../../../../libs/image.lib');
 const { deleteS3 } = require('../../../../libs/delete_s3.lib');
 const query = require('../../../../libs/query.lib');
@@ -87,7 +86,7 @@ module.exports = (req, res, next) => {
       if (!req.files) {
         return cb();
       }
-      if (!isArray(req.files.images)) {
+      if (!_.isArray(req.files.images)) {
         req.files.images = [req.files.images];
       }
 

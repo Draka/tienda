@@ -2,6 +2,7 @@
 import { Session } from './session';
 import { GetApi } from './get_api';
 import { Wompi } from './wompi';
+import { Vars } from './vars';
 
 export class Util {
   session = new Session();
@@ -64,8 +65,24 @@ export class Util {
   }
 
   showDetailOrder() {
-    $('button.payment').each((_i, el) => {
+    $('button.payment--wompi').each((_i, el) => {
       Wompi.btn(this.getApi, $(el));
+    });
+    $('button.payment--file').on('click', (event) => {
+      const $el = $(event.currentTarget);
+      const payment = $el.data('payment');
+      $('#paymentFileOrder').data('page', `/usuario/pedidos/${$el.data('id')}`);
+      $('#redirect').val(`/usuario/pedidos/${$el.data('orderid')}`);
+      $('#paymentFileOrderForm').attr('action', `${Vars.urlApi}orders/payment/${$el.data('id')}`);
+      $('#paymentName').html(payment.info.name);
+      $('#paymentInstructions').html(payment.info.instructions);
+      let fields = '';
+      $.each(payment.fields, (i, v) => {
+        fields += `<div>${payment.info.fields[i].label}: <b>${v.value}</b></div>`;
+      });
+      $('#paymentFields').html(fields);
+
+      sclib.modalShow('#paymentFileOrder');
     });
 
     $('.btn-cancel').on('click', () => {

@@ -12,9 +12,20 @@ block list
         th.w-100.b Metodo de Pago
     tbody
       each item of payments
-        tr
-          td.tc
-            +boolean(item.active)
-          td.w-100
-            .b #{item.name}
-            .small #{item.description}
+        if (store.trust && item.trust) || !item.trust
+          tr
+            td.tc
+              +boolean(item.active)
+            td.w-100
+              .b #{item.name}
+              .small #{item.description}
+              each field in item.fields
+                ul
+                  if field.value
+                    li
+                      span.b #{field.label}:
+                      | #{' '}
+                      if field.type=="text"
+                        | #{field.value}
+                      if field.type=="select"
+                        | #{field.options[field.value]}

@@ -19,16 +19,33 @@ block list
           th.w-100.b Metodo de Pago
       tbody
         each item,i in payments
-          tr
-            td.tc
-              input(type="hidden" name=`payments[${i}][slug]` value=item.slug)
-              label
-                input.checkbox.checkbox--no-margin(type="checkbox" name=`payments[${i}][active]` value='1' checked=item.active)
-                span
-            td.w-100
-              .b #{item.name}
-              .small #{item.description}
+          if (store.trust && item.trust) || !item.trust
+            tr
+              td.tc
+                input(type="hidden" name=`payments[${i}][slug]` value=item.slug)
+                label
+                  input.checkbox.checkbox--no-margin(type="checkbox" name=`payments[${i}][active]` value='1' checked=item.active)
+                  span
+              td.w-100
+                .b #{item.name}
+                .small #{item.description}
+                if (store.trust && item.trust)
+                  each field,j in item.fields
+                    .form-group.mt-0-5
+                      .form-control
+                        input(type="hidden" name=`payments[${i}][fields][${j}][slug]` value=field.slug)
+                        if field.type=="text"
+                          input.input(id=`f-${i}-${field.slug}` type="text" name=`payments[${i}][fields][${j}][value]` placeholder=' ' value=field.value)
+                          label(for=`f-${i}-${field.slug}`) #{field.label}
+                        if field.type=="select"
+                          select.input(id=`f-${i}-${field.slug}` name=`payments[${i}][fields][${j}][value]`)
+                            option(value='') --
+                            each label,val in field.options
+                              option(value=val selected=_.get(item, `fields[${j}].value`)==val) #{label}
+                          label(for=`f-${i}-${field.slug}`) #{field.label}
 
     .row
       .col-xs-12.tr
-        button.btn.btn--primary.w-100-xs.mt-2-xs(type="submit") Guardar opciones de pago
+        a.btn.btn--secondary.w-100-xs.mt-1-xs(href=`/administracion/tiendas/${store._id}/opciones-de-pago`) Cancelar
+        | #{' '}
+        button.btn.btn--primary.w-100-xs.mt-1-xs(type="submit") Guardar opciones de pago

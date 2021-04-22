@@ -51,6 +51,17 @@ module.exports = (req, res, next) => {
         active: _.get(d, 'active') || false,
         name: payment.name,
         description: payment.description,
+        trust: payment.trust,
+        fields: _.map(payment.fields, (field) => {
+          const e = _.find(_.get(d, 'fields'), { slug: field.slug });
+          return {
+            slug: field.slug,
+            type: field.type,
+            label: field.label,
+            options: field.options,
+            value: _.get(e, 'value') || '',
+          };
+        }),
       };
     });
 

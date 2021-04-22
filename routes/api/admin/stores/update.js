@@ -50,6 +50,13 @@ module.exports = (req, res, next) => {
       return {
         slug: payment.slug,
         active: _.get(d, 'active') || false,
+        fields: _.map(payment.fields, (field) => {
+          const e = _.find(_.get(d, 'fields'), { slug: field.slug });
+          return {
+            slug: field.slug,
+            value: _.get(e, 'value') || '',
+          };
+        }),
       };
     });
   }

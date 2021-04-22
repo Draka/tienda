@@ -6,6 +6,7 @@ export class Wompi {
   static btn(getApi, obj: any) {
     obj.on('click', (event: any) => {
       const order = obj.data('order');
+      const wompiKey = obj.data('wompiKey');
       if (!order) {
         return;
       }
@@ -16,7 +17,7 @@ export class Wompi {
             currency: 'COP',
             amountInCents: data.amount * 100,
             reference: `${data.reference}`,
-            publicKey: Wompi.key,
+            publicKey: wompiKey || Wompi.key,
           });
           checkout.open(() => {
             setTimeout(() => {

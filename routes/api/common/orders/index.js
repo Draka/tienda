@@ -3,5 +3,6 @@
 module.exports = (app) => {
   app.post('/v1/orders', checkAuth, require('./new'));
   app.get('/v1/orders/ref/:orderID', checkAuth, require('./reference'));
+  app.post('/v1/orders/ref/:orderID([0-9a-f]{24})', checkAuth, require('./reference'));
   app.put('/v1/orders/:orderID([0-9a-f]{24})/cancel', checkAuth, require('./cancel'));
 };

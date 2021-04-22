@@ -88,10 +88,22 @@ module.exports = (req, res, next) => {
             }
             const payment = _.find(global.payments, { slug: p.slug });
             cb(null, {
-              slug: payment.slug,
               active: _.get(d, 'active') || false,
               name: payment.name,
+              slug: payment.slug,
               description: payment.description,
+              trust: payment.trust,
+              fields: _.map(payment.fields, (field) => {
+                const e = _.find(p.fields, { slug: field.slug });
+                return {
+                  slug: field.slug,
+                  type: field.type,
+                  label: field.label,
+                  options: field.options,
+                  value: _.get(e, 'value') || '',
+                };
+              }),
+              file: payment.file,
             });
           }],
           coveragesAreas: ['delivery', 'payment', (results, cb) => {
@@ -210,10 +222,7 @@ module.exports = (req, res, next) => {
                 slug: order.delivery.slug,
                 personalDelivery: order.delivery.personalDelivery,
               },
-              payment: {
-                name: order.payment.name,
-                slug: order.payment.slug,
-              },
+              payment: order.payment,
               statuses: [{
                 status: 'created',
                 userID: req.user._id,

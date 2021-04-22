@@ -167,6 +167,37 @@ const schema = new mongoose.Schema({
     pse: {
       type: Boolean,
     },
+    description: {
+      type: String,
+    },
+    trust: {
+      type: String,
+    },
+    fields: [{
+      slug: {
+        type: String,
+        trim: true,
+      },
+      value: {
+        type: String,
+        trim: true,
+      },
+    }],
+    fileCheck: {
+      type: Boolean,
+    },
+    file: {
+      type: String,
+      trim: true,
+    },
+    mime: {
+      type: String,
+      trim: true,
+    },
+    rejectMsg: {
+      type: String,
+      trim: true,
+    },
   },
   address: {
     address: {

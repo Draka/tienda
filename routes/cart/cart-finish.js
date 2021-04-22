@@ -24,6 +24,7 @@ module.exports = (req, res, next) => {
     }],
     payment: ['orders', (results, cb) => {
       async.eachLimit(results.orders, 10, (order, cb) => {
+        order.payment.info = _.find(global.payments, { slug: order.payment.slug });
         reference(order, req.user._id, cb);
       }, cb);
     }],

@@ -56,11 +56,18 @@ const schema = new mongoose.Schema({
     default: false,
     index: true,
   },
+  // meenú para productos de amazon
   amz: {
     type: Boolean,
     default: false,
   },
+  // vitrina, sin precios
   showcase: {
+    type: Boolean,
+    default: false,
+  },
+  // tienda confiable, permite opciones de pago propias
+  trust: {
     type: Boolean,
     default: false,
   },
@@ -83,11 +90,6 @@ const schema = new mongoose.Schema({
       trim: true,
     },
   },
-  // defaultPlace: {
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: `${appCnf.dbPrefix}places`,
-  //   index: true,
-  // },
   inventory: {
     type: Boolean,
     default: false,
@@ -96,16 +98,6 @@ const schema = new mongoose.Schema({
     type: Array,
     default: ['iva'],
   },
-  // featuredCategories: [{
-  //   quantity: {
-  //     type: Number,
-  //     default: 8,
-  //   },
-  //   category: {
-  //     type: mongoose.Schema.Types.ObjectId,
-  //     ref: `${appCnf.dbPrefix}categories`,
-  //   },
-  // }],
   deliveries: [
     {
       active: {
@@ -132,6 +124,16 @@ const schema = new mongoose.Schema({
         type: String,
         trim: true,
       },
+      fields: [{
+        slug: {
+          type: String,
+          trim: true,
+        },
+        value: {
+          type: String,
+          trim: true,
+        },
+      }],
     },
   ],
   department: {

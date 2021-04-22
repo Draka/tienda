@@ -18,6 +18,7 @@ export class Util {
     this.openModalAction();
     this.openModalMsg();
     this.moveRow();
+    this.showDetailOrder();
   }
 
   moveRow() {
@@ -115,6 +116,12 @@ export class Util {
       $modal.find('.btn--primary').html($el.data('close'));
       $modal.find('.body').html($($el.data('body')).html());
       sclib.modalShow('#modalMsg');
+    });
+  }
+
+  showDetailOrder() {
+    $('.btn-cancel').on('click', () => {
+      sclib.modalShow('#cancelOrder');
     });
   }
 }
