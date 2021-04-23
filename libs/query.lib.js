@@ -97,7 +97,7 @@ exports.site = (cb) => {
           if (err) {
             return cb(err);
           }
-          _.each(doc.images, (image, path) => {
+          _.each(_.get(doc, 'images'), (image, path) => {
             _.each(image, (url, ext) => {
               doc.images[path][ext] = `${appCnf.url.static}tenancy/${appCnf.tenancy}/images/${appCnf.s3.folder}/site/${path}/${url}`;
             });
