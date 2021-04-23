@@ -27,7 +27,7 @@ module.exports = (req, res, next) => {
           },
           save: ['convert', (results, cb) => {
             const files = [];
-            if (file.mimetype === 'image/jpeg') {
+            if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/webp') {
               files.push('jpg');
               files.push('webp');
             } else {
