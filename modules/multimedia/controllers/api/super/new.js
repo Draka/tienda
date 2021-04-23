@@ -34,7 +34,7 @@ module.exports = (req, res, next) => {
               files.push(originalExt);
             }
             let sizes = [];
-            if (['image/png', 'image/jpeg'].indexOf(file.mimetype) >= 0) {
+            if (['image/png', 'image/jpeg', 'image/webp'].indexOf(file.mimetype) >= 0) {
               sizes = _.map(modCnf.imagesSizes, 'x');
             }
             const multimedia = new models.Multimedia({

@@ -87,7 +87,7 @@ exports.imageToS3 = (pathImg, key, localImg, sizes, cb) => {
   } else if (localImg.mimetype === 'image/jpeg') {
     originalExt = 'jpg';
   } else if (localImg.mimetype === 'image/webp') {
-    originalExt = 'jpg';
+    originalExt = 'webp';
   }
   const fileName = `./tmp/${nameTemp}`;
   const convert = ['png', 'jpg', 'webp'].indexOf(originalExt) >= 0;
