@@ -1,0 +1,19 @@
+{
+    "email": {
+        "title": "Aquista",
+        "emailNoreply": "no-reply@aquista.com",
+        "emailInfo": "info@aquista.com"
+    },
+    "site": {
+        "name": "Aquista",
+        "title": "",
+        "description": "El lugar seguro donde encontrarás todo lo que necesitas para ti y tú familia",
+        "separator": "|",
+        "twitter": "",
+        "sameAs": [
+            "https://aquista.co/"
+        ],
+        "whatsapp": "+573108784749"
+    },
+    "url": "https://aquista.com/"
+}
