@@ -86,9 +86,11 @@ exports.imageToS3 = (pathImg, key, localImg, sizes, cb) => {
     originalExt = 'png';
   } else if (localImg.mimetype === 'image/jpeg') {
     originalExt = 'jpg';
+  } else if (localImg.mimetype === 'image/webp') {
+    originalExt = 'jpg';
   }
   const fileName = `./tmp/${nameTemp}`;
-  const convert = ['png', 'jpg'].indexOf(originalExt) >= 0;
+  const convert = ['png', 'jpg', 'webp'].indexOf(originalExt) >= 0;
 
   async.auto({
     makedir: (cb) => {
@@ -120,6 +122,7 @@ exports.imageToS3 = (pathImg, key, localImg, sizes, cb) => {
     images: ['copyFile', (_results, cb) => {
       switch (originalExt) {
         case 'jpg':
+        case 'webp':
           async.auto({
             jpg: (cb) => {
               resizes(fileName, nameTemp, 'jpg', sizes, cb);
@@ -140,6 +143,7 @@ exports.imageToS3 = (pathImg, key, localImg, sizes, cb) => {
       if (process.env.NODE_ENV === 'production' || appCnf.s3.forced) {
         switch (originalExt) {
           case 'jpg':
+          case 'webp':
             async.auto({
               jpg: (cb) => {
                 uploadImages(fileName, nameTemp, 'jpg', sizes, pathImg, key, cb);
@@ -164,6 +168,7 @@ exports.imageToS3 = (pathImg, key, localImg, sizes, cb) => {
         // save local
         switch (originalExt) {
           case 'jpg':
+          case 'webp':
             async.auto({
               jpg: (cb) => {
                 uploadLocalImages(fileName, nameTemp, 'jpg', sizes, pathImg, key, cb);
@@ -222,6 +227,7 @@ exports.imageToS3 = (pathImg, key, localImg, sizes, cb) => {
     deleteSizes: ['uploadImages', 'uploadImagesLocal', (_results, cb) => {
       switch (originalExt) {
         case 'jpg':
+        case 'webp':
           async.auto({
             jpg: (cb) => {
               deleteTemImages(nameTemp, 'jpg', sizes, cb);
