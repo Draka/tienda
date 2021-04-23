@@ -28,10 +28,6 @@ footer.mt-8
         .col-md-4.mb-1-xs.mb-1-sm.mb-1-md
           .small COMPRA 100% SEGURA
         .col-md-4.mb-1-xs.mb-1-sm.mb-1-md
-          img.h-2(src=appCnf.url.static+'images/logo-name.svg' alt='Véndelo Mejor logo blanco')
-          .small powered by:
-            | #{' '}
-            a(href='https://vendelomejor.com/') Véndelo Mejor
 
   if !store && _.find(_.get(appCnf, 'site.contacts'), {slug: 'whatsapp'})
     .m-1.fixed.bottom
