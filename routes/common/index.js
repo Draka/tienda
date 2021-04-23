@@ -1,6 +1,6 @@
 /* eslint-disable global-require */
 module.exports = (app) => {
-  if (appCnf.tenancy !== 'vendelomejor' || process.env.NODE_ENV !== 'production') {
+  if (!(appCnf.tenancy === 'vendelomejor' || appCnf.tenancy === 'aquista') || process.env.NODE_ENV !== 'production') {
     app.get('/', require('./landpage'));
   }
   // app.get('/', require('./landpage'));
