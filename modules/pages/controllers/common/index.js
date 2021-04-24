@@ -26,7 +26,7 @@ module.exports = (req, res, next) => {
         results.item = results.check;
       }
       // Busca todos los meta para convertir
-      meta(req.params.slug, results.item.html, cb);
+      meta(req.params.slug, results.item.html, true, cb);
     }],
   }, (err, results) => {
     if (err) {
