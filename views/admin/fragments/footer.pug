@@ -1,30 +1,10 @@
 footer.mt-8
-  .container-fluid.primary
-    .container.ph-1
-      .row
-        .col-md-4.tc.vertical-align-center.mb-3-xs.mb-3-sm.mb-3-md
-          img.h-96p(src=_.get(global.appCnf, 'site.images.logoSquare.svg') alt=`${_.get(appCnf, 'site.name')} logo nombre`)
-          .small.pt-1 TIENDAS EN PESOS COLOMBIANOS
-        .col-md-8.vertical-align-center
-          ul
-            li.p-0-5
-              a(href='/usuario/vendedor') ¿Interesado en vender sus productos?
-            li.p-0-5
-              a(href='/documentos/politica-de-privacidad-y-tratamiento-de-datos') Política de Privacidad y Tratamiento de Datos
-            li.p-0-5
-              a(href='/documentos/terminos-y-condiciones-cliente') Términos y Condiciones Cliente
-            li.p-0-5
-              a(href='/documentos/terminos-y-condiciones-vendedor') Términos y Condiciones Vendedor
-            li.p-0-5
-              | Comentarios y dudas:
-              | #{' '}
-              a.b(href=`mailto:${_.get(appCnf, 'site.email.emailInfo')}`) #{_.get(appCnf, 'site.email.emailInfo')}
   .container-fluid.primary-500
     .container.tc.ph-1
       .row
         .col-md-4.mb-1-xs.mb-1-sm.mb-1-md
-          .small
-            | Santrato copyright 2021
+          | !{getFragment('footer-l-2-c-1')}
         .col-md-4.mb-1-xs.mb-1-sm.mb-1-md
-          .small COMPRA 100% SEGURA
+          | !{getFragment('footer-l-2-c-2')}
         .col-md-4.mb-1-xs.mb-1-sm.mb-1-md
+          | !{getFragment('footer-l-2-c-3')}
