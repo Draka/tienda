@@ -1,5 +1,5 @@
 const { modelSlug } = require('../../../../libs/query.lib');
-const meta = require('../../libs/meta');
+const { meta } = require('../../libs/meta');
 
 module.exports = (req, res, next) => {
   async.auto({
