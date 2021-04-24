@@ -46,7 +46,7 @@ module.exports = (req, res, next) => {
       },
     ];
 
-    res.render('admin/pages/super-pages/list.pug', {
+    res.render('../modules/pages/views/super/list.pug', {
       session: req.user,
       items: results.items,
       limit,

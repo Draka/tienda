@@ -39,16 +39,17 @@ const simples = [
   'p',
 ];
 
-const _meta = (text, cb) => {
+const _meta = (text, html, cb) => {
   // return parse(text);
 
   let re;
 
   // escapeHtml(unsafe) {
-  text = text
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
-
+  if (!html) {
+    text = text
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+  }
   // complejas
   _.each(complex, (key) => {
     re = new RegExp(`\\[(${key})( .*?)?\\]`, 'igm');
@@ -212,7 +213,7 @@ const _meta = (text, cb) => {
                 return cb(null, '');
               }
               // Busca todos los meta para convertir
-              _meta(results.item.html, cb);
+              _meta(results.item.html, html, cb);
             }],
           }, (err, results) => {
             text = text.replace(match[0], results.meta);
@@ -241,7 +242,7 @@ const _meta = (text, cb) => {
                 return cb(null, '');
               }
               // Busca todos los meta para convertir
-              _meta(results.item.html, cb);
+              _meta(results.item.html, html, cb);
             }],
           }, (err, results) => {
             if (!results.items) {
@@ -265,24 +266,62 @@ const _meta = (text, cb) => {
       text = text.replace(/\[site-description\]/g, _.get(appCnf, 'site.description'));
       cb();
     },
+    siteEmail: (cb) => {
+      text = text.replace(/\[site-email\]/g, `<a href=""mailto:${_.get(appCnf, 'site.email.emailInfo')}>${_.get(appCnf, 'site.email.emailInfo')}</a>`);
+      cb();
+    },
+    logoCuadrado: (cb) => {
+      text = text.replace(/\[logo-cuadrado\]/g,
+        `<img class="h-96p" src="${
+          _.get(appCnf, 'site.images.logoSquare.svg')
+        }" alt="${_.get(appCnf, 'site.name')} logo nombre">`);
+      cb();
+    },
+    menu: (cb) => {
+      text = text.replace(/\[menu\]/g, '<ul class="flex menu" role="menu">');
+      text = text.replace(/\[\/menu\]/g, '</ul>');
+      text = text.replace(/\[menu-mob\]/g, '<ul class="list" role="menu">');
+      text = text.replace(/\[\/menu-mob\]/g, '</ul>');
+      text = text.replace(/\[item\]/g, '<li role="menuitem">');
+      text = text.replace(/\[\/item\]/g, '</li>');
+      cb();
+    },
+    searchStore: (cb) => {
+      text = text.replace(/\[menu\]/g, '<form class="flex search" action="/tiendas/buscar">'
+      + '<label class="out-screen" for="query-d">Buscar</label>'
+      + '<input class="input--simple w-100 rdtl-50 rdbl-50 ph-0-25 pw-1" id="query-d" type="text" name="q" placeholder="Buscar tiendas" required="">'
+      + '<button class="btn btn--secondary"><i class="fas fa-search"></i><span class="out-screen">Buscar tiendas</span></button>'
+      + '</form>');
+      cb();
+    },
   }, (err) => cb(err, text));
 };
 
-const meta = (page, text, cb) => {
+const meta = (page, text, html, cb) => {
   const key = `__page_render__${page}`;
   client.get(key, (_err, reply) => {
     if (reply) {
       cb(null, reply);
     } else {
-      _meta(text, (err, text) => {
+      _meta(text, html, (err, xtext) => {
         if (err) {
           return cb(err);
         }
-        client.set(key, text, 'EX', 3600);
-        cb(null, text);
+        client.set(key, xtext, 'EX', 3600);
+        cb(null, xtext);
       });
     }
   });
 };
+const metaNoCache = (page, text, html, cb) => {
+  _meta(text, html, (err, xtext) => {
+    if (err) {
+      return cb(err);
+    }
+    // client.set(key, xtext, 'EX', 3600);
+    cb(null, xtext);
+  });
+};
 
-module.exports = meta;
+exports.meta = meta;
+exports.metaNoCache = metaNoCache;

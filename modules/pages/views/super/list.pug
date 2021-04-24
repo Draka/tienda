@@ -1,0 +1,45 @@
+extends /modules/admin/views/layout-list
+
+block list
+  if items.length
+    .remark
+      b A
+      | #{' '} = Activa,
+      | #{' '}
+      b P
+      | #{' '} = Publicado
+      | #{' '}
+    table.small.table.table--lines.table--striped
+      thead
+        tr
+          th.tc(colspan=2)
+            i.fas.fa-cog
+          th.b.tc A
+          th.b.tc P
+          th.b Nombre
+          th.b Slug
+      tbody
+        each item of items
+          tr
+            td.tc
+              if item.publish
+                a(href=`/paginas/${item.slug}` title='Ver' target="_blank")
+                  i.fas.fa-external-link-alt
+            td.tc.w50
+              a.btn-flat.p-0-5.rd-0-2(href=`/administracion/super/paginas/editar/${item._id}` title='Editar')
+                i.fas.fa-pencil-alt
+            td.tc
+              +boolean(item.active)
+            td.tc
+              +boolean(item.publish)
+            td
+              a.b(href=`/administracion/super/paginas/editar/${item._id}`) #{item.title}
+            td
+              | #{item.slug}
+
+      tfoot
+        tr
+          th(colspan="6")
+            +paginator
+  else
+    +noItems('No hay páginas creadas.')

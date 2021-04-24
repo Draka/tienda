@@ -197,19 +197,26 @@ block edit
               h2.mb-1 Colores
               .form-group
                 .form-control
-                  input.input#color-primary(type="color" name="color[primary]" placeholder=' ' required value=_.get(item, 'color.primary'))
+                  input.input#color-primary(type="color" name="style.color.primary" placeholder=' ' required value=_.get(item, 'style.color.primary'))
                   label(for='color-primary') Color Primario
               .form-group
                 .form-control
-                  input.input#color-secondary(type="color" name="color[secondary]" placeholder=' ' required value=_.get(item, 'color.secondary'))
+                  input.input#color-secondary(type="color" name="style.color.secondary" placeholder=' ' required value=_.get(item, 'style.color.secondary'))
                   label(for='color-secondary') Color Secundario
               .form-group
                 .form-control
-                  select.input#header(name='header' required)
+                  select.input#header(name='style.header' required)
                     option(value='') --
                     each color in colors
-                      option(value=color.value selected=color.value==item.header) #{color.name}
+                      option(value=color.value selected=color.value==_.get(item, 'style.header')) #{color.name}
                   label.nowrap(for='header') Cabecera
+              .form-group
+                .form-control
+                  select.input#footer(name='style.footer' required)
+                    option(value='') --
+                    each color in colors
+                      option(value=color.value selected=color.value==_.get(item, 'style.footer')) #{color.name}
+                  label.nowrap(for='footer') Pie de página
 
           .row
             .col-xs-12.tr

@@ -1,5 +1,5 @@
 const { modelSlug } = require('../../../../libs/query.lib');
-const meta = require('../../libs/meta');
+const { meta } = require('../../libs/meta');
 
 module.exports = (req, res, next) => {
   async.auto({
@@ -11,7 +11,7 @@ module.exports = (req, res, next) => {
         return cb(listErrors(404, null, [{ field: 'pageID', msg: 'No existe la Página' }]));
       }
       // Busca todos los meta para convertir
-      meta(req.params.slug, results.item.html, cb);
+      meta(req.params.slug, results.item.html, true, cb);
     }],
   }, (err, results) => {
     if (err) {

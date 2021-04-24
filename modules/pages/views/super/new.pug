@@ -1,0 +1,47 @@
+extends /modules/admin/views/layout-edit-cmp
+
+block edit
+  form.validate-rest(
+    id="updateProfileForm"
+    action=`${appCnf.url.api}admin/super/pages`
+    method="post"
+    data-page=`/administracion/super/paginas`
+    data-error="#form-results")
+    .white.br-1.rd-0-2.p-3
+      .msg.error#form-results
+      .row
+        .col-xs-12
+          .form-group
+            .form-control
+              label.switch
+                input#active(type="hidden" name="active" value='0')
+                span.check
+                span.caption Activa
+          .form-group
+            .form-control
+              label.switch
+                input#publish(type="hidden" name="publish" value='0')
+                span.check
+                span.caption Publicado
+          .form-group
+            .form-control
+              input.input#title(type="text" name="title" placeholder=' ' required)
+              label(for='title') Título
+          .form-group
+            .form-control
+              input.input#seo(type="text" name="seo" data-count="180" data-target="#count-short-description" placeholder=' ')
+              label(for='seo') SEO (corta, entre 150 y 180 caracteres)
+            .small No más de 180 caracteres. Lleva #{' '}
+              spam#count-short-description
+              | #{' '}caracteres
+          .form-group
+            .form-control
+              input.input#slug(type="text" name="slug" placeholder=' ')
+              label(for='slug') Slug
+          .form-group.ph-1
+            .form-control
+              textarea.input#html(name="html" placeholder=' ' rows=20)
+              label(for='html') HTML [bbcode]
+      .row
+        .col-xs-12.tr
+          button.btn.btn--primary.w-100-xs.mt-1-xs(type="submit") Crear Página

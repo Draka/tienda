@@ -1,3 +1,5 @@
+const { deleteKeysByPattern } = require('../libs/redis.lib');
+
 const schema = new mongoose.Schema({
   userID: {
     type: mongoose.Schema.Types.ObjectId,
@@ -35,11 +37,11 @@ const schema = new mongoose.Schema({
 }, { timestamps: true });
 
 function preUpdate(result, next) {
+  deleteKeysByPattern('__page_render*');
   client.del(`__page__${result._id}`);
   if (result.slug) {
     result.slug = _.kebabCase(_.deburr(result.slug));
     client.del(`__page__${result.slug}`);
-    client.del(`__page_render__${result.slug}`);
   }
   if (result.title && !result.slug) {
     result.slug = _.kebabCase(_.deburr(result.title));

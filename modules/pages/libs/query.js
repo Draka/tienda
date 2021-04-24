@@ -76,7 +76,6 @@ exports.multimediaByKey = (bykey, cb) => {
 const urls = [
   'https://marketsabana.com/',
   'https://vendelomejor.com/',
-  'https://buenaventa.co/',
 ];
 
 exports.getUrlStores = (cb) => {
