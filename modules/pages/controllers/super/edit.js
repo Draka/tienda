@@ -32,7 +32,7 @@ module.exports = (req, res, next) => {
     ];
 
     res.render('../modules/pages/views/super/edit.pug', {
-      session: req.user,
+      req,
       item: results.item,
       title: 'Editar Página',
       menu: 'super-paginas',

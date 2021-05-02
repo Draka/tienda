@@ -1,4 +1,9 @@
 const schema = new mongoose.Schema({
+  tenancy: {
+    type: String,
+    index: true,
+    required: true,
+  },
   publish: {
     type: Boolean,
     index: true,
@@ -12,7 +17,6 @@ const schema = new mongoose.Schema({
   slug: {
     type: String,
     trim: true,
-    unique: true,
   },
   description: {
     type: String,
@@ -53,6 +57,7 @@ function preUpdate(result, next) {
   next();
 }
 schema.post('validate', preUpdate);
+schema.index({ tenancy: 1, slug: 1 }, { unique: true });
 
 const Model = mongoose.model(`${appCnf.dbPrefix}plans`, schema);
 

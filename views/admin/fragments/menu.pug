@@ -41,7 +41,7 @@ nav
           a.item(href=`/administracion/super/faq-categorias`) FAQ Categorías
         li.navigation__item(class=menu=='super-faq'?'navigation--active':'')
           a.item(href=`/administracion/super/faq`) FAQ Preguntas
-    if appCnf.tenancy=='vendelomejor' || process.env.NODE_ENV !== 'production'
+    if req.tenancy=='santrato' || process.env.NODE_ENV !== 'production'
       .expandable
         .expandable__header
           .expandable__title General

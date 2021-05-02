@@ -34,7 +34,7 @@ module.exports = (req, res, next) => {
       text: `La tienda, <b>${results.store.name}</b> se ha creado.<br> Ingrese a su configuración <a href="/administracion/tiendas/${results.store._id}">aquí</a>`,
     };
     res.render('admin/pages/messages/general.pug', {
-      session: req.user,
+      req,
       user: results.user,
       title: 'Tienda',
       menu: 'tienda/nuevo',

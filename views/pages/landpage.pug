@@ -8,8 +8,8 @@ block content
       "name": "#{_.get(appCnf, 'site.name')}",
       "url": "#{appCnf.url.site}",
       "sameAs": !{JSON.stringify(_.get(appCnf, 'site.sameAs'))},
-      "logo": "#{appCnf.url.static}tenancy/#{appCnf.tenancy}/images/logo-01.png",
-      "image": "#{appCnf.url.static}tenancy/#{appCnf.tenancy}/images/logo-02.png",
+      "logo": "#{appCnf.url.cdn}tenancy/#{req.tenancy}/images/logo-01.png",
+      "image": "#{appCnf.url.cdn}tenancy/#{req.tenancy}/images/logo-02.png",
       "description": "#{_.get(appCnf, 'site.description')}",
       "address": {
         "@type": "PostalAddress",
@@ -18,7 +18,7 @@ block content
     }
 
   h1.out-screen #{_.get(appCnf, 'site.name')}
-  .container-fluid.h-460p.h-100-xs.bg.s-cover.lazy(data-src=appCnf.url.static+'tenancy/'+appCnf.tenancy+'/images/home/1920_home2.jpg')
+  .container-fluid.h-460p.h-100-xs.bg.s-cover.lazy(data-src=appCnf.url.cdn+'tenancy/'+req.tenancy+'/images/home/1920_home2.jpg')
     .container
       .row
         .col-lg-6.offset-lg-3

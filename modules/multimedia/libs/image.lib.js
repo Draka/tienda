@@ -57,7 +57,7 @@ function uploadImages(fileName, nameTemp, ext, sizes, pathImg, key, cb) {
     // ajustes de s3
     const params = {
       Bucket: appCnf.s3.bucket,
-      Key: `tenancy/${appCnf.tenancy}/images/${appCnf.s3.folder}/${pathImg}/${size.x}_${key}.${ext}`, // ruta donde va a quedar
+      Key: `tenancy/${req.tenancy}/images/${appCnf.s3.folder}/${pathImg}/${size.x}_${key}.${ext}`, // ruta donde va a quedar
       Body: fileContent,
       ContentType: mime.lookup(`./tmp/${nameTemp}.${ext}`),
       CacheControl: 'private, max-age=31536000',
@@ -70,7 +70,7 @@ function uploadImages(fileName, nameTemp, ext, sizes, pathImg, key, cb) {
 }
 function uploadLocalImages(fileName, nameTemp, ext, sizes, pathImg, key, cb) {
   async.eachLimit(sizes, 5, (size, cb) => {
-    fs.copyFile(`./tmp/${size.x}_${nameTemp}.${ext}`, `./public/tenancy/${appCnf.tenancy}/images/${appCnf.s3.folder}/${pathImg}/${size.x}_${key}.${ext}`, cb);
+    fs.copyFile(`./tmp/${size.x}_${nameTemp}.${ext}`, `./public/tenancy/${req.tenancy}/images/${appCnf.s3.folder}/${pathImg}/${size.x}_${key}.${ext}`, cb);
   }, cb);
 }
 function deleteTemImages(nameTemp, ext, sizes, cb) {
@@ -105,7 +105,7 @@ exports.imageToS3 = (pathImg, key, localImg, sizes, cb) => {
       if (process.env.NODE_ENV === 'production') {
         return cb();
       }
-      const dir = `./public/tenancy/${appCnf.tenancy}/images/${appCnf.s3.folder}/${pathImg}`;
+      const dir = `./public/tenancy/${req.tenancy}/images/${appCnf.s3.folder}/${pathImg}`;
       if (!fs.existsSync(dir)) {
         fs.mkdir(dir, { recursive: true }, cb);
       } else {
@@ -198,7 +198,7 @@ exports.imageToS3 = (pathImg, key, localImg, sizes, cb) => {
         // ajustes de s3
         const params = {
           Bucket: appCnf.s3.bucket,
-          Key: `tenancy/${appCnf.tenancy}/images/${appCnf.s3.folder}/${pathImg}/${key}.${originalExt}`, // ruta donde va a quedar
+          Key: `tenancy/${req.tenancy}/images/${appCnf.s3.folder}/${pathImg}/${key}.${originalExt}`, // ruta donde va a quedar
           Body: fileContent,
           ContentType: localImg.mimetype,
           CacheControl: 'private, max-age=31536000',
@@ -218,7 +218,7 @@ exports.imageToS3 = (pathImg, key, localImg, sizes, cb) => {
       }
       if (process.env.NODE_ENV !== 'production') {
         // save local
-        fs.copyFile(fileName, `./public/tenancy/${appCnf.tenancy}/images/${appCnf.s3.folder}/${pathImg}/${key}.${originalExt}`, cb);
+        fs.copyFile(fileName, `./public/tenancy/${req.tenancy}/images/${appCnf.s3.folder}/${pathImg}/${key}.${originalExt}`, cb);
       } else {
         cb();
       }
@@ -303,7 +303,7 @@ exports.imagenUrl = (items, cb) => {
         _.set(
           items[i],
           `urlSize.${file}.${size}`,
-          `${appCnf.url.static}tenancy/${appCnf.tenancy}/images/${appCnf.s3.folder}/multimedia/${item.key}/${size}_${item.key}.${file}`,
+          `${appCnf.url.cdn}tenancy/${req.tenancy}/images/${appCnf.s3.folder}/multimedia/${item.key}/${size}_${item.key}.${file}`,
         );
       });
     });
@@ -311,7 +311,7 @@ exports.imagenUrl = (items, cb) => {
       _.set(
         items[i],
         `url.${file}`,
-        `${appCnf.url.static}tenancy/${appCnf.tenancy}/images/${appCnf.s3.folder}/multimedia/${item.key}/${item.sizes.length ? 'default_' : ''}${item.key}.${file}`,
+        `${appCnf.url.cdn}tenancy/${req.tenancy}/images/${appCnf.s3.folder}/multimedia/${item.key}/${item.sizes.length ? 'default_' : ''}${item.key}.${file}`,
       );
     });
   });

@@ -13,7 +13,7 @@ header
               button.btn.btn--secondary
                 i.fas.fa-search
                 span.out-screen #{__('Bucar productos')}
-        | !{getFragment('menu')}
+        | !{getFragment(req, 'menu')}
         if !session
           ul.flex.menu
             li
@@ -130,7 +130,7 @@ header
     .sidenav-body
       .white-500.w-100.flex.h-3
         .w-100.title.tc.b Inicio
-      | !{getFragment('menu-mob')}
+      | !{getFragment(req, 'menu-mob')}
       if account
         .white-500.w-100.flex.h-3
           .w-100.title.tc.b Cuenta

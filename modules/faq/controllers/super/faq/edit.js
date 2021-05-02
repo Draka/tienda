@@ -37,7 +37,7 @@ module.exports = (req, res, next) => {
     ];
 
     res.render('../modules/faq/views/super/faq/edit.pug', {
-      session: req.user,
+      req,
       item: results.item,
       categories: results.categories,
       title: 'Editar FAQ',

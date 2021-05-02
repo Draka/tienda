@@ -19,16 +19,16 @@ exports.model = (model, id, cb) => {
   });
 };
 
-exports.modelSlug = (model, slug, cb) => {
+exports.modelSlug = (req, model, slug, cb) => {
   const name = _.kebabCase(_.deburr(model));
   slug = _.kebabCase(_.deburr(slug));
-  const key = `__${name}__${slug}`;
+  const key = `__${req.tenancy}__${name}__${slug}`;
   client.get(key, (_err, reply) => {
     if (reply && process.env.NODE_ENV === 'production') {
       cb(null, JSON.parse(reply));
     } else {
       models[model]
-        .findOne({ slug })
+        .findOne({ slug, tenancy: req.tenancy })
         .lean()
         .exec((err, doc) => {
           if (err) {
@@ -99,7 +99,7 @@ exports.site = (cb) => {
           }
           _.each(_.get(doc, 'images'), (image, path) => {
             _.each(image, (url, ext) => {
-              doc.images[path][ext] = `${appCnf.url.static}tenancy/${appCnf.tenancy}/images/${appCnf.s3.folder}/site/${path}/${url}`;
+              doc.images[path][ext] = `${appCnf.url.cdn}tenancy/${req.tenancy}/images/${appCnf.s3.folder}/site/${path}/${url}`;
             });
           });
           client.set(key, JSON.stringify(doc), 'EX', 3600);

@@ -22,7 +22,7 @@ module.exports = (req, res, next) => {
     ];
 
     res.render('../modules/email/views/super/templates/new.pug', {
-      session: req.user,
+      req,
       items: results.items,
       title: 'Nueva Plantilla',
       menu: 'super-emails-plantillas',

@@ -9,7 +9,7 @@ const ses = new AWS.SES({
 });
 
 function template(data) {
-  const fn = pug.compileFile(`./views/tenancy/${data.tenancy || appCnf.tenancy}/email/${data.template}.pug`, {});
+  const fn = pug.compileFile(`./views/tenancy/${data.tenancy || req.tenancy}/email/${data.template}.pug`, {});
   const html = fn(data);
   return html;
 }

@@ -1,0 +1,34 @@
+.spacer {
+  padding: 0;
+  list-style: none inside;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+
+  li,
+  .item {
+    position: relative;
+    cursor: pointer;
+    display: list-item;
+    background-color: inherit;
+    color: inherit;
+    transition: all 0.15s ease-in-out;
+    margin: 0.3em;
+    padding: .1em .7em;
+  }
+
+  & li+li:before,
+  & .item+.item:before {
+    display: block;
+    position: absolute;
+    content: "|";
+    left: 0;
+    margin-left: -.75em;
+    font-size: 0.7em;
+    top: .5em;
+  }
+
+  a {
+    text-decoration: none;
+  }
+}

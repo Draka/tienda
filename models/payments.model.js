@@ -1,4 +1,9 @@
 const schema = new mongoose.Schema({
+  tenancy: {
+    type: String,
+    index: true,
+    required: true,
+  },
   orderID: {
     type: mongoose.Schema.Types.ObjectId,
     ref: `${appCnf.dbPrefix}orders`,

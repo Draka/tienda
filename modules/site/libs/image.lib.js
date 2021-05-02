@@ -26,7 +26,7 @@ exports.imageToS3 = (pathImg, key, localImg, convert, cb) => {
       if (process.env.NODE_ENV === 'production') {
         return cb();
       }
-      const dir = `./public/tenancy/${appCnf.tenancy}/images/${appCnf.s3.folder}/${pathImg}`;
+      const dir = `./public/tenancy/${req.tenancy}/images/${appCnf.s3.folder}/${pathImg}`;
       if (!fs.existsSync(dir)) {
         fs.mkdir(dir, { recursive: true }, cb);
       } else {
@@ -80,7 +80,7 @@ exports.imageToS3 = (pathImg, key, localImg, convert, cb) => {
           // ajustes de s3
           const params = {
             Bucket: appCnf.s3.bucket,
-            Key: `tenancy/${appCnf.tenancy}/images/${appCnf.s3.folder}/${pathImg}/${key}.${ext}`, // ruta donde va a quedar
+            Key: `tenancy/${req.tenancy}/images/${appCnf.s3.folder}/${pathImg}/${key}.${ext}`, // ruta donde va a quedar
             Body: fileContent,
             ContentType: mime.lookup(`./tmp/${nameTemp}.${ext}`),
             CacheControl: 'private, max-age=31536000',
@@ -99,7 +99,7 @@ exports.imageToS3 = (pathImg, key, localImg, convert, cb) => {
       if (process.env.NODE_ENV !== 'production') {
         // save local
         async.each(convert, (ext, cb) => {
-          fs.copyFile(`./tmp/${nameTemp}.${ext}`, `./public/tenancy/${appCnf.tenancy}/images/${appCnf.s3.folder}/${pathImg}/${key}.${ext}`, cb);
+          fs.copyFile(`./tmp/${nameTemp}.${ext}`, `./public/tenancy/${req.tenancy}/images/${appCnf.s3.folder}/${pathImg}/${key}.${ext}`, cb);
         }, cb);
       } else {
         cb();
@@ -115,7 +115,7 @@ exports.imageToS3 = (pathImg, key, localImg, convert, cb) => {
         // ajustes de s3
         const params = {
           Bucket: appCnf.s3.bucket,
-          Key: `tenancy/${appCnf.tenancy}/images/${appCnf.s3.folder}/${pathImg}/${key}.${originalExt}`, // ruta donde va a quedar
+          Key: `tenancy/${req.tenancy}/images/${appCnf.s3.folder}/${pathImg}/${key}.${originalExt}`, // ruta donde va a quedar
           Body: fileContent,
           ContentType: localImg.mimetype,
           CacheControl: 'private, max-age=31536000',
@@ -135,7 +135,7 @@ exports.imageToS3 = (pathImg, key, localImg, convert, cb) => {
       }
       if (process.env.NODE_ENV !== 'production') {
         // save local
-        fs.copyFile(fileName, `./public/tenancy/${appCnf.tenancy}/images/${appCnf.s3.folder}/${pathImg}/${key}.${originalExt}`, cb);
+        fs.copyFile(fileName, `./public/tenancy/${req.tenancy}/images/${appCnf.s3.folder}/${pathImg}/${key}.${originalExt}`, cb);
       } else {
         cb();
       }

@@ -25,7 +25,7 @@ module.exports = (req, res, next) => {
     ];
 
     res.render('../modules/site/views/super/edit.pug', {
-      session: req.user,
+      req,
       item: results.site,
       title: 'Configuración',
       menu: 'super-site-config',

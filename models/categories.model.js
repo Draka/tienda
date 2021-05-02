@@ -1,4 +1,9 @@
 const schema = new mongoose.Schema({
+  tenancy: {
+    type: String,
+    index: true,
+    required: true,
+  },
   storeID: {
     type: mongoose.Schema.Types.ObjectId,
     ref: `${appCnf.dbPrefix}stores`,
@@ -48,7 +53,9 @@ schema.post('remove', (result) => {
   }
 });
 
-schema.index({ storeID: 1, categoryID: 1, slug: 1 }, { unique: true });
+schema.index({
+  tenancy: 1, storeID: 1, categoryID: 1, slug: 1,
+}, { unique: true });
 const Model = mongoose.model(`${appCnf.dbPrefix}categories`, schema);
 
 module.exports = Model;

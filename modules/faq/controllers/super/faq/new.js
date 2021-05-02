@@ -27,7 +27,7 @@ module.exports = (req, res, next) => {
     ];
 
     res.render('../modules/faq/views/super/faq/new.pug', {
-      session: req.user,
+      req,
       categories: results.categories,
       title: 'Nueva Categoría',
       menu: 'super-faq',

@@ -1,13 +1,12 @@
 /* eslint-disable no-param-reassign */
 const schema = new mongoose.Schema({
-  site: {
+  tenancy: {
     type: String,
-    trim: true,
+    required: true,
     index: {
       unique: true,
       sparse: true,
     },
-    default: 'site',
   },
   name: {
     type: String,
@@ -95,7 +94,7 @@ const schema = new mongoose.Schema({
 }, { timestamps: true });
 
 function preUpdate(result, next) {
-  client.del('__site__');
+  client.del(`__site__${result.tenancy}__`);
   next();
 }
 schema.post('validate', preUpdate);

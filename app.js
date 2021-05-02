@@ -8,18 +8,17 @@ const fileUpload = require('express-fileupload');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const sassMiddleware = require('node-sass-middleware');
 const shrinkRay = require('shrink-ray-current');
 
 // Cache
 const Redis = require('ioredis');
-const auth = require('./libs/auth.lib');
 const cache = require('./libs/cache.lib');
 const cacheHtml = require('./libs/cache-html.lib');
-const jsMiddleware = require('./libs/js_middleware.lib');
-const tsMiddleware = require('./libs/ts_middleware.lib');
-const imgMiddleware = require('./libs/img_middleware.lib');
-const { site } = require('./libs/query.lib');
+// Engines and Middleware
+const ts = require('./libs/engine.ts.lib');
+const js = require('./libs/engine.js.lib');
+const site = require('./libs/middleware.site.lib');
+const auth = require('./libs/middleware.auth.lib');
 const {
   formatMoney, statusToDate, badge, mapImg, statusText, statusIcon,
 } = require('./libs/util.lib');
@@ -32,7 +31,7 @@ global.statusText = statusText;
 global.statusIcon = statusIcon;
 
 global.client = new Redis(appCnf.redis.url, {
-  keyPrefix: `_${appCnf.tenancy}_`,
+  keyPrefix: '_santrato_',
   retryStrategy(times) {
     const delay = Math.min(times * 50, 2000);
     return delay;
@@ -46,9 +45,9 @@ global.client = new Redis(appCnf.redis.url, {
   },
 });
 global.client.connect(() => {
-  console.log(`redis connected to: ${appCnf.redis.url}`);
+  console.log(`Redis conectdo a: ${appCnf.redis.url}`);
   global.client.flushall('ASYNC', (err, succeeded) => {
-    console.log('flush cache', succeeded);
+    console.log('Redis flush cache', succeeded);
   });
 });
 
@@ -69,18 +68,19 @@ const dbOptions = {
 };
 mongoose.connect(appCnf.db, dbOptions).then(
   () => {
-    console.log(`MongoDB connected to: ${appCnf.db}`);
+    console.log(`MongoDB conectdo a: ${appCnf.db}`);
 
     // Genera scripts
-    tsMiddleware();
-    imgMiddleware();
-    jsMiddleware({
-      src: path.join(__dirname, 'public'),
-      tmp: 'tmp',
-      js: 'sources',
-      sourceMap: true,
-      debug: true,
-    });
+    if (process.env.NODE_ENV !== 'production') {
+      ts();
+      js({
+        src: path.join(__dirname, 'public'),
+        tmp: 'tmp',
+        js: 'sources',
+        sourceMap: true,
+        debug: true,
+      });
+    }
   },
   (err) => {
     console.log('MongoDB error', err);
@@ -89,12 +89,10 @@ mongoose.connect(appCnf.db, dbOptions).then(
 );
 // modelos
 global.models = require('./models');
-// carga site
-site((err, doc) => {
-  global.appCnf.site = doc;
-});
 
 const app = express();
+// carga site
+app.use(site);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -118,13 +116,6 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use(fileUpload());
 app.use(cookieParser(appCnf.keySecret));
-app.use(sassMiddleware({
-  src: path.join(__dirname, 'public'),
-  dest: path.join(__dirname, 'public'),
-  indentedSyntax: true, // true = .sass and false = .scss
-  sourceMap: true,
-}));
-app.use(express.static(path.join(__dirname, `public/tenancy${appCnf.tenancy}`)));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(auth);
 

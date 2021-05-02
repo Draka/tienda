@@ -95,7 +95,7 @@ mixin img(name, image, size = ['196x196_jpg', '392x392_jpg'], cssClass)
   if (image)
     img.lazy(data-src=image[size[0]] data-retina=image[size[1]] alt=name class=cssClass?cssClass:'w-100')
   else
-    img.lazy(data-src=`${appCnf.url.static}images/imagen_no_disponible.svg` alt=name class=cssClass?cssClass:'w-100')
+    img.lazy(data-src=`${appCnf.url.cdn}images/imagen_no_disponible.svg` alt=name class=cssClass?cssClass:'w-100')
 
 block content
   script(type='application/ld+json').
@@ -221,10 +221,10 @@ block content
             | Métodos de Pago
           .flex.flex-wrap.mt-1
             .tc.mr-4
-              img.w-img-48(src=appCnf.url.static+'images/pagos/ico_tarjetas.svg' alt='pago tarjetas de crédito')
+              img.w-img-48(src=appCnf.url.cdn+'images/pagos/ico_tarjetas.svg' alt='pago tarjetas de crédito')
               .b.small Todas las tarjetas
             .tc
-              img.h-img-48(src=appCnf.url.static+'images/pagos/ico_pse.svg' alt='pago pse')
+              img.h-img-48(src=appCnf.url.cdn+'images/pagos/ico_pse.svg' alt='pago pse')
               .b.small Cuentas de ahorro
 
           p Su información de pago se procesa de forma segura. No almacenamos detalles de la tarjeta de crédito ni tenemos acceso a la información de su tarjeta de crédito.

@@ -22,7 +22,7 @@ module.exports = (req, res, next) => {
     ];
 
     res.render('../modules/multimedia/views/super/new.pug', {
-      session: req.user,
+      req,
       title: 'Nuevo Archivo Multimedia',
       menu: 'super-multimedia',
       breadcrumbs,

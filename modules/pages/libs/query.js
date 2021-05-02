@@ -59,11 +59,11 @@ exports.multimediaByKey = (bykey, cb) => {
           if (doc) {
             _.each(doc.sizes, (size) => {
               _.each(doc.files, (file) => {
-                _.set(doc, `urlSize.${file}.x${size}`, `${appCnf.url.static}tenancy/${appCnf.tenancy}/images/${appCnf.s3.folder}/multimedia/${doc.key}/${size}_${doc.key}.${file}`);
+                _.set(doc, `urlSize.${file}.x${size}`, `${appCnf.url.cdn}tenancy/${req.tenancy}/images/${appCnf.s3.folder}/multimedia/${doc.key}/${size}_${doc.key}.${file}`);
               });
             });
             _.each(doc.files, (file) => {
-              _.set(doc, `url.${file}`, `${appCnf.url.static}tenancy/${appCnf.tenancy}/images/${appCnf.s3.folder}/multimedia/${doc.key}/${doc.key}.${file}`);
+              _.set(doc, `url.${file}`, `${appCnf.url.cdn}tenancy/${req.tenancy}/images/${appCnf.s3.folder}/multimedia/${doc.key}/${doc.key}.${file}`);
             });
           }
           client.set(key, JSON.stringify(doc), 'EX', 3600);
@@ -75,7 +75,7 @@ exports.multimediaByKey = (bykey, cb) => {
 
 const urls = [
   'https://marketsabana.com/',
-  'https://vendelomejor.com/',
+  'https://santrato.com/',
 ];
 
 exports.getUrlStores = (cb) => {

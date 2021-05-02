@@ -50,7 +50,7 @@ module.exports = (req, res, next) => {
     ];
 
     res.render('admin/pages/super-users/list.pug', {
-      session: req.user,
+      req,
       items: results.users,
       limit,
       page,

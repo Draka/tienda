@@ -25,7 +25,7 @@ module.exports = (req, res, next) => {
     ];
 
     res.render('../modules/email/views/super/send/new.pug', {
-      session: req.user,
+      req,
       templates: results.templates,
       title: 'Nueva Plantilla',
       menu: 'super-emails-enviar',

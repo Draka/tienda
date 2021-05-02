@@ -32,7 +32,7 @@ module.exports = (req, res, next) => {
     ];
 
     res.render('admin/pages/super-plans/view.pug', {
-      session: req.user,
+      req,
       item: results.item,
       title: 'Ver Plan',
       menu: 'super-planes',

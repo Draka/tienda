@@ -33,7 +33,7 @@ module.exports = (req, res, next) => {
       return next(err);
     }
     res.render('pages/cart/cart-finish', {
-      session: req.user,
+      req,
       title: __('Carrito de compras -> Resumen pedido'),
       js: 'page',
       wompi: true,

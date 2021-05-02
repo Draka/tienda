@@ -3,18 +3,18 @@ footer.mt-8
     .container.ph-1
       .row
         .col-md-4.tc.vertical-align-center.mb-3-xs.mb-3-sm.mb-3-md
-          | !{getFragment('footer-l-1-c-1')}
+          | !{getFragment(req, 'footer-l-1-c-1')}
         .col-md-8.vertical-align-center
-          | !{getFragment('footer-l-1-c-2')}
+          | !{getFragment(req, 'footer-l-1-c-2')}
   .container-fluid(class=(_.get(global.appCnf,'site.style.footer')||'primary')+'-500')
     .container.tc.ph-1
       .row
         .col-md-4.mb-1-xs.mb-1-sm.mb-1-md
-          | !{getFragment('footer-l-2-c-1')}
+          | !{getFragment(req, 'footer-l-2-c-1')}
         .col-md-4.mb-1-xs.mb-1-sm.mb-1-md
-          | !{getFragment('footer-l-2-c-2')}
+          | !{getFragment(req, 'footer-l-2-c-2')}
         .col-md-4.mb-1-xs.mb-1-sm.mb-1-md
-          | !{getFragment('footer-l-2-c-3')}
+          | !{getFragment(req, 'footer-l-2-c-3')}
 
   if !store && _.find(_.get(appCnf, 'site.contacts'), {slug: 'whatsapp'})
     .m-1.fixed.bottom

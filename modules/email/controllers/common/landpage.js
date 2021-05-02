@@ -27,7 +27,7 @@ module.exports = (req, res, next) => {
     };
 
     res.render('../modules/email/views/common/landpage.pug', {
-      session: req.user,
+      req,
       item,
       items: results.items,
       title: 'Centro de Ayuda',

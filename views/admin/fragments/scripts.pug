@@ -1,7 +1,7 @@
 
-link(rel='stylesheet', href=appCnf.url.static+'css/fonts.min.css?='+appCnf.v)
+link(rel='stylesheet', href=appCnf.url.cdn+'css/fonts.min.css?='+appCnf.v)
 
-script(src=appCnf.url.static+'lib/script.js?='+appCnf.v)
+script(src=appCnf.url.cdn+'lib/script.js?='+appCnf.v)
 
 if mapbox
   //- MapBox
@@ -17,20 +17,20 @@ if mapbox
     script(src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.2.0/mapbox-gl-draw.js")
 
 if osm
-  link(rel="stylesheet", href=appCnf.url.static+'lib/leaflet/leaflet.css')
-  script(src=appCnf.url.static+'lib/leaflet/leaflet.js')
-  link(rel='stylesheet', href=appCnf.url.static+'lib/leaflet/L.Control.Locate.min.css')
-  script(src=appCnf.url.static+'lib/leaflet/L.Control.Locate.min.js')
+  link(rel="stylesheet", href=appCnf.url.cdn+'lib/leaflet/leaflet.css')
+  script(src=appCnf.url.cdn+'lib/leaflet/leaflet.js')
+  link(rel='stylesheet', href=appCnf.url.cdn+'lib/leaflet/L.Control.Locate.min.css')
+  script(src=appCnf.url.cdn+'lib/leaflet/L.Control.Locate.min.js')
   if osm=='draw'
-    link(rel='stylesheet', href=appCnf.url.static+'lib/leaflet/leaflet-geoman.css')
-    script(src=appCnf.url.static+'lib/leaflet/leaflet-geoman.min.js')
+    link(rel='stylesheet', href=appCnf.url.cdn+'lib/leaflet/leaflet-geoman.css')
+    script(src=appCnf.url.cdn+'lib/leaflet/leaflet-geoman.min.js')
 
 if wompi
   //- Pagos
   script(src='https://checkout.wompi.co/widget.js')
 
 if cke
-  script(src=appCnf.url.static+'lib/ckeditor/ckeditor.js')
+  script(src=appCnf.url.cdn+'lib/ckeditor/ckeditor.js')
 
 if js
-  script(src=appCnf.url.static+'js/'+js+'.js?='+appCnf.v)
+  script(src=appCnf.url.cdn+'js/'+js+'.js?='+appCnf.v)

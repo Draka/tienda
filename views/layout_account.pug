@@ -2,7 +2,7 @@ mixin img(name, image, size = ['196x196_jpg', '392x392_jpg'], cssClass)
   if (image)
     img.lazy(data-src=image[size[0]] data-retina=image[size[1]] alt=name class=cssClass?cssClass:'w-100')
   else
-    img.lazy(data-src=`${appCnf.url.static}images/imagen_no_disponible.svg` alt=name class=cssClass?cssClass:'w-100')
+    img.lazy(data-src=`${appCnf.url.cdn}images/imagen_no_disponible.svg` alt=name class=cssClass?cssClass:'w-100')
 
 mixin btnPayment(order)
   if order.status === 'created' && order.payment.pse

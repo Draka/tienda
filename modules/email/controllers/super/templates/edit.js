@@ -32,7 +32,7 @@ module.exports = (req, res, next) => {
     ];
 
     res.render('../modules/email/views/super/templates/edit.pug', {
-      session: req.user,
+      req,
       item: results.item,
       title: `Editar - ${results.item.name}`,
       menu: 'super-emails-plantillas',

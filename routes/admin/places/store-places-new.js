@@ -49,7 +49,7 @@ module.exports = (req, res, next) => {
     ];
 
     res.render('admin/pages/places/store-places-new.pug', {
-      session: req.user,
+      req,
       user: results.user,
       store: results.store,
       items: results.coveragesAreas,

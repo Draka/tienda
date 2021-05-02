@@ -22,7 +22,7 @@ module.exports = (req, res, next) => {
     ];
 
     res.render('../modules/faq/views/super/faq-categorias/new.pug', {
-      session: req.user,
+      req,
       title: 'Nueva Categoría',
       menu: 'super-faq-categorias',
       breadcrumbs,

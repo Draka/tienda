@@ -1,0 +1,30 @@
+.navigation {
+  padding-left: 2em;
+
+  &__item {
+    margin: 1em 0;
+    padding: 0;
+    list-style: none;
+
+    a {
+      color: $color-foreground;
+      ;
+      text-decoration: none;
+
+      &:hover,
+      &:focus {
+        text-decoration: none;
+        color: map-get($colors-sections, "secondary");
+      }
+    }
+  }
+
+  &--active {
+    color: map-get($colors-sections, "secondary");
+    font-weight: bold;
+
+    a {
+      color: map-get($colors-sections, "secondary");
+    }
+  }
+}

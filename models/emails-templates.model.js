@@ -1,4 +1,9 @@
 const schema = new mongoose.Schema({
+  tenancy: {
+    type: String,
+    index: true,
+    required: true,
+  },
   name: {
     type: String,
     trim: true,

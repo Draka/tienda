@@ -4,7 +4,7 @@ const { meta } = require('../../libs/meta');
 module.exports = (req, res, next) => {
   async.auto({
     item: (cb) => {
-      modelSlug('Page', req.params.slug, cb);
+      modelSlug(req, 'Page', req.params.slug, cb);
     },
     meta: ['item', (results, cb) => {
       if (!results.item) {
@@ -34,7 +34,7 @@ module.exports = (req, res, next) => {
     results.item.html = results.meta;
 
     res.render('../modules/pages/views/common/view.pug', {
-      session: req.user,
+      req,
       item: results.item,
       title: results.item.title,
       breadcrumbs,

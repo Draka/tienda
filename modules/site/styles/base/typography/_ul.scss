@@ -1,0 +1,28 @@
+ ul,
+ ol {
+
+   &.list-ul {
+    list-style: none;
+    margin-left: 18px;
+    position: relative;
+
+     li:not(:last-child) {
+       margin-bottom: .35em;
+     }
+
+     li {
+       position: relative;
+
+       &:before {
+         position: absolute;
+         content: "";
+         left: -1.1em;
+         top: 0.62em;
+         height: .31em;
+         width: .31em;
+         border-radius: 100%;
+         background: set-alpha-color($color-foreground, 0.4);
+       }
+     }
+   }
+ }

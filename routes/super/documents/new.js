@@ -22,7 +22,7 @@ module.exports = (req, res, next) => {
     ];
 
     res.render('admin/pages/super-documents/new.pug', {
-      session: req.user,
+      req,
       title: 'Nuevo Documento',
       menu: 'super-documentos',
       breadcrumbs,

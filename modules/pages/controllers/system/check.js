@@ -1,12 +1,15 @@
 const modCnf = require('../../modCnf');
 
-function check(slug, pDefault, cb) {
+function check(req, slug, pDefault, cb) {
   if (!_.isFunction(cb)) {
     cb = () => {};
   }
   pDefault = pDefault || {};
   models.Page
-    .findOne({ slug })
+    .findOne({
+      slug,
+      tenancy: req.tenancy,
+    })
     .lean()
     .exec((err, doc) => {
       if (err) {
@@ -14,6 +17,7 @@ function check(slug, pDefault, cb) {
       }
       if (!doc) {
         const page = new models.Page({
+          tenancy: req.tenancy,
           active: true,
           publish: pDefault.publish || false,
           title: slug || '',
@@ -28,13 +32,36 @@ function check(slug, pDefault, cb) {
     });
 }
 
-module.exports = () => {
-  check('index', { html: modCnf.index, publish: true });
-  check('menu', { html: modCnf.menu, publish: false });
-  check('menu-mob', { html: modCnf['menu-mob'], publish: false });
-  check('footer-l-1-c-1', { html: modCnf['footer-l-1-c-1'], publish: false });
-  check('footer-l-1-c-2', { html: modCnf['footer-l-1-c-2'], publish: false });
-  check('footer-l-2-c-1', { html: modCnf['footer-l-2-c-1'], publish: false });
-  check('footer-l-2-c-2', { html: modCnf['footer-l-2-c-2'], publish: false });
-  check('footer-l-2-c-3', { html: modCnf['footer-l-2-c-3'], publish: false });
+module.exports = (req, res, next) => {
+  async.parallel([
+    (cb) => {
+      check(req, 'index', { html: modCnf.index, publish: true }, cb);
+    },
+    (cb) => {
+      check(req, 'menu', { html: modCnf.menu, publish: false }, cb);
+    },
+    (cb) => {
+      check(req, 'menu-mob', { html: modCnf['menu-mob'], publish: false }, cb);
+    },
+    (cb) => {
+      check(req, 'footer-l-1-c-1', { html: modCnf['footer-l-1-c-1'], publish: false }, cb);
+    },
+    (cb) => {
+      check(req, 'footer-l-1-c-2', { html: modCnf['footer-l-1-c-2'], publish: false }, cb);
+    },
+    (cb) => {
+      check(req, 'footer-l-2-c-1', { html: modCnf['footer-l-2-c-1'], publish: false }, cb);
+    },
+    (cb) => {
+      check(req, 'footer-l-2-c-2', { html: modCnf['footer-l-2-c-2'], publish: false }, cb);
+    },
+    (cb) => {
+      check(req, 'footer-l-2-c-3', { html: modCnf['footer-l-2-c-3'], publish: false }, cb);
+    },
+  ], (err) => {
+    if (err) {
+      return next(err);
+    }
+    res.status(201).send({ ok: 'ok' });
+  });
 };

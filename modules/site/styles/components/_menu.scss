@@ -1,0 +1,19 @@
+.menu {
+  display: flex;
+  align-items: center;
+  list-style: none inside;
+  margin: 0;
+  padding: 0;
+
+  > * {
+    white-space: nowrap;
+  }
+  a {
+    padding: 0 (1em / 2);
+    &:hover,
+    &:focus {
+      background-color: darken($color: map-get($colors-sections, "primary"), $amount: 20);
+      text-decoration: none;
+    }
+  }
+}

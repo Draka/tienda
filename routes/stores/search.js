@@ -103,7 +103,7 @@ module.exports = (req, res, next) => {
     };
 
     res.render('pages/stores/search.pug', {
-      session: req.user,
+      req,
       store: results.store,
       categories: results.categories,
       products: results.products,

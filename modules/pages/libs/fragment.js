@@ -3,7 +3,7 @@ const { metaNoCache } = require('./meta');
 
 const fragments = {};
 
-function getPage(slug, cb) {
+function getPage(req, slug, cb) {
   const key = `__xpage_render__${slug}`;
   client.get(key, (_err, reply) => {
     if (reply) {
@@ -11,14 +11,14 @@ function getPage(slug, cb) {
     } else {
       async.auto({
         item: (cb) => {
-          modelSlug('Page', slug, cb);
+          modelSlug(req, 'Page', slug, cb);
         },
         meta: ['item', (results, cb) => {
           if (!results.item || !results.item.active) {
             return cb(null, '');
           }
           // Busca todos los meta para convertir
-          metaNoCache(slug, results.item.html, true, cb);
+          metaNoCache(req, slug, results.item.html, true, cb);
         }],
       }, (err, results) => {
         setImmediate(cb, err, results.meta);
@@ -26,8 +26,8 @@ function getPage(slug, cb) {
     }
   });
 }
-module.exports = (page) => {
-  getPage(page, (err, value) => {
+module.exports = (req, page) => {
+  getPage(req, page, (err, value) => {
     fragments[page] = value;
   });
   return fragments[page];

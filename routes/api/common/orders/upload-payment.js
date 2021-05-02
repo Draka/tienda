@@ -58,7 +58,7 @@ module.exports = (req, res, next) => {
         default:
       }
 
-      const dir = `./public/tenancy/${appCnf.tenancy}/files/${appCnf.s3.folder}/orders/${req.params.orderID}`;
+      const dir = `./public/tenancy/${req.tenancy}/files/${appCnf.s3.folder}/orders/${req.params.orderID}`;
       async.auto({
         makedirLocal: (cb) => {
           if (process.env.NODE_ENV === 'production') {
@@ -75,7 +75,7 @@ module.exports = (req, res, next) => {
             // ajustes de s3
             const params = {
               Bucket: appCnf.s3.bucket,
-              Key: `tenancy/${appCnf.tenancy}/files/${appCnf.s3.folder}/orders/${req.params.orderID}/payment${ext}`, // ruta donde va a quedar
+              Key: `tenancy/${req.tenancy}/files/${appCnf.s3.folder}/orders/${req.params.orderID}/payment${ext}`, // ruta donde va a quedar
               Body: req.files.file.data,
               ContentType: req.files.file.mimetype,
               CacheControl: 'private, max-age=31536000',

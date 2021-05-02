@@ -51,7 +51,7 @@ module.exports = (req, res, next) => {
     ];
 
     res.render('../modules/email/views/super/templates/list.pug', {
-      session: req.user,
+      req,
       items: results.items,
       limit,
       page,

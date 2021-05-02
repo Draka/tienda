@@ -22,7 +22,7 @@ module.exports = (data, user, cb) => {
       data.site = {
         name: _.get(appCnf, 'site.name'),
         urlSite: appCnf.url.site,
-        urlStatic: appCnf.url.static,
+        urlStatic: appCnf.url.cdn,
         info: _.get(appCnf, 'site.email.emailInfo'),
         title: _.get(appCnf, 'site.email.title'),
       };
@@ -39,7 +39,7 @@ module.exports = (data, user, cb) => {
           },
           Tenancy: {
             DataType: 'String',
-            StringValue: appCnf.tenancy,
+            StringValue: req.tenancy,
           },
         },
         MessageBody: 'correo',

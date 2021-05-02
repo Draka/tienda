@@ -35,7 +35,7 @@ module.exports = (req, res, next) => {
     item.seo = item.description;
 
     res.render('../modules/help/views/common/topic.pug', {
-      session: req.user,
+      req,
       item,
       tree: results.tree,
       title: 'Centro de Ayuda',

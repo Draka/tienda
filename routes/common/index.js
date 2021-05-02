@@ -1,10 +1,5 @@
 /* eslint-disable global-require */
 module.exports = (app) => {
-  if (!(appCnf.tenancy === 'vendelomejor' || appCnf.tenancy === 'aquista') || process.env.NODE_ENV !== 'production') {
-    app.get('/', require('./landpage'));
-  }
-  // app.get('/', require('./landpage'));
-
   app.get('/iniciar-sesion', (req, res) => {
     const breadcrumbs = [
       {
@@ -18,7 +13,7 @@ module.exports = (app) => {
       },
     ];
     res.render('pages/common/login', {
-      session: req.user,
+      req,
       title: 'Iniciar Sesión',
       description: 'Inicie sesión, hay muchos productos para que escoja de nuestra plaza de emprendedores',
       breadcrumbs,
@@ -39,7 +34,7 @@ module.exports = (app) => {
       },
     ];
     res.render('pages/common/signup', {
-      session: req.user,
+      req,
       title: 'Registrarse como cliente',
       description: `Inscríbase en ${_.get(appCnf, 'site.name')}, navegue por nuestra vitrina virtual, seleccione sus productos y pague online`,
       breadcrumbs,
@@ -60,7 +55,7 @@ module.exports = (app) => {
       },
     ];
     res.render('pages/common/signup-confirm', {
-      session: req.user,
+      req,
       title: 'Registro Confirmación',
       breadcrumbs,
       js: 'page',
@@ -80,7 +75,7 @@ module.exports = (app) => {
       },
     ];
     res.render('pages/common/password-reset', {
-      session: req.user,
+      req,
       title: '¿Olvidaste tu contraseña?',
       breadcrumbs,
       js: 'page',
@@ -100,7 +95,7 @@ module.exports = (app) => {
       },
     ];
     res.render('pages/common/password-reset-confirm', {
-      session: req.user,
+      req,
       title: '¿Olvidaste tu contraseña?',
       breadcrumbs,
       js: 'page',
@@ -123,7 +118,7 @@ module.exports = (app) => {
       },
     ];
     res.render('pages/common/logout', {
-      session: req.user,
+      req,
       title: 'Sesión finalizada',
       breadcrumbs,
       js: 'page',

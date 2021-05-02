@@ -57,7 +57,7 @@ module.exports = (req, res, next) => {
     ];
 
     res.render('admin/pages/categories/new.pug', {
-      session: req.user,
+      req,
       store: results.store,
       items: results.items,
       title: 'Nueva Categoría',

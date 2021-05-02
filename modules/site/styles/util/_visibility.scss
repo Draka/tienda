@@ -1,0 +1,75 @@
+%hide {
+  display: none !important;
+}
+
+%show {
+  display: block !important;
+}
+
+$ant: null;
+$var: null;
+
+.hide {
+  @extend %hide;
+}
+
+.show {
+  @extend %show;
+}
+
+
+@each $key, $val in $breakpoints {
+
+  .show-#{$key} {
+    @extend %hide;
+  }
+
+  $var: index(($breakpoints), ($key $val));
+
+  @if $var !=1 {
+    @include media-breakpoint(map-get($breakpoints, $ant), map-get($breakpoints, $key) - 0.1) {
+      .hide-#{$ant} {
+        display: none !important;
+      }
+
+      .show-#{$ant} {
+        display: block !important;
+      }
+    }
+
+  }
+
+  $ant: $key;
+}
+
+.invisible {
+  position: absolute !important;
+  /* IE6, IE7 */
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+}
+.out-screen {
+  position:absolute;
+  left:-10000px;
+  top:auto;
+  width:1px;
+  height:1px;
+  overflow:hidden;
+}
+
+.start-hide {
+  display: none;
+}
+
+.oh {
+  overflow: hidden;
+}
+
+.oa {
+  overflow: auto;
+}
+
+.scroll,
+.os {
+  overflow: scroll;
+}

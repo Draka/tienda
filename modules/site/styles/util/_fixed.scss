@@ -1,0 +1,41 @@
+.fixed {
+  position: fixed;
+}
+
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.sticky {
+  position: sticky;
+}
+
+.fixed,
+.absolute {
+
+  &.top {
+    top: 0;
+  }
+
+  &.left {
+    left: 0;
+  }
+
+  &.rigth {
+    right: 0;
+  }
+
+  &.bottom {
+    bottom: 0;
+  }
+  &.center {
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    width: fit-content;
+  }
+}

@@ -44,7 +44,7 @@ module.exports = (req, res, next) => {
     };
 
     res.render('../modules/stores/views/common/list.pug', {
-      session: req.user,
+      req,
       item,
       items: results.items,
       title: 'Tiendas',

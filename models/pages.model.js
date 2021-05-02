@@ -1,6 +1,11 @@
 const { deleteKeysByPattern } = require('../libs/redis.lib');
 
 const schema = new mongoose.Schema({
+  tenancy: {
+    type: String,
+    index: true,
+    required: true,
+  },
   userID: {
     type: mongoose.Schema.Types.ObjectId,
     ref: `${appCnf.dbPrefix}users`,
@@ -28,7 +33,6 @@ const schema = new mongoose.Schema({
   slug: {
     type: String,
     trim: true,
-    unique: true,
   },
   html: {
     type: String,
@@ -37,7 +41,7 @@ const schema = new mongoose.Schema({
 }, { timestamps: true });
 
 function preUpdate(result, next) {
-  deleteKeysByPattern('__page_render*');
+  deleteKeysByPattern(result.tenancy, '__page_render*');
   client.del(`__page__${result._id}`);
   if (result.slug) {
     result.slug = _.kebabCase(_.deburr(result.slug));
@@ -49,6 +53,7 @@ function preUpdate(result, next) {
   next();
 }
 schema.post('validate', preUpdate);
+schema.index({ tenancy: 1, slug: 1 }, { unique: true });
 
 const Model = mongoose.model(`${appCnf.dbPrefix}pages`, schema);
 

@@ -142,7 +142,7 @@ module.exports = (req, res, next) => {
         if (pos >= 0) {
           results.query.images.splice(pos, 1);
         }
-        deleteS3(`tenancy/${appCnf.tenancy}/ecommerce/${appCnf.s3.folder}/${req.params.storeID}/products/${req.params.productID}/${i}`, cb);
+        deleteS3(`tenancy/${req.tenancy}/ecommerce/${appCnf.s3.folder}/${req.params.storeID}/products/${req.params.productID}/${i}`, cb);
       }, cb);
     }],
     category: ['uploadFile', (_results, cb) => {

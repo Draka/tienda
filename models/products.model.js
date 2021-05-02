@@ -1,4 +1,9 @@
 const schema = new mongoose.Schema({
+  tenancy: {
+    type: String,
+    index: true,
+    required: true,
+  },
   storeID: {
     type: mongoose.Schema.Types.ObjectId,
     ref: `${appCnf.dbPrefix}stores`,
@@ -226,7 +231,7 @@ function preUpdate(result, next) {
 }
 schema.post('validate', preUpdate);
 
-schema.index({ storeID: 1, sku: 1 }, { unique: true });
+schema.index({ tenancy: 1, storeID: 1, sku: 1 }, { unique: true });
 
 const Model = mongoose.model(`${appCnf.dbPrefix}products`, schema);
 

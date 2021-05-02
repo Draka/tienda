@@ -1,0 +1,77 @@
+
+
+@each $key, $val in $sizes-borders {
+  .br-#{$key}{
+    border: $val solid $color-default;
+  }
+  .brh-#{$key}{
+    border-left: $val solid $color-default;
+    border-right: $val solid $color-default;
+  }
+  .brv-#{$key}{
+    border-top: $val solid $color-default;
+    border-bottom: $val solid $color-default;
+  }
+  .brl-#{$key}{
+    border-left: $val solid $color-default;
+  }
+  .brr-#{$key}{
+    border-right: $val solid $color-default;
+  }
+  .brt-#{$key}{
+    border-top: $val solid $color-default;
+  }
+  .brb-#{$key}{
+    border-bottom: $val solid $color-default;
+  }
+}
+
+@each $key, $val in $radius-borders {
+  .rd-#{$key}{
+    border-radius: $val;
+  }
+  .rdt-#{$key}{
+    border-top-left-radius: $val;
+    border-top-right-radius: $val;
+  }
+  .rdb-#{$key}{
+    border-bottom-left-radius: $val;
+    border-bottom-right-radius: $val;
+  }
+  .rdtl-#{$key}{
+    border-top-left-radius: $val;
+  }
+  .rdtr-#{$key}{
+    border-top-right-radius: $val;
+  }
+  .rdbl-#{$key}{
+    border-bottom-left-radius: $val;
+  }
+  .rdbr-#{$key}{
+    border-bottom-right-radius: $val;
+  }
+}
+
+.rd-50{
+  border-radius: 5000px;
+}
+.rdt-50{
+  border-top-left-radius: 5000px;
+  border-top-right-radius: 5000px;
+}
+.rdb-50{
+  border-bottom-left-radius: 5000px;
+  border-bottom-right-radius: 5000px;
+}
+.rdtl-50{
+  border-top-left-radius: 5000px;
+}
+.rdtr-50{
+  border-top-right-radius: 5000px;
+}
+.rdbl-50{
+  border-bottom-left-radius: 5000px;
+}
+.rdbr-50{
+  border-bottom-right-radius: 5000px;
+}

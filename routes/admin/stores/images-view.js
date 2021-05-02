@@ -50,7 +50,7 @@ module.exports = (req, res, next) => {
     ];
 
     res.render('admin/pages/stores/images-view.pug', {
-      session: req.user,
+      req,
       user: results.user,
       store: results.store,
       title: 'Imágenes',

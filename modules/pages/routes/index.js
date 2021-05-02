@@ -25,7 +25,6 @@ module.exports = (app) => {
 
   app.post('/v1/admin/super/pages', checkAuthAdmin, apiSuperNew);
   app.put('/v1/admin/super/pages/:pageID([0-9a-f]{24})', checkAuthAdmin, apiSuperUpdate);
-
   // Crea fragmentos obligados
-  systemCheck();
+  app.get('/v1/admin/super/pages/default', checkAuthAdmin, systemCheck);
 };

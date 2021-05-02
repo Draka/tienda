@@ -1,0 +1,47 @@
+.pagination {
+  display: flex;
+
+  .item,
+  li {
+    overflow: hidden;
+    position: relative;
+    user-select: none;
+  }
+
+  li,
+  > .item {
+    border: 1px solid set-change-color($color-default-inv, 50);
+    border-left-width: 0;
+    background-color: $color-white;
+
+    &:first-child {
+      border-top-left-radius: .2em;
+      border-bottom-left-radius: .2em;
+      border-left-width: 1px;
+    }
+
+    &:last-child {
+      border-top-right-radius: .2em;
+      border-bottom-right-radius: .2em;
+    }
+  }
+  .item{
+    padding: 0 .8em;
+    height: 2.5em;
+    line-height: 2.5em;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    text-decoration: none;
+    color: set-text-color($color-white);
+
+    &:hover,
+    &:focus {
+      cursor: pointer;
+      $background-color: set-lightness-color($color-default, 97);
+      background-color: $background-color;
+      color: set-text-color($background-color);
+      text-decoration: none;
+    }
+  }
+}

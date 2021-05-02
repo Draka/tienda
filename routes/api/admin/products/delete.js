@@ -41,7 +41,7 @@ module.exports = (req, res, next) => {
     }],
     deleteS3: ['check2', (results, cb) => {
       async.each(results.query.images, (i, cb) => {
-        deleteS3(`tenancy/${appCnf.tenancy}/ecommerce/${appCnf.s3.folder}/${req.params.storeID}/products/${results.query._id}/${i}`, cb);
+        deleteS3(`tenancy/${req.tenancy}/ecommerce/${appCnf.s3.folder}/${req.params.storeID}/products/${results.query._id}/${i}`, cb);
       }, cb);
     }],
     delete: ['deleteS3', (results, cb) => {

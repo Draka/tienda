@@ -46,7 +46,7 @@ module.exports = (req, res, next) => {
     ];
 
     res.render('../modules/help/views/super/help-categorias/list.pug', {
-      session: req.user,
+      req,
       items: results.items,
       limit,
       page,

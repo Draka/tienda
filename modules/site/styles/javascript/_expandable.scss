@@ -1,0 +1,12 @@
+.expandable {
+  &__header {
+    display: flex;
+
+  }
+
+  &__title {
+    font-weight: bold;
+  }
+
+  &__body {}
+}

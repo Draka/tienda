@@ -1,5 +1,10 @@
 /* eslint-disable no-param-reassign */
 const schema = new mongoose.Schema({
+  tenancy: {
+    type: String,
+    index: true,
+    required: true,
+  },
   title: {
     type: String,
     trim: true,
@@ -26,6 +31,7 @@ function preUpdate(result, next) {
   next();
 }
 schema.post('validate', preUpdate);
+
 const Model = mongoose.model(`${appCnf.dbPrefix}multimedias`, schema);
 
 module.exports = Model;

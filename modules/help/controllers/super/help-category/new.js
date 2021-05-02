@@ -32,7 +32,7 @@ module.exports = (req, res, next) => {
     ];
 
     res.render('../modules/help/views/super/help-categorias/new.pug', {
-      session: req.user,
+      req,
       items: results.items,
       title: 'Nueva Categoría',
       menu: 'super-help-categorias',

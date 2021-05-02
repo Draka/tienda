@@ -1,0 +1,68 @@
+
+
+@each $key, $val in $spaces {
+  .p-#{$key}{
+    padding: $val;
+  }
+  .pw-#{$key}{
+    padding-left: $val;
+    padding-right: $val;
+  }
+  .ph-#{$key}{
+    padding-top: $val;
+    padding-bottom: $val;
+  }
+  .pl-#{$key}{
+    padding-left: $val;
+  }
+  .pr-#{$key}{
+    padding-right: $val;
+  }
+  .pt-#{$key}{
+    padding-top: $val;
+  }
+  .pb-#{$key}{
+    padding-bottom: $val;
+  }
+}
+
+$ant: null;
+$var: null;
+
+@each $key, $val in $breakpoints {
+
+  $var: index(($breakpoints), ($key $val));
+
+  @if $var !=1 {
+    @include media-breakpoint(map-get($breakpoints, $ant), map-get($breakpoints, $key) - 0.1) {
+      @each $key, $val in $spaces {
+        .p-#{$key}-#{$ant}{
+          padding: $val;
+        }
+        .pw-#{$key}-#{$ant}{
+          padding-left: $val;
+          padding-right: $val;
+        }
+        .ph-#{$key}-#{$ant}{
+          padding-top: $val;
+          padding-bottom: $val;
+        }
+        .pl-#{$key}-#{$ant}{
+          padding-left: $val;
+        }
+        .pr-#{$key}-#{$ant}{
+          padding-right: $val;
+        }
+        .pt-#{$key}-#{$ant}{
+          padding-top: $val;
+        }
+        .pb-#{$key}-#{$ant}{
+          padding-bottom: $val;
+        }
+      }
+    }
+
+  }
+
+  $ant: $key;
+}

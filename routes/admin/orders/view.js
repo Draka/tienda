@@ -18,7 +18,7 @@ module.exports = (req, res, next) => {
       results.order.store._id = results.order.storeID;
       putS3LogoPath([results.order.store]);
       results.order.payment.info = _.find(global.payments, { slug: results.order.payment.slug });
-      results.order.payment.file = `${appCnf.url.static}tenancy/${appCnf.tenancy}/files/${appCnf.s3.folder}/orders/${results.order._id}/${results.order.payment.file}`;
+      results.order.payment.file = `${appCnf.url.cdn}tenancy/${req.tenancy}/files/${appCnf.s3.folder}/orders/${results.order._id}/${results.order.payment.file}`;
       reference(results.order, req.user._id, cb);
     }],
   }, (err, results) => {
@@ -46,7 +46,7 @@ module.exports = (req, res, next) => {
     ];
 
     res.render('admin/pages/orders/view.pug', {
-      session: req.user,
+      req,
       order: results.order,
       title: 'Ver pedido',
       menu: 'pedidos-lista',

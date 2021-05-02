@@ -1,0 +1,86 @@
+.tabs {
+  .item {
+    cursor: pointer;
+    outline: none;
+  }
+  &--boxes {
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    border-bottom: 1px solid set-change-color($color-white, 20);
+
+    .item {
+      background: 0 0;
+      border-bottom: none;
+      border-left: 1px solid transparent;
+      border-right: 1px solid transparent;
+      border-top: 2px solid transparent;
+      padding: 1em 1.5em;
+      border-radius: 0.4em 0.4em 0 0;
+
+      &.active {
+        background: none $color-white;
+        color: set-text-color($color-white);
+        border-top-width: 1px;
+        border-color: set-change-color($color-white, 20);
+        font-weight: 700;
+        margin-bottom: -1px;
+      }
+
+      &:hover,
+      &:focus {
+        background-color: set-change-color($color-white, 8);
+        color: set-text-color($color-white);
+        text-decoration: none;
+      }
+    }
+  }
+  &--lines {
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    .item {
+      background: 0 0;
+      border-bottom: .4em solid transparent;
+      padding: 1em 1.5em 0.6em 1.5em;
+      &.active {
+        color: set-text-color($color-white);
+        border-bottom: .4em solid map-get($colors-sections, "primary");
+        font-weight: 700;
+      }
+
+      &:hover,
+      &:focus {
+        background-color: set-change-color($color-white, 8);
+        color: set-text-color($color-white);
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+.tabs-content {
+  .tab {
+    display: none;
+
+    &.active {
+      display: block;
+    }
+  }
+
+  &--boxes {
+    margin-bottom: 1em;
+    border-radius: 0 0 0.4em 0.4em;
+
+    border-bottom: 2px solid set-change-color($color-white, 20);
+    border-left: 1px solid set-change-color($color-white, 20);
+    border-right: 1px solid set-change-color($color-white, 20);
+    border-top: none;
+
+    padding: 1em;
+  }
+}

@@ -1,8 +1,8 @@
 {
     "email": {
         "title": "Véndelo Mejor",
-        "emailNoreply": "no-reply@vendelomejor.com",
-        "emailInfo": "info@vendelomejor.com"
+        "emailNoreply": "no-reply@santrato.com",
+        "emailInfo": "info@santrato.com"
     },
     "site": {
         "name": "Véndelo mejor",
@@ -11,12 +11,12 @@
         "separator": "|",
         "twitter": "",
         "sameAs": [
-            "https://vendelomejor.com/",
+            "https://santrato.com/",
             "https://www.facebook.com/Tienda-p4s-108008880983303",
             "https://www.facebook.com/tiendap4s",
             "https://tienda.p4s.co/"
         ],
         "whatsapp": "+573016287965"
     },
-    "url": "https://vendelomejor.com/"
+    "url": "https://santrato.com/"
 }

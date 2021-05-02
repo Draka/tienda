@@ -80,7 +80,7 @@ module.exports = (req, res, next) => {
     ];
 
     res.render('admin/pages/products/edit.pug', {
-      session: req.user,
+      req,
       user: results.user,
       store: results.store,
       item: results.item,

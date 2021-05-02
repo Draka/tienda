@@ -58,7 +58,7 @@ module.exports = (req, res, next) => {
     ];
 
     res.render('pages/orders/list.pug', {
-      session: req.user,
+      req,
       items: results.orders,
       limit,
       page,

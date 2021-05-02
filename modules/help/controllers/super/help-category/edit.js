@@ -42,7 +42,7 @@ module.exports = (req, res, next) => {
     ];
 
     res.render('../modules/help/views/super/help-categorias/edit.pug', {
-      session: req.user,
+      req,
       item: results.item,
       items: results.items,
       title: `Editar - ${results.item.name}`,

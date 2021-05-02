@@ -1,0 +1,24 @@
+.container-fluid,
+.container {
+  width: 100%;
+  padding-right: $gutter;
+  padding-left: $gutter;
+  margin-right: auto;
+  margin-left: auto;
+  &.left{
+    margin-left: 0;
+  }
+  &.right{
+    margin-right: 0;
+  }
+}
+
+@each $key, $val in $breakpoints {
+  @if strip-unit($val) >= $container-max-h {
+    @include media-breakpoint-up(map-get($breakpoints, $key)) {
+      .container {
+        max-width: calc(#{$val} - #{($gutter * 2)});
+      }
+    }
+  }
+}

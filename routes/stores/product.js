@@ -87,7 +87,7 @@ module.exports = (req, res, next) => {
     };
 
     res.render('pages/stores/product.pug', {
-      session: req.user,
+      req,
       store: results.store,
       categories: results.categories,
       product: results.product,

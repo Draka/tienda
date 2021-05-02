@@ -60,7 +60,7 @@ module.exports = (req, res, next) => {
     ];
 
     res.render('admin/pages/stores/list.pug', {
-      session: req.user,
+      req,
       user: results.user,
       items: results.items,
       limit,

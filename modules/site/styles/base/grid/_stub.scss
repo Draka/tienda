@@ -1,0 +1,24 @@
+.stub {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-content: center;
+  align-items: stretch;
+
+  &__left {
+    width: $stub-width;
+
+    .navbar.fixed {
+      width: $stub-width;
+    }
+  }
+
+  &__right {
+    width: calc(100% - #{$stub-width});
+
+    .fixed .container {
+      width: calc(100% - #{$stub-width});
+    }
+  }
+}

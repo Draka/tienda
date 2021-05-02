@@ -21,7 +21,7 @@ module.exports = (req, res, next) => {
       return next(err);
     }
     res.render('admin/pages/account/bank-account.pug', {
-      session: req.user,
+      req,
       user,
       menu: 'cuenta-bancaria',
       active: 'cuenta-bancaria',

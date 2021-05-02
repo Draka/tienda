@@ -164,7 +164,7 @@ const vars = {
     },
   ],
   tenancyUrl: {
-    vendelomejor: 'https://vendelomejor.com/',
+    santrato: 'https://santrato.com/',
     marketsabana: 'https://marketsabana.com/',
     buenaventa: 'https://buenaventa.co/',
   },

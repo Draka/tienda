@@ -3,7 +3,7 @@ const http = require('http');
 
 let url = '';
 if (process.env.NODE_ENV === 'production') {
-  url = 'https://vendelomejor.com/v1/help/';
+  url = 'https://santrato.com/v1/help/';
 } else {
   url = 'http://localhost:3000/v1/help/';
 }

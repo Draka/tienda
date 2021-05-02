@@ -62,7 +62,7 @@ module.exports = (req, res, next) => {
     ];
     const points = JSON.parse(results.coverageArea.points);
     res.render('admin/pages/stores/store-coverage-areas-edit.pug', {
-      session: req.user,
+      req,
       user: results.user,
       store: results.store,
       item: results.coverageArea,

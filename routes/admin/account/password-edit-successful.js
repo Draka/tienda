@@ -28,7 +28,7 @@ module.exports = (req, res, next) => {
     }
 
     res.render('admin/pages/messages/general.pug', {
-      session: req.user,
+      req,
       user,
       menu: 'contrasena',
       title: 'Contraseña',

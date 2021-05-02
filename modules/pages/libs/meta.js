@@ -39,7 +39,7 @@ const simples = [
   'p',
 ];
 
-const _meta = (text, html, cb) => {
+const _meta = (req, text, html, cb) => {
   // return parse(text);
 
   let re;
@@ -121,6 +121,7 @@ const _meta = (text, html, cb) => {
             }],
           }, (err, results) => {
             text = text.replace(re, template({
+              req,
               items: results.items,
               features: results.features,
             }, 'plans-table'));
@@ -143,7 +144,7 @@ const _meta = (text, html, cb) => {
           const slug = match[1];
           async.auto({
             item: (cb) => {
-              modelSlug('FaqCategory', slug, cb);
+              modelSlug(req, 'FaqCategory', slug, cb);
             },
             items: ['item', (results, cb) => {
               if (!results.item) {
@@ -156,6 +157,7 @@ const _meta = (text, html, cb) => {
               return cb(err, null);
             }
             text = text.replace(match[0], template({
+              req,
               category: results.item,
               items: results.items,
             }, 'faq'));
@@ -185,6 +187,7 @@ const _meta = (text, html, cb) => {
               return cb(err, null);
             }
             text = text.replace(match[0], template({
+              req,
               item: results.item,
               sizes: match[1].split(','),
             }, 'img-responsive'));
@@ -206,14 +209,14 @@ const _meta = (text, html, cb) => {
         async.eachLimit(matchs, 5, (match, cb) => {
           async.auto({
             item: (cb) => {
-              modelSlug('Page', match[1], cb);
+              modelSlug(req, 'Page', match[1], cb);
             },
             meta: ['item', (results, cb) => {
               if (!results.item || !results.item.active) {
                 return cb(null, '');
               }
               // Busca todos los meta para convertir
-              _meta(results.item.html, html, cb);
+              _meta(req, results.item.html, html, cb);
             }],
           }, (err, results) => {
             text = text.replace(match[0], results.meta);
@@ -242,13 +245,14 @@ const _meta = (text, html, cb) => {
                 return cb(null, '');
               }
               // Busca todos los meta para convertir
-              _meta(results.item.html, html, cb);
+              _meta(req, results.item.html, html, cb);
             }],
           }, (err, results) => {
             if (!results.items) {
               return cb(err, null);
             }
             text = text.replace(match[0], template({
+              req,
               items: results.items,
             }, 'stores'));
             cb(err, null);
@@ -297,13 +301,13 @@ const _meta = (text, html, cb) => {
   }, (err) => cb(err, text));
 };
 
-const meta = (page, text, html, cb) => {
+const meta = (req, page, text, html, cb) => {
   const key = `__page_render__${page}`;
   client.get(key, (_err, reply) => {
     if (reply) {
       cb(null, reply);
     } else {
-      _meta(text, html, (err, xtext) => {
+      _meta(req, text, html, (err, xtext) => {
         if (err) {
           return cb(err);
         }
@@ -313,8 +317,8 @@ const meta = (page, text, html, cb) => {
     }
   });
 };
-const metaNoCache = (page, text, html, cb) => {
-  _meta(text, html, (err, xtext) => {
+const metaNoCache = (req, page, text, html, cb) => {
+  _meta(req, text, html, (err, xtext) => {
     if (err) {
       return cb(err);
     }

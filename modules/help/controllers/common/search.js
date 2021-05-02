@@ -31,7 +31,7 @@ module.exports = (req, res, next) => {
     };
 
     res.render('../modules/help/views/common/search.pug', {
-      session: req.user,
+      req,
       item,
       items: results.items,
       title: 'Centro de Ayuda',

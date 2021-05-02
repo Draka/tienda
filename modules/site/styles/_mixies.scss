@@ -1,0 +1,101 @@
+@mixin btn($color) {
+  background-color: $color !important;
+  color: set-text-color($color) !important;
+}
+
+@mixin btn-hov($color) {
+  &.btn--focus,
+  &:focus,
+  &.btn--hover,
+  &:hover {
+    background-color: lighten($color: $color, $amount: 10) !important;
+    color: set-text-color(lighten($color: $color, $amount: 10)) !important;
+  }
+  &.btn--active,
+  &:active {
+    background-color: darken($color: $color, $amount: 10) !important;
+    color: set-text-color(darken($color: $color, $amount: 10)) !important;
+  }
+  &:focus {
+    outline: none;
+  }
+}
+
+@mixin box-shadow() {
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+}
+
+@mixin media-breakpoint-up($min) {
+
+  @if $min>0 {
+    @media (min-width: $min) {
+      @content;
+    }
+  }
+
+  @else {
+    @content;
+  }
+}
+
+@mixin media-breakpoint($min, $max:'') {
+  @if $max !='' {
+    @media (min-width: $min) and (max-width: $max) {
+      @content;
+    }
+  } @else {
+    @media (min-width: $min) {
+      @content;
+    }
+  }
+}
+
+@function strip-unit($number) {
+  @if type-of($number) == 'number' and not unitless($number) {
+    @return $number / ($number * 0 + 1);
+  }
+
+  @return $number;
+}
+@function set-text-color($color) {
+  @if (saturation( $color ) < 20 and lightness( $color ) > 80) {
+    @return $color-black;
+  }
+  @else if (saturation( $color ) < 50 and lightness( $color ) < 50) {
+    @return $color-white;
+  }
+  @else if (saturation( $color ) > 70 and lightness( $color ) < 42) {
+    @return $color-white;
+  }
+  @else if (saturation( $color ) > 60 and lightness( $color ) < 30) {
+    @return $color-white;
+  }
+  @else if (saturation( $color ) > 90 and lightness( $color ) < 55) {
+    @return $color-black;
+  }
+  @else if (saturation( $color ) > 92 and lightness( $color ) > 68) {
+    @return $color-black;
+  }
+  @else if (hue( $color ) > 50 and lightness( $color ) < 50) {
+    @return $color-black;
+  }
+  @else {
+    @return $color-white;
+  }
+}
+@function set-change-color($color, $amount) {
+  @if (lightness( $color ) > 50) {
+    @return darken($color: $color, $amount: $amount);
+  }
+  @else {
+    @return lighten($color: $color, $amount: $amount + 5);
+  }
+}
+
+@function set-lightness-color($color, $amount) {
+  @return adjust-color($color, $lightness: $amount - lightness( $color ));
+}
+
+@function set-alpha-color($color, $amount) {
+  @return adjust-color($color, $alpha: $amount - 1);
+}

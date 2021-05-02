@@ -1,0 +1,179 @@
+.steps {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: stretch;
+  margin: 1em 0;
+  border-radius: 0.2em;
+  border: 1px solid set-change-color($color-default-inv, 50);
+  overflow: hidden;
+  width: 100%;
+
+  a {
+    text-decoration: none;
+    background-color: $color-white;
+    color: set-text-color($color-white);
+
+    $background-color: set-change-color($color-white, 5);
+
+    &:hover,
+    &:focus {
+      text-decoration: none;
+      color: set-text-color($background-color);
+      background-color: $background-color;
+
+      &:after {
+        background-color: $background-color;
+      }
+    }
+
+    &.active {
+      $background-color: set-change-color(set-lightness-color($color-default, 97), 5);
+
+      &:hover,
+      &:focus {
+        color: set-text-color($background-color);
+        background-color: $background-color;
+
+        &:after {
+          background-color: $background-color;
+        }
+      }
+    }
+  }
+
+  .step {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    vertical-align: middle;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5em 1em;
+    border-right: 1px solid set-change-color($color-default-inv, 50);
+    background-color: $color-white;
+    flex: 1 0 auto;
+
+    .step-icon {
+      font-size: 2em;
+      margin-right: 0.3em;
+    }
+
+    .step-title {
+      font-size: 1.1em;
+      font-weight: bold;
+    }
+
+    .step-description {
+      font-size: 0.8em;
+    }
+
+    &.completed {
+      .step-icon {
+        color: map-get($colors-sections, "primary");
+      }
+    }
+
+    &:last-child {
+      border-right: none;
+    }
+
+    &:after {
+      display: none;
+      position: absolute;
+      z-index: 2;
+      content: "";
+      top: 50%;
+      right: -0.05em;
+      border: medium none;
+      background-color: $color-white;
+      width: 1em;
+      height: 1em;
+      border-style: solid;
+      border-color: set-change-color($color-default-inv, 50);
+      border-width: 0 1px 1px 0;
+      transform: translateY(-50%) translateX(50%) rotate(-45deg);
+    }
+
+    &:after {
+      display: block;
+    }
+
+    &.active {
+      $background-color: set-lightness-color($color-default, 97);
+      background-color: $background-color;
+      color: set-text-color($background-color);
+
+      &:after {
+        display: block;
+        background-color: $background-color;
+      }
+    }
+
+    &.disabled {
+      .step-icon,
+      .step-title,
+      .step-description {
+        color: set-change-color($color-default-inv, 50);
+      }
+    }
+
+    &:last-child:after {
+      display: none;
+    }
+  }
+
+  &:first-child {
+    margin-top: 0;
+  }
+
+  @media only screen and (max-width: 767px) {
+    display: inline-flex;
+    flex-direction: column;
+
+    .step {
+      border-right: none;
+
+      &:after,
+      &.active:after {
+        display: none;
+      }
+    }
+  }
+}
+
+@each $key, $val in $colors-sections {
+  .#{$key} {
+    &.step {
+      border-color: $val;
+      &:after {
+        background-color: $val !important;
+        border-color: $val;
+      }
+    }
+  }
+  //variantes
+  @each $ckey, $cval in $colors-variants {
+    $background-color: $val;
+    .#{$key}-#{$ckey} {
+      @if ($cval < 0) {
+        $background-color: lighten(
+          $color: $val,
+          $amount: $cval * -1,
+        );
+      } @else {
+        $background-color: darken(
+          $color: $val,
+          $amount: $cval,
+        );
+      }
+      &.step {
+        border-color: $background-color;
+        &:after {
+          background-color: $background-color !important;
+          border-color: $background-color;
+        }
+      }
+    }
+  }
+}

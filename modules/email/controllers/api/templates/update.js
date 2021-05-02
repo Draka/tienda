@@ -48,8 +48,8 @@ module.exports = (req, res, next) => {
           return cb(err);
         }
         const text = data
-          .replace('{{%urlStatic%}}', appCnf.url.static)
-          .replace('{{%tenancy%}}', appCnf.tenancy)
+          .replace('{{%urlStatic%}}', appCnf.url.cdn)
+          .replace('{{%tenancy%}}', req.tenancy)
           .replace('{{%v%}}', appCnf.v)
           .replace('{{%content%}}', body.text);
 

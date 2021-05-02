@@ -1,5 +1,10 @@
 /* eslint-disable no-param-reassign */
 const schema = new mongoose.Schema({
+  tenancy: {
+    type: String,
+    index: true,
+    required: true,
+  },
   storeID: {
     type: mongoose.Schema.Types.ObjectId,
     ref: `${appCnf.dbPrefix}stores`,

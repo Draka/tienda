@@ -41,7 +41,7 @@ module.exports = (req, res, next) => {
     ];
 
     res.render('admin/pages/super-stores/view.pug', {
-      session: req.user,
+      req,
       user: results.user,
       store: results.store,
       title: 'Aprobar Tienda',

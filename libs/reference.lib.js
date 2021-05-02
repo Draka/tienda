@@ -22,7 +22,7 @@ module.exports = (order, userID, cb) => {
               orderID: order._id,
               userID,
               status: 'created',
-              reference: `${appCnf.tenancy}__${order.store.slug}_${order.orderID}_${num + 1}`,
+              reference: `${req.tenancy}__${order.store.slug}_${order.orderID}_${num + 1}`,
             });
             order.ref.save(cb);
           });

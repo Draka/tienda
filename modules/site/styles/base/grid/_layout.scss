@@ -1,0 +1,80 @@
+%grid {
+  float: left;
+  box-sizing: border-box;
+  padding: 0 $gutter;
+  min-height: 1px;
+  width: 100%;
+  left: auto;
+  right: auto;
+}
+
+.row {
+  margin-left: -$gutter;
+  margin-right: -$gutter;
+  margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  &.flex-xs-center {
+    display: flex;
+    align-items: center;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.col {
+  flex-basis: 0;
+  flex-grow: 1;
+  min-width: 0;
+  max-width: 100%;
+}
+
+@each $key,
+$val in $breakpoints {
+  $i: 1;
+
+  @while $i <=$layout-steps {
+    .col-#{$key}-#{$i} {
+      @extend %grid;
+    }
+
+    $i: $i+1;
+  }
+
+  @include media-breakpoint-up($val) {
+    $i: 1;
+
+    .justify-content-#{$key}-center {
+      justify-content: center !important;
+    }
+
+    @while $i <=$layout-steps {
+      .col-#{$key}-#{$i} {
+        $width: unquote((100 / ($layout-steps / $i)) + "%");
+        width: $width;
+        flex: 0 0 $width;
+        max-width: $width;
+      }
+      .offset-#{$key}-#{$i} {
+        margin-left: unquote((100 / ($layout-steps / $i)) + "%");
+      }
+
+      $i: $i+1;
+    }
+
+    .flex-#{$key}-center {
+      display: flex;
+      align-items: center;
+    }
+
+  }
+}

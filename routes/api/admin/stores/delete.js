@@ -59,7 +59,7 @@ module.exports = (req, res, next) => {
         async.auto({
           deleteS3: (cb) => {
             async.each(query.images, (i, cb) => {
-              deleteS3(`tenancy/${appCnf.tenancy}/ecommerce/${appCnf.s3.folder}/${req.params.storeID}/products/${query._id}/${i}`, cb);
+              deleteS3(`tenancy/${req.tenancy}/ecommerce/${appCnf.s3.folder}/${req.params.storeID}/products/${query._id}/${i}`, cb);
             }, cb);
           },
           delete: ['deleteS3', (results, cb) => {
@@ -69,7 +69,7 @@ module.exports = (req, res, next) => {
       }, cb);
     }],
     deleteImages: ['deleteCategory', 'deleteCoverageArea', 'deletePlace', 'deleteProduct', (results, cb) => {
-      deleteS3(`tenancy/${appCnf.tenancy}/ecommerce/${appCnf.s3.folder}/${req.params.storeID}`, cb);
+      deleteS3(`tenancy/${req.tenancy}/ecommerce/${appCnf.s3.folder}/${req.params.storeID}`, cb);
     }],
     deleteStore: ['deleteImages', (results, cb) => {
       results.store.remove(cb);

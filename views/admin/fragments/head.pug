@@ -27,17 +27,17 @@ title
   | #{title} | #{_.get(appCnf, 'site.name')}
 
 //- preload
-link(rel='preload' href=appCnf.url.static+'webfonts/lato-v16-latin-700.woff2' as='font' crossorigin type='font/woff2')
-link(rel='preload' href=appCnf.url.static+'webfonts/lato-v16-latin-regular.woff2' as='font' crossorigin type='font/woff2')
-link(rel='preload' href=appCnf.url.static+'webfonts/fa-brands-400.woff2' as='font' crossorigin type='font/woff2')
-link(rel='preload' href=appCnf.url.static+'webfonts/fa-solid-900.woff2' as='font' crossorigin type='font/woff2')
-link(rel='preload' href=appCnf.url.static+'admin/css/style.min.css?='+appCnf.v as='style')
-link(rel='preload' href=appCnf.url.static+'css/fonts.min.css?='+appCnf.v as='style' )
+link(rel='preload' href=appCnf.url.cdn+'webfonts/lato-v16-latin-700.woff2' as='font' crossorigin type='font/woff2')
+link(rel='preload' href=appCnf.url.cdn+'webfonts/lato-v16-latin-regular.woff2' as='font' crossorigin type='font/woff2')
+link(rel='preload' href=appCnf.url.cdn+'webfonts/fa-brands-400.woff2' as='font' crossorigin type='font/woff2')
+link(rel='preload' href=appCnf.url.cdn+'webfonts/fa-solid-900.woff2' as='font' crossorigin type='font/woff2')
+link(rel='preload' href=appCnf.url.cdn+'admin/css/style.min.css?='+appCnf.v as='style')
+link(rel='preload' href=appCnf.url.cdn+'css/fonts.min.css?='+appCnf.v as='style' )
 
 
-link(rel='preload' href=appCnf.url.static+'lib/script.js?='+appCnf.v as='script')
+link(rel='preload' href=appCnf.url.cdn+'lib/script.js?='+appCnf.v as='script')
 if js
-  link(rel='preload' href=appCnf.url.static+'js/'+js+'.js?='+appCnf.v as='script')
+  link(rel='preload' href=appCnf.url.cdn+'js/'+js+'.js?='+appCnf.v as='script')
 
 if mapbox
   //- MapBox
@@ -53,17 +53,17 @@ if mapbox
     link(rel='preload' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.2.0/mapbox-gl-draw.js' as='script')
 
 if osm
-  link(rel='preload' href=appCnf.url.static+'lib/leaflet/leaflet.css' as='style')
-  link(rel='preload' href=appCnf.url.static+'lib/leaflet/leaflet.js' as='script')
-  link(rel='preload' href=appCnf.url.static+'lib/leaflet/L.Control.Locate.min.js' as='script')
-  link(rel='preload' href=appCnf.url.static+'lib/leaflet/L.Control.Locate.min.css' as='style')
+  link(rel='preload' href=appCnf.url.cdn+'lib/leaflet/leaflet.css' as='style')
+  link(rel='preload' href=appCnf.url.cdn+'lib/leaflet/leaflet.js' as='script')
+  link(rel='preload' href=appCnf.url.cdn+'lib/leaflet/L.Control.Locate.min.js' as='script')
+  link(rel='preload' href=appCnf.url.cdn+'lib/leaflet/L.Control.Locate.min.css' as='style')
   if osm=='draw'
-    link(rel='preload' href=appCnf.url.static+'lib/leaflet/leaflet-geoman.css' as='style')
-    link(rel='preload' href=appCnf.url.static+'lib/leaflet/leaflet-geoman.min.js' as='script')
+    link(rel='preload' href=appCnf.url.cdn+'lib/leaflet/leaflet-geoman.css' as='style')
+    link(rel='preload' href=appCnf.url.cdn+'lib/leaflet/leaflet-geoman.min.js' as='script')
 
 if cke
-  link(rel='preload' href=appCnf.url.static+'lib/ckeditor/ckeditor.js' as='script')
+  link(rel='preload' href=appCnf.url.cdn+'lib/ckeditor/ckeditor.js' as='script')
 
 link(rel='shortcut icon' href=_.get(global.appCnf, 'site.images.favpng.png') type='image/x-icon')
 link(rel='icon', type='image/vnd.microsoft.icon', href=_.get(global.appCnf, 'site.images.favicon.ico'))
-link(rel='stylesheet', href=appCnf.url.static+'admin/css/style.min.css?='+appCnf.v)
+link(rel='stylesheet', href=appCnf.url.cdn+'admin/css/style.min.css?='+appCnf.v)

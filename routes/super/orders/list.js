@@ -49,7 +49,7 @@ module.exports = (req, res, next) => {
     ];
 
     res.render('admin/pages/super-orders/list.pug', {
-      session: req.user,
+      req,
       items: results.orders,
       limit,
       page,

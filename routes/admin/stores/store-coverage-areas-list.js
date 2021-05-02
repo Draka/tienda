@@ -67,7 +67,7 @@ module.exports = (req, res, next) => {
     ];
 
     res.render('admin/pages/stores/store-coverage-areas-list.pug', {
-      session: req.user,
+      req,
       user: results.user,
       store: results.store,
       items: results.items.map((i) => {

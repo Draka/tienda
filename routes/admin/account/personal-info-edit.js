@@ -25,7 +25,7 @@ module.exports = (req, res, next) => {
       return next(err);
     }
     res.render('admin/pages/account/personal-info-edit.pug', {
-      session: req.user,
+      req,
       user,
       menu: 'informacion-personal',
       active: 'editar',

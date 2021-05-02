@@ -36,6 +36,11 @@ function preUpdate(result, next) {
 }
 
 const schema = new mongoose.Schema({
+  tenancy: {
+    type: String,
+    index: true,
+    required: true,
+  },
   email: {
     type: String,
     trim: true,
@@ -44,10 +49,7 @@ const schema = new mongoose.Schema({
   emailNormalized: {
     type: String,
     trim: true,
-    index: {
-      unique: true,
-      sparse: true,
-    },
+    index: true,
     required: true,
     validate: {
       validator(v) {
@@ -198,6 +200,7 @@ const schema = new mongoose.Schema({
 }, { timestamps: true });
 
 schema.post('validate', preUpdate);
+schema.index({ tenancy: 1, emailNormalized: 1 }, { unique: true });
 const Model = mongoose.model(`${appCnf.dbPrefix}users`, schema);
 
 module.exports = Model;

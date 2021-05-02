@@ -1,0 +1,14 @@
+.bg {
+  &.s-cover {
+    background-size: cover;
+  }
+  &.norepeat {
+    background-repeat: no-repeat;
+  }
+  &.a-fixed {
+    background-attachment: fixed;
+  }
+  &.p-top {
+    background-position: top;
+  }
+}

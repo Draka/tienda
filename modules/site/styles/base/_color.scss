@@ -1,0 +1,40 @@
+@each $key, $val in $colors-sections {
+  .#{$key}:not(.form-group):not(.msg):not(button):not(.btn):not(.remark):not(.carousel) {
+    background-color: $val !important;
+    color: set-text-color($val) !important;
+  }
+  //alpha
+  @each $ckey, $cval in $colors-alpha {
+    $background-color: $val;
+    &.a-#{$key}-#{$ckey}:not(.form-group):not(.msg):not(button):not(.btn):not(.remark):not(.carousel) {
+      background-color: set-alpha-color($val, $cval) !important;
+      color: set-text-color($val) !important;
+    }
+  }
+
+  .t-#{$key} {
+    color: $val;
+  }
+  //variantes
+  @each $ckey, $cval in $colors-variants {
+    $background-color: $val;
+    .#{$key}-#{$ckey}:not(.form-group):not(.msg):not(button):not(.btn):not(.remark):not(.carousel) {
+      @if ($cval < 0) {
+        $background-color: lighten(
+          $color: $val,
+          $amount: $cval * -1,
+        );
+      } @else {
+        $background-color: darken(
+          $color: $val,
+          $amount: $cval,
+        );
+      }
+      background-color: $background-color !important;
+      color: set-text-color($background-color) !important;
+    }
+    .t-#{$key}-#{$ckey} {
+      color: $background-color;
+    }
+  }
+}

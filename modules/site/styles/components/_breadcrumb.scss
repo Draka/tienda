@@ -1,0 +1,57 @@
+.breadcrumb {
+  padding: 0;
+  list-style: none inside;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
+  li,
+  &--item {
+    position: relative;
+    cursor: pointer;
+    display: list-item;
+    background-color: inherit;
+    color: inherit;
+    transition: all 0.15s ease-in-out;
+    margin: 0.3em;
+    padding: .1em .7em;
+    &:first-child{
+      padding-left: 0;
+      margin-left: 0;
+    }
+    &:last-child{
+      padding-right: 0;
+      margin-right: 0;
+    }
+  }
+
+  & li+li:before,
+  & .item+.item:before {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    display: block;
+    position: absolute;
+    content: "\f054";
+    left: 0;
+    margin-left: -.75em;
+    font-size: 0.7em;
+  }
+
+  a {
+    color: $color-foreground;;
+    text-decoration: none;
+    &:hover,
+    &:focus {
+      text-decoration: none;
+      color: map-get($colors-sections, "secondary");
+    }
+  }
+
+  &--active {
+    color: map-get($colors-sections, "secondary");
+    font-weight: bold;
+    a {
+      color: map-get($colors-sections, "secondary");
+    }
+  }
+}

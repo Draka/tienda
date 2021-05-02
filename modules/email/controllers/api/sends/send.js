@@ -49,13 +49,13 @@ module.exports = (req, res, next) => {
           site: {
             name: _.get(appCnf, 'site.name'),
             urlSite: appCnf.url.site,
-            urlStatic: appCnf.url.static,
+            urlStatic: appCnf.url.cdn,
             info: _.get(appCnf, 'site.email.emailInfo'),
             title: _.get(appCnf, 'site.email.title'),
             color: _.get(appCnf, 'site.color'),
             logoEmail: _.get(appCnf, 'site.images.logoEmail.jpg'),
           },
-          tenancy: appCnf.tenancy,
+          tenancy: req.tenancy,
           v: appCnf.v,
         };
         async.auto({

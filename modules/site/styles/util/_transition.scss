@@ -1,0 +1,6 @@
+//alpha
+@each $key, $val in $transition {
+  &.trn-#{$key} {
+    transition: $val
+  }
+}

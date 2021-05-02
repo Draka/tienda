@@ -32,7 +32,7 @@ module.exports = (req, res, next) => {
     ];
 
     res.render('../modules/faq/views/super/faq-categorias/edit.pug', {
-      session: req.user,
+      req,
       item: results.item,
       title: 'Editar FAQ Categoría',
       menu: 'super-faq-categorias',

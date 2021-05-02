@@ -97,7 +97,7 @@ module.exports = (req, res, next) => {
     }
 
     res.render('pages/stores/index.pug', {
-      session: req.user,
+      req,
       store: results.store,
       places: results.places,
       markers,

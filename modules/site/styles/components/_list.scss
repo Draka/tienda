@@ -1,0 +1,43 @@
+.list {
+  > * {
+
+    &:first-child a {
+      border-top: 1px solid darken($color-default, 20%);
+    }
+
+    a {
+      font-size: 90%;
+      line-height: 4em;
+      padding: 0 1em;
+      margin: 0;
+      display: block;
+      text-decoration: none;
+      border-bottom: 1px solid darken($color-default, 20%);
+      background-color: set-lightness-color($color-default, 95) !important;
+      color: $color-foreground !important;
+
+      &:hover,
+      &:focus {
+        background-color: set-lightness-color($color-default, 90) !important;
+        text-decoration: none !important;
+      }
+
+      @each $key, $val in $colors-sections {
+        &.#{$key} {
+          background-color: set-lightness-color($val, 95) !important;
+
+          &:hover,
+          &:focus {
+            background-color: set-lightness-color($val, 90) !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+ul.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}

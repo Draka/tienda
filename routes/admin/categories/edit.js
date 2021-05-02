@@ -71,7 +71,7 @@ module.exports = (req, res, next) => {
     ];
 
     res.render('admin/pages/categories/edit.pug', {
-      session: req.user,
+      req,
       user: results.user,
       store: results.store,
       items: results.items,

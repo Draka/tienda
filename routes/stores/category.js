@@ -132,7 +132,7 @@ module.exports = (req, res, next) => {
     };
 
     res.render('pages/stores/category.pug', {
-      session: req.user,
+      req,
       user: results.user,
       store: results.store,
       category: results.category,

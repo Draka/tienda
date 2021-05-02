@@ -29,7 +29,7 @@ module.exports = (req, res, next) => {
     }
 
     res.render('pages/landpage.pug', {
-      session: req.user,
+      req,
       user: results.user,
       items: results.items,
       title: _.get(appCnf, 'site.title'),

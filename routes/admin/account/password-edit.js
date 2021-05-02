@@ -21,7 +21,7 @@ module.exports = (req, res, next) => {
       return next(err);
     }
     res.render('admin/pages/account/password-edit.pug', {
-      session: req.user,
+      req,
       user,
       menu: 'contrasena',
       active: 'editar',

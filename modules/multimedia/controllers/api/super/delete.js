@@ -18,7 +18,7 @@ module.exports = (req, res, next) => {
       if (errors.length) {
         return cb(listErrors(400, null, errors));
       }
-      deleteS3(`tenancy/${appCnf.tenancy}/images/${appCnf.s3.folder}/multimedia/${results.query.key}`, cb);
+      deleteS3(`tenancy/${req.tenancy}/images/${appCnf.s3.folder}/multimedia/${results.query.key}`, cb);
     }],
     delete: ['query', (results, cb) => {
       models.Multimedia

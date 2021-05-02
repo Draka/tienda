@@ -1,0 +1,82 @@
+.btn {
+  border-radius: $border-radius-base;
+  height: 2.25em;
+  padding: 0 1em;
+  user-select: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.3s linear, color 0.3s linear;
+  outline: none;
+  position: relative;
+  text-align: center;
+  font-weight: 700;
+  font-style: normal;
+  vertical-align: middle;
+  display: inline-block;
+  text-decoration: none;
+  border: none;
+}
+
+.btn:not(button) {
+  line-height: 2.25em;
+}
+
+.btn {
+
+  @include box-shadow();
+  @include btn($color-default);
+  @include btn-hov($color-default);
+
+  // Colores
+  @each $key,
+  $val in $colors-sections {
+    &--#{$key} {
+      @include btn($val);
+      @include btn-hov($val);
+    }
+
+    @each $ckey,
+    $cval in $colors-variants {
+      &--#{$key}-#{$ckey} {
+        @if ($cval < 0) {
+          @include btn(lighten($color: $val, $amount: $cval * -1));
+          @include btn-hov(lighten($color: $val, $amount: $cval * -1));
+        }
+
+        @else {
+          @include btn(darken($color: $val, $amount: $cval));
+          @include btn-hov(darken($color: $val, $amount: $cval));
+        }
+      }
+    }
+  }
+
+  &--disabled,
+  &:disabled {
+    background-color: $color-disabled;
+
+    color: lighten(invert($color-disabled), $amount: 40);
+    cursor: not-allowed;
+  }
+}
+
+.btn-flat {
+  border: none;
+  background-color: transparent;
+  $color: $color-default;
+  cursor: pointer;
+
+  &--focus,
+  &:focus,
+  &--hover,
+  &:hover {
+    background-color: darken($color: $color, $amount: 10) !important;
+    color: set-text-color(darken($color: $color, $amount: 10)) !important;
+  }
+
+  &--active,
+  &:active {
+    background-color: darken($color: $color, $amount: 10) !important;
+    color: set-text-color(darken($color: $color, $amount: 10)) !important;
+  }
+}

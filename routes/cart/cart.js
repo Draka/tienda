@@ -8,7 +8,7 @@ module.exports = (req, res, next) => {
       return next(err);
     }
     res.render('pages/cart/cart', {
-      session: req.user,
+      req,
       title: 'Carrito de compras',
       js: 'cart',
     });

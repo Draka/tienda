@@ -1,6 +1,11 @@
 mongoose.set('useFindAndModify', false);
 
 const schema = new mongoose.Schema({
+  tenancy: {
+    type: String,
+    index: true,
+    required: true,
+  },
   storeID: {
     type: mongoose.Schema.Types.ObjectId,
     ref: `${appCnf.dbPrefix}stores`,
@@ -260,6 +265,7 @@ function preSave(next) {
 schema.pre('save', preSave);
 
 schema.index({ browserUUID: 1, storeID: 1 }, { unique: true });
+schema.index({ tenancy: 1, orderID: 1 }, { unique: true });
 
 const Model = mongoose.model(`${appCnf.dbPrefix}orders`, schema);
 

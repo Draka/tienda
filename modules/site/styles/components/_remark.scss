@@ -1,0 +1,15 @@
+.remark{
+  padding: 1em;
+
+  background-color: set-lightness-color($color-default, 97) !important;
+  color: $color-foreground;
+  border-left: 0.4em solid $color-default;
+
+  @each $key, $val in $colors-sections {
+    &.#{$key} {
+      border-left-color: $val;
+      background-color: set-lightness-color($val, 97) !important;
+      color: $color-foreground !important;
+    }
+  }
+}

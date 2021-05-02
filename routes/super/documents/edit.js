@@ -32,7 +32,7 @@ module.exports = (req, res, next) => {
     ];
 
     res.render('admin/pages/super-documents/edit.pug', {
-      session: req.user,
+      req,
       item: results.item,
       title: 'Editar Documento',
       menu: 'super-documentos',

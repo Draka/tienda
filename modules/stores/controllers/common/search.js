@@ -67,7 +67,7 @@ module.exports = (req, res, next) => {
     };
 
     res.render('../modules/stores/views/common/search.pug', {
-      session: req.user,
+      req,
       item,
       stores: results.stores,
       title: 'Buscar Tiendas',
