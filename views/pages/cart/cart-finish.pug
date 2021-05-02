@@ -71,22 +71,7 @@ block content
                 .col-md-8
                   h2 Pedido ##{order.orderID} de: #{order.store.name}
                 .col-md-4
-                  if order.status === 'created' && order.payment.pse
-                    if order.payment.slug == 'wompi'
-                      button.btn.btn--alert.small.w-100.ph-0-5.rd-50.mt-0-5-sm.mt-0-5-xs.payment--wompi(
-                        id='id_'+order.orderID
-                        data-order=order._id) Pagar #{formatMoney(order.order.total)}
-                    else
-                      button.btn.btn--alert.small.w-100.ph-0-5.rd-50.mt-0-5-sm.mt-0-5-xs.payment--file(
-                        style="height: auto;"
-                        data-id=order._id
-                        data-orderid=order.orderID
-                        data-payment=JSON.stringify(_.pick(order.payment,['fields','info']))
-                        )
-                          b #{_.get(_.find(payments,{slug:order.payment.slug}),'name')}
-                          .title Pagar #{formatMoney(order.order.total)}
-                  if order.status === 'picking' && !order.payment.pse
-                    button.btn.btn--alert.small.w-100.ph-0-5.rd-50.mt-0-5-sm.mt-0-5-xs Pago contra entrega
+                  +btnPayment(order)
               table.hide-xs.small.table.table--lines
                 thead
                   tr

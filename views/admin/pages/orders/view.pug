@@ -92,14 +92,52 @@ block list
                 tr
                   td.b.mt-1-xs Forma de Pago:
                   td.mt-1-xs.cellphone #{order.payment.name}
+                if _.get(order, 'payment.info.fields')
+                  tr
+                    td.b.mt-1-xs Detalles del Pago:
+                    td.mt-1-xs.paymentFields
+                      ul
+                        each field,i in _.get(order, 'payment.info.fields')
+                          li
+                            span.b #{field.label}:
+                            | #{' '}
+                            if field.type=="text"
+                              | #{_.get(order, `payment.fields.${i}.value`)}
+                            if field.type=="select"
+                              | #{field.options[_.get(order, `payment.fields.${i}.value`)]}
+                  tr
+                    td.b.mt-1-xs Comprobante:
+                    td.mt-1-xs.paymentFile
+                      a(href=_.get(order, `payment.file`) target="_blank") Ver
+                        | #{' '}
+                        i.fas.fa-external-link-alt
 
             .row
-              .col-xs-4.tr.bigx2.vertical-align-center
-                i.fas.fa-angle-double-right
+              if order.status == 'verifying'
+                .col-xl-8.vertical-align-center
+                  button.btn.btn--action.small.w-100.open-modal-action(
+                    title=`¿Desea cambiar el estado a ${statusText('paid')}?`
+                    data-title=`¿Desea cambiar el estado a ${statusText('paid')}?`
+                    data-cancel='Cancelar'
+                    data-action=`Si, cambiar a "${statusText('paid')}"`
+                    data-method='PUT'
+                    data-url=`${appCnf.url.api}admin/orders/${order._id}/next-status/paid`
+                    data-page=`/administracion/tiendas/pedidos/${order.orderID}`
+                  ) Cambiar a: #{statusText('paid')}
+
+                  button.btn.btn--error.small.w-100.open-modal-action.mt-0-25(
+                    title=`¿Desea cambiar el estado a ${statusText('rejected')}?`
+                    data-title=`¿Desea cambiar el estado a ${statusText('rejected')}?`
+                    data-cancel='Cancelar'
+                    data-action=`Si, cambiar a "${statusText('rejected')}"`
+                    data-method='PUT'
+                    data-url=`${appCnf.url.api}admin/orders/${order._id}/next-status/rejected`
+                    data-page=`/administracion/tiendas/pedidos/${order.orderID}`
+                  ) Cambiar a: #{statusText('rejected')}
 
               if order.status == 'paid'
-                .col-md-8.vertical-align-center
-                  button.btn.btn--error.small.w-100.open-modal-action(
+                .col-xl-8.vertical-align-center
+                  button.btn.btn--action.small.w-100.open-modal-action(
                     title=`¿Desea cambiar el estado a ${statusText('picking')}?`
                     data-title=`¿Desea cambiar el estado a ${statusText('picking')}?`
                     data-cancel='Cancelar'
@@ -111,7 +149,7 @@ block list
 
               if order.status == 'picking'
                 .col-md-8.vertical-align-center
-                  button.btn.btn--error.small.w-100.open-modal-action(
+                  button.btn.btn--action.small.w-100.open-modal-action(
                     title=`¿Desea cambiar el estado a ${statusText('ready')}?`
                     data-title=`¿Desea cambiar el estado a ${statusText('ready')}?`
                     data-cancel='Cancelar'
@@ -123,7 +161,7 @@ block list
 
               if order.status == 'ready' || order.status == 'missing'
                 .col-md-8.vertical-align-center
-                  button.btn.btn--error.small.w-100.open-modal-action(
+                  button.btn.btn--action.small.w-100.open-modal-action(
                     title=`¿Desea cambiar el estado a ${statusText('onway')}?`
                     data-title=`¿Desea cambiar el estado a ${statusText('onway')}?`
                     data-cancel='Cancelar'
@@ -135,7 +173,7 @@ block list
 
               if order.status == 'onway'
                 .col-md-8.vertical-align-center
-                  button.btn.btn--error.small.w-100.open-modal-action(
+                  button.btn.btn--action.small.w-100.open-modal-action(
                     title=`¿Desea cambiar el estado a ${statusText('arrived')}?`
                     data-title=`¿Desea cambiar el estado a ${statusText('arrived')}?`
                     data-cancel='Cancelar'

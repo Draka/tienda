@@ -26,7 +26,7 @@ const schema = new mongoose.Schema({
   status: {
     type: String,
     index: true,
-    enum: ['created', 'paid', 'cancelled', 'cancelledAdmin', 'picking', 'ready', 'onway', 'arrived', 'missing', 'completed'],
+    enum: ['created', 'verifying', 'rejected', 'paid', 'cancelled', 'cancelledAdmin', 'picking', 'ready', 'onway', 'arrived', 'missing', 'completed'],
     default: 'created',
   },
   statuses: [{
@@ -36,7 +36,7 @@ const schema = new mongoose.Schema({
     },
     status: {
       type: String,
-      enum: ['created', 'paid', 'cancelled', 'cancelledAdmin', 'picking', 'ready', 'onway', 'arrived', 'missing', 'completed'],
+      enum: ['created', 'verifying', 'rejected', 'paid', 'cancelled', 'cancelledAdmin', 'picking', 'ready', 'onway', 'arrived', 'missing', 'completed'],
       default: 'created',
     },
     reason: {

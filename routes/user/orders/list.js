@@ -32,6 +32,7 @@ module.exports = (req, res, next) => {
       async.eachLimit(results.orders, 10, (order, cb) => {
         order.store._id = order.storeID;
         putS3LogoPath([order.store]);
+        order.payment.info = _.find(global.payments, { slug: order.payment.slug });
         reference(order, req.user._id, cb);
       }, cb);
     }],

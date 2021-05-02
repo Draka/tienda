@@ -24,30 +24,27 @@ block content
                   th.b PRODUCTOS
                   th.b TOTAL
               tbody
-                each item of items
+                each order of items
                   tr
                     td.tc
-                      a(href=`/usuario/pedidos/${item.orderID}` title='Ver')
+                      a(href=`/usuario/pedidos/${order.orderID}` title='Ver')
                         i.fas.fa-search
                     td.tc
-                      +img(`Logo de la tienda ${item.store.name}`, _.get(item.store, 'imageSizes.logo'), ['48x48_jpg', '96x96_jpg'], 'h-48p')
+                      +img(`Logo de la tienda ${order.store.name}`, _.get(order.store, 'imageSizes.logo'), ['48x48_jpg', '96x96_jpg'], 'h-48p')
                     td.tc
-                      a(href=`/usuario/pedidos/${item.orderID}` title='Ver')
-                        | #{item.orderID}
+                      a(href=`/usuario/pedidos/${order.orderID}` title='Ver')
+                        | #{order.orderID}
                     td.tc.subtitle
-                      if item.status === 'created' && item.payment.pse
-                        button.btn.btn--primary.small.w-100.payment.mb-0-5(
-                          id='id_'+item.orderID 
-                          data-order=item._id) Pagar #{formatMoney(item.order.total)}
-                      | !{badge(item.status)}
+                      +btnPayment(order)
+                      | !{badge(order.status)}
                     td
-                      | #{statusToDate(item.statuses, 'created')}
+                      | #{statusToDate(order.statuses, 'created')}
                     td
-                      | #{statusToDate(item.statuses, 'completed')}
+                      | #{statusToDate(order.statuses, 'completed')}
                     td.tr
-                      | #{item.products.length}
+                      | #{order.products.length}
                     td.tr.b.t-secondary
-                      | #{formatMoney(item.order.total)}
+                      | #{formatMoney(order.order.total)}
               tfoot
                 tr
                   th(colspan="10")
@@ -60,42 +57,39 @@ block content
                       a.item(href=`?page=${Math.ceil(count/limit) - (count % limit == 0 ? 0 : 1)}`)
                         i.fas.fa-chevron-right
           .show-xs
-            each item of items
+            each order of items
               table.small.table.table--lines.table--striped
                 tbody
                   tr
                     th.h-img-48
-                      +img(`Logo de la tienda ${item.store.name}`, _.get(item.store, 'imageSizes.logo'), ['48x48_jpg', '96x96_jpg'], 'h-48p')
-                    td.b.big #{item.store.name}
+                      +img(`Logo de la tienda ${order.store.name}`, _.get(order.store, 'imageSizes.logo'), ['48x48_jpg', '96x96_jpg'], 'h-48p')
+                    td.b.big #{order.store.name}
                   tr
                     td(colspan='2')
-                      if item.status === 'created' && item.payment.pse
-                        button.btn.btn--primary.w-100.payment.mb-0-5(
-                          id='id_'+item.orderID 
-                          data-order=item._id) Pagar #{formatMoney(item.order.total)}
+                      +btnPayment(order)
                   tr
                     th.b NUMERO
-                    td #{item.orderID}
+                    td #{order.orderID}
                   tr
                     th.b ESTADO
                     td.big
-                      | !{badge(item.status)}
+                      | !{badge(order.status)}
                   tr
                     th.b PEDIDO
-                    td #{statusToDate(item.statuses, 'created')}
+                    td #{statusToDate(order.statuses, 'created')}
                   tr
                     th.b ENTREGA
-                    td #{statusToDate(item.statuses, 'completed')}
+                    td #{statusToDate(order.statuses, 'completed')}
                   tr
                     th.b PRODUCTOS
-                    td #{item.products.length}
+                    td #{order.products.length}
                   tr
                     th.b TOTAL
-                    td.b.big.t-secondary #{formatMoney(item.order.total)}
+                    td.b.big.t-secondary #{formatMoney(order.order.total)}
                   tr
                     td(colspan='2')
-                      a.btn.btn--secondary.w-100(href=`/usuario/pedidos/${item.orderID}`) Ver detalles
-                
+                      a.btn.btn--secondary.w-100(href=`/usuario/pedidos/${order.orderID}`) Ver detalles
+
             table.small.table.table--lines.table--striped
               tr
                 th(colspan="10")
@@ -113,3 +107,5 @@ block content
             .remark.info.flex.mb-0-5
               i.fas.fa-info-circle.h4.mr-1.t-info
               | No hay pedidos
+
+  include ../../fragments/modal-payment-file.pug

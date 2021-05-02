@@ -95,22 +95,36 @@ block list
                 tr
                   td.b.mt-1-xs Forma de Pago:
                   td.mt-1-xs.cellphone #{order.payment.name}
+                if _.get(order, 'payment.info.fields')
+                  tr
+                    td.b.mt-1-xs Detalles del Pago:
+                    td.mt-1-xs.paymentFields
+                      ul
+                        each field,i in _.get(order, 'payment.info.fields')
+                          li
+                            span.b #{field.label}:
+                            | #{' '}
+                            if field.type=="text"
+                              | #{_.get(order, `payment.fields.${i}.value`)}
+                            if field.type=="select"
+                              | #{field.options[_.get(order, `payment.fields.${i}.value`)]}
+                  tr
+                    td.b.mt-1-xs Comprobante:
+                    td.mt-1-xs.paymentFile
+                      a(href=_.get(order, `payment.file`) target="_blank") Ver
+                        | #{' '}
+                        i.fas.fa-external-link-alt
             .row
               if ['created', 'paid', 'picking', 'ready', 'onway', 'arrived', 'missing'].indexOf(order.status) >= 0
-                .col-xs-4.tr.bigx2.vertical-align-center
-                  i.fas.fa-angle-double-right
-                .col-md-8
+                .col-xl-8.vertical-align-center
                   if order.status === 'created' || order.status === 'picking'
                     button.btn.btn--error.small.w-100.btn-cancel.mb-0-5(
                       id='id_'+order.orderID
                       data-order=order._id) Cancelar
 
             .row
-              .col-xs-4.tr.bigx2.vertical-align-center
-                i.fas.fa-angle-double-right
-
               if order.status == 'paid'
-                .col-md-8.vertical-align-center
+                .col-xl-8.vertical-align-center
                   button.btn.btn--error.small.w-100.open-modal-action(
                     title=`¿Desea cambiar el estado a ${statusText('picking')}?`
                     data-title=`¿Desea cambiar el estado a ${statusText('picking')}?`

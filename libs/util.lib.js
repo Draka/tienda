@@ -49,6 +49,8 @@ exports.statusToDate = (arr, status) => {
 
 const status = {
   created: 'Creado',
+  verifying: 'Veificando pago',
+  rejected: 'Rechazado',
   paid: 'Pagado',
   cancelled: 'Cancelado',
   cancelledAdmin: 'Cancelado',
@@ -61,6 +63,8 @@ const status = {
 };
 const color = {
   created: 'primary',
+  verifying: 'alert',
+  rejected: 'error',
   paid: 'alert',
   cancelled: 'error',
   cancelledAdmin: 'error',
@@ -73,6 +77,8 @@ const color = {
 };
 const icon = {
   created: 'fas fa-shopping-basket',
+  verifying: 'fas fa-money-check-alt',
+  rejected: 'fas fa-ban',
   paid: 'fas fa-money-check-alt',
   cancelled: 'fas fa-ban',
   cancelledAdmin: 'fas fa-ban',

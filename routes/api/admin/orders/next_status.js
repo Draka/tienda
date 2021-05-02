@@ -34,11 +34,18 @@ module.exports = (req, res, next) => {
         return cb(listErrors(404, null, errors));
       }
 
-      if (['paid', 'picking', 'ready', 'onway', 'arrived', 'missing'].indexOf(results.order.status) === -1) {
+      if (['verifying', 'paid', 'picking', 'ready', 'onway', 'arrived', 'missing'].indexOf(results.order.status) === -1) {
         errors.push({ field: 'order', msg: __('No se puede cambiar el estado') });
         return cb(listErrors(404, null, errors));
       }
-      if (results.order.status === 'paid') {
+      if (results.order.status === 'verifying' && (['rejected', 'paid'].indexOf(req.params.status) >= 0)) {
+        results.order.status = req.params.status;
+        results.order.statuses.push({
+          status: req.params.status,
+          userID: req.user._id,
+        });
+        results.order.save(cb);
+      } else if (results.order.status === 'paid') {
         results.order.status = 'picking';
         results.order.statuses.push({
           status: 'picking',

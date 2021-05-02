@@ -90,17 +90,38 @@ block content
                     td.mt-1-xs.name #{order.delivery.name}
                   tr
                     td.b.mt-1-xs Forma de Pago:
-                    td.mt-1-xs.cellphone #{order.payment.name}
+                    td.mt-1-xs.payment #{order.payment.name}
+                  if _.get(order, 'payment.info.fields')
+                    tr
+                      td.b.mt-1-xs Detalles del Pago:
+                      td.mt-1-xs.paymentFields
+                        ul
+                          each field,i in _.get(order, 'payment.info.fields')
+                            if !field.hide
+                              li
+                                span.b #{field.label}:
+                                | #{' '}
+                                if field.type=="text"
+                                  | #{_.get(order, `payment.fields.${i}.value`)}
+                                if field.type=="select"
+                                  | #{field.options[_.get(order, `payment.fields.${i}.value`)]}
+                    if order.payment.slug !== 'wompi' && order.payment.pse
+                      tr
+                        td.b.mt-1-xs Comprobante:
+                        td.mt-1-xs.paymentFile
+                          if order.status === 'created'
+                            | Esperando comprobante de pago
+                          else
+                            a(href=_.get(order, `payment.file`) target="_blank") Ver
+                              | #{' '}
+                              i.fas.fa-external-link-alt
               .row
-                .col-md-6
-                  if order.status === 'created' && order.payment.pse
-                    button.btn.btn--primary.small.w-100.payment.mb-0-5(
-                      id='id_'+order.orderID 
-                      data-order=order._id) Pagar #{formatMoney(order.order.total)}
-                .col-md-6
+                .col-xl-8.vertical-align-center
+                  +btnPayment(order)
+                .col-xl-8.vertical-align-center
                   if order.status === 'created' || order.status === 'picking'
                     button.btn.btn--error.small.w-100.btn-cancel.mb-0-5(
-                      id='id_'+order.orderID 
+                      id='id_'+order.orderID
                       data-order=order._id) Cancelar
 
 
@@ -127,7 +148,7 @@ block content
                   td.tr #{formatMoney(product.price)}
                   td.tr #{product.quantity}
                   td.tr.t-secondary.b #{formatMoney(product.price*product.quantity)}
-              
+
             tfoot
               tr
                 td.b(colspan='4') Subtotal
@@ -194,3 +215,5 @@ block content
             button.close-modal.btn.btn--secondary(type='button') Salir
             | #{' '}
             button.btn.btn--primary(type='submit') Confirmar cancelar
+
+  include ../../fragments/modal-payment-file.pug

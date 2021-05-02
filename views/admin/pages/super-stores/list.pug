@@ -24,7 +24,10 @@ block list
       | #{' '} = Publicado,
       | #{' '}
       b A
-      | #{' '} = Aprobada
+      | #{' '} = Aprobada,
+      | #{' '}
+      b C
+      | #{' '} = Confiable
       | #{' '}
 
     .scroll
@@ -38,6 +41,7 @@ block list
             th.b Logo
             th.b.tc P
             th.b.tc A
+            th.b.tc C
             th.b Nombre
             th.b URL
             th.b Usuario
@@ -145,6 +149,8 @@ block list
                 +boolean(item.publish)
               td.tc
                 +boolean(item.approve)
+              td.tc
+                +boolean(item.trust)
               td
                 a.b(href=`/administracion/super/tiendas/${item._id}`) #{item.name}
                 .small #{item.slogan}
@@ -157,7 +163,7 @@ block list
                 a(href=`https://wa.me/${item.userID.personalInfo.allCellphone || item.userID.personalInfo.cellphone}?text=Hola` title='Whatsapp' target='_blank') #{item.userID.personalInfo.allCellphone || item.userID.personalInfo.cellphone}
         tfoot
           tr
-            th(colspan="10")
+            th(colspan="11")
               .pagination.justify-content-right
                 a.item(href=`?page=0`)
                   i.fas.fa-chevron-left

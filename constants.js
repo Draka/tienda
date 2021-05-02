@@ -62,6 +62,7 @@ const vars = {
         type: 'text',
         label: 'Key de Producción',
         slug: 'wompiKey',
+        hide: true,
       }],
       file: false,
     },
@@ -95,10 +96,15 @@ const vars = {
     },
     {
       slug: 'bancolombia',
-      name: 'Transferencia Bancolombia',
+      name: 'Transferencia Bancaria',
       description: 'Transferencia cuenta a cuenta Bancolombia',
       trust: true,
       fields: [
+        {
+          type: 'text',
+          label: 'Banco',
+          slug: 'banco',
+        },
         {
           type: 'text',
           label: 'Número de Cuenta',

@@ -29,7 +29,7 @@ block list
               td.w-100
                 .b #{item.name}
                 .small #{item.description}
-                if (store.trust && item.trust)
+                if store.trust
                   each field,j in item.fields
                     .form-group.mt-0-5
                       .form-control

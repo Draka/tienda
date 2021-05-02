@@ -17,6 +17,8 @@ module.exports = (req, res, next) => {
       }
       results.order.store._id = results.order.storeID;
       putS3LogoPath([results.order.store]);
+      results.order.payment.info = _.find(global.payments, { slug: results.order.payment.slug });
+      results.order.payment.file = `${appCnf.url.static}tenancy/${appCnf.tenancy}/files/${appCnf.s3.folder}/orders/${results.order._id}/${results.order.payment.file}`;
       reference(results.order, req.user._id, cb);
     }],
   }, (err, results) => {

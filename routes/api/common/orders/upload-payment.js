@@ -8,6 +8,7 @@ const s3 = new AWS.S3({
 
 module.exports = (req, res, next) => {
   const errors = [];
+  let ext = '';
   async.auto({
     validate: (cb) => {
       cb();
@@ -18,7 +19,6 @@ module.exports = (req, res, next) => {
           _id: req.params.orderID,
           userID: req.user._id,
         })
-        .lean()
         .exec(cb);
     }],
     check: ['order', (results, cb) => {
@@ -45,6 +45,18 @@ module.exports = (req, res, next) => {
       if (errors.length) {
         return cb(listErrors(400, null, errors));
       }
+      switch (req.files.file.mimetype) {
+        case 'application/pdf':
+          ext = '.pdf';
+          break;
+        case 'image/jpeg':
+          ext = '.jpg';
+          break;
+        case 'image/png':
+          ext = '.png';
+          break;
+        default:
+      }
 
       const dir = `./public/tenancy/${appCnf.tenancy}/files/${appCnf.s3.folder}/orders/${req.params.orderID}`;
       async.auto({
@@ -63,7 +75,7 @@ module.exports = (req, res, next) => {
             // ajustes de s3
             const params = {
               Bucket: appCnf.s3.bucket,
-              Key: `public/tenancy/${appCnf.tenancy}/files/${appCnf.s3.folder}/orders/${req.params.orderID}/payment`, // ruta donde va a quedar
+              Key: `tenancy/${appCnf.tenancy}/files/${appCnf.s3.folder}/orders/${req.params.orderID}/payment${ext}`, // ruta donde va a quedar
               Body: req.files.file.data,
               ContentType: req.files.file.mimetype,
               CacheControl: 'private, max-age=31536000',
@@ -79,20 +91,20 @@ module.exports = (req, res, next) => {
         }],
         moveFileLocal: ['makedirLocal', (_results, cb) => {
           if (process.env.NODE_ENV !== 'production') {
-            req.files.file.mv(`${dir}/payment`);
+            req.files.file.mv(`${dir}/payment${ext}`);
           }
-          results.order.file = 'payment';
-          results.order.mime = req.files.file.mimetype;
-          results.order.fileCheck = true;
-          results.order.rejectMsg = '';
+          results.order.payment.file = `payment${ext}`;
+          results.order.payment.mime = req.files.file.mimetype;
+          results.order.payment.fileCheck = true;
+          results.order.payment.rejectMsg = '';
           cb();
         }],
       }, cb);
     }],
     update: ['uploadFile', (results, cb) => {
-      results.order.status = 'paid';
+      results.order.status = 'verifying';
       results.order.statuses.push({
-        status: 'paid',
+        status: 'verifying',
       });
       results.order.save(cb);
     }],
@@ -107,7 +119,7 @@ module.exports = (req, res, next) => {
       }, () => {
         const admin = _.get(results.order, 'storeID.userID');
         if (admin) {
-          if (results.query.status === 'approved') {
+          if (results.order.status === 'verifying') {
             sqsMailer({
               to: { email: admin.email, name: (_.get(admin, 'personalInfo.name') || ' ').split(' ')[0] },
               subject: `Nueva Orden #${results.order.orderID}`,
@@ -139,6 +151,9 @@ module.exports = (req, res, next) => {
     if (err) {
       return next(err);
     }
-    res.send(results.order.ref);
+    if (req.body.redirect) {
+      return res.redirect(req.body.redirect);
+    }
+    res.status(201).send(_.pick(results.order, ['_id', 'status']));
   });
 };

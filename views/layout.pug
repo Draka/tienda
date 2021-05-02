@@ -22,6 +22,31 @@ mixin emptyCart
           p Encontrará muchos productos interesantes en nuestra página.
           a.btn.btn--primary(href='/') Inicio
 
+mixin btnPayment(order)
+  if order.status === 'created' && order.payment.pse
+    if order.payment.slug == 'wompi'
+      button.btn.btn--alert.small.w-100.ph-0-5.rd-50.mt-0-5-sm.mt-0-5-xs.mb-1.payment--wompi(
+        style="height: auto;"
+        id='id_'+order.orderID
+        data-order=order._id)
+          b Wompi
+          .title Pagar #{formatMoney(order.order.total)}
+    else
+      button.btn.btn--alert.small.w-100.ph-0-5.rd-50.mt-0-5-sm.mt-0-5-xs.mb-1.payment--file(
+        style="height: auto;"
+        data-id=order._id
+        data-orderid=order.orderID
+        data-payment=JSON.stringify(_.pick(order.payment,['fields','info']))
+        )
+          b #{_.get(_.find(payments,{slug:order.payment.slug}),'name')}
+          .title Pagar #{formatMoney(order.order.total)}
+  if order.status === 'picking' && !order.payment.pse
+    button.btn.btn--alert.small.w-100.ph-0-5.rd-50.mt-0-5-sm.mt-0-5-xs.mb-1(
+      style="height: auto;"
+    )
+      b Pago contra entrega
+      .title Pagar #{formatMoney(order.order.total)}
+
 
 doctype html
 html(lang='es')

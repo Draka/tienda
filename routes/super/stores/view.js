@@ -47,6 +47,7 @@ module.exports = (req, res, next) => {
       title: 'Aprobar Tienda',
       menu: 'super-tienda',
       approve: `/administracion/super/tiendas/${req.params.storeID}/aprobar`,
+      trust: `/administracion/super/tiendas/${req.params.storeID}/confiar`,
       breadcrumbs,
     });
   });

@@ -10,7 +10,7 @@ module.exports = (req, res, next) => {
   async.auto({
     validate: (cb) => {
       body.status = {
-        $in: ['paid', 'cancelled', 'cancelledAdmin', 'picking', 'ready', 'onway', 'arrived', 'missing', 'completed'],
+        $in: ['verifying', 'paid', 'cancelled', 'cancelledAdmin', 'picking', 'ready', 'onway', 'arrived', 'missing', 'completed'],
       };
       // if (req.query.q) {
       //   body.$or = [
