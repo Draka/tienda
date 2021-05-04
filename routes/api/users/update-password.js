@@ -14,6 +14,8 @@ function comparePassword(password, field) {
 module.exports = (req, res, next) => {
   const errors = [];
   const body = _.pick(req.body, ['password', 'newPassword']);
+  body.tenancy = req.tenancy;
+
   if (!body.password) {
     body.personalInfo = {
       firstname: req.body.firstname,

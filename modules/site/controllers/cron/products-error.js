@@ -12,7 +12,7 @@ module.exports = (req, res, next) => {
         async.auto({
           query: (cb) => {
             models.Product
-              .find({
+              .find({ tenancy: req.tenancy,
                 storeID: store._id,
               })
               .exec(cb);

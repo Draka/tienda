@@ -11,7 +11,9 @@ module.exports = (req, res, next) => {
     'point',
     'schedule',
   ]);
-  const adminQuery = {
+  body.tenancy=req.tenancy;
+
+  const adminQuery = { tenancy: req.tenancy,
     _id: req.params.storeID,
     userID: req.user._id,
   };
@@ -55,7 +57,7 @@ module.exports = (req, res, next) => {
     }],
     save: ['query', (results, cb) => {
       if (!results.query) {
-        errors.push({ field: 'places', msg: 'No existe la sede.' });
+        errors.push({ field: 'places', msg: 'El registro no existe.' });
       }
       if (errors.length) {
         return cb(listErrors(400, null, errors));

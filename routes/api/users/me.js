@@ -3,7 +3,7 @@ module.exports = (req, res, _next) => {
     .findById(req.user._id)
     .select({
       email: 1,
-      personalInfo: 1
+      personalInfo: 1,
     })
     .exec((err, doc) => {
       if (err || !doc) {

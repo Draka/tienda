@@ -1,6 +1,8 @@
 module.exports = (req, res, next) => {
   const errors = [];
   const body = _.pick(req.body, ['reason']);
+  body.tenancy = req.tenancy;
+
   async.auto({
     validate: (cb) => {
       if (!_.trim(body.reason)) {
@@ -14,6 +16,7 @@ module.exports = (req, res, next) => {
     order: ['validate', (_results, cb) => {
       models.Order
         .findOne({
+          tenancy: req.tenancy,
           _id: req.params.orderID,
           userID: req.user._id,
         })
@@ -21,7 +24,7 @@ module.exports = (req, res, next) => {
     }],
     cancel: ['order', (results, cb) => {
       if (!results.order) {
-        errors.push({ field: 'order', msg: __('El pedido no existe') });
+        errors.push({ field: 'order', msg: 'El registro no existe.' });
         return next(listErrors(404, null, errors));
       }
       if (['cancelled', 'cancelledAdmin'].indexOf(results.order.status) >= 0) {

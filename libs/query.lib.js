@@ -28,7 +28,7 @@ exports.modelSlug = (req, model, slug, cb) => {
       cb(null, JSON.parse(reply));
     } else {
       models[model]
-        .findOne({ slug, tenancy: req.tenancy })
+        .findOne({ tenancy: req.tenancy, slug, tenancy: req.tenancy })
         .lean()
         .exec((err, doc) => {
           if (err) {
@@ -48,7 +48,7 @@ exports.modelAllPublish = (model, cb) => {
       cb(null, JSON.parse(reply));
     } else {
       models[model]
-        .find({ publish: true })
+        .find({ tenancy: req.tenancy, publish: true })
         .lean()
         .exec((err, doc) => {
           if (err) {
@@ -80,34 +80,6 @@ exports.modelAll = (model, cb) => {
     }
   });
 };
-/**
- * Datos del sitio
- * @param {*} cb
- */
-exports.site = (cb) => {
-  const key = '__site__';
-  client.get(key, (_err, reply) => {
-    if (reply && process.env.NODE_ENV === 'production') {
-      cb(null, JSON.parse(reply));
-    } else {
-      models.Site
-        .findOne()
-        .lean()
-        .exec((err, doc) => {
-          if (err) {
-            return cb(err);
-          }
-          _.each(_.get(doc, 'images'), (image, path) => {
-            _.each(image, (url, ext) => {
-              doc.images[path][ext] = `${appCnf.url.cdn}tenancy/${req.tenancy}/images/${appCnf.s3.folder}/site/${path}/${url}`;
-            });
-          });
-          client.set(key, JSON.stringify(doc), 'EX', 3600);
-          cb(null, doc);
-        });
-    }
-  });
-};
 
 exports.user = (id, cb) => {
   const key = `__user__${id}`;
@@ -129,7 +101,7 @@ exports.user = (id, cb) => {
   });
 };
 
-exports.store = (id, cb) => {
+exports.xxxxxxstore = (id, cb) => {
   const key = `__store__${id}`;
   client.get(key, (_err, reply) => {
     if (reply && process.env.NODE_ENV === 'production') {
@@ -172,6 +144,7 @@ exports.place = (id, cb) => {
 function categoryTree(storeID, categoryID, cb) {
   models.Category
     .find({
+      tenancy: req.tenancy,
       storeID,
       categoryID,
     })
@@ -224,7 +197,7 @@ exports.treePush = treePush;
 
 function up(arr, categoryID, cb) {
   models.Category
-    .findOne({ _id: categoryID })
+    .findOne({ tenancy: req.tenancy, _id: categoryID })
     .select('categoryID name')
     .lean()
     .exec((err, doc) => {

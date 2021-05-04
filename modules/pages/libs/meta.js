@@ -263,22 +263,22 @@ const _meta = (req, text, html, cb) => {
       }
     },
     siteName: (cb) => {
-      text = text.replace(/\[site-name\]/g, _.get(appCnf, 'site.name'));
+      text = text.replace(/\[site-name\]/g, _.get(req, 'site.name'));
       cb();
     },
     siteDescription: (cb) => {
-      text = text.replace(/\[site-description\]/g, _.get(appCnf, 'site.description'));
+      text = text.replace(/\[site-description\]/g, _.get(req, 'site.description'));
       cb();
     },
     siteEmail: (cb) => {
-      text = text.replace(/\[site-email\]/g, `<a href=""mailto:${_.get(appCnf, 'site.email.emailInfo')}>${_.get(appCnf, 'site.email.emailInfo')}</a>`);
+      text = text.replace(/\[site-email\]/g, `<a href=""mailto:${_.get(req, 'site.email.emailInfo')}>${_.get(req, 'site.email.emailInfo')}</a>`);
       cb();
     },
     logoCuadrado: (cb) => {
       text = text.replace(/\[logo-cuadrado\]/g,
-        `<img class="h-96p" src="${
-          _.get(appCnf, 'site.images.logoSquare.svg')
-        }" alt="${_.get(appCnf, 'site.name')} logo nombre">`);
+        `<img class="maxh-96p w-100" src="${
+          _.get(req, 'site.images.logoSquare.svg')
+        }" alt="${_.get(req, 'site.name')} logo nombre">`);
       cb();
     },
     menu: (cb) => {
@@ -297,6 +297,24 @@ const _meta = (req, text, html, cb) => {
       + '<button class="btn btn--secondary"><i class="fas fa-search"></i><span class="out-screen">Buscar tiendas</span></button>'
       + '</form>');
       cb();
+    },
+    newsletter: (cb) => {
+      if (/\[newsletter\]/.test(text)) {
+        const re = new RegExp('\\[newsletter\\]', 'igm');
+        const matchAll = text.matchAll(re);
+        const matchs = [];
+        for (const match of matchAll) {
+          matchs.push(match);
+        }
+        async.eachLimit(matchs, 5, (match, cb) => {
+          text = text.replace(match[0], template({
+            req,
+          }, 'newsletter'));
+          cb();
+        }, cb);
+      } else {
+        cb();
+      }
     },
   }, (err) => cb(err, text));
 };

@@ -7,6 +7,8 @@ module.exports = (req, res, next) => {
   const body = _.pick(fbody, [
     'name',
   ]);
+  body.tenancy=req.tenancy;
+
   async.auto({
     validate: (cb) => {
       if (!_.trim(body.name)) {
@@ -24,7 +26,7 @@ module.exports = (req, res, next) => {
     }],
     save: ['query', (results, cb) => {
       if (!results.query) {
-        errors.push({ field: 'faq-category', msg: 'No existe la Categoría.' });
+        errors.push({ field: 'faq-category', msg: 'El registro no existe.' });
       }
       if (errors.length) {
         return cb(listErrors(400, null, errors));

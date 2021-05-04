@@ -33,7 +33,7 @@ module.exports = (req, res, next) => {
         .exec(cb);
     },
     postFind: ['stores', (results, cb) => {
-      putS3LogoPath(results.stores);
+      putS3LogoPath(req, results.stores);
       cb();
     }],
     count: ['postFind', (_results, cb) => {

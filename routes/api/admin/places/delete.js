@@ -1,6 +1,7 @@
 module.exports = (req, res, next) => {
   const errors = [];
   const adminQuery = {
+    tenancy: req.tenancy,
     _id: req.params.storeID,
     userID: req.user._id,
   };
@@ -30,7 +31,7 @@ module.exports = (req, res, next) => {
     }],
     check2: ['query', (results, cb) => {
       if (!results.query) {
-        errors.push({ field: 'categories', msg: 'No existe la Sede.' });
+        errors.push({ field: 'categories', msg: 'El registro no existe.' });
       }
       if (errors.length) {
         return cb(listErrors(400, null, errors));

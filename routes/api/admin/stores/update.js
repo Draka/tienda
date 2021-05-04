@@ -29,6 +29,8 @@ module.exports = (req, res, next) => {
     'mode',
     'messages',
   ]);
+  body.tenancy=req.tenancy;
+
   if (req.body.lat && req.body.lng) {
     body['location.type'] = 'Point';
     body['location.coordinates'] = [req.body.lng, req.body.lat];
@@ -83,6 +85,7 @@ module.exports = (req, res, next) => {
     });
   }
   const adminQuery = {
+    tenancy: req.tenancy,
     _id: req.params.storeID,
     userID: req.user._id,
   };
@@ -100,7 +103,7 @@ module.exports = (req, res, next) => {
     }],
     uploadFile: ['query', (results, cb) => {
       if (!results.query) {
-        errors.push({ field: 'store', msg: 'No existe la tienda.' });
+        errors.push({ field: 'store', msg: 'El registro no existe.' });
       }
       if (errors.length) {
         return cb(listErrors(400, null, errors));
@@ -119,7 +122,7 @@ module.exports = (req, res, next) => {
         const cimg = _.random(10000, 99999);
         results.query.images[key] = cimg;
         const pathImg = `${req.params.storeID}/images/${key}`;
-        imageToS3(pathImg, null, file, global.storeImageSizes[key], true, global.storeImageFit[key], cb);
+        imageToS3(req, pathImg, null, file, global.storeImageSizes[key], true, global.storeImageFit[key], cb);
       }, cb);
     }],
     save: ['uploadFile', (results, cb) => {

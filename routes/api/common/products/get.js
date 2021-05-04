@@ -13,7 +13,7 @@ module.exports = (req, res, next) => {
     }],
     check: ['store', (results, cb) => {
       if (!results.store) {
-        errors.push({ field: 'store', msg: 'No existe la tienda.' });
+        errors.push({ field: 'store', msg: 'El registro no existe.' });
         return cb(listErrors(404, null, errors));
       }
       cb();
@@ -23,7 +23,7 @@ module.exports = (req, res, next) => {
     }],
     postFind: ['product', (results, cb) => {
       if (!results.product) {
-        errors.push({ field: 'product', msg: 'No existe el producto.' });
+        errors.push({ field: 'product', msg: 'El registro no existe.' });
         return cb(listErrors(404, null, errors));
       }
       putS3Path([results.product], results.store);

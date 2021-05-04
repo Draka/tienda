@@ -13,7 +13,7 @@ module.exports = (req, res, next) => {
     selectMethods: ['store', (results, cb) => {
       const selectMethods = [];
       if (!results.store) {
-        errors.push({ field: 'store', msg: 'No existe la tienda.' });
+        errors.push({ field: 'store', msg: 'El registro no existe.' });
       }
       if (errors.length) {
         return cb(listErrors(400, null, errors));

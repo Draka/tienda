@@ -19,7 +19,8 @@ const s3 = new AWS.S3({
  * @param {*} saveOriginal almacena imagen original
  * @param {*} cb callback
  */
-exports.imageToS3 = (pathImg, urlImg, localImg, sizes, saveOriginal, fit, cb) => {
+exports.imageToS3 = (req, pathImg, urlImg, localImg, sizes, saveOriginal, fit, cb) => {
+  console.trace();
   const nameTemp = util.makeid(10);
   const fileName = `./tmp/${nameTemp}`;
   const errors = [];

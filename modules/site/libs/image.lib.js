@@ -8,7 +8,9 @@ const s3 = new AWS.S3({
   secretAccessKey: appCnf.s3.secretAccessKey,
 });
 
-exports.imageToS3 = (pathImg, key, localImg, convert, cb) => {
+exports.imageToS3 = (req, pathImg, key, localImg, convert, cb) => {
+  console.log('--------------------------');
+  console.trace();
   const nameTemp = util.makeid(10);
   const originalExt = _.last(localImg.name.split('.'));
   const fileName = `./tmp/${nameTemp}`;

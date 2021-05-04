@@ -9,7 +9,7 @@ module.exports = (app) => {
       },
       check: ['item', (results, cb) => {
         if (!results.item) {
-          return cb(listErrors(404, null, [{ field: 'documentID', msg: 'No existe el Documento' }]));
+          return cb(listErrors(404, null, [{ field: 'documentID', msg: 'El registro no existe.' }]));
         }
         cb();
       }],

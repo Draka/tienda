@@ -16,7 +16,7 @@ module.exports = (req, res, next) => {
             queryStore.storesByPrimaryActivity(activity, cb);
           },
           postFind: ['stores', (results, cb) => {
-            putS3LogoPath(results.stores);
+            putS3LogoPath(req, results.stores);
             cb();
           }],
         }, cb);
@@ -32,7 +32,7 @@ module.exports = (req, res, next) => {
       req,
       user: results.user,
       items: results.items,
-      title: _.get(appCnf, 'site.title'),
+      title: _.get(req, 'site.title'),
       menu: 'index',
       js: 'page',
     });

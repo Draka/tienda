@@ -6,7 +6,10 @@ module.exports = (req, res, next) => {
     'price',
     'points',
   ]);
+  body.tenancy = req.tenancy;
+
   const adminQuery = {
+    tenancy: req.tenancy,
     _id: req.params.storeID,
     userID: req.user._id,
   };
@@ -47,7 +50,7 @@ module.exports = (req, res, next) => {
     }],
     save: ['query', (results, cb) => {
       if (!results.query) {
-        errors.push({ field: 'coverages-areas', msg: 'No existe la zona de cobertura.' });
+        errors.push({ field: 'coverages-areas', msg: 'El registro no existe.' });
       }
       if (errors.length) {
         return cb(listErrors(400, null, errors));

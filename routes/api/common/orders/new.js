@@ -6,6 +6,7 @@ const sqsMailer = require('../../../../libs/sqs_mailer');
 module.exports = (req, res, next) => {
   const errors = [];
   const body = _.pick(req.body, ['stores', 'address', 'cartID']);
+  body.tenancy = req.tenancy;
 
   async.auto({
     validate: (cb) => {
@@ -47,14 +48,14 @@ module.exports = (req, res, next) => {
           },
           delivery: ['store', (results, cb) => {
             if (!results.store) {
-              errors.push({ field: 'store', msg: __('No existe la tienda o esta desactivada') });
+              errors.push({ field: 'store', msg: __('El registro no existe.') });
             }
             if (errors.length) {
               return cb(listErrors(400, null, errors));
             }
             const d = results.store.deliveries.find((d) => d.slug === store.shipping && d.active);
             if (!d) {
-              errors.push({ field: 'delivery', msg: __('No existe el Método de Envío o esta desactivado') });
+              errors.push({ field: 'delivery', msg: __('El registro no existe.') });
             }
             if (errors.length) {
               return cb(listErrors(400, null, errors));
@@ -74,14 +75,14 @@ module.exports = (req, res, next) => {
           payment: ['store', (results, cb) => {
             const p = results.store.payments.find((d) => d.slug === store.payment && d.active);
             if (!p) {
-              errors.push({ field: 'delivery', msg: __('No existe el Método de Pago o esta desactivada') });
+              errors.push({ field: 'delivery', msg: __('El registro no existe.') });
             }
             if (errors.length) {
               return cb(listErrors(400, null, errors));
             }
             const d = global.deliveries.find((d) => d.slug === store.shipping);
             if (!d || d.payments.indexOf(p.slug) === -1) {
-              errors.push({ field: 'delivery', msg: __('No existe el Método de Pago o esta desactivada') });
+              errors.push({ field: 'delivery', msg: __('El registro no existe.') });
             }
             if (errors.length) {
               return cb(listErrors(400, null, errors));

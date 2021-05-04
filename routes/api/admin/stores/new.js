@@ -8,6 +8,8 @@ module.exports = (req, res, next) => {
     'primaryActivity',
     'secondaryActivity',
   ]);
+  body.tenancy = req.tenancy;
+
   async.auto({
     validate: (cb) => {
       body.userID = req.user._id;

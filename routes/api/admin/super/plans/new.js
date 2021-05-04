@@ -15,6 +15,8 @@ module.exports = (req, res, next) => {
     'test',
     'period',
   ]);
+  body.tenancy=req.tenancy;
+
   if (typeof req.body.publish !== 'undefined' && !body.publish) {
     body.publish = false;
   }
@@ -30,7 +32,7 @@ module.exports = (req, res, next) => {
     },
     query: ['validate', (_results, cb) => {
       models.Plan
-        .findOne({ slug: body.slug || _.kebabCase(_.deburr(body.name)) })
+        .findOne({ tenancy: req.tenancy, slug: body.slug || _.kebabCase(_.deburr(body.name)) })
         .exec(cb);
     }],
     check: ['query', (results, cb) => {

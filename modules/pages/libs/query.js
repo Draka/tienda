@@ -7,7 +7,7 @@ exports.faqByCategoryID = (categoryID, cb) => {
       cb(null, JSON.parse(reply));
     } else {
       models.Faq
-        .find({ categoryID })
+        .find({ tenancy: req.tenancy, categoryID })
         .lean()
         .exec((err, doc) => {
           if (err) {
@@ -27,7 +27,7 @@ exports.modelAllPlans = (cb) => {
       cb(null, JSON.parse(reply));
     } else {
       models.Plan
-        .find({ publish: true })
+        .find({ tenancy: req.tenancy, publish: true })
         .sort({
           price: 1,
         })
@@ -50,7 +50,7 @@ exports.multimediaByKey = (bykey, cb) => {
       cb(null, JSON.parse(reply));
     } else {
       models.Multimedia
-        .findOne({ key: bykey })
+        .findOne({ tenancy: req.tenancy, key: bykey })
         .lean()
         .exec((err, doc) => {
           if (err) {

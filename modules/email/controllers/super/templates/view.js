@@ -9,25 +9,25 @@ module.exports = (req, res, next) => {
     },
     check: ['item', (results, cb) => {
       if (!results.item) {
-        return cb(listErrors(404, null, [{ field: 'emailTemplateID', msg: 'No existe la Plantilla' }]));
+        return cb(listErrors(404, null, [{ field: 'emailTemplateID', msg: 'El registro no existe.' }]));
       }
       const template = Handlebars.compile(results.item.html);
       const data = {
         source: {
-          name: _.get(appCnf, 'site.email.title'),
-          email: _.get(appCnf, 'site.email.emailInfo'),
+          name: _.get(req, 'site.email.title'),
+          email: _.get(req, 'site.email.emailInfo'),
         },
         replyToAddresses: [
-          _.get(appCnf, 'site.email.emailNoreply'),
+          _.get(req, 'site.email.emailNoreply'),
         ],
         site: {
-          name: _.get(appCnf, 'site.name'),
+          name: _.get(req, 'site.name'),
           urlSite: appCnf.url.site,
           urlStatic: appCnf.url.cdn,
-          info: _.get(appCnf, 'site.email.emailInfo'),
-          title: _.get(appCnf, 'site.email.title'),
-          color: _.get(appCnf, 'site.color'),
-          logoEmail: _.get(appCnf, 'site.images.logoEmail.jpg'),
+          info: _.get(req, 'site.email.emailInfo'),
+          title: _.get(req, 'site.email.title'),
+          color: _.get(req, 'site.color'),
+          logoEmail: _.get(req, 'site.images.logoEmail.jpg'),
         },
         tenancy: req.tenancy,
         v: appCnf.v,

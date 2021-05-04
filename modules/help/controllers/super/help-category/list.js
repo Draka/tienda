@@ -2,6 +2,7 @@ const { categoryTree, treePush } = require('../../../libs/query.lib');
 
 module.exports = (req, res, next) => {
   const body = _.pick(req.query, ['name']);
+  body.tenancy = req.tenancy;
 
   const limit = Math.min(Math.max(1, req.query.limit) || 20, 500);
   const page = Math.max(0, req.query.page) || 0;

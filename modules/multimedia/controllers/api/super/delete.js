@@ -13,7 +13,7 @@ module.exports = (req, res, next) => {
     }],
     deleteS3: ['query', (results, cb) => {
       if (!results.query) {
-        errors.push({ field: 'store', msg: 'No existe el Archivo Multimedia.' });
+        errors.push({ field: 'store', msg: 'El registro no existe.' });
       }
       if (errors.length) {
         return cb(listErrors(400, null, errors));

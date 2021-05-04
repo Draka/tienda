@@ -11,6 +11,8 @@ module.exports = (req, res) => {
     'timestamp',
     'sent_at',
   ]);
+  body.tenancy = req.tenancy;
+
   const data = JSON.stringify(body);
   async.auto({
     validate: (cb) => {

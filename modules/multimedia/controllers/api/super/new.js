@@ -23,7 +23,7 @@ module.exports = (req, res, next) => {
         async.auto({
           convert: (cb) => {
             const pathImg = `multimedia/${key}`;
-            imageToS3(pathImg, key, file, modCnf.imagesSizes, cb);
+            imageToS3(req, pathImg, key, file, modCnf.imagesSizes, cb);
           },
           save: ['convert', (results, cb) => {
             const files = [];

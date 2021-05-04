@@ -9,6 +9,7 @@ module.exports = (req, res, next) => {
     order: ['validate', (_results, cb) => {
       models.Order
         .findOne({
+          tenancy: req.tenancy,
           _id: req.params.orderID,
           userID: req.user._id,
         })
@@ -17,7 +18,7 @@ module.exports = (req, res, next) => {
     }],
     check: ['order', (results, cb) => {
       if (!results.order) {
-        errors.push({ field: 'order', msg: __('El pedido no existe') });
+        errors.push({ field: 'order', msg: 'El registro no existe.' });
         return next(listErrors(404, null, errors));
       }
       if (results.order.status !== 'created' || !results.order.payment.pse) {

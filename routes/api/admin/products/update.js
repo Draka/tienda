@@ -33,7 +33,10 @@ module.exports = (req, res, next) => {
     'amz',
     'images',
   ]);
+  body.tenancy=req.tenancy;
+
   const adminQuery = {
+    tenancy: req.tenancy,
     _id: req.params.storeID,
     userID: req.user._id,
   };
@@ -78,7 +81,7 @@ module.exports = (req, res, next) => {
     }],
     uploadFile: ['query', (results, cb) => {
       if (!results.query) {
-        errors.push({ field: 'store', msg: 'No existe el producto.' });
+        errors.push({ field: 'store', msg: 'El registro no existe.' });
       }
       if (errors.length) {
         return cb(listErrors(400, null, errors));
@@ -97,12 +100,12 @@ module.exports = (req, res, next) => {
         } while (results.query.images.indexOf(cimg) !== -1);
         results.query.images.push(cimg);
         const pathImg = `${req.params.storeID}/products/${req.params.productID}/${cimg}`;
-        imageToS3(pathImg, null, image, global.imagesSizes, true, 'contain', cb);
+        imageToS3(req, pathImg, null, image, global.imagesSizes, true, 'contain', cb);
       }, cb);
     }],
     urlFile: ['query', (results, cb) => {
       if (!results.query) {
-        errors.push({ field: 'store', msg: 'No existe el producto.' });
+        errors.push({ field: 'store', msg: 'El registro no existe.' });
       }
       if (errors.length) {
         return cb(listErrors(400, null, errors));
@@ -123,7 +126,7 @@ module.exports = (req, res, next) => {
         } while (results.query.images.indexOf(cimg) !== -1);
         results.query.images.push(cimg);
         const pathImg = `${req.params.storeID}/products/${req.params.productID}/${cimg}`;
-        imageToS3(pathImg, urlImg, null, global.imagesSizes, true, 'contain', cb);
+        imageToS3(req, pathImg, urlImg, null, global.imagesSizes, true, 'contain', cb);
       }, cb);
     }],
     deleteS3: ['query', (results, cb) => {
@@ -153,7 +156,7 @@ module.exports = (req, res, next) => {
     }],
     groups: ['query', (results, cb) => {
       if (!results.query) {
-        errors.push({ field: 'store', msg: 'No existe el producto.' });
+        errors.push({ field: 'store', msg: 'El registro no existe.' });
       }
       if (errors.length) {
         return cb(listErrors(400, null, errors));
@@ -174,6 +177,7 @@ module.exports = (req, res, next) => {
             product: (cb) => {
               models.Product
                 .findOne({
+                  tenancy: req.tenancy,
                   sku,
                   storeID: req.params.storeID,
                 })

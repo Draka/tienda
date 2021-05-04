@@ -15,7 +15,7 @@ module.exports = (req, res, next) => {
         return cb(null, []);
       }
       models.Store
-        .find({ userID: req.user._id })
+        .find({ tenancy: req.tenancy, userID: req.user._id })
         .lean()
         .exec(cb);
     }],
@@ -30,7 +30,7 @@ module.exports = (req, res, next) => {
     }],
     save: ['order', (results, cb) => {
       if (!results.order) {
-        errors.push({ field: 'order', msg: __('El pedido no existe') });
+        errors.push({ field: 'order', msg: 'El registro no existe.' });
         return cb(listErrors(404, null, errors));
       }
 

@@ -5,7 +5,7 @@ module.exports = (req, res, next) => {
   async.auto({
     query: (cb) => {
       models.Store
-        .find({
+        .find({ tenancy: req.tenancy,
           publish: true,
         })
         .populate({

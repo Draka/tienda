@@ -53,12 +53,11 @@ select {
     outline: 0;
 
     &--simple {
-      font-size: 1.1em;
-      border: 1px solid $color-default;
+      border: 0;
       font-family: inherit;
       -webkit-appearance: none;
       cursor: text;
-      background-color: darken($color-white, 2);
+      background-color: transparent;
       outline: 0;
     }
 
@@ -256,4 +255,30 @@ label {
 
 [type="color"].input {
   min-height: 2em;
+}
+
+input{
+  @each $key, $val in $colors-sections {
+    &.t-#{$key}::placeholder {
+      color: $val;
+    }
+    //variantes
+    @each $ckey, $cval in $colors-variants {
+      $background-color: $val;
+      @if ($cval < 0) {
+        $background-color: lighten(
+          $color: $val,
+          $amount: $cval * -1,
+        );
+      } @else {
+        $background-color: darken(
+          $color: $val,
+          $amount: $cval,
+        );
+      }
+      &.t-#{$key}-#{$ckey}::placeholder {
+        color: $background-color;
+      }
+    }
+  }
 }

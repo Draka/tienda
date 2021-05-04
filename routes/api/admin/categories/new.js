@@ -10,10 +10,13 @@ module.exports = (req, res, next) => {
     'categoryID',
     'name',
   ]);
+  body.tenancy = req.tenancy;
+
   if (typeof req.body.categoryID !== 'undefined' && !body.categoryID) {
     body.categoryID = null;
   }
   const adminQuery = {
+    tenancy: req.tenancy,
     _id: req.params.storeID,
     userID: req.user._id,
   };
@@ -37,7 +40,9 @@ module.exports = (req, res, next) => {
     }],
     query: ['validate', (_results, cb) => {
       models.Category
-        .findOne({ slug: _.kebabCase(_.deburr(_.trim(body.slug))), storeID: req.params.storeID, categoryID: body.categoryID })
+        .findOne({
+          tenancy: req.tenancy, slug: _.kebabCase(_.deburr(_.trim(body.slug))), storeID: req.params.storeID, categoryID: body.categoryID,
+        })
         .exec(cb);
     }],
     check: ['store', 'query', (results, cb) => {

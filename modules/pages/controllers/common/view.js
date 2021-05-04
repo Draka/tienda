@@ -8,7 +8,7 @@ module.exports = (req, res, next) => {
     },
     meta: ['item', (results, cb) => {
       if (!results.item) {
-        return cb(listErrors(404, null, [{ field: 'pageID', msg: 'No existe la Página' }]));
+        return cb(listErrors(404, null, [{ field: 'pageID', msg: 'El registro no existe.' }]));
       }
       // Busca todos los meta para convertir
       meta(req.params.slug, results.item.html, true, cb);

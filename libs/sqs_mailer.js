@@ -13,18 +13,18 @@ module.exports = (data, user, cb) => {
   async.auto({
     sqs: (cb) => {
       data.source = {
-        name: _.get(appCnf, 'site.email.title'),
-        email: _.get(appCnf, 'site.email.emailInfo'),
+        name: _.get(req, 'site.email.title'),
+        email: _.get(req, 'site.email.emailInfo'),
       };
       data.replyToAddresses = [
-        _.get(appCnf, 'site.email.emailNoreply'),
+        _.get(req, 'site.email.emailNoreply'),
       ];
       data.site = {
-        name: _.get(appCnf, 'site.name'),
+        name: _.get(req, 'site.name'),
         urlSite: appCnf.url.site,
         urlStatic: appCnf.url.cdn,
-        info: _.get(appCnf, 'site.email.emailInfo'),
-        title: _.get(appCnf, 'site.email.title'),
+        info: _.get(req, 'site.email.emailInfo'),
+        title: _.get(req, 'site.email.title'),
       };
       const params = {
         DelaySeconds: 0,

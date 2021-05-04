@@ -2,6 +2,7 @@ const { imagenUrl } = require('../../libs/image.lib');
 
 module.exports = (req, res, next) => {
   const body = _.pick(req.query, ['title', 'multimediaID']);
+  body.tenancy = req.tenancy;
 
   const limit = Math.min(Math.max(1, req.query.limit) || 40, 500);
   const page = Math.max(0, req.query.page) || 0;

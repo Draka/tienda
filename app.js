@@ -136,11 +136,14 @@ app.use((err, req, res, next) => {
   if (process.env.NODE_ENV === 'production') {
     res.locals.error = {};
     err.stack = '';
+  } else {
+    console.log('-------------------------------------------------');
+    console.trace();
   }
   if (req.originalUrl.split('/')[1] === 'v1') {
     res.status(err.status || 500).send(err);
   } else {
-    res.status(err.status || 500).render('error.pug', { error: err, session: req.user });
+    res.status(err.status || 500).render('error.pug', { error: err, req });
   }
 });
 

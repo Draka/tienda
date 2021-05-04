@@ -9,7 +9,7 @@ module.exports = (req, res, next) => {
     },
     check: ['item', (results, cb) => {
       if (!results.item) {
-        return cb(listErrors(404, null, [{ field: 'helpCategoryID', msg: 'No existe la Categoría' }]));
+        return cb(listErrors(404, null, [{ field: 'helpCategoryID', msg: 'El registro no existe.' }]));
       }
       cb();
     }],

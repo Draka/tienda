@@ -7,7 +7,7 @@ module.exports = (req, res, next) => {
     },
     check: ['item', (results, cb) => {
       if (!results.item) {
-        return cb(listErrors(404, null, [{ field: 'emailTemplateID', msg: 'No existe la Plantilla' }]));
+        return cb(listErrors(404, null, [{ field: 'emailTemplateID', msg: 'El registro no existe.' }]));
       }
       cb();
     }],

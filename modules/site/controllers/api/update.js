@@ -1,6 +1,6 @@
 const modCnf = require('../../modCnf');
 const { imageToS3 } = require('../../libs/image.lib');
-const { site } = require('../../../../libs/query.lib');
+const generateCSS = require('../../libs/generate-css.lib');
 
 module.exports = (req, res, next) => {
   const errors = [];
@@ -21,6 +21,7 @@ module.exports = (req, res, next) => {
     'sameAs',
     'style',
   ]);
+  body.tenancy = req.tenancy;
 
   if (body.contacts) {
     body.contacts = _.map(global.socialMedia, (contact) => {
@@ -53,10 +54,19 @@ module.exports = (req, res, next) => {
     },
     query: ['validate', (_results, cb) => {
       models.Site
-        .findOne()
+        .findOne({
+          tenancy: req.tenancy,
+          tenancy: req.tenancy,
+        })
         .exec(cb);
     }],
     uploadFile: ['query', (results, cb) => {
+      if (!results.query) {
+        errors.push({ field: 'sites', msg: 'El registro no existe.' });
+      }
+      if (errors.length) {
+        return cb(listErrors(400, null, errors));
+      }
       if (!req.files) {
         return cb();
       }
@@ -76,28 +86,26 @@ module.exports = (req, res, next) => {
             _.set(results.query, `images.${key}.${modCnf.images[key].ext}`, `${key}.${originalExt}?=${cimg}`);
           }
           const pathImg = `site/${key}`;
-          imageToS3(pathImg, key, file, modCnf.images[key].convert, cb);
+          imageToS3(req, pathImg, key, file, modCnf.images[key].convert, cb);
         } else {
           return cb();
         }
       }, cb);
     }],
     save: ['uploadFile', (results, cb) => {
-      if (!results.query) {
-        const site = new models.Site(body);
-        site.save(cb);
+      results.query.set(body).save(cb);
+    }],
+    generateCSS: ['save', (results, cb) => {
+      if (_.get(body, 'style.base')) {
+        generateCSS(req, cb);
       } else {
-        results.query.set(body).save(cb);
+        cb();
       }
     }],
   }, (err, results) => {
     if (err) {
       return next(err);
     }
-    // update config
-    site((err, doc) => {
-      global.appCnf.site = doc;
-    });
     if (req.body.redirect) {
       return res.redirect(req.body.redirect);
     }

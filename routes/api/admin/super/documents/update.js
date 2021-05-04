@@ -11,6 +11,8 @@ module.exports = (req, res, next) => {
     'seo',
     'html',
   ]);
+  body.tenancy = req.tenancy;
+
   if (typeof req.body.publish !== 'undefined' && !body.publish) {
     body.publish = false;
   }

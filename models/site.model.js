@@ -63,17 +63,19 @@ const schema = new mongoose.Schema({
     trim: true,
   }],
   style: {
-    color: {
-      primary: {
-        type: String,
-        trim: true,
-      },
-      secondary: {
-        type: String,
-        trim: true,
-      },
+    base: {
+      type: String,
+      trim: true,
+    },
+    css: {
+      type: String,
+      trim: true,
     },
     header: {
+      type: String,
+      trim: true,
+    },
+    headerFontClass: {
       type: String,
       trim: true,
     },

@@ -26,6 +26,7 @@ module.exports = (req, res, next) => {
   const body = _.pick(fbody, [
     'bank',
   ]);
+  body.tenancy = req.tenancy;
 
   async.auto({
     validate: (cb) => {

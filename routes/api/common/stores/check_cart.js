@@ -4,6 +4,8 @@ const queryStore = require('../../../../libs/query_store.lib');
 module.exports = (req, res, next) => {
   const errors = [];
   const body = _.pick(req.body, ['place', 'items']);
+  body.tenancy = req.tenancy;
+
 
   async.auto({
     validate: (cb) => {

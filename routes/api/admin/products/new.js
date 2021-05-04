@@ -30,7 +30,10 @@ module.exports = (req, res, next) => {
     'width',
     'amz',
   ]);
+  body.tenancy=req.tenancy;
+
   const adminQuery = {
+    tenancy: req.tenancy,
     _id: req.params.storeID,
     userID: req.user._id,
   };
@@ -63,7 +66,7 @@ module.exports = (req, res, next) => {
     }],
     query: ['validate', (_results, cb) => {
       models.Product
-        .findOne({ sku: _.kebabCase(_.deburr(body.sku)), storeID: req.params.storeID })
+        .findOne({ tenancy: req.tenancy, sku: _.kebabCase(_.deburr(body.sku)), storeID: req.params.storeID })
         .exec(cb);
     }],
     check: ['store', 'query', (results, cb) => {
@@ -113,7 +116,7 @@ module.exports = (req, res, next) => {
         } while (results.create.images.indexOf(cimg) !== -1);
         results.create.images.push(cimg);
         const pathImg = `${req.params.storeID}/products/${results.create._id}/${cimg}`;
-        imageToS3(pathImg, urlImg, null, global.imagesSizes, true, 'contain', cb);
+        imageToS3(req, pathImg, urlImg, null, global.imagesSizes, true, 'contain', cb);
       }, (err) => {
         if (err) return cb(err);
         results.create.save(cb);

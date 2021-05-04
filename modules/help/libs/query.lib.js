@@ -1,6 +1,7 @@
 function categoryTree(categoryID, cb) {
   models.HelpCategory
     .find({
+      tenancy: req.tenancy,
       categoryID,
     })
     .select('_id name slugLong')
@@ -53,7 +54,7 @@ exports.treePush = treePush;
 
 function up(categoryID, cb) {
   models.HelpCategory
-    .findOne({ _id: categoryID })
+    .findOne({ tenancy: req.tenancy, _id: categoryID })
     .select('slugLong')
     .exec((err, doc) => {
       if (err) {

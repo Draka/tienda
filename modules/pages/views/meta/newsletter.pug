@@ -1,0 +1,11 @@
+form.mt-3.mb-2(class="search" action=`${appCnf.url.site}/tiendas/buscar`)
+  .row.justify-content-center
+    .col-md-12.col-lg-8.col-xl-5
+      .row
+        .col-sm-8.pb-0-5-xs.pb-0-5-sm.pb-0-5-md
+          .flex.w-100.oh.primary-500.br-1(style="height: 82px")
+            label.out-screen(for='input-newsletter') Tu email
+            input#input-newsletter.input--simple.h-100.w-100.ph-0-25.pw-1.t-white.social(type="text" name="email" placeholder='Tu email' required)
+        .col-sm-4
+          button.btn.btn--primary-500.w-100.br-1(style="height: 82px")
+            .social Suscribirse

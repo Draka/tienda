@@ -3,6 +3,8 @@ const sqsMailer = require('../../../libs/sqs_mailer');
 module.exports = (req, res, next) => {
   const errors = [];
   const body = _.pick(req.body, ['email', 'password']);
+  body.tenancy = req.tenancy;
+
   body.personalInfo = {
     firstname: req.body.firstname,
     lastname: req.body.lastname,
@@ -11,6 +13,7 @@ module.exports = (req, res, next) => {
   };
   body.email = _.trim(body.email);
   body.emailNormalized = validator.normalizeEmail(body.email);
+  body.tenancy = req.tenancy;
 
   async.auto({
     validate: (cb) => {
@@ -41,7 +44,11 @@ module.exports = (req, res, next) => {
     },
     query: ['validate', (_results, cb) => {
       models.User
-        .find({ emailNormalized: body.emailNormalized })
+        .find({
+          tenancy: req.tenancy,
+          tenancy: req.tenancy,
+          emailNormalized: body.emailNormalized,
+        })
         .exec(cb);
     }],
     check: ['query', (results, cb) => {

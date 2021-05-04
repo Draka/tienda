@@ -25,7 +25,7 @@ block content
               .step-title Pago
               .step-description Pago por Wompi
 
-  .container.session
+  .container.req.user
     h1 Confirmar dirección de entrega
     .row.cart-screen-adrress
       .col-md-7
@@ -34,16 +34,16 @@ block content
           table.table.table--striped
             tr
               th.b Nombre
-              td.firstname #{session.personalInfo.firstname}
+              td.firstname #{req.user.personalInfo.firstname}
             tr
               th.b Apellido
-              td.lastname #{session.personalInfo.lastname}
+              td.lastname #{req.user.personalInfo.lastname}
             tr
               th.b Número de célular
-              td.cellphone #{session.personalInfo.callsign} #{session.personalInfo.cellphone}
+              td.cellphone #{req.user.personalInfo.callsign} #{req.user.personalInfo.cellphone}
             tr
               th.b Correo Electrónico
-              td.email #{session.email}
+              td.email #{req.user.email}
             tr
               td.user-address(colspan=2)
             tr
@@ -72,7 +72,7 @@ block content
           .remark.alert.mb-1
               | Sus datos personales se utilizarán para respaldar su experiencia en este sitio web, para administrar el acceso a su cuenta y para otros fines descritos en la
               | #{' '}
-              a.b(href='/documentos/politica-de-privacidad-y-tratamiento-de-datos' target="_blank") 
+              a.b(href='/documentos/politica-de-privacidad-y-tratamiento-de-datos' target="_blank")
                 | Política de Privacidad y Tratamiento de Datos
                 | #{' '}
                 i.fas.fa-external-link-alt

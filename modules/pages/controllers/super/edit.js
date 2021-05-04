@@ -7,7 +7,7 @@ module.exports = (req, res, next) => {
     },
     check: ['item', (results, cb) => {
       if (!results.item) {
-        return cb(listErrors(404, null, [{ field: 'pageID', msg: 'No existe la Página' }]));
+        return cb(listErrors(404, null, [{ field: 'pageID', msg: 'El registro no existe.' }]));
       }
       cb();
     }],

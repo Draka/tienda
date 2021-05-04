@@ -6,6 +6,13 @@
   .w-#{$key} {
     width: $val;
   }
+  .maxh-#{$key} {
+    max-height: $val;
+  }
+
+  .maxw-#{$key} {
+    max-width: $val;
+  }
 }
 
 
@@ -26,6 +33,13 @@ $var: null;
 
         .w-#{$key}-#{$ant} {
           width: $val;
+        }
+        .maxh-#{$key}-#{$ant} {
+          max-height: $val;
+        }
+
+        .maxw-#{$key}-#{$ant} {
+          max-width: $val;
         }
       }
     }

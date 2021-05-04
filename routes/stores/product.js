@@ -18,9 +18,9 @@ module.exports = (req, res, next) => {
     },
     postFind: ['store', (results, cb) => {
       if (!results.store) {
-        return cb(listErrors(404, null, [{ field: 'storeID', msg: 'No existe la tienda' }]));
+        return cb(listErrors(404, null, [{ field: 'storeID', msg: 'El registro no existe.' }]));
       }
-      putS3LogoPath([results.store]);
+      putS3LogoPath(req, [results.store]);
       cb();
     }],
     categories: ['store', (results, cb) => {
@@ -29,6 +29,7 @@ module.exports = (req, res, next) => {
       }
       models.Category
         .find({
+          tenancy: req.tenancy,
           storeID: results.store._id,
           categoryID: null,
         })
@@ -48,7 +49,7 @@ module.exports = (req, res, next) => {
     }],
     postFindProduct: ['product', (results, cb) => {
       if (!results.store || !results.product) {
-        return cb(listErrors(404, null, [{ field: 'storeID', msg: 'No existe el producto' }]));
+        return cb(listErrors(404, null, [{ field: 'storeID', msg: 'El registro no existe.' }]));
       }
       results.product.isAvailable = isAvailable(results.product);
       putS3Path([results.product], results.store);
@@ -58,6 +59,7 @@ module.exports = (req, res, next) => {
     products: ['product', (results, cb) => {
       models.Product
         .find({
+          tenancy: req.tenancy,
           storeID: results.store._id,
           categoryIDs: { $in: _.clone(results.product.categoryIDs).reverse() },
           publish: 1,

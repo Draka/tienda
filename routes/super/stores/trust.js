@@ -7,7 +7,7 @@ module.exports = (req, res, next) => {
     },
     check: ['store', (results, cb) => {
       if (!results.store) {
-        return cb(listErrors(404, null, [{ field: 'storeID', msg: 'No existe la tienda' }]));
+        return cb(listErrors(404, null, [{ field: 'storeID', msg: 'El registro no existe.' }]));
       }
       results.store.trust = true;
       results.store.save(cb);

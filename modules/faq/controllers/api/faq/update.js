@@ -10,6 +10,8 @@ module.exports = (req, res, next) => {
     'question',
     'answer',
   ]);
+  body.tenancy=req.tenancy;
+
   if (typeof req.body.active !== 'undefined' && !body.active) {
     body.active = false;
   }
@@ -33,7 +35,7 @@ module.exports = (req, res, next) => {
     }],
     save: ['query', (results, cb) => {
       if (!results.query) {
-        errors.push({ field: 'faq', msg: 'No existe la Pregunta.' });
+        errors.push({ field: 'faq', msg: 'El registro no existe.' });
       }
       if (errors.length) {
         return cb(listErrors(400, null, errors));

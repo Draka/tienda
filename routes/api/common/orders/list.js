@@ -6,7 +6,8 @@ module.exports = (req, res, next) => {
     orders: ['validate', (_results, cb) => {
       models.Order
         .find({
-          userID: req.user._id
+          tenancy: req.tenancy,
+          userID: req.user._id,
         })
         .select({
           store: 1,
@@ -16,10 +17,10 @@ module.exports = (req, res, next) => {
           status: 1,
           statuses: 1,
           delivery: 1,
-          payment: 1
+          payment: 1,
         })
         .sort({
-          createdAt: -1
+          createdAt: -1,
         })
         .lean()
         .exec(cb);
@@ -31,8 +32,9 @@ module.exports = (req, res, next) => {
         }
         models.Payment
           .findOne({
+            tenancy: req.tenancy,
             orderID: order._id,
-            status: { $in: ['created', 'approved'] }
+            status: { $in: ['created', 'approved'] },
           })
           .exec((err, doc) => {
             if (err) return cb(err);
@@ -40,7 +42,7 @@ module.exports = (req, res, next) => {
             if (!doc) {
               models.Payment
                 .countDocuments({
-                  orderID: order._id
+                  orderID: order._id,
                 })
                 .exec((err, num) => {
                   if (err) return cb(err);
@@ -48,7 +50,7 @@ module.exports = (req, res, next) => {
                     orderID: order._id,
                     userID: req.user._id,
                     status: 'created',
-                    reference: `${order.store.slug}_${order.orderID}_${num + 1}`
+                    reference: `${order.store.slug}_${order.orderID}_${num + 1}`,
                   });
                   order.ref.save(cb);
                 });
@@ -58,7 +60,7 @@ module.exports = (req, res, next) => {
             }
           });
       }, cb);
-    }]
+    }],
   }, (err, results) => {
     if (err) {
       return next(err);

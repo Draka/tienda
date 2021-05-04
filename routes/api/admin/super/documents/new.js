@@ -11,6 +11,8 @@ module.exports = (req, res, next) => {
     'seo',
     'html',
   ]);
+  body.tenancy = req.tenancy;
+
   if (typeof req.body.publish !== 'undefined' && !body.publish) {
     body.publish = false;
   }
@@ -26,7 +28,7 @@ module.exports = (req, res, next) => {
     },
     query: ['validate', (_results, cb) => {
       models.Document
-        .findOne({ slug: body.slug || _.kebabCase(_.deburr(body.title)) })
+        .findOne({ tenancy: req.tenancy, slug: body.slug || _.kebabCase(_.deburr(body.title)) })
         .exec(cb);
     }],
     check: ['query', (results, cb) => {

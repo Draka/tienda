@@ -1,0 +1,34 @@
+extends /modules/admin/views/layout-list
+
+block list
+  if items.length
+    table.small.table.table--lines.table--striped
+      thead
+        tr
+          th.b Nombre
+          th.tc(colspan=2)
+            i.fas.fa-cog
+      tbody
+        each item of items
+          tr
+            td.w-100
+              a.b(href=`/administracion/super/categorias/${item._id}/editar`) #{item.name}
+            td.tc
+              a.btn-flat.p-0-5.rd-0-2(href=`/administracion/super/categorias/${item._id}/editar` title='Editar')
+                i.fas.fa-pencil-alt
+            td.tc
+              button.btn-flat.p-0-5.open-modal-action(
+                  title='Eliminar'
+                  data-title='¿Desea eliminar la categoría?'
+                  data-cancel='Cancelar'
+                  data-action='Si, Eliminar'
+                  data-method='DELETE'
+                  data-url=`${appCnf.url.api}admin/super/categories/${item._id}`
+                  data-page=`/administracion/super/categorias`
+                )
+                i.fas.fa-trash-alt
+  else
+    .white.br-1.rd-0-2.p-3
+      .remark.info.flex.mb-0-5
+        i.fas.fa-info-circle.h4.mr-1.t-info
+        | No hay categorías creadas.

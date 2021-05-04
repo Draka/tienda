@@ -5,7 +5,7 @@
  * @param {*} next
  */
 module.exports = (req, res, next) => {
-  const tenancy = req.get('X-Tenancy') || 'santrato';
+  const tenancy = req.get('x-tenancy') || 'santrato';
   const key = `__site__${tenancy}__`;
   req.tenancy = tenancy;
   client.get(key, (_err, reply) => {
@@ -15,6 +15,7 @@ module.exports = (req, res, next) => {
     } else {
       models.Site
         .findOne({
+          tenancy: req.tenancy,
           tenancy,
         })
         .lean()

@@ -1,6 +1,6 @@
 function upByID(_id, cb) {
   models.Category
-    .findOne({ _id })
+    .findOne({ tenancy: req.tenancy, _id })
     .exec((err, doc) => {
       if (!doc) {
         return cb(null, []);
@@ -15,7 +15,7 @@ function upByID(_id, cb) {
 
 module.exports = (slugLong, cb) => {
   models.Category
-    .findOne({ slugLong })
+    .findOne({ tenancy: req.tenancy, slugLong })
     .exec((err, doc) => {
       upByID(doc._id, cb);
     });

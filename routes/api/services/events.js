@@ -10,6 +10,8 @@ module.exports = (req, res) => {
     'timestamp',
     'sent_at',
   ]);
+  body.tenancy = req.tenancy;
+
   let firstStatus = '';
   async.auto({
     validate: (cb) => {
@@ -27,6 +29,7 @@ module.exports = (req, res) => {
     query: ['validate', (_results, cb) => {
       models.Payment
         .findOne({
+          tenancy: req.tenancy,
           reference: _.get(body, 'data.transaction.reference'),
         })
         .exec(cb);
@@ -64,6 +67,7 @@ module.exports = (req, res) => {
        || (firstStatus === 'approved' && results.query.status === 'voided')) {
         models.Order
           .findOne({
+            tenancy: req.tenancy,
             _id: results.query.orderID,
           })
           .populate({

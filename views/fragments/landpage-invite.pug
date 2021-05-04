@@ -1,7 +1,7 @@
 .container
   .row
     .col-md-12
-      h2.b.t-primary.tc.mt-2 ¿Por qué debes unirte a los empresarios que ya venden a través de #{_.get(appCnf, 'site.name')}?
+      h2.b.t-primary.tc.mt-2 ¿Por qué debes unirte a los empresarios que ya venden a través de #{_.get(req, 'site.name')}?
       .hr.mt-1.mb-2
   .row.justify-content-center
     .col-md-8
@@ -11,7 +11,7 @@
         .col-md-7.mb-3
           h3.b.t-primary PUEDES REDUCIR TUS GASTOS O INCLUSO ELIMINARLOS
           p
-            | Siendo parte de #{_.get(appCnf, 'site.name')} podrías pensar en olvidarte de la renta de un local y de sus costos administrativos.
+            | Siendo parte de #{_.get(req, 'site.name')} podrías pensar en olvidarte de la renta de un local y de sus costos administrativos.
 
         .col-md-5.mb-3.show-xs.show-sm
           img.lazy.responsive(data-src=appCnf.url.cdn+'tenancy/'+req.tenancy+'/images/home/343_mas-clientes-800x486.jpg' data-retina=appCnf.url.cdn+'tenancy/'+req.tenancy+'/images/home/686_mas-clientes-800x486.jpg' alt='Más clientes')
@@ -27,7 +27,7 @@
         .col-md-7.mb-3
           h3.b.t-primary NO TIENES HORARIOS DE ATENCIÓN
           p
-            | Tus productos estarán disponibles 24/7 para todos los visitantes de #{_.get(appCnf, 'site.name')}.
+            | Tus productos estarán disponibles 24/7 para todos los visitantes de #{_.get(req, 'site.name')}.
         .col-md-5.mb-3.show-xs.show-sm
           img.lazy.responsive(data-src=appCnf.url.cdn+'tenancy/'+req.tenancy+'/images/home/343_mayor-margen-de-ganancia800x483.jpg' data-retina=appCnf.url.cdn+'tenancy/'+req.tenancy+'/images/home/686_mayor-margen-de-ganancia800x483.jpg' alt='Sin horarios')
         .col-md-7.mb-3

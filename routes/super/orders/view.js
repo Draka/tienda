@@ -6,6 +6,7 @@ module.exports = (req, res, next) => {
     order: (cb) => {
       models.Order
         .findOne({
+          tenancy: req.tenancy,
           orderID: req.params.orderID,
         })
         .lean()
@@ -13,10 +14,10 @@ module.exports = (req, res, next) => {
     },
     payment: ['order', (results, cb) => {
       if (!results.order) {
-        return next(listErrors(404, null, [{ field: 'order', msg: __('El pedido no existe') }]));
+        return next(listErrors(404, null, [{ field: 'order', msg: 'El registro no existe.' }]));
       }
       results.order.store._id = results.order.storeID;
-      putS3LogoPath([results.order.store]);
+      putS3LogoPath(req, [results.order.store]);
       results.order.payment.info = _.find(global.payments, { slug: results.order.payment.slug });
       results.order.payment.file = `${appCnf.url.cdn}tenancy/${req.tenancy}/files/${appCnf.s3.folder}/orders/${results.order._id}/${results.order.payment.file}`;
       reference(results.order, req.user._id, cb);

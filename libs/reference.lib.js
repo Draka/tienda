@@ -3,7 +3,7 @@ module.exports = (order, userID, cb) => {
     return cb();
   }
   models.Payment
-    .findOne({
+    .findOne({ tenancy: req.tenancy,
       orderID: order._id,
       status: { $in: ['created', 'approved'] },
     })

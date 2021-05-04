@@ -3,6 +3,7 @@ const { deleteS3 } = require('../../../../libs/delete_s3.lib');
 module.exports = (req, res, next) => {
   const errors = [];
   const adminQuery = {
+    tenancy: req.tenancy,
     _id: req.params.storeID,
     userID: req.user._id,
   };
@@ -27,22 +28,22 @@ module.exports = (req, res, next) => {
     }],
     queryCategory: ['check', (_results, cb) => {
       models.Category
-        .find({ storeID: req.params.storeID })
+        .find({ tenancy: req.tenancy, storeID: req.params.storeID })
         .exec(cb);
     }],
     queryCoverageArea: ['check', (_results, cb) => {
       models.CoverageArea
-        .find({ storeID: req.params.storeID })
+        .find({ tenancy: req.tenancy, storeID: req.params.storeID })
         .exec(cb);
     }],
     queryPlace: ['check', (_results, cb) => {
       models.Place
-        .find({ storeID: req.params.storeID })
+        .find({ tenancy: req.tenancy, storeID: req.params.storeID })
         .exec(cb);
     }],
     queryProduct: ['check', (_results, cb) => {
       models.Product
-        .find({ storeID: req.params.storeID })
+        .find({ tenancy: req.tenancy, storeID: req.params.storeID })
         .exec(cb);
     }],
     deleteCategory: ['queryCategory', (results, cb) => {

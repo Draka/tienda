@@ -1,6 +1,6 @@
 function up(categoryID, cb) {
   models.Category
-    .findOne({ _id: categoryID })
+    .findOne({ tenancy: req.tenancy, _id: categoryID })
     .select('slugLong')
     .exec((err, doc) => {
       if (err) {

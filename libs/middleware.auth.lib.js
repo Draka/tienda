@@ -25,7 +25,7 @@ module.exports = (req, res, next) => {
     // async.auto({
     //   query: (cb) => {
     //     models.Session
-    //       .findOne({
+    //       .findOne({ tenancy: req.tenancy,
     //         userID: req.user._id,
     //         token,
     //       })

@@ -1,18 +1,22 @@
 const { getCenterOfBounds } = require('geolib');
 
-const query = require('../../../libs/query.lib');
-
 module.exports = (req, res, next) => {
   async.auto({
     user: (cb) => {
       cb(null, req.user);
     },
     store: ['user', (results, cb) => {
-      query.store(req.params.storeID, cb);
+      models.Store
+        .findOne({
+          tenancy: req.tenancy,
+          _id: req.params.storeID,
+        })
+        .lean()
+        .exec(cb);
     }],
     check: ['store', (results, cb) => {
       if (!results.store) {
-        return cb(listErrors(404, null, [{ field: 'storeID', msg: 'No existe la tienda' }]));
+        return cb(listErrors(404, null, [{ field: 'storeID', msg: 'El registro no existe.' }]));
       }
       if (results.user.admin) {
         return cb();
@@ -24,12 +28,12 @@ module.exports = (req, res, next) => {
     }],
     coverageArea: ['check', (results, cb) => {
       models.CoverageArea
-        .findOne({ storeID: req.params.storeID, _id: req.params.coverageAreaID })
+        .findOne({ tenancy: req.tenancy, storeID: req.params.storeID, _id: req.params.coverageAreaID })
         .exec(cb);
     }],
     check2: ['coverageArea', (results, cb) => {
       if (!results.coverageArea) {
-        return cb(listErrors(404, null, [{ field: 'storeID', msg: 'No existe el Área de Cobertura' }]));
+        return cb(listErrors(404, null, [{ field: 'storeID', msg: 'El registro no existe.' }]));
       }
       cb();
     }],

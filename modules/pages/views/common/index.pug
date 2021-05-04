@@ -5,16 +5,15 @@ block view
     {
       "@context": "http://www.schema.org",
       "@type": "LocalBusiness",
-      "name": "#{_.get(appCnf, 'site.name')}",
+      "name": "#{_.get(req, 'site.name')}",
       "url": "#{appCnf.url.site}",
-      "sameAs": !{JSON.stringify(_.get(appCnf, 'site.sameAs'))},
+      "sameAs": !{JSON.stringify(_.get(req, 'site.sameAs'))},
       "logo": "#{appCnf.url.cdn}tenancy/#{req.tenancy}/images/logo-01.png",
       "image": "#{appCnf.url.cdn}tenancy/#{req.tenancy}/images/logo-02.png",
-      "description": "#{_.get(appCnf, 'site.description')}",
+      "description": "#{_.get(req, 'site.description')}",
       "address": {
         "@type": "PostalAddress",
         "addressCountry": "Colombia"
       }
     }
   | !{item.html}
-  .mt-2

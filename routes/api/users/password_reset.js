@@ -29,7 +29,9 @@ module.exports = (req, res, next) => {
       query: (cb) => {
         models.User
           .findOne({
+            tenancy: req.tenancy,
             emailNormalized: validator.normalizeEmail(req.body.email),
+            tenancy: req.tenancy,
           })
           .select({
             email: 1,

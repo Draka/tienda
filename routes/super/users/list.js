@@ -1,12 +1,13 @@
 module.exports = (req, res, next) => {
-  const query = _.pick(req.query, ['email']);
+  const body = _.pick(req.query, ['email']);
+  body.tenancy = req.tenancy;
 
   const limit = Math.min(Math.max(1, req.query.limit) || 20, 500);
   const page = Math.max(0, req.query.page) || 0;
 
   if (req.query.q) {
     const q = _.deburr(_.trim(req.query.q));
-    query.$or = [
+    body.$or = [
       { email: { $regex: q, $options: 'i' } },
       { emailNormalized: { $regex: q, $options: 'i' } },
       { 'personalInfo.name': { $regex: q, $options: 'i' } },
@@ -19,7 +20,7 @@ module.exports = (req, res, next) => {
     validate: (cb) => cb(),
     users: ['validate', (results, cb) => {
       models.User
-        .find(query)
+        .find(body)
         .limit(limit)
         .skip(limit * page)
         .sort({
@@ -30,7 +31,7 @@ module.exports = (req, res, next) => {
     }],
     count: ['validate', (_results, cb) => {
       models.User
-        .countDocuments(query)
+        .countDocuments(body)
         .exec(cb);
     }],
   }, (err, results) => {

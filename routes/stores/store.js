@@ -22,9 +22,9 @@ module.exports = (req, res, next) => {
     },
     postFind: ['store', (results, cb) => {
       if (!results.store) {
-        return cb(listErrors(404, null, [{ field: 'storeID', msg: 'No existe la tienda' }]));
+        return cb(listErrors(404, null, [{ field: 'storeID', msg: 'El registro no existe.' }]));
       }
-      putS3LogoPath([results.store]);
+      putS3LogoPath(req, [results.store]);
       cb();
     }],
     places: ['store', (results, cb) => {
@@ -36,6 +36,7 @@ module.exports = (req, res, next) => {
       }
       models.Category
         .find({
+          tenancy: req.tenancy,
           storeID: results.store._id,
           categoryID: null,
         })
@@ -60,6 +61,7 @@ module.exports = (req, res, next) => {
       async.each(results.store.featuredCategories, (featured, cb) => {
         models.Product
           .find({
+            tenancy: req.tenancy,
             storeID: results.store._id,
             categoryIDs: { $in: featured.category._id },
             publish: 1,

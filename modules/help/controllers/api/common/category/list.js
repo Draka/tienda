@@ -1,5 +1,6 @@
 module.exports = (req, res, next) => {
   const body = _.pick(req.query, ['slugLong']);
+  body.tenancy = req.tenancy;
 
   async.auto({
     validate: (cb) => {
@@ -27,7 +28,7 @@ module.exports = (req, res, next) => {
       }
       async.each(results.query, (item, cb) => {
         models.HelpCategory
-          .find({ categoryID: item._id })
+          .find({ tenancy: req.tenancy, categoryID: item._id })
           .sort({ order: 1 })
           .lean()
           .exec((err, docs) => {

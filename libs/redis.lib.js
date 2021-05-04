@@ -5,7 +5,7 @@ exports.deleteKeysByPattern = (tenancy, key) => {
 
   stream.on('data', (resultKeys) => {
     _.each(resultKeys, (k) => {
-      client.unlink(k.replace(`_${req.tenancy}_`, ''));
+      client.unlink(k.replace(`_${tenancy}_`, ''));
     });
   });
 };

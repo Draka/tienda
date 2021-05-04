@@ -8,7 +8,6 @@ const schema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: `${appCnf.dbPrefix}stores`,
     index: true,
-    required: true,
   },
   categoryID: {
     type: mongoose.Schema.Types.ObjectId,
@@ -33,6 +32,9 @@ const schema = new mongoose.Schema({
 
 function preUpdate(result, next) {
   client.del(`__category__${result._id}`);
+  if (!result.storeID) {
+    client.del(`__category_tree__teenancy__${result.tenancy}`);
+  }
   client.del(`__category_tree__${result.storeID}`);
   if (result.slugLong) {
     client.del(`__category__${result.storeID}__${result.slugLong}`);
@@ -48,6 +50,9 @@ schema.post('validate', preUpdate);
 schema.post('remove', (result) => {
   client.del(`__category__${result._id}`);
   client.del(`__category_tree__${result.storeID}`);
+  if (!result.storeID) {
+    client.del(`__category_tree__teenancy__${result.tenancy}`);
+  }
   if (result.slugLong) {
     client.del(`__category__${result.storeID}__${result.slugLong}`);
   }

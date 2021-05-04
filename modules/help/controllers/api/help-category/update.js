@@ -13,6 +13,8 @@ module.exports = (req, res, next) => {
     'text',
     'categoryID',
   ]);
+  body.tenancy = req.tenancy;
+
   if (typeof req.body.categoryID !== 'undefined' && !body.categoryID) {
     body.categoryID = null;
   }
@@ -33,7 +35,7 @@ module.exports = (req, res, next) => {
     }],
     save: ['query', (results, cb) => {
       if (!results.query) {
-        errors.push({ field: 'help-category', msg: 'No existe la Categoría.' });
+        errors.push({ field: 'help-category', msg: 'El registro no existe.' });
       }
       if (errors.length) {
         return cb(listErrors(400, null, errors));

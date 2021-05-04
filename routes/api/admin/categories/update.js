@@ -31,10 +31,13 @@ module.exports = (req, res, next) => {
     'categoryID',
     'name',
   ]);
+  body.tenancy = req.tenancy;
+
   if (typeof req.body.categoryID !== 'undefined' && !body.categoryID) {
     body.categoryID = null;
   }
   const adminQuery = {
+    tenancy: req.tenancy,
     _id: req.params.storeID,
     userID: req.user._id,
   };
@@ -74,7 +77,7 @@ module.exports = (req, res, next) => {
     }],
     check2: ['query', (results, cb) => {
       if (!results.query) {
-        errors.push({ field: 'categories', msg: 'No existe la Categoría.' });
+        errors.push({ field: 'categories', msg: 'El registro no existe.' });
       }
       if (errors.length) {
         return cb(listErrors(400, null, errors));

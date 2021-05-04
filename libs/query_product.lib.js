@@ -6,7 +6,7 @@ exports.productBySKU = (storeID, sku, cb) => {
       cb(null, JSON.parse(reply));
     } else {
       models.Product
-        .findOne({ storeID, sku, delete: false })
+        .findOne({ tenancy: req.tenancy, storeID, sku, delete: false })
         .populate({
           path: 'categoryIDs',
           select: 'name slugLong',

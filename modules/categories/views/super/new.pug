@@ -1,0 +1,28 @@
+extends /modules/admin/views/layout-edit-cmp
+
+block edit
+  form.validate-rest(
+    id="form"
+    action=`${appCnf.url.api}admin/super/categories`
+    method="post"
+    data-page=`/administracion/super/categorias`
+    data-error="#form-results")
+    .white.br-1.rd-0-2.p-3
+      .msg.error#form-results
+      .row
+        .col-xs-12
+          .form-group
+            .form-control
+              select#categoryID.input(name='categoryID')
+                option(value="") --
+                each category of items
+                  option(value=category._id) #{category.name}
+              label.nowrap(for='categoryID') Categoría Padre
+          .form-group
+            .form-control
+              input.input#name(type="text" name="name" placeholder=' ' required)
+              label(for='name') Nombre
+
+      .row
+        .col-xs-12.tr
+          button.btn.btn--primary.w-100-xs.mt-1-xs(type="submit") Crear Categoría

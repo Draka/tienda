@@ -14,6 +14,7 @@ function comparePassword(password, field) {
 module.exports = (req, res, next) => {
   const errors = [];
   const body = _.pick(req.body, ['password', 'email']);
+  body.tenancy = req.tenancy;
 
   async.auto({
     validate: (cb) => {
@@ -56,7 +57,11 @@ module.exports = (req, res, next) => {
         return cb(listErrors(409, null, errors));
       }
       models.User
-        .find({ emailNormalized: body.emailNormalized })
+        .find({
+          tenancy: req.tenancy,
+          emailNormalized: body.emailNormalized,
+          tenancy: req.tenancy,
+        })
         .exec(cb);
     }],
     checkEmail: ['queryEmail', (results, cb) => {

@@ -13,6 +13,8 @@ module.exports = (req, res, next) => {
     'text',
     'categoryID',
   ]);
+  body.tenancy = req.tenancy;
+
   if (typeof req.body.categoryID !== 'undefined' && !body.categoryID) {
     body.categoryID = null;
   }
@@ -28,7 +30,7 @@ module.exports = (req, res, next) => {
     },
     query: ['validate', (_results, cb) => {
       models.HelpCategory
-        .findOne({ slug: _.kebabCase(_.deburr(body.name)) })
+        .findOne({ tenancy: req.tenancy, slug: _.kebabCase(_.deburr(body.name)) })
         .exec(cb);
     }],
     check: ['query', (results, cb) => {

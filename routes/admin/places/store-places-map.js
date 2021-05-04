@@ -1,9 +1,8 @@
 const { getCenterOfBounds } = require('geolib');
 
-const query = require('../../../libs/query.lib');
-
 module.exports = (req, res, next) => {
   const body = _.pick(req.query, ['name']);
+  body.tenancy = req.tenancy;
 
   const limit = Math.min(Math.max(1, req.query.limit) || 20, 500);
   const page = Math.max(0, req.query.page) || 0;
@@ -13,11 +12,17 @@ module.exports = (req, res, next) => {
       cb(null, req.user);
     },
     store: ['user', (results, cb) => {
-      query.store(req.params.storeID, cb);
+      models.Store
+        .findOne({
+          tenancy: req.tenancy,
+          _id: req.params.storeID,
+        })
+        .lean()
+        .exec(cb);
     }],
     check: ['store', (results, cb) => {
       if (!results.store) {
-        return cb(listErrors(404, null, [{ field: 'storeID', msg: 'No existe la tienda' }]));
+        return cb(listErrors(404, null, [{ field: 'storeID', msg: 'El registro no existe.' }]));
       }
       if (results.user.admin || results.user._id.toString() === results.store.userID.toString()) {
         body.storeID = req.params.storeID;

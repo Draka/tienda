@@ -1,4 +1,3 @@
-const query = require('../../../libs/query.lib');
 const departments = require('../../api/common/world/departments_db');
 const towns = require('../../api/common/world/towns_db');
 
@@ -8,11 +7,17 @@ module.exports = (req, res, next) => {
       cb(null, req.user);
     },
     store: ['user', (results, cb) => {
-      query.store(req.params.storeID, cb);
+      models.Store
+        .findOne({
+          tenancy: req.tenancy,
+          _id: req.params.storeID,
+        })
+        .lean()
+        .exec(cb);
     }],
     check: ['store', (results, cb) => {
       if (!results.store) {
-        return cb(listErrors(404, null, [{ field: 'storeID', msg: 'No existe la tienda' }]));
+        return cb(listErrors(404, null, [{ field: 'storeID', msg: 'El registro no existe.' }]));
       }
       if (results.user.admin) {
         return cb();

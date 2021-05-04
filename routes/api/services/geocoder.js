@@ -11,6 +11,7 @@ module.exports = (req, res, next) => {
       // consulta historial
       models.Address
         .findOne({
+          tenancy: req.tenancy,
           input: _.lowerCase(`${country} ${city} ${address}`),
         })
         .select({

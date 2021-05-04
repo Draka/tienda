@@ -1,5 +1,4 @@
 const { putS3LogoPath } = require('../../../libs/put_s3_path.lib');
-const query = require('../../../libs/query.lib');
 
 module.exports = (req, res, next) => {
   async.auto({
@@ -7,11 +6,17 @@ module.exports = (req, res, next) => {
       cb(null, req.user);
     },
     store: ['user', (results, cb) => {
-      query.store(req.params.storeID, cb);
+      models.Store
+        .findOne({
+          tenancy: req.tenancy,
+          _id: req.params.storeID,
+        })
+        .lean()
+        .exec(cb);
     }],
     check: ['store', (results, cb) => {
       if (!results.store) {
-        return cb(listErrors(404, null, [{ field: 'storeID', msg: 'No existe la tienda' }]));
+        return cb(listErrors(404, null, [{ field: 'storeID', msg: 'El registro no existe.' }]));
       }
       if (results.user.admin) {
         return cb();
@@ -22,7 +27,7 @@ module.exports = (req, res, next) => {
       return cb(listErrors(401, null, [{ field: 'storeID', msg: 'No puedes ver esta tienda' }]));
     }],
     postFind: ['check', (results, cb) => {
-      putS3LogoPath([results.store]);
+      putS3LogoPath(req, [results.store]);
       cb();
     }],
   }, (err, results) => {

@@ -15,6 +15,8 @@ module.exports = (req, res, next) => {
     'text',
     'subject',
   ]);
+  body.tenancy = req.tenancy;
+
   async.auto({
     validate: (cb) => {
       if (!_.trim(body.name)) {
@@ -27,7 +29,7 @@ module.exports = (req, res, next) => {
     },
     query: ['validate', (_results, cb) => {
       models.EmailTemplate
-        .findOne({ slug: _.kebabCase(_.deburr(body.name)) })
+        .findOne({ tenancy: req.tenancy, slug: _.kebabCase(_.deburr(body.name)) })
         .exec(cb);
     }],
     check: ['query', (results, cb) => {

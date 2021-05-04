@@ -7,7 +7,7 @@ module.exports = (req, res, next) => {
     },
     check: ['item', (results, cb) => {
       if (!results.item) {
-        return cb(listErrors(404, null, [{ field: 'planID', msg: 'No existe el Plan' }]));
+        return cb(listErrors(404, null, [{ field: 'planID', msg: 'El registro no existe.' }]));
       }
       cb();
     }],

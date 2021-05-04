@@ -5,25 +5,25 @@ block content
     {
       "@context": "http://www.schema.org",
       "@type": "LocalBusiness",
-      "name": "#{_.get(appCnf, 'site.name')}",
+      "name": "#{_.get(req, 'site.name')}",
       "url": "#{appCnf.url.site}",
-      "sameAs": !{JSON.stringify(_.get(appCnf, 'site.sameAs'))},
+      "sameAs": !{JSON.stringify(_.get(req, 'site.sameAs'))},
       "logo": "#{appCnf.url.cdn}tenancy/#{req.tenancy}/images/logo-01.png",
       "image": "#{appCnf.url.cdn}tenancy/#{req.tenancy}/images/logo-02.png",
-      "description": "#{_.get(appCnf, 'site.description')}",
+      "description": "#{_.get(req, 'site.description')}",
       "address": {
         "@type": "PostalAddress",
         "addressCountry": "Colombia"
       }
     }
 
-  h1.out-screen #{_.get(appCnf, 'site.name')}
+  h1.out-screen #{_.get(req, 'site.name')}
   .container-fluid.h-460p.h-100-xs.bg.s-cover.lazy(data-src=appCnf.url.cdn+'tenancy/'+req.tenancy+'/images/home/1920_home2.jpg')
     .container
       .row
         .col-lg-6.offset-lg-3
           .p-3.mh-5.a-black-70.rd-0-5
-            .bigx2.b-category #{_.get(appCnf, 'site.name')}
+            .bigx2.b-category #{_.get(req, 'site.name')}
             .subtitle.b El espacio para que des a conocer los productos de tu emprendimiento
   .container
     h2.b.t-primary.tc.mt-2 Nuestras tiendas

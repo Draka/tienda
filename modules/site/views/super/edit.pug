@@ -1,19 +1,27 @@
 extends /modules/admin/views/layout-edit-cmp
 
 block edit
+
+  .msg.error#form-results
+
   .white.br-1.rd-0-2.pw-2.pt-1.pb-2
-    .tabs.tabs--lines.scroll.nowrap.mb-1
+    .tabs.tabs--lines.oa.nowrap.mb-1
       a.item.active(data-tab='#p1') Principales datos
       a.item(data-tab='#p2') Correo electrónco
       a.item(data-tab='#p3') Redes Sociales
       a.item(data-tab='#p4') Imágenes
       a.item(data-tab='#p5') Colores
+      a.item(data-tab='#p6') CSS
 
 
     .tabs-content
       .tab.active#p1
-        form.validate-rest(id="formSite1" action=`${appCnf.url.api}admin/super/config` method="put" data-page=`/administracion/super/configuracion` data-error="#form-results-1")
-          .msg.error#form-results-1
+        form.validate-rest(
+          action=`${appCnf.url.api}admin/super/config`
+          method="put"
+          data-ok='Cambios guardados'
+          data-ok-color='action'
+          data-error="#form-results")
           .row
             .col-xs-12
               h2.mb-1 Principales datos
@@ -39,8 +47,12 @@ block edit
               button.btn.btn--primary.w-100-xs(type="submit") Guardar Cambios
 
       .tab#p2
-        form.validate-rest(id="formSite2" action=`${appCnf.url.api}admin/super/config` method="put" data-page=`/administracion/super/configuracion` data-error="#form-results-2")
-          .msg.error#form-results-2
+        form.validate-rest(
+          action=`${appCnf.url.api}admin/super/config`
+          method="put"
+          data-ok='Cambios guardados'
+          data-ok-color='action'
+          data-error="#form-results")
           .row
             .col-xs-12
               h2.mb-1 Correo electrónco
@@ -62,8 +74,12 @@ block edit
               button.btn.btn--primary.w-100-xs(type="submit") Guardar Cambios
 
       .tab#p3
-        form.validate-rest(id="formSite2" action=`${appCnf.url.api}admin/super/config` method="put" data-page=`/administracion/super/configuracion` data-error="#form-results-2")
-          .msg.error#form-results-2
+        form.validate-rest(
+          action=`${appCnf.url.api}admin/super/config`
+          method="put"
+          data-ok='Cambios guardados'
+          data-ok-color='action'
+          data-error="#form-results")
           .row
             .col-xs-12
               h2.mb-1 Redes Sociales
@@ -86,7 +102,6 @@ block edit
 
       .tab#p4
         form.validate(
-          id="form"
           action=`${appCnf.url.api}admin/super/config`
           method="post"
           enctype="multipart/form-data"
@@ -190,19 +205,15 @@ block edit
               button.btn.btn--primary.w-100-xs(type="submit") Subir imágenes
 
       .tab#p5
-        form.validate-rest(id="formSite2" action=`${appCnf.url.api}admin/super/config` method="put" data-page=`/administracion/super/configuracion` data-error="#form-results-2")
-          .msg.error#form-results-2
+        form.validate-rest(
+          action=`${appCnf.url.api}admin/super/config`
+          method="put"
+          data-ok='Cambios guardados'
+          data-ok-color='action'
+          data-error="#form-results")
           .row
             .col-xs-12
               h2.mb-1 Colores
-              .form-group
-                .form-control
-                  input.input#color-primary(type="color" name="style.color.primary" placeholder=' ' required value=_.get(item, 'style.color.primary'))
-                  label(for='color-primary') Color Primario
-              .form-group
-                .form-control
-                  input.input#color-secondary(type="color" name="style.color.secondary" placeholder=' ' required value=_.get(item, 'style.color.secondary'))
-                  label(for='color-secondary') Color Secundario
               .form-group
                 .form-control
                   select.input#header(name='style.header' required)
@@ -212,11 +223,35 @@ block edit
                   label.nowrap(for='header') Cabecera
               .form-group
                 .form-control
+                  input.input#headerFontClass(type="text" name='style.headerFontClass' value=_.get(item, 'style.headerFontClass'))
+                  label(for='headerFontClass') Clase para la fuente de la Cabecera
+              .form-group
+                .form-control
                   select.input#footer(name='style.footer' required)
                     option(value='') --
                     each color in colors
                       option(value=color.value selected=color.value==_.get(item, 'style.footer')) #{color.name}
                   label.nowrap(for='footer') Pie de página
+
+          .row
+            .col-xs-12.tr
+              button.btn.btn--primary.w-100-xs(type="submit") Guardar Cambios
+
+      .tab#p6
+        form.validate-rest(
+          action=`${appCnf.url.api}admin/super/config`
+          method="put"
+          data-ok='Cambios guardados'
+          data-ok-color='action'
+          data-error="#form-results")
+          .row
+            .col-xs-12
+              h2.mb-1 CSS
+              .form-group
+                .form-control
+                  textarea.input#base(name="style.base" placeholder=' ' rows=30) #{_.get(item, 'style.base')}
+                  label(for='base') CSS
+
 
           .row
             .col-xs-12.tr

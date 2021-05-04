@@ -1,20 +1,43 @@
 header
   .hide-xs
-    nav.navbar.shadow.fixed.top(class=_.get(global.appCnf,'site.style.header')||'primary')
-      .container
+    nav.navbar.shadow.fixed.top(class=
+      (_.get(req,'site.style.header')||'primary')
+      + ' '
+      + (_.get(req,'site.style.headerFontClass')||'') )
+      .container-fluid
         a.logo(href='/')
-          img(src=_.get(global.appCnf, 'site.images.logoTop.svg') alt=`${_.get(appCnf, 'site.name')} logo`)
+          img(src=_.get(req, 'site.images.logoTop.svg') alt=`${_.get(req, 'site.name')} logo`)
+        .relative
+          a.dropdown(aria-controls='menu-categories')
+            span
+              i.fas.fa-list-ul.fa-fw
+              | #{' '}
+              | Categorías
+            span.icon.ml-0-25
+              i.fas.fa-chevron-down.fa-fw
+          #menu-categories.dropdown-list.shadow
+            ul(role='menu')
+              li(role='menuitem')
+                a.item(href='/usuario')
+                  i.far.fa-address-card
+                  | #{' '}Cat 1
+              li(role='menuitem')
+                a.item(href='/usuario/pedidos')
+                  i.fas.fa-shopping-bag
+                  | #{' '}Cat 2
+        | !{getFragment(req, 'menu')}
 
         .expand
-          if store
-            form.flex(class="search" action=`${appCnf.url.site}${store.slug}/buscar`)
-              label.out-screen(for='query-d') Buscar
-              input#query-d.input--simple.w-100.rdtl-50.rdbl-50.ph-0-25.pw-1(type="text" name="q" placeholder='Buscar' required value=q)
-              button.btn.btn--secondary
+          form.flex(class="search" action=`${appCnf.url.site}/tiendas/buscar`)
+            .flex.w-100.rdtl-50.rdbl-50.oh.white.h-55p
+              label.out-screen(for='query-d') Buscar productos
+              input#query-d.input--simple.h-100.w-100.ph-0-25.pl-0-5.title(type="text" name="q" placeholder='Buscar productos' required value=q)
+            button.btn-flat.btn--white.rdtr-50.rdbr-50.h-55p
+              .title.pl-0-5.pr-1
                 i.fas.fa-search
                 span.out-screen #{__('Bucar productos')}
-        | !{getFragment(req, 'menu')}
-        if !session
+
+        if !req.user
           ul.flex.menu
             li
               a.btn.btn--secondary(href='/registro') Registro
@@ -22,17 +45,16 @@ header
               a(href='/iniciar-sesion') Iniciar Sesión
         else
           .relative
-            a.dropdown(aria-controls='menu-login')
+            a.dropdown.flex(aria-controls='menu-login')
               span
-                i.fas.fa-user-circle.fa-fw
-                | #{' '}
-                span Hola, #{session.personalInfo.firstname}
-                | #{' '}
-              span.icon.ml-1
-                i.fas.fa-arrow-down.fa-fw
+                .tc.social.mb-0-25
+                  i.fas.fa-user-circle.fa-fw
+                .very-small Mi Cuenta
+              span.icon.ml-0-25
+                i.fas.fa-chevron-down.fa-fw
             #menu-login.dropdown-list.right.shadow
-              ul.list-categories(role='menu')
-                if session && (session.admin || session.adminStore)
+              ul(role='menu')
+                if req.user && (req.user.admin || req.user.adminStore)
                   li(role='menuitem')
                     a.item(href='/administracion/tiendas')
                       i.fas.fa-store
@@ -54,9 +76,12 @@ header
         ul.flex.menu
           li.w-4
             a.link-shopping-cart.relative.w-4.justify-content-center(href='/carrito')
-              i.fas.fa-shopping-cart
+              span
+                .tc.social
+                  i.fas.fa-shopping-cart.mb-0-25
+                .very-small Mi Carrito
               span.badge.inside.num-shopping-cart.m-1.secondary.start-hide
-              span.out-screen Ver carrito
+              span.out-screen Mi Carrito
     if store && !notMenu
       nav.navbar.white.shadow.mt-4
         .container
@@ -87,7 +112,7 @@ header
           ul
             li.flex
               a.nav-link.brand-logo(href='/usuario')
-                div.not-wrap.b #{session.personalInfo.name}
+                div.not-wrap.b #{req.user.personalInfo.name}
           .expand
           .relative
             a.dropdown(aria-controls='menu-categories')
@@ -105,13 +130,13 @@ header
                   a.item(href='/usuario/correo') Cambiar correo electrónico
                 li(role='menuitem')
                   a.item(href='/usuario/contrasena') Cambiar mi contraseña
-                if !session.admin && !session.adminStore
+                if !req.user.admin && !req.user.adminStore
                   li.hr
                   li(role='menuitem')
                     a.item(href='/usuario/vendedor') Volverme vendedor
 
   .show-xs
-    nav.navbar.shadow.fixed.top(class=_.get(global.appCnf,'site.style.header')||'primary')
+    nav.navbar.shadow.fixed.top(class=_.get(req,'site.style.header')||'primary')
       ul.flex.menu.w-100
         li
           a.sidenav-action.w-4.justify-content-center(href='#' data-target='#mobile-menu')
@@ -119,7 +144,7 @@ header
             span.out-screen Menú
         li.expand
           a.logo.justify-content-center(href='/')
-            img(src=_.get(global.appCnf, 'site.images.logoTop.svg') alt=`${_.get(appCnf, 'site.name')} logo`)
+            img(src=_.get(req, 'site.images.logoTop.svg') alt=`${_.get(req, 'site.name')} logo`)
         li
           a.link-shopping-cart.relative.w-4.justify-content-center(href='/carrito')
             i.fas.fa-shopping-cart
@@ -141,11 +166,11 @@ header
             a.item(href='/usuario/correo') Cambiar correo electrónico
           li(role='menuitem')
             a.item(href='/usuario/contrasena') Cambiar mi contraseña
-          if !session.admin && !session.adminStore
+          if !req.user.admin && !req.user.adminStore
             li.hr
             li(role='menuitem')
               a.item(href='/usuario/vendedor') Volverme vendedor
-      if !session
+      if !req.user
         ul.list(role='menu')
           li(role='menuitem')
             a(href='/iniciar-sesion') Iniciar Sesión
@@ -155,7 +180,7 @@ header
         .white-500.w-100.flex.h-3
           .w-100.title.tc.b Usuario
         ul.list(role='menu')
-          if session && (session.admin || session.adminStore)
+          if req.user && (req.user.admin || req.user.adminStore)
             li(role='menuitem')
               a.item(href='/administracion/tiendas')
                 i.fas.fa-store

@@ -12,6 +12,8 @@ module.exports = (req, res, next) => {
     'seo',
     'html',
   ]);
+  body.tenancy = req.tenancy;
+
   if (typeof req.body.active !== 'undefined' && !body.active) {
     body.active = false;
   }
@@ -34,6 +36,12 @@ module.exports = (req, res, next) => {
         .exec(cb);
     }],
     save: ['query', (results, cb) => {
+      if (!results.query) {
+        errors.push({ field: 'pages', msg: 'El registro no existe.' });
+      }
+      if (errors.length) {
+        return cb(listErrors(400, null, errors));
+      }
       body.userID = req.user._id;
       results.query.set(body).save(cb);
     }],

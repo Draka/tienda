@@ -10,6 +10,8 @@ module.exports = (req, res, next) => {
     'question',
     'answer',
   ]);
+  body.tenancy=req.tenancy;
+
   if (typeof req.body.active !== 'undefined' && !body.active) {
     body.active = false;
   }
@@ -25,7 +27,7 @@ module.exports = (req, res, next) => {
     },
     query: ['validate', (_results, cb) => {
       models.Faq
-        .findOne({ slug: _.kebabCase(_.deburr(body.question)) })
+        .findOne({ tenancy: req.tenancy, slug: _.kebabCase(_.deburr(body.question)) })
         .exec(cb);
     }],
     check: ['query', (results, cb) => {

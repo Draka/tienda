@@ -1,7 +1,6 @@
 const Handlebars = require('handlebars');
 // const fs = require('fs');
 const mailer = require('../../../../../libs/mailer');
-const { model } = require('../../../../../libs/query.lib');
 
 module.exports = (req, res, next) => {
   const errors = [];
@@ -15,6 +14,8 @@ module.exports = (req, res, next) => {
     'emails',
     'data',
   ]);
+  body.tenancy = req.tenancy;
+
   async.auto({
     validate: (cb) => {
       cb();
@@ -26,7 +27,7 @@ module.exports = (req, res, next) => {
     }],
     send: ['query', (results, cb) => {
       if (!results.query) {
-        errors.push({ field: 'template', msg: 'No existe la Plantilla.' });
+        errors.push({ field: 'template', msg: 'El registro no existe.' });
       }
       if (errors.length) {
         return cb(listErrors(400, null, errors));
@@ -40,20 +41,20 @@ module.exports = (req, res, next) => {
         const data = {
           subject: results.query.subject,
           source: {
-            name: _.get(appCnf, 'site.email.title'),
-            email: _.get(appCnf, 'site.email.emailInfo'),
+            name: _.get(req, 'site.email.title'),
+            email: _.get(req, 'site.email.emailInfo'),
           },
           replyToAddresses: [
-            _.get(appCnf, 'site.email.emailNoreply'),
+            _.get(req, 'site.email.emailNoreply'),
           ],
           site: {
-            name: _.get(appCnf, 'site.name'),
+            name: _.get(req, 'site.name'),
             urlSite: appCnf.url.site,
             urlStatic: appCnf.url.cdn,
-            info: _.get(appCnf, 'site.email.emailInfo'),
-            title: _.get(appCnf, 'site.email.title'),
-            color: _.get(appCnf, 'site.color'),
-            logoEmail: _.get(appCnf, 'site.images.logoEmail.jpg'),
+            info: _.get(req, 'site.email.emailInfo'),
+            title: _.get(req, 'site.email.title'),
+            color: _.get(req, 'site.color'),
+            logoEmail: _.get(req, 'site.images.logoEmail.jpg'),
           },
           tenancy: req.tenancy,
           v: appCnf.v,
@@ -67,8 +68,12 @@ module.exports = (req, res, next) => {
               };
               return cb();
             }
-            model.User
-              .findOne({ email })
+            models.User
+              .findOne({
+                tenancy: req.tenancy,
+                email,
+                tenancy: req.tenancy,
+              })
               .exec((err, doc) => {
                 if (err || !doc) {
                   return cb(err);

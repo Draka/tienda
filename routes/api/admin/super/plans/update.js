@@ -15,6 +15,8 @@ module.exports = (req, res, next) => {
     'test',
     'period',
   ]);
+  body.tenancy=req.tenancy;
+
   if (typeof req.body.publish !== 'undefined' && !body.publish) {
     body.publish = false;
   }

@@ -36,7 +36,7 @@ module.exports = (app) => {
     res.render('pages/common/signup', {
       req,
       title: 'Registrarse como cliente',
-      description: `Inscríbase en ${_.get(appCnf, 'site.name')}, navegue por nuestra vitrina virtual, seleccione sus productos y pague online`,
+      description: `Inscríbase en ${_.get(req, 'site.name')}, navegue por nuestra vitrina virtual, seleccione sus productos y pague online`,
       breadcrumbs,
       js: 'page',
     });

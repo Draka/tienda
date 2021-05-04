@@ -1,9 +1,22 @@
-const { site } = require('../../../../libs/query.lib');
-
 module.exports = (req, res, next) => {
   async.auto({
     site: (cb) => {
-      site(cb);
+      models.Site
+        .findOne({ tenancy: req.tenancy,
+          tenancy: req.tenancy,
+        })
+        .lean()
+        .exec((err, doc) => {
+          if (err) {
+            return cb(err);
+          }
+          _.each(_.get(doc, 'images'), (image, path) => {
+            _.each(image, (url, ext) => {
+              doc.images[path][ext] = `${appCnf.url.cdn}tenancy/${req.tenancy}/images/${appCnf.s3.folder}/site/${path}/${url}`;
+            });
+          });
+          cb(null, doc);
+        });
     },
   }, (err, results) => {
     if (err) {
@@ -29,7 +42,6 @@ module.exports = (req, res, next) => {
       item: results.site,
       title: 'Configuración',
       menu: 'super-site-config',
-      edit: `/administracion/tiendas/${req.params.storeID}/editar`,
       breadcrumbs,
     });
   });

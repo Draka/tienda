@@ -8,6 +8,7 @@ module.exports = (req, res, next) => {
     orders: ['validate', (_results, cb) => {
       models.Order
         .find({
+          tenancy: req.tenancy,
           userID: req.user._id,
           status: {
             $in: [

@@ -28,6 +28,8 @@ function generateToken(user, secret) {
 module.exports = (req, res, next) => {
   const errors = [];
   const body = _.pick(req.body, ['email', 'password']);
+  body.tenancy = req.tenancy;
+
   body.email = _.trim(body.email);
   async.auto({
     validate: (cb) => {
@@ -45,6 +47,8 @@ module.exports = (req, res, next) => {
     query: ['validate', (results, cb) => {
       models.User
         .findOne({
+          tenancy: req.tenancy,
+          tenancy: req.tenancy,
           emailNormalized: validator.normalizeEmail(req.body.email),
         })
         .select({

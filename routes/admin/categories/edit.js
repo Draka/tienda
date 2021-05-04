@@ -10,7 +10,7 @@ module.exports = (req, res, next) => {
     }],
     check: ['store', (results, cb) => {
       if (!results.store) {
-        return cb(listErrors(404, null, [{ field: 'storeID', msg: 'No existe la tienda' }]));
+        return cb(listErrors(404, null, [{ field: 'storeID', msg: 'El registro no existe.' }]));
       }
       if (results.user.admin) {
         return cb();
@@ -22,7 +22,7 @@ module.exports = (req, res, next) => {
     }],
     item: ['check', (results, cb) => {
       models.Category
-        .findOne({
+        .findOne({ tenancy: req.tenancy,
           storeID: req.params.storeID,
           _id: req.params.categoryID,
         })
@@ -38,7 +38,7 @@ module.exports = (req, res, next) => {
     }],
     check2: ['item', (results, cb) => {
       if (!results.item) {
-        return cb(listErrors(404, null, [{ field: 'categoryID', msg: 'No existe la Categoría' }]));
+        return cb(listErrors(404, null, [{ field: 'categoryID', msg: 'El registro no existe.' }]));
       }
       cb();
     }],

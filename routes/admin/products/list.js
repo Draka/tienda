@@ -17,7 +17,7 @@ module.exports = (req, res, next) => {
     }],
     check: ['store', (results, cb) => {
       if (!results.store) {
-        return cb(listErrors(404, null, [{ field: 'storeID', msg: 'No existe la tienda' }]));
+        return cb(listErrors(404, null, [{ field: 'storeID', msg: 'El registro no existe.' }]));
       }
       if (results.user.admin || results.user._id.toString() === results.store.userID.toString()) {
         body.storeID = req.params.storeID;

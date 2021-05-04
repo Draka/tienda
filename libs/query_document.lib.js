@@ -6,7 +6,7 @@ exports.documentBySlug = (slug, cb) => {
       cb(null, JSON.parse(reply));
     } else {
       models.Document
-        .findOne({ slug, publish: true })
+        .findOne({ tenancy: req.tenancy, slug, publish: true })
         .lean()
         .exec((err, doc) => {
           if (err) {

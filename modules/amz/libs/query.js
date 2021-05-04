@@ -6,7 +6,6 @@ const https = require('https');
 const cheerio = require('cheerio');
 const puppeteer = require('puppeteer-extra');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
-const { site } = require('../../../libs/query.lib');
 
 exports.getUrlPage = (url, cb) => {
   const key = `__url_amz__${url}`;

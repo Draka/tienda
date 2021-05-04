@@ -1,4 +1,3 @@
-const query = require('../../../libs/query.lib');
 const departments = require('../../api/common/world/departments_db');
 
 const breadcrumbs = [

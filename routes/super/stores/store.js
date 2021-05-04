@@ -2,6 +2,7 @@ const { putS3LogoPath } = require('../../../libs/put_s3_path.lib');
 
 module.exports = (req, res, next) => {
   const body = _.pick(req.query, ['name']);
+  body.tenancy = req.tenancy;
 
   const limit = Math.min(Math.max(1, req.query.limit) || 20, 500);
   const page = Math.max(0, req.query.page) || 0;
@@ -34,7 +35,7 @@ module.exports = (req, res, next) => {
         .exec(cb);
     }],
     postFind: ['items', (results, cb) => {
-      putS3LogoPath(results.items);
+      putS3LogoPath(req, results.items);
       cb();
     }],
     count: ['validate', (_results, cb) => {

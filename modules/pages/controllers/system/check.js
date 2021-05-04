@@ -6,7 +6,7 @@ function check(req, slug, pDefault, cb) {
   }
   pDefault = pDefault || {};
   models.Page
-    .findOne({
+    .findOne({ tenancy: req.tenancy,
       slug,
       tenancy: req.tenancy,
     })

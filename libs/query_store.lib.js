@@ -5,7 +5,7 @@ exports.stores = (cb) => {
       cb(null, JSON.parse(reply));
     } else {
       models.Store
-        .find({ publish: true, approve: true })
+        .find({ tenancy: req.tenancy, publish: true, approve: true })
         .lean()
         .exec((err, docs) => {
           if (err) {
@@ -25,7 +25,9 @@ exports.storesByPrimaryActivity = (primaryActivity, cb) => {
       cb(null, JSON.parse(reply));
     } else {
       models.Store
-        .find({ publish: true, approve: true, primaryActivity })
+        .find({
+          tenancy: req.tenancy, publish: true, approve: true, primaryActivity,
+        })
         .lean()
         .exec((err, docs) => {
           if (err) {
@@ -45,7 +47,7 @@ exports.coveragesAreas = (storeID, cb) => {
       cb(null, JSON.parse(reply));
     } else {
       models.CoverageArea
-        .find({ active: true, storeID })
+        .find({ tenancy: req.tenancy, active: true, storeID })
         .lean()
         .exec((err, docs) => {
           if (err) {
@@ -68,7 +70,7 @@ exports.places = (storeID, cb) => {
       cb(null, JSON.parse(reply));
     } else {
       models.Place
-        .find({ active: true, storeID })
+        .find({ tenancy: req.tenancy, active: true, storeID })
         .lean()
         .exec((err, docs) => {
           if (err) {
@@ -91,7 +93,7 @@ exports.storeBySlug = (slug, cb) => {
       cb(null, JSON.parse(reply));
     } else {
       models.Store
-        .findOne({ slug })
+        .findOne({ tenancy: req.tenancy, slug })
         .lean()
         .exec((err, doc) => {
           if (err) {
@@ -111,7 +113,7 @@ exports.categoryByLongSlug = (storeID, slugLong, cb) => {
       cb(null, JSON.parse(reply));
     } else {
       models.Category
-        .findOne({ storeID, slugLong })
+        .findOne({ tenancy: req.tenancy, storeID, slugLong })
         .lean()
         .exec((err, doc) => {
           if (err) {

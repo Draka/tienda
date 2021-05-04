@@ -1,5 +1,3 @@
-const query = require('../../../libs/query.lib');
-
 const breadcrumbs = [
   {
     link: '/administracion',

@@ -12,7 +12,7 @@ module.exports = (req, res, next) => {
     }],
     check: ['item', (results, cb) => {
       if (!results.item) {
-        return cb(listErrors(404, null, [{ field: 'faqID', msg: 'No existe la Pregunta' }]));
+        return cb(listErrors(404, null, [{ field: 'faqID', msg: 'El registro no existe.' }]));
       }
       cb();
     }],

@@ -15,6 +15,8 @@ module.exports = (req, res, next) => {
     'text',
     'subject',
   ]);
+  body.tenancy = req.tenancy;
+
   async.auto({
     validate: (cb) => {
       if (!_.trim(body.name)) {
@@ -32,7 +34,7 @@ module.exports = (req, res, next) => {
     }],
     toHTML: ['query', (results, cb) => {
       if (!results.query) {
-        errors.push({ field: '_id', msg: 'No existe la Plantilla.' });
+        errors.push({ field: '_id', msg: 'El registro no existe.' });
       }
       if (errors.length) {
         return cb(listErrors(400, null, errors));

@@ -11,7 +11,10 @@ module.exports = (req, res, next) => {
     'point',
     'schedule',
   ]);
+  body.tenancy = req.tenancy;
+
   const adminQuery = {
+    tenancy: req.tenancy,
     _id: req.params.storeID,
     userID: req.user._id,
   };

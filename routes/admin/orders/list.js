@@ -3,6 +3,7 @@ const reference = require('../../../libs/reference.lib');
 
 module.exports = (req, res, next) => {
   const body = _.pick(req.query, ['orderID']);
+  body.tenancy = req.tenancy;
 
   const limit = Math.min(Math.max(1, req.query.limit) || 20, 500);
   const page = Math.max(0, req.query.page) || 0;
@@ -21,7 +22,7 @@ module.exports = (req, res, next) => {
     },
     stores: ['validate', (results, cb) => {
       models.Store
-        .find({ userID: req.user._id })
+        .find({ tenancy: req.tenancy, userID: req.user._id })
         .lean()
         .exec(cb);
     }],
@@ -40,7 +41,7 @@ module.exports = (req, res, next) => {
     payment: ['orders', (results, cb) => {
       async.eachLimit(results.orders, 10, (order, cb) => {
         order.store._id = order.storeID;
-        putS3LogoPath([order.store]);
+        putS3LogoPath(req, [order.store]);
         reference(order, req.user._id, cb);
       }, cb);
     }],

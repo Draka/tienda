@@ -11,7 +11,7 @@ module.exports = (req, res, next) => {
     },
     check: ['items', (results, cb) => {
       if (!results.items) {
-        return cb(listErrors(404, null, [{ field: 'emailTemplateID', msg: 'No existe el Tópico' }]));
+        return cb(listErrors(404, null, [{ field: 'emailTemplateID', msg: 'El registro no existe.' }]));
       }
       cb();
     }],
