@@ -6,7 +6,6 @@ module.exports = (req, res, next) => {
   const body = _.pick(req.body, ['place', 'items']);
   body.tenancy = req.tenancy;
 
-
   async.auto({
     validate: (cb) => {
       if (!_.isPlainObject(body.items) || !(Object.keys(body.items)).length) {
@@ -18,7 +17,7 @@ module.exports = (req, res, next) => {
       cb();
     },
     store: ['validate', (_results, cb) => {
-      queryStore.storeBySlug(req.params.storeSlug, cb);
+      queryStore.storeBySlug(req, req.params.storeSlug, cb);
     }],
     // valida que los productos existan
     validateItems: ['store', (results, cb) => {

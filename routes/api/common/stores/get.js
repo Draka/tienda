@@ -11,7 +11,7 @@ module.exports = (req, res, next) => {
       cb();
     },
     store: ['validate', (_results, cb) => {
-      queryStore.storeBySlug(req.params.storeSlug, cb);
+      queryStore.storeBySlug(req, req.params.storeSlug, cb);
     }],
     selectStore: ['store', (results, cb) => {
       if (!results.store) {

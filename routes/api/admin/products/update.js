@@ -33,7 +33,7 @@ module.exports = (req, res, next) => {
     'amz',
     'images',
   ]);
-  body.tenancy=req.tenancy;
+  body.tenancy = req.tenancy;
 
   const adminQuery = {
     tenancy: req.tenancy,
@@ -152,7 +152,7 @@ module.exports = (req, res, next) => {
       if (!req.body.categoryID) {
         return cb();
       }
-      query.up([], req.body.categoryID._id || req.body.categoryID, cb);
+      query.up(req, [], req.body.categoryID._id || req.body.categoryID, cb);
     }],
     groups: ['query', (results, cb) => {
       if (!results.query) {

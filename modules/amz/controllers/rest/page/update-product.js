@@ -12,7 +12,7 @@ module.exports = (req, res, next) => {
         .exec(cb);
     }],
     getUrl: ['validate', (results, cb) => {
-      getUrlPage(body.url, cb);
+      getUrlPage(req, body.url, cb);
     }],
   }, (err, results) => {
     if (err) {

@@ -7,7 +7,13 @@ module.exports = (req, res, next) => {
       cb(null, req.user);
     },
     store: ['user', (results, cb) => {
-      query.store(req.params.storeID, cb);
+      models.Store
+        .findOne({
+          tenancy: req.tenancy,
+          _id: req.params.storeID,
+        })
+        .lean()
+        .exec(cb);
     }],
     check: ['store', (results, cb) => {
       if (!results.store) {
@@ -23,7 +29,8 @@ module.exports = (req, res, next) => {
     }],
     item: ['check', (results, cb) => {
       models.Product
-        .findOne({ tenancy: req.tenancy,
+        .findOne({
+          tenancy: req.tenancy,
           storeID: req.params.storeID,
           _id: req.params.productID,
         })
@@ -34,11 +41,11 @@ module.exports = (req, res, next) => {
         .exec(cb);
     }],
     postFind: ['item', (results, cb) => {
-      putS3Path([results.item], results.store);
+      putS3Path(req, [results.item], results.store);
       cb();
     }],
     tree: ['check', (results, cb) => {
-      query.categoryTree(req.params.storeID, cb);
+      query.categoryTreeTenancy(req, cb);
     }],
     items: ['tree', (results, cb) => {
       const items = [];

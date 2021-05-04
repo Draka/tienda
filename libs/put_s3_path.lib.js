@@ -1,4 +1,4 @@
-exports.putS3Path = (items, store) => {
+exports.putS3Path = (req, items, store) => {
   _.each(items, (o) => {
     o.imagesSizes = _.map(o.images, (i) => {
       const sizes = {};
@@ -18,9 +18,8 @@ exports.putS3Path = (items, store) => {
 };
 
 exports.putS3LogoPath = (req, stores) => {
-  console.trace();
   _.each(stores, (store) => {
-    store.url = appCnf.site.url + store.slug;
+    store.url = _.get(req.site, 'url') + store.slug;
     if (!store.images) {
       return;
     }

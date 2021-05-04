@@ -141,11 +141,11 @@ exports.place = (id, cb) => {
   });
 };
 
-function categoryTree(storeID, categoryID, cb) {
+function categoryTree(req, categoryID, cb) {
   models.Category
     .find({
       tenancy: req.tenancy,
-      storeID,
+      storeID: null,
       categoryID,
     })
     .select('_id name active')
@@ -158,7 +158,7 @@ function categoryTree(storeID, categoryID, cb) {
         cb(err);
       } else {
         async.mapLimit(docs, 20, (i, cb) => {
-          categoryTree(storeID, i._id, (_err, r) => {
+          categoryTree(req, i._id, (_err, r) => {
             i.categories = r;
             cb(null, i);
           });
@@ -168,13 +168,13 @@ function categoryTree(storeID, categoryID, cb) {
       }
     });
 }
-exports.categoryTree = (storeID, cb) => {
-  const key = `__category_tree__${storeID}`;
+exports.categoryTreeTenancy = (req, cb) => {
+  const key = `__category_tree__teenancy__${req.tenancy}`;
   client.get(key, (_err, reply) => {
     if (reply && process.env.NODE_ENV === 'production') {
       cb(null, JSON.parse(reply));
     } else {
-      categoryTree(storeID, null, (err, docs) => {
+      categoryTree(req, null, (err, docs) => {
         if (err) {
           return cb(err);
         }
@@ -195,7 +195,7 @@ function treePush(items, arr, depth = 0) {
 }
 exports.treePush = treePush;
 
-function up(arr, categoryID, cb) {
+function up(req, arr, categoryID, cb) {
   models.Category
     .findOne({ tenancy: req.tenancy, _id: categoryID })
     .select('categoryID name')
@@ -205,7 +205,7 @@ function up(arr, categoryID, cb) {
         cb(err);
       } else if (doc) {
         arr.unshift({ _id: doc._id, name: doc.name });
-        up(arr, doc.categoryID, cb);
+        up(req, arr, doc.categoryID, cb);
       } else {
         cb(null, arr);
       }

@@ -44,7 +44,7 @@ module.exports = (req, res, next) => {
       async.mapValues(body.stores, (store, slug, cb) => {
         async.auto({
           store: (cb) => {
-            queryStore.storeBySlug(slug, cb);
+            queryStore.storeBySlug(req, slug, cb);
           },
           delivery: ['store', (results, cb) => {
             if (!results.store) {

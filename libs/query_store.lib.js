@@ -86,14 +86,17 @@ exports.places = (storeID, cb) => {
   });
 };
 
-exports.storeBySlug = (slug, cb) => {
+exports.storeBySlug = (req, slug, cb) => {
   const key = `__store__${slug}`;
   client.get(key, (_err, reply) => {
     if (reply && process.env.NODE_ENV === 'production') {
       cb(null, JSON.parse(reply));
     } else {
       models.Store
-        .findOne({ tenancy: req.tenancy, slug })
+        .findOne({
+          tenancy: req.tenancy,
+          slug,
+        })
         .lean()
         .exec((err, doc) => {
           if (err) {

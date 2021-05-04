@@ -2,66 +2,64 @@
 // import axios from 'axios';
 // import cherrio from 'cheerio';
 
-const https = require('https');
+// const https = require('https');
 const cheerio = require('cheerio');
 const puppeteer = require('puppeteer-extra');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 
-exports.getUrlPage = (url, cb) => {
+exports.getUrlPage = (req, url, cb) => {
   const key = `__url_amz__${url}`;
   client.get(key, (_err, reply) => {
     if (reply && process.env.NODE_ENV === 'production') {
       cb(null, JSON.parse(reply));
     } else {
-      const d = moment.tz(global.tz).format('YYYY-MM-DD');
+      // const d = moment.tz(global.tz).format('YYYY-MM-DD');
       async.auto({
-        trm: (cb) => {
-          return cb();
-          if (_.get(appCnf.site, 'trm.date') !== d) {
-            async.auto({
-              trm: (cb) => {
-                https.get(`https://trm-colombia.vercel.app/?date=${d}`, (response) => {
-                  if (response.statusCode !== 200) {
-                    // eslint-disable-next-line no-console
-                    console.error(`${url} Response status was ${response.statusCode}`);
-                    return cb(null, []);
-                  }
-                  let body = '';
-                  response.on('data', (chunk) => {
-                    body += chunk;
-                  });
-                  response.on('end', () => {
-                    cb(null, JSON.parse(body));
-                  });
-                }).on('error', (e) => {
-                  // eslint-disable-next-line no-console
-                  console.error('Got an error: ', e);
-                });
-              },
-              query: ['trm', (_results, cb) => {
-                models.Site
-                  .findOne()
-                  .exec(cb);
-              }],
-              save: ['query', (results, cb) => {
-                results.query.set({
-                  trm: {
-                    date: d,
-                    cop: _.get(results.trm, 'data.value') || 0,
-                  },
-                }).save(cb);
-              }],
-              site: ['save', (results, cb) => {
-                site((err, doc) => {
-                  global.appCnf.site = doc;
-                  cb();
-                });
-              }],
-            }, cb);
-          } else {
-            cb();
-          }
-        },
+        trm: (cb) => cb(), // if (_.get(appCnf.site, 'trm.date') !== d) {
+        //   async.auto({
+        //     trm: (cb) => {
+        //       https.get(`https://trm-colombia.vercel.app/?date=${d}`, (response) => {
+        //         if (response.statusCode !== 200) {
+        //           // eslint-disable-next-line no-console
+        //           console.error(`${url} Response status was ${response.statusCode}`);
+        //           return cb(null, []);
+        //         }
+        //         let body = '';
+        //         response.on('data', (chunk) => {
+        //           body += chunk;
+        //         });
+        //         response.on('end', () => {
+        //           cb(null, JSON.parse(body));
+        //         });
+        //       }).on('error', (e) => {
+        //         // eslint-disable-next-line no-console
+        //         console.error('Got an error: ', e);
+        //       });
+        //     },
+        //     query: ['trm', (_results, cb) => {
+        //       models.Site
+        //         .findOne()
+        //         .exec(cb);
+        //     }],
+        //     save: ['query', (results, cb) => {
+        //       results.query.set({
+        //         trm: {
+        //           date: d,
+        //           cop: _.get(results.trm, 'data.value') || 0,
+        //         },
+        //       }).save(cb);
+        //     }],
+        //     site: ['save', (results, cb) => {
+        //       site((err, doc) => {
+        //         global.appCnf.site = doc;
+        //         cb();
+        //       });
+        //     }],
+        //   }, cb);
+        // } else {
+        //   cb();
+        // }
+
         amz: ['trm', async (_results) => {
           puppeteer.use(StealthPlugin());
           const browser = await puppeteer.launch({
@@ -165,7 +163,7 @@ exports.getUrlPage = (url, cb) => {
 
             return {
               title,
-              trm: appCnf.site.trm.cop,
+              trm: _.get(req.site, 'trm.cop') || 0,
               price,
               brandText,
               longDescription,
@@ -178,7 +176,7 @@ exports.getUrlPage = (url, cb) => {
             await browser.close();
             return {
               title: '',
-              trm: appCnf.site.trm.cop,
+              trm: _.get(req.site, 'trm.cop') || 0,
               price: 0,
               brandText: '',
               longDescription: '',

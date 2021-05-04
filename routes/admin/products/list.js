@@ -13,7 +13,13 @@ module.exports = (req, res, next) => {
       cb(null, req.user);
     },
     store: ['user', (results, cb) => {
-      query.store(req.params.storeID, cb);
+      models.Store
+        .findOne({
+          tenancy: req.tenancy,
+          _id: req.params.storeID,
+        })
+        .lean()
+        .exec(cb);
     }],
     check: ['store', (results, cb) => {
       if (!results.store) {
@@ -45,7 +51,7 @@ module.exports = (req, res, next) => {
         .exec(cb);
     }],
     postFind: ['items', (results, cb) => {
-      putS3Path(results.items, results.store);
+      putS3Path(req, results.items, results.store);
       cb();
     }],
     count: ['check', (_results, cb) => {
@@ -54,7 +60,8 @@ module.exports = (req, res, next) => {
         .exec(cb);
     }],
     tree: ['store', (results, cb) => {
-      query.categoryTree(req.params.storeID, cb);
+      // TODO: cuando se pueda configurar para que se pueda tener sus propias categorías
+      query.categoryTreeTenancy(req, cb);
     }],
     categories: ['tree', (results, cb) => {
       const items = [];

@@ -6,7 +6,13 @@ module.exports = (req, res, next) => {
       cb(null, req.user);
     },
     store: ['user', (results, cb) => {
-      query.store(req.params.storeID, cb);
+      models.Store
+        .findOne({
+          tenancy: req.tenancy,
+          _id: req.params.storeID,
+        })
+        .lean()
+        .exec(cb);
     }],
     check: ['store', (results, cb) => {
       if (!results.store) {
@@ -21,7 +27,7 @@ module.exports = (req, res, next) => {
       return cb(listErrors(401, null, [{ field: 'storeID', msg: 'No puedes ver esta tienda' }]));
     }],
     tree: ['check', (results, cb) => {
-      query.categoryTree(req.params.storeID, cb);
+      query.categoryTreeTenancy(req, cb);
     }],
     items: ['tree', (results, cb) => {
       const items = [];

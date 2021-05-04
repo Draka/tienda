@@ -7,7 +7,7 @@ module.exports = (req, res, next) => {
   async.auto({
     validate: (cb) => cb(),
     getUrl: ['validate', (results, cb) => {
-      getUrlPage(body.url, cb);
+      getUrlPage(req, body.url, cb);
     }],
   }, (err, results) => {
     if (err) {

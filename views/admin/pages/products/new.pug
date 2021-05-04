@@ -7,9 +7,9 @@ block edit
       action=`${appCnf.url.api}amz/name`
       method="post"
       data-post='amz'
-      data-error="#form-results")
+      data-error="#form-results1")
       .white.br-1.rd-0-2.p-3.mb-2
-        .msg.error#form-results
+        .msg.error#form-results1
         .row
           .col-xs-12
             .form-group
@@ -29,9 +29,9 @@ block edit
     method="post"
     data-page=`/administracion/tiendas/${store._id}/productos`
     data-gotoid="editar"
-    data-error="#form-results")
+    data-error="#form-results2")
     .white.br-1.rd-0-2.p-3
-      .msg.error#form-results
+      .msg.error#form-results2
 
       if store.amz
         .row
@@ -46,12 +46,12 @@ block edit
           .col-xs-12
             .form-group.flex
               .form-control
-                input.input.tr.b.t-secondary#amzTrm(type="number" name="amz.trm" placeholder=' ' value=_.get(appCnf.site, 'trm.cop') || 0)
+                input.input.tr.b.t-secondary#amzTrm(type="number" name="amz.trm" placeholder=' ' value=_.get(req.site, 'trm.cop') || 0)
                 label(for='amzTrm') TRM
               .form-control.pl-1
                 input.input.tr#amzUsd(type="number" name="amz.usd" placeholder=' ' value=0 step=".01")
                 label(for='amzUsd') USD
-            .form-group.flex
+            .form-group.flex.flex-wrap
               .form-control
                 input.input.tr#amzIncPrice(type="number" name="amz.incPrice" placeholder=' ' value=15)
                 label(for='amzIncPrice') Incremento Precio (%)
@@ -62,24 +62,27 @@ block edit
                 input.input.tr#amzIncDimensions(type="number" name="amz.incDimensions" placeholder=' ' value=0 step=".01")
                 label(for='amzIncDimensions') Incremento Volumen
 
-            .form-group.flex
+            .form-group.flex.flex-wrap
               .form-control
                 input.input.tr#weight(type="number" name="weight" placeholder=' ' min=0 value=0)
                 label(for='weight') Peso (en gramos)
               .b (g)
-            .form-group.flex
-              .form-control
-                input.input.tr#length(type="number" name="length" placeholder=' ' min=0 value=0)
-                label(for='length') Largo (en centímetros)
-              .b (cm) &times;
-              .form-control.pl-1
-                input.input.tr#height(type="number" name="height" placeholder=' ' min=0 value=0)
-                label(for='height') Altura (en centímetros)
-              .b (cm) &times;
-              .form-control.pl-1
-                input.input.tr#width(type="number" name="width" placeholder=' ' min=0 value=0)
-                label(for='width') Ancho (en centímetros)
-              .b (cm)
+            .form-group.flex.flex-wrap
+              .flex
+                .form-control
+                  input.input.tr#length(type="number" name="length" placeholder=' ' min=0 value=0)
+                  label(for='length') Largo (en centímetros)
+                .b (cm) &times;
+              .flex
+                .form-control.pl-1
+                  input.input.tr#height(type="number" name="height" placeholder=' ' min=0 value=0)
+                  label(for='height') Altura (en centímetros)
+                .b (cm) &times;
+              .flex
+                .form-control.pl-1
+                  input.input.tr#width(type="number" name="width" placeholder=' ' min=0 value=0)
+                  label(for='width') Ancho (en centímetros)
+                .b (cm)
             .form-group
               .form-control
                 textarea.input#urlFiles(name="urlFiles" placeholder=' ' rows=8)
@@ -87,9 +90,9 @@ block edit
           .col-xs-12
             .parts
 
-      .row
-        .col-xs-12
-          .hr.mh-2
+        .row
+          .col-xs-12
+            .hr.mh-2
 
       .row
         .col-xs-12
