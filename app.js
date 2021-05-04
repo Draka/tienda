@@ -8,7 +8,6 @@ const fileUpload = require('express-fileupload');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const sassMiddleware = require('node-sass-middleware');
 const shrinkRay = require('shrink-ray-current');
 
 // Cache
@@ -118,12 +117,6 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use(fileUpload());
 app.use(cookieParser(appCnf.keySecret));
-app.use(sassMiddleware({
-  src: path.join(__dirname, 'public'),
-  dest: path.join(__dirname, 'public'),
-  indentedSyntax: true, // true = .sass and false = .scss
-  sourceMap: true,
-}));
 app.use(express.static(path.join(__dirname, `public/tenancy${appCnf.tenancy}`)));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(auth);
