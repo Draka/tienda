@@ -3,6 +3,7 @@ const schema = new mongoose.Schema({
     type: String,
     index: true,
     required: true,
+    immutable: true,
   },
   storeID: {
     type: mongoose.Schema.Types.ObjectId,
@@ -33,7 +34,7 @@ const schema = new mongoose.Schema({
 function preUpdate(result, next) {
   client.del(`__category__${result._id}`);
   if (!result.storeID) {
-    client.del(`__category_tree__teenancy__${result.tenancy}`);
+    client.del(`__category_tree__tenancy__${result.tenancy}`);
   }
   client.del(`__category_tree__${result.storeID}`);
   if (result.slugLong) {
@@ -51,7 +52,7 @@ schema.post('remove', (result) => {
   client.del(`__category__${result._id}`);
   client.del(`__category_tree__${result.storeID}`);
   if (!result.storeID) {
-    client.del(`__category_tree__teenancy__${result.tenancy}`);
+    client.del(`__category_tree__tenancy__${result.tenancy}`);
   }
   if (result.slugLong) {
     client.del(`__category__${result.storeID}__${result.slugLong}`);

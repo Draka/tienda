@@ -31,7 +31,7 @@ global.statusText = statusText;
 global.statusIcon = statusIcon;
 
 global.client = new Redis(appCnf.redis.url, {
-  keyPrefix: '_santrato_',
+  keyPrefix: '',
   retryStrategy(times) {
     const delay = Math.min(times * 50, 2000);
     return delay;

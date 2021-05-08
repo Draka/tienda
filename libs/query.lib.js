@@ -1,6 +1,6 @@
-exports.model = (model, id, cb) => {
+exports.model = (req, model, id, cb) => {
   const name = _.kebabCase(_.deburr(model));
-  const key = `__${name}__${id}`;
+  const key = `__${name}__tenancy:${req.tenancy}_${id}`;
   client.get(key, (_err, reply) => {
     if (reply && process.env.NODE_ENV === 'production') {
       cb(null, JSON.parse(reply));
@@ -22,13 +22,13 @@ exports.model = (model, id, cb) => {
 exports.modelSlug = (req, model, slug, cb) => {
   const name = _.kebabCase(_.deburr(model));
   slug = _.kebabCase(_.deburr(slug));
-  const key = `__${req.tenancy}__${name}__${slug}`;
+  const key = `__${name}__tenancy:${req.tenancy}_${slug}`;
   client.get(key, (_err, reply) => {
     if (reply && process.env.NODE_ENV === 'production') {
       cb(null, JSON.parse(reply));
     } else {
       models[model]
-        .findOne({ tenancy: req.tenancy, slug, tenancy: req.tenancy })
+        .findOne({ tenancy: req.tenancy, slug })
         .lean()
         .exec((err, doc) => {
           if (err) {
@@ -41,8 +41,8 @@ exports.modelSlug = (req, model, slug, cb) => {
   });
 };
 
-exports.modelAllPublish = (model, cb) => {
-  const key = `__${models[model].collection.collectionName}__publish__`;
+exports.xxxxxxxmodelAllPublish = (req, model, cb) => {
+  const key = `__${models[model].collection.collectionName}__tenancy:${req.tenancy}_publish__`;
   client.get(key, (_err, reply) => {
     if (reply && process.env.NODE_ENV === 'production') {
       cb(null, JSON.parse(reply));
@@ -169,7 +169,7 @@ function categoryTree(req, categoryID, cb) {
     });
 }
 exports.categoryTreeTenancy = (req, cb) => {
-  const key = `__category_tree__teenancy__${req.tenancy}`;
+  const key = `__category_tree__tenancy__${req.tenancy}`;
   client.get(key, (_err, reply) => {
     if (reply && process.env.NODE_ENV === 'production') {
       cb(null, JSON.parse(reply));

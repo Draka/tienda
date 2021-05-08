@@ -2,17 +2,16 @@
   > * {
 
     &:first-child a {
-      border-top: 1px solid darken($color-default, 20%);
+      border-top: 1px solid $color-default;
     }
 
     a {
       font-size: 90%;
       line-height: 4em;
-      padding: 0 1em;
       margin: 0;
       display: block;
       text-decoration: none;
-      border-bottom: 1px solid darken($color-default, 20%);
+      border-bottom: 1px solid $color-default;
       background-color: set-lightness-color($color-default, 95) !important;
       color: $color-foreground !important;
 
@@ -29,6 +28,39 @@
           &:hover,
           &:focus {
             background-color: set-lightness-color($val, 90) !important;
+          }
+        }
+      }
+    }
+  }
+  @each $key, $val in $colors-sections {
+    &.#{$key} {
+      > * {
+        a {
+          background-color: $val !important;
+          color: set-text-color($val) !important;
+        }
+      }
+    }
+    //variantes
+    @each $ckey, $cval in $colors-variants {
+      $background-color: $val;
+      &.#{$key}-#{$ckey} {
+        @if ($cval < 0) {
+          $background-color: lighten(
+            $color: $val,
+            $amount: $cval * -1,
+          );
+        } @else {
+          $background-color: darken(
+            $color: $val,
+            $amount: $cval,
+          );
+        }
+        > * {
+          a {
+            background-color: $background-color !important;
+        color: set-text-color($background-color) !important;
           }
         }
       }

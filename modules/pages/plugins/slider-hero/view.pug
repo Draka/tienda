@@ -1,0 +1,25 @@
+mixin img(name, image, size = ['196x196_jpg', '392x392_jpg'], cssClass)
+  if (image)
+    img.br-1.lazy(data-src=image[size[0]] data-retina=image[size[1]] alt=name class=cssClass?cssClass:'w-100')
+  else
+    img.br-1.lazy(data-src=`${appCnf.url.cdn}images/imagen_no_disponible.svg` alt=name class=cssClass?cssClass:'w-100')
+
+mixin simpleProduct(product)
+  +img(product.name, _.first(product.imagesSizes), ['196x196_jpg', '392x392_jpg'])
+
+.br-1.pt-1.pl-1
+  .pr-1
+    .big NUEVOS PRODUCTOS
+    .brt-1.mh-1
+  .flex.justify-content-center
+    each item,i in items
+      .h-100.white.mr-1
+        .tc.h-100.relative.pb-1
+          a(href=`/tienda/${item.productID.storeID.slug}/`)
+            +simpleProduct(item.productID)
+            //- b #{item.productID.name}
+            .t-secondary.b $#{formatMoney(item.productID.price)}
+        //- .title.mt-0-5.b #{store.name}
+        //- .subtitle.pb-1 #{store.slogan}
+        //- .absolute.bottom.tc.pb-1.w-100c2
+          //-   a.btn.btn--secondary.w-100(href=`/${store.slug}`) Visitar

@@ -68,7 +68,7 @@ function uploadImages(fileName, nameTemp, ext, sizes, pathImg, key, cb) {
     s3.upload(params, cb);
   }, cb);
 }
-function uploadLocalImages(fileName, nameTemp, ext, sizes, pathImg, key, cb) {
+function uploadLocalImages(req, fileName, nameTemp, ext, sizes, pathImg, key, cb) {
   async.eachLimit(sizes, 5, (size, cb) => {
     fs.copyFile(`./tmp/${size.x}_${nameTemp}.${ext}`, `./public/tenancy/${req.tenancy}/images/${appCnf.s3.folder}/${pathImg}/${size.x}_${key}.${ext}`, cb);
   }, cb);
@@ -79,7 +79,7 @@ function deleteTemImages(nameTemp, ext, sizes, cb) {
   }, cb);
 }
 
-exports.imageToS3 = (pathImg, key, localImg, sizes, cb) => {
+exports.imageToS3 = (req, pathImg, key, localImg, sizes, cb) => {
   const nameTemp = util.makeid(10);
   let originalExt = _.last(localImg.name.split('.'));
   if (localImg.mimetype === 'image/png') {
@@ -171,15 +171,15 @@ exports.imageToS3 = (pathImg, key, localImg, sizes, cb) => {
           case 'webp':
             async.auto({
               jpg: (cb) => {
-                uploadLocalImages(fileName, nameTemp, 'jpg', sizes, pathImg, key, cb);
+                uploadLocalImages(req, fileName, nameTemp, 'jpg', sizes, pathImg, key, cb);
               },
               webp: (cb) => {
-                uploadLocalImages(fileName, nameTemp, 'webp', sizes, pathImg, key, cb);
+                uploadLocalImages(req, fileName, nameTemp, 'webp', sizes, pathImg, key, cb);
               },
             }, cb);
             break;
           case 'png':
-            uploadLocalImages(fileName, nameTemp, 'png', sizes, pathImg, key, cb);
+            uploadLocalImages(req, fileName, nameTemp, 'png', sizes, pathImg, key, cb);
             break;
           default:
             cb();

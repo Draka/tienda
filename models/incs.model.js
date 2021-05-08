@@ -3,6 +3,7 @@ const schema = new mongoose.Schema({
     type: String,
     index: true,
     required: true,
+    immutable: true,
   },
   id: {
     type: String,

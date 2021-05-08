@@ -1,6 +1,6 @@
 const https = require('https');
 
-exports.faqByCategoryID = (categoryID, cb) => {
+exports.faqByCategoryID = (req, categoryID, cb) => {
   const key = `__faqs__categoryID__${categoryID}`;
   client.get(key, (_err, reply) => {
     if (reply && process.env.NODE_ENV === 'production') {
@@ -20,7 +20,7 @@ exports.faqByCategoryID = (categoryID, cb) => {
   });
 };
 
-exports.modelAllPlans = (cb) => {
+exports.xxxxxxmodelAllPlans = (req, cb) => {
   const key = '__plans__publish__';
   client.get(key, (_err, reply) => {
     if (reply && process.env.NODE_ENV === 'production') {
@@ -43,7 +43,7 @@ exports.modelAllPlans = (cb) => {
   });
 };
 
-exports.multimediaByKey = (bykey, cb) => {
+exports.multimediaByKey = (req, bykey, cb) => {
   const key = `__multimedia__${bykey}`;
   client.get(key, (_err, reply) => {
     if (reply && process.env.NODE_ENV === 'production') {

@@ -58,7 +58,10 @@
   @return $number;
 }
 @function set-text-color($color) {
-  @if (saturation( $color ) < 20 and lightness( $color ) > 80) {
+  @if (saturation( $color ) < 40 and lightness( $color ) > 80 and hue( $color ) > 200) {
+    @return $color-black;
+  }
+  @else if (saturation( $color ) < 20 and lightness( $color ) > 80) {
     @return $color-black;
   }
   @else if (saturation( $color ) < 50 and lightness( $color ) < 50) {

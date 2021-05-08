@@ -1,0 +1,10 @@
+
+.br-1.pt-1.pl-1
+  .pr-1
+    .big LOS MÁS VENDIDOS
+    .mh-1
+      ul.list.white
+        each item,i in items
+          li
+            a.title(href=`/tienda/${item.slugLong}/`)
+              | #{item.name}

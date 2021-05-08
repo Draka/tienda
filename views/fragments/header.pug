@@ -17,14 +17,10 @@ header
               i.fas.fa-chevron-down.fa-fw
           #menu-categories.dropdown-list.shadow
             ul(role='menu')
-              li(role='menuitem')
-                a.item(href='/usuario')
-                  i.far.fa-address-card
-                  | #{' '}Cat 1
-              li(role='menuitem')
-                a.item(href='/usuario/pedidos')
-                  i.fas.fa-shopping-bag
-                  | #{' '}Cat 2
+              each category in req.categories
+                li(role='menuitem')
+                  a.item(href='/categoria/'+category.slugLong)
+                    | #{category.name}
         | !{getFragment(req, 'menu')}
 
         .expand

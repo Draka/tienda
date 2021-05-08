@@ -19,3 +19,4 @@ exports.Multimedia = require('./multimedias.model');
 exports.HelpCategory = require('./help-categories.model');
 exports.Email = require('./emails.model');
 exports.EmailTemplate = require('./emails-templates.model');
+exports.ProductList = require('./products-lists.model');
