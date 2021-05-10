@@ -1,3 +1,41 @@
-.shadow {
+.sh {
   @include box-shadow();
+}
+.sh-hover {
+  &:focus,
+  &:hover {
+    @include box-shadow();
+  }
+}
+
+$ant: null;
+//colores en breakpoints
+@each $ckey, $cval in $breakpoints {
+  $var: index(($breakpoints), ($ckey $cval));
+
+  @if $var !=1 {
+    @include media-breakpoint(map-get($breakpoints, $ant), map-get($breakpoints, $ckey) - 0.1) {
+      .sh-#{$ant} {
+        @include box-shadow();
+      }
+      .sh-hover-#{$ant} {
+        &:focus,
+        &:hover {
+          @include box-shadow();
+        }
+      }
+    }
+  }
+  $ant: $ckey;
+}
+@include media-breakpoint-up(map-get($breakpoints, $ant)) {
+  .sh-#{$ant} {
+    @include box-shadow();
+  }
+  .sh-hover-#{$ant} {
+    &:focus,
+    &:hover {
+      @include box-shadow();
+    }
+  }
 }

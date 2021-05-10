@@ -60,9 +60,7 @@ typings/
 # next.js build output
 .next
 
-public/tenancy/**/ecommerce
-public/tenancy/**/files
-public/tenancy/**/images
+public/tenancy
 localhost.*
 myCA.*
 package-lock.json

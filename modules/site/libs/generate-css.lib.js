@@ -23,7 +23,8 @@ module.exports = (req, cb) => {
     },
     query: ['validate', (_results, cb) => {
       models.Site
-        .findOne({ tenancy: req.tenancy,
+        .findOne({
+          tenancy: req.tenancy,
           tenancy: req.tenancy,
         })
         .exec(cb);
@@ -65,9 +66,10 @@ module.exports = (req, cb) => {
       sass.render({
         file: `./tmp/${req.tenancy}/style.scss`,
         outFile: toFile,
-        outputStyle: 'compressed',
+        // outputStyle: 'compressed',
       }, (err, result) => {
         if (err) {
+          console.log(err);
           errors.push({ field: 'site', msg: 'Errores en la configuración del CSS' });
           return cb(listErrors(400, null, errors));
         }

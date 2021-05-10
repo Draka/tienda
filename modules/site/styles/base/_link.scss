@@ -2,7 +2,7 @@ a:not(.btn):not(.item):not(.step) {
   color: map-get($colors-sections, "black");
   cursor: pointer;
   text-decoration: none;
-  transition: background-color 0.3s linear,color 0.3s linear;
+  transition: background-color 0.3s linear, color 0.3s linear;
 
   &:hover,
   &:focus {
@@ -12,8 +12,42 @@ a:not(.btn):not(.item):not(.step) {
   &:hover {
     text-decoration: underline;
   }
+  @each $key, $val in $colors-sections {
+    &.t-#{$key} {
+      color: map-get($colors-sections, $key);
+
+      &:hover,
+      &:focus {
+        color: darken($color: map-get($colors-sections, $key), $amount: 20);
+      }
+    }
+    //variantes
+    @each $ckey, $cval in $colors-variants {
+      &.t-#{$key}-#{$ckey} {
+        $text-color: null;
+        @if ($cval < 0) {
+          $text-color: lighten(
+            $color: $val,
+            $amount: $cval * -1,
+          );
+        } @else {
+          $text-color: darken(
+            $color: $val,
+            $amount: $cval,
+          );
+        }
+        color: $text-color;
+
+        &:hover,
+        &:focus {
+          color: set-change-color(set-text-color($text-color), 40);
+        }
+      }
+    }
+  }
 }
 
+//color de fondo
 @each $key, $val in $colors-sections {
   .#{$key} {
     a:not(.btn):not(.item):not(.step) {
@@ -31,10 +65,16 @@ a:not(.btn):not(.item):not(.step) {
   @each $ckey, $cval in $colors-variants {
     .#{$key}-#{$ckey} {
       $background-color: null;
-      @if ($cval < 0){
-        $background-color: lighten($color: $val, $amount: $cval * -1);
+      @if ($cval < 0) {
+        $background-color: lighten(
+          $color: $val,
+          $amount: $cval * -1,
+        );
       } @else {
-        $background-color: darken($color: $val, $amount: $cval);
+        $background-color: darken(
+          $color: $val,
+          $amount: $cval,
+        );
       }
       a:not(.btn):not(.item):not(.step) {
         color: set-change-color(set-text-color($background-color), 20);

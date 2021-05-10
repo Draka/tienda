@@ -22,7 +22,7 @@ module.exports = (req, obj, cb) => {
         obj.text = obj.text.replace(match[0], template({
           req,
           items: results.items,
-        }, 'slider-products'));
+        }, 'slider-hero'));
         cb(err);
       });
     }, cb);

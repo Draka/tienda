@@ -24,72 +24,62 @@
   .mb-#{$key}{
     margin-bottom: $val;
   }
-}
+  $ant: null;
+  //colores en breakpoints
+  @each $ckey, $cval in $breakpoints {
+    $var: index(($breakpoints), ($ckey $cval));
 
-$ant: null;
-$var: null;
-
-@each $key, $val in $breakpoints {
-
-  $var: index(($breakpoints), ($key $val));
-
-  @if $var !=1 {
-    @include media-breakpoint(map-get($breakpoints, $ant), map-get($breakpoints, $key) - 0.1) {
-      @each $key, $val in $spaces {
-        .m-#{$key}-#{$ant}{
+    @if $var !=1 {
+      @include media-breakpoint(map-get($breakpoints, $ant), map-get($breakpoints, $ckey) - 0.1) {
+        .m-#{$key}-#{$ant} {
           margin: $val;
         }
-        .mw-#{$key}-#{$ant}{
+        .mw-#{$key}-#{$ant} {
           margin-left: $val;
           margin-right: $val;
         }
-        .mh-#{$key}-#{$ant}{
+        .mh-#{$key}-#{$ant} {
           margin-top: $val;
           margin-bottom: $val;
         }
-        .ml-#{$key}-#{$ant}{
+        .ml-#{$key}-#{$ant} {
           margin-left: $val;
         }
-        .mr-#{$key}-#{$ant}{
+        .mr-#{$key}-#{$ant} {
           margin-right: $val;
         }
-        .mt-#{$key}-#{$ant}{
+        .mt-#{$key}-#{$ant} {
           margin-top: $val;
         }
-        .mb-#{$key}-#{$ant}{
+        .mb-#{$key}-#{$ant} {
           margin-bottom: $val;
         }
       }
     }
-
+    $ant: $ckey;
   }
-
-  $ant: $key;
-}
-
-@include media-breakpoint(map-get($breakpoints, $ant)) {
-  @each $key, $val in $spaces {
-    .m-#{$key}-#{$ant}{
+  @include media-breakpoint-up(map-get($breakpoints, $ant)) {
+    .m-#{$key}-#{$ant} {
       margin: $val;
     }
-    .mw-#{$key}-#{$ant}{
+    .mw-#{$key}-#{$ant} {
       margin-left: $val;
       margin-right: $val;
     }
-    .mh-#{$key}-#{$ant}{
+    .mh-#{$key}-#{$ant} {
       margin-top: $val;
       margin-bottom: $val;
     }
-    .ml-#{$key}-#{$ant}{
+    .ml-#{$key}-#{$ant} {
       margin-left: $val;
     }
-    .mr-#{$key}-#{$ant}{
+    .mr-#{$key}-#{$ant} {
       margin-right: $val;
     }
-    .mt-#{$key}-#{$ant}{
+    .mt-#{$key}-#{$ant} {
       margin-top: $val;
     }
-    .mb-#{$key}-#{$ant}{
+    .mb-#{$key}-#{$ant} {
       margin-bottom: $val;
     }
   }

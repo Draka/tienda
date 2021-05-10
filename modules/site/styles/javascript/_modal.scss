@@ -24,8 +24,7 @@
   margin: 1em;
   pointer-events: none;
 
-  @each $key,
-  $size in $modal-size {
+  @each $key, $size in $modal-size {
     @if map-has-key($breakpoints, $key) {
       @include media-breakpoint-up(map-get($breakpoints, $key)) {
         max-width: $size;
@@ -48,8 +47,8 @@
   pointer-events: auto;
   background-color: $color-white;
   background-clip: padding-box;
-  border: 1px solid rgba(0, 0, 0, .2);
-  border-radius: .2em;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 0.2em;
   outline: 0;
 }
 
@@ -59,8 +58,8 @@
   justify-content: space-between;
   padding: 1em 1em;
   border-bottom: 1px solid set-change-color($color-default-inv, 50);
-  border-top-left-radius: .2em;
-  border-top-right-radius: .2em;
+  border-top-left-radius: 0.2em;
+  border-top-right-radius: 0.2em;
 
   .close {
     padding: 0.5em 0.5em;
@@ -75,7 +74,7 @@
   line-height: 1;
   color: $color-black;
   text-shadow: 0 1px 0 $color-white;
-  opacity: .5;
+  opacity: 0.5;
 
   &:hover,
   &:focus {
@@ -90,8 +89,8 @@
 .modal-footer {
   padding: 1em;
   border-top: 1px solid set-change-color($color-default-inv, 50);
-  border-bottom-right-radius: .2em;
-  border-bottom-left-radius: .2em;
+  border-bottom-right-radius: 0.2em;
+  border-bottom-left-radius: 0.2em;
 }
 
 .modal-backdrop {
@@ -102,5 +101,5 @@
   width: 100vw;
   height: 100vh;
   background-color: $color-black;
-  opacity: .5;
+  opacity: 0.5;
 }

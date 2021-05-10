@@ -1,5 +1,4 @@
 .navbar {
-  height: $navar;
   display: flex;
   align-items: center;
   color: $color-default;
@@ -22,7 +21,6 @@
   }
   a:not(button):not(.btn):not(.item) {
     padding: 0 1em;
-    height: $navar;
     display: flex;
     align-items: center;
     color: $color-default;
@@ -39,8 +37,7 @@
     &.#{$key} {
       color: set-text-color(map-get($colors-sections, $key));
       background-color: map-get($colors-sections, $key);
-      *:not(.dropdown-list)
-      a:not(button):not(.btn):not(.item) {
+      *:not(.dropdown-list) a:not(button):not(.btn):not(.item) {
         color: set-text-color(map-get($colors-sections, $key));
 
         &:hover,
@@ -54,16 +51,24 @@
     //variantes
     @each $ckey, $cval in $colors-variants {
       &.#{$key}-#{$ckey} {
-        $background-color: darken($color: $val, $amount: 0);
-        @if ($cval < 0){
-          $background-color: lighten($color: $val, $amount: $cval * -1);
+        $background-color: darken(
+          $color: $val,
+          $amount: 0,
+        );
+        @if ($cval < 0) {
+          $background-color: lighten(
+            $color: $val,
+            $amount: $cval * -1,
+          );
         } @else {
-          $background-color: darken($color: $val, $amount: $cval);
+          $background-color: darken(
+            $color: $val,
+            $amount: $cval,
+          );
         }
         color: set-text-color(map-get($colors-sections, $key));
         background-color: $background-color;
-        *:not(.dropdown-list)
-        a:not(button):not(.btn):not(.item) {
+        *:not(.dropdown-list) a:not(button):not(.btn):not(.item) {
           color: set-text-color(map-get($colors-sections, $key));
 
           &:hover,
@@ -81,23 +86,73 @@
     }
   }
 }
-
-.navbar-fixed {
-  margin-top: $navar;
-}
-
 $ant: null;
-$var: null;
-
-@each $key, $val in $breakpoints {
-  $var: index(($breakpoints), ($key $val));
-
-  @if $var !=1 {
-    @include media-breakpoint(map-get($breakpoints, $ant), map-get($breakpoints, $key) - 0.1) {
-      .navbar-fixed-#{$ant} {
-        margin-top: $navar;
+$sant: null;
+@each $key, $size in $navar {
+  @if map-has-key($breakpoints, $key) {
+    @include media-breakpoint-up(map-get($breakpoints, $key)) {
+      .navbar {
+        height: $size;
+        a:not(button):not(.btn):not(.item) {
+          height: $size;
+        }
+      }
+      .navbar-fixed-t {
+        margin-top: $size;
+      }
+      .navbar-fixed-b {
+        margin-bottom: $size;
       }
     }
+    $var: index(($breakpoints), ($key map-get($breakpoints, $key)));
+
+    @if $var !=1 {
+      @include media-breakpoint(map-get($breakpoints, $ant), map-get($breakpoints, $key) - 0.1) {
+        .navbar-fixed-t-#{$ant} {
+          margin-top: $sant;
+        }
+        .navbar-fixed-b-#{$ant} {
+          margin-bottom: $sant;
+        }
+      }
+    }
+    $ant: $key;
+    $sant: $size;
   }
-  $ant: $key;
 }
+@include media-breakpoint(map-get($breakpoints, $ant)) {
+  .navbar-fixed-t-#{$ant} {
+    margin-top: $sant;
+  }
+  .navbar-fixed-b-#{$ant} {
+    margin-bottom: $sant;
+  }
+}
+
+// $ant: null;
+// $vant: null;
+// @each $ckey, $cval in $breakpoints {
+//   $var: index(($breakpoints), ($ckey $cval));
+
+//   @if $var !=1 {
+//     @include media-breakpoint(map-get($breakpoints, $ant), map-get($breakpoints, $ckey) - 0.1) {
+//       .navbar-fixed-t-#{$ant} {
+//         margin-top: $vant;
+//       }
+//       .navbar-fixed-b-#{$ant} {
+//         margin-bottom: $vant;
+//       }
+//     }
+//   }
+// }
+
+// $ant: $ckey;
+// $vant: $cval;
+// @include media-breakpoint(map-get($breakpoints, $ant)) {
+//   .navbar-fixed-t-#{$ant} {
+//     margin-top: $vant;
+//   }
+//   .navbar-fixed-b-#{$ant} {
+//     margin-bottom: $vant;
+//   }
+// }

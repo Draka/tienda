@@ -24,6 +24,69 @@
   .brb-#{$key}{
     border-bottom: $val solid $color-default;
   }
+  @each $cskey, $csval in $colors-sections {
+    .br-#{$key}-#{$cskey}{
+      border: $val solid $csval;
+    }
+    .brh-#{$key}-#{$cskey}{
+      border-left: $val solid $csval;
+      border-right: $val solid $csval;
+    }
+    .brv-#{$key}-#{$cskey}{
+      border-top: $val solid $csval;
+      border-bottom: $val solid $csval;
+    }
+    .brl-#{$key}-#{$cskey}{
+      border-left: $val solid $csval;
+    }
+    .brr-#{$key}-#{$cskey}{
+      border-right: $val solid $csval;
+    }
+    .brt-#{$key}-#{$cskey}{
+      border-top: $val solid $csval;
+    }
+    .brb-#{$key}-#{$cskey}{
+      border-bottom: $val solid $csval;
+    }
+    //variantes
+    @each $ckey, $cval in $colors-variants {
+      $border-color: $val;
+      @if ($cval < 0) {
+        $border-color: lighten(
+          $color: $csval,
+          $amount: $cval * -1,
+        );
+      } @else {
+        $border-color: darken(
+          $color: $csval,
+          $amount: $cval,
+        );
+      }
+      .br-#{$key}-#{$cskey}-#{$ckey}{
+        border: $val solid $border-color;
+      }
+      .brh-#{$key}-#{$cskey}-#{$ckey}{
+        border-left: $val solid $border-color;
+        border-right: $val solid $border-color;
+      }
+      .brv-#{$key}-#{$cskey}-#{$ckey}{
+        border-top: $val solid $border-color;
+        border-bottom: $val solid $border-color;
+      }
+      .brl-#{$key}-#{$cskey}-#{$ckey}{
+        border-left: $val solid $border-color;
+      }
+      .brr-#{$key}-#{$cskey}-#{$ckey}{
+        border-right: $val solid $border-color;
+      }
+      .brt-#{$key}-#{$cskey}-#{$ckey}{
+        border-top: $val solid $border-color;
+      }
+      .brb-#{$key}-#{$cskey}-#{$ckey}{
+        border-bottom: $val solid $border-color;
+      }
+    }
+  }
 }
 
 @each $key, $val in $radius-borders {
@@ -52,6 +115,7 @@
   }
 }
 
+//radio para generar bordes redondos
 .rd-50{
   border-radius: 5000px;
 }

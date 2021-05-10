@@ -1,68 +1,85 @@
-
-
 @each $key, $val in $spaces {
-  .p-#{$key}{
+  .p-#{$key} {
     padding: $val;
   }
-  .pw-#{$key}{
+  .pw-#{$key} {
     padding-left: $val;
     padding-right: $val;
   }
-  .ph-#{$key}{
+  .ph-#{$key} {
     padding-top: $val;
     padding-bottom: $val;
   }
-  .pl-#{$key}{
+  .pl-#{$key} {
     padding-left: $val;
   }
-  .pr-#{$key}{
+  .pr-#{$key} {
     padding-right: $val;
   }
-  .pt-#{$key}{
+  .pt-#{$key} {
     padding-top: $val;
   }
-  .pb-#{$key}{
+  .pb-#{$key} {
     padding-bottom: $val;
   }
-}
 
-$ant: null;
-$var: null;
+  $ant: null;
+  //colores en breakpoints
+  @each $ckey, $cval in $breakpoints {
+    $var: index(($breakpoints), ($ckey $cval));
 
-@each $key, $val in $breakpoints {
-
-  $var: index(($breakpoints), ($key $val));
-
-  @if $var !=1 {
-    @include media-breakpoint(map-get($breakpoints, $ant), map-get($breakpoints, $key) - 0.1) {
-      @each $key, $val in $spaces {
-        .p-#{$key}-#{$ant}{
+    @if $var !=1 {
+      @include media-breakpoint(map-get($breakpoints, $ant), map-get($breakpoints, $ckey) - 0.1) {
+        .p-#{$key}-#{$ant} {
           padding: $val;
         }
-        .pw-#{$key}-#{$ant}{
+        .pw-#{$key}-#{$ant} {
           padding-left: $val;
           padding-right: $val;
         }
-        .ph-#{$key}-#{$ant}{
+        .ph-#{$key}-#{$ant} {
           padding-top: $val;
           padding-bottom: $val;
         }
-        .pl-#{$key}-#{$ant}{
+        .pl-#{$key}-#{$ant} {
           padding-left: $val;
         }
-        .pr-#{$key}-#{$ant}{
+        .pr-#{$key}-#{$ant} {
           padding-right: $val;
         }
-        .pt-#{$key}-#{$ant}{
+        .pt-#{$key}-#{$ant} {
           padding-top: $val;
         }
-        .pb-#{$key}-#{$ant}{
+        .pb-#{$key}-#{$ant} {
           padding-bottom: $val;
         }
       }
     }
-
+    $ant: $ckey;
   }
-
-  $ant: $key;
+  @include media-breakpoint(map-get($breakpoints, $ant)) {
+    .p-#{$key}-#{$ant} {
+      padding: $val;
+    }
+    .pw-#{$key}-#{$ant} {
+      padding-left: $val;
+      padding-right: $val;
+    }
+    .ph-#{$key}-#{$ant} {
+      padding-top: $val;
+      padding-bottom: $val;
+    }
+    .pl-#{$key}-#{$ant} {
+      padding-left: $val;
+    }
+    .pr-#{$key}-#{$ant} {
+      padding-right: $val;
+    }
+    .pt-#{$key}-#{$ant} {
+      padding-top: $val;
+    }
+    .pb-#{$key}-#{$ant} {
+      padding-bottom: $val;
+    }
+  }
 }

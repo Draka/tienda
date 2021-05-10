@@ -1,6 +1,6 @@
 header
   .hide-xs
-    nav.navbar.primary-500.fixed.shadow
+    nav.navbar.primary-500.fixed.sh
       .container.left
         a.logo(href='/')
           img(src=_.get(req, 'site.images.logoTop.svg') alt=`${_.get(req, 'site.name')} logo`)
@@ -21,7 +21,7 @@ header
               span Hola, #{req.user.personalInfo.firstname}
             span.icon.ml-1
               i.fas.fa-arrow-down.fa-fw
-          #menu-login.dropdown-list.right.shadow
+          #menu-login.dropdown-list.right.sh
             ul.list-categories(role='menu')
               li(role='menuitem')
                 a.item(href='/cerrar-sesion')
@@ -29,7 +29,7 @@ header
                   | #{' '}Cerrar Sesión
 
   .show-xs
-    nav.navbar.primary.shadow.fixed.top
+    nav.navbar.primary.sh.fixed.top
       ul.flex.menu.w-100
         li
           a.sidenav-action.w-4.justify-content-center(href='#' data-target='#mobile-menu')

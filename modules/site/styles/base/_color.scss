@@ -37,4 +37,26 @@
       color: $background-color;
     }
   }
+
+  $ant: null;
+  //colores en breakpoints
+  @each $ckey, $cval in $breakpoints {
+    $var: index(($breakpoints), ($ckey $cval));
+
+    @if $var !=1 {
+      @include media-breakpoint(map-get($breakpoints, $ant), map-get($breakpoints, $ckey) - 0.1) {
+        .#{$key}-#{$ant}:not(.form-group):not(.msg):not(button):not(.btn):not(.remark):not(.carousel) {
+          background-color: $val !important;
+          color: set-text-color($val) !important;
+        }
+      }
+    }
+    $ant: $ckey;
+  }
+  @include media-breakpoint(map-get($breakpoints, $ant)) {
+    .#{$key}-#{$ant}:not(.form-group):not(.msg):not(button):not(.btn):not(.remark):not(.carousel) {
+      background-color: $val !important;
+      color: set-text-color($val) !important;
+    }
+  }
 }

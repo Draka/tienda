@@ -1,6 +1,6 @@
 header
   .hide-xs
-    nav.navbar.shadow.fixed.top(class=
+    nav.navbar.sh.fixed.top(class=
       (_.get(req,'site.style.header')||'primary')
       + ' '
       + (_.get(req,'site.style.headerFontClass')||'') )
@@ -15,7 +15,7 @@ header
               | Categorías
             span.icon.ml-0-25
               i.fas.fa-chevron-down.fa-fw
-          #menu-categories.dropdown-list.shadow
+          #menu-categories.dropdown-list.sh
             ul(role='menu')
               each category in req.categories
                 li(role='menuitem')
@@ -34,7 +34,7 @@ header
                 span.out-screen #{__('Bucar productos')}
 
         if !req.user
-          ul.flex.menu
+          ul.menu
             li
               a.btn.btn--secondary(href='/registro') Registro
             li
@@ -48,7 +48,7 @@ header
                 .very-small Mi Cuenta
               span.icon.ml-0-25
                 i.fas.fa-chevron-down.fa-fw
-            #menu-login.dropdown-list.right.shadow
+            #menu-login.dropdown-list.right.sh
               ul(role='menu')
                 if req.user && (req.user.admin || req.user.adminStore)
                   li(role='menuitem')
@@ -69,7 +69,7 @@ header
                   a.item(href='/cerrar-sesion')
                     i.fas.fa-sign-out-alt
                     | #{' '}Cerrar Sesión
-        ul.flex.menu
+        ul.menu
           li.w-4
             a.link-shopping-cart.relative.w-4.justify-content-center(href='/carrito')
               span
@@ -79,7 +79,7 @@ header
               span.badge.inside.num-shopping-cart.m-1.secondary.start-hide
               span.out-screen Mi Carrito
     if store && !notMenu
-      nav.navbar.white.shadow.mt-4
+      nav.navbar.white.sh.mt-4
         .container
           a(href='/'+store.slug)
             if _.get(store, 'imageSizes.logo')
@@ -97,13 +97,13 @@ header
                 span Categorías
               span.icon.ml-1
                 i.fas.fa-angle-down
-            #menu-categories.dropdown-list.right.shadow
+            #menu-categories.dropdown-list.right.sh
               ul.list-categories(role='menu')
                 each category in categories
                   li(role='menuitem')
                     a.item(href='/'+store.slug+'/categorias/'+category.slugLong) #{category.name}
     if account
-      nav.navbar.white.shadow.mt-4
+      nav.navbar.white.sh.mt-4
         .container
           ul
             li.flex
@@ -118,7 +118,7 @@ header
                 span Cuenta
               span.icon.ml-1
                 i.fas.fa-angle-down
-            #menu-categories.dropdown-list.right.shadow
+            #menu-categories.dropdown-list.right.sh
               ul(role='menu')
                 li(role='menuitem')
                   a.item(href='/usuario') Ver mis datos
@@ -132,20 +132,42 @@ header
                     a.item(href='/usuario/vendedor') Volverme vendedor
 
   .show-xs
-    nav.navbar.shadow.fixed.top(class=_.get(req,'site.style.header')||'primary')
-      ul.flex.menu.w-100
+    nav.navbar.sh.fixed.top(class=_.get(req,'site.style.header')||'primary')
+      ul.menu.w-100
         li
-          a.sidenav-action.w-4.justify-content-center(href='#' data-target='#mobile-menu')
-            i.fas.fa-bars
-            span.out-screen Menú
-        li.expand
           a.logo.justify-content-center(href='/')
             img(src=_.get(req, 'site.images.logoTop.svg') alt=`${_.get(req, 'site.name')} logo`)
-        li
-          a.link-shopping-cart.relative.w-4.justify-content-center(href='/carrito')
-            i.fas.fa-shopping-cart
-            span.badge.inside.num-shopping-cart.m-1.secondary
-            span.out-screen Ver carrito
+        li.expand.pr-1
+          form.flex(class="search" action=`${appCnf.url.site}/tiendas/buscar`)
+            .flex.w-100.rdtl-50.rdbl-50.oh.white.h-32p
+              label.out-screen(for='query-m') Buscar productos
+              input#query-m.input--simple.h-100.w-100.ph-0-25.pl-0-5.title(type="text" name="q" placeholder='Buscar productos' required value=q)
+            button.btn-flat.btn--white.rdtr-50.rdbr-50.h-32p
+              .title.pl-0-5.pr-1
+                i.fas.fa-search
+                span.out-screen #{__('Bucar productos')}
+  .show-xs
+    nav.navbar.sh.fixed.bottom(class=_.get(req,'site.style.header')||'primary')
+      ul.justify-content-center.menu.w-100
+        li.flex-grow
+          a.justify-content-center(href='/')
+            span
+              .social
+                i.fas.fa-home.mb-0-25
+              .very-small Inicio
+        li.flex-grow.tc
+          a.sidenav-action.justify-content-center(href='#' data-target='#mobile-menu')
+            span
+              .tc.social
+                i.fas.fa-user-circle.mb-0-25
+              .very-small Mi Cuenta
+        li.flex-grow.tc
+          a.link-shopping-cart.relative.justify-content-center(href='/carrito')
+            span
+              .tc.social
+                i.fas.fa-shopping-cart.mb-0-25
+              .very-small Mi Carrito
+            span.badge.inside.num-shopping-cart.m-1.secondary.start-hide
 
   nav#mobile-menu.sidenav
     .sidenav-body
@@ -203,3 +225,4 @@ header
           each category in categories
             li(role='menuitem')
               a.item(href='/'+store.slug+'/categorias/'+category.slugLong) #{category.name}
+

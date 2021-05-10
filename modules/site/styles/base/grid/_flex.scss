@@ -4,6 +4,9 @@
   &.align-items-start{
     align-items: start;
   }
+  &.col{
+    flex-direction: column;
+  }
 }
 
 .justify-content-center {
@@ -20,4 +23,10 @@
 .flex-wrap {
   display: flex;
   flex-wrap: wrap;
+}
+.flex-grow{
+  flex-grow: 1;
+}
+.flex-basis{
+  flex-basis: 100%;
 }
