@@ -22,7 +22,8 @@ module.exports = (req, res, next) => {
     }],
     item: ['check', (results, cb) => {
       models.Category
-        .findOne({ tenancy: req.tenancy,
+        .findOne({
+          tenancy: req.tenancy,
           storeID: req.params.storeID,
           _id: req.params.categoryID,
         })

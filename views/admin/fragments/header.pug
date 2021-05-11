@@ -46,33 +46,15 @@ header
 
   nav#mobile-menu.sidenav
     .sidenav-body
-      .white-500.w-100.flex.h-3
-        .w-100.title.tc.b Inicio
       ul.list(role='menu')
         li(role='menuitem')
-          a(href='/administracion/tiendas/pedidos') Pedidos
-        li(role='menuitem')
-          a(href='/paginas/precios') Precios
-        li(role='menuitem')
-          a(href='/ayuda') Ayuda
-      .white-500.w-100.flex.h-3
-        .w-100.title.tc.b Cuenta
-      if req.user
-        ul.list(role='menu')
-          li(role='menuitem')
-            a(href='/usuario')
-              i.far.fa-address-card
-              | #{' '}Ver Cuenta
-          li(role='menuitem')
-            a(href='/usuario/pedidos')
-              i.fas.fa-shopping-bag
-              | #{' '}Pedidos
-          li(role='menuitem')
-            a(href='/cerrar-sesion')
-              i.fas.fa-sign-out-alt
-              | #{' '}Cerrar Sesión
+          a(href='/cerrar-sesion')
+            i.fas.fa-sign-out-alt
+            | #{' '}Cerrar Sesión
 
       .white-500.w-100.flex.h-3
         .w-100.title.tc.b Administrador
       .pl-1
+        if _.get(req,'user.admin')
+          include menu-super.pug
         include menu.pug

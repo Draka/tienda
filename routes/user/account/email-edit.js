@@ -1,5 +1,3 @@
-const query = require('../../../libs/query.lib');
-
 const breadcrumbs = [
   {
     link: '/',
@@ -14,8 +12,7 @@ const breadcrumbs = [
 
 module.exports = (req, res) => {
   res.render('pages/account/email-edit.pug', {
-    session: req.user,
-    user: req.user,
+    req,
     breadcrumbs,
     account: true,
     js: 'user',

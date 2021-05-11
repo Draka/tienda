@@ -18,7 +18,7 @@ function generateToken(user, secret) {
     iss: 'localhost',
     _id: user._id,
     admin: user.admin,
-    adminStore: _.get(user, 'stores.admin') || false,
+    adminStore: _.get(req, 'user.stores.admin') || false,
     iat: moment().unix(),
     exp: moment().add(1, 'years').unix(),
   };
@@ -83,7 +83,7 @@ module.exports = (req, res, next) => {
         });
       }
       // Guarda el token
-      const browser = detect(req.headers['user-agent']);
+      const browser = detect(req.headers['user.-agent']);
       models.Session.updateOne(
         {
           userID: results.query._id,
@@ -100,7 +100,7 @@ module.exports = (req, res, next) => {
                         || req.connection.remoteAddress
                         || req.socket.remoteAddress
                         || (req.connection.socket ? req.connection.socket.remoteAddress : null),
-          userAgent: browser ? '' : req.headers['user-agent'],
+          userAgent: browser ? '' : req.headers['user.-agent'],
         },
         {
           upsert: true,

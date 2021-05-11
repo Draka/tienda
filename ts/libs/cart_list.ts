@@ -58,9 +58,9 @@ export class CartList {
         const slug = <string>i;
         if (Object.keys(elem.cart).length) {
           valid = true;
-          const lineStore = $(`<div id="cart_${slug}" class="mb-5">`)
+          const lineStore = $(`<div id="cart_${slug}" class="mb-1">`)
             .append(`<div class="row"><div class="col-md-8"><div class="title">Pedido de: ${elem.name}</div></div>`
-              + `<div class="col-md-4 mt-0-5-sm mt-0-5-xs"><a href="/${slug}" class="btn btn--secondary w-100 small">Seguir comprando</a></div></div>`);
+              + `<div class="col-md-4 mt-0-5-sm mt-0-5-xs"><a href="/tiendas/${slug}" class="btn btn--secondary w-100 small">Seguir comprando</a></div></div>`);
 
           const desktop = $('<table class="table table--striped small hide-xs">')
             .append('<thead><tr>'

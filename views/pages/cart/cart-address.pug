@@ -43,7 +43,7 @@ block content
               td.cellphone #{req.user.personalInfo.callsign} #{req.user.personalInfo.cellphone}
             tr
               th.b Correo Electrónico
-              td.email #{req.user.email}
+              td.email #{_.get(req,'user.email')}
             tr
               td.user-address(colspan=2)
             tr
@@ -53,7 +53,7 @@ block content
         .cart-list-availability
 
       .col-md-5.cart-summary
-        .white.br-1.rd-0-2.p-1.mh-2.sticky(style='top:100px')
+        .white.br-1.rd-0-2.p-1.mh-1.sticky(style='top:100px')
           h2 TOTAL DEL CARRITO
 
           .cart-list-address

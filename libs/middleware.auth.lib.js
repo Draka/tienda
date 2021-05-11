@@ -20,7 +20,7 @@ module.exports = (req, res, next) => {
       return next(err);
     });
     // Lo de abajo para cuando tenga tiempo
-    // const browser = detect(req.headers['user-agent']);
+    // const browser = detect(req.headers['user.-agent']);
 
     // async.auto({
     //   query: (cb) => {
@@ -48,7 +48,7 @@ module.exports = (req, res, next) => {
     //                     || req.connection.remoteAddress
     //                     || req.socket.remoteAddress
     //                     || (req.connection.socket ? req.connection.socket.remoteAddress : null),
-    //       userAgent: browser ? '' : req.headers['user-agent'],
+    //       userAgent: browser ? '' : req.headers['user.-agent'],
     //     }).save(cb);
     //   }],
     // }, next);

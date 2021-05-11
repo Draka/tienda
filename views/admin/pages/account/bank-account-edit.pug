@@ -31,32 +31,32 @@ block content
                   .form-control__eye
               .form-group
                 .form-control
-                  input.input#name(type='text' name='bank.name' placeholder=' ' required value=_.get(user,'bank.name'))
+                  input.input#name(type='text' name='bank.name' placeholder=' ' required value=_.get(req,'user.bank.name'))
                   label(for='name') Titular de la cuenta
               .form-group
                 .form-control
-                  input.input#nameBank(type='text' name='bank.nameBank' placeholder=' ' required value=_.get(user,'bank.nameBank'))
+                  input.input#nameBank(type='text' name='bank.nameBank' placeholder=' ' required value=_.get(req,'user.bank.nameBank'))
                   label(for='nameBank') Banco
               .form-group
                 .form-control
-                  input.input#number(type='text' name='bank.number' placeholder=' ' required value=_.get(user,'bank.number'))
+                  input.input#number(type='text' name='bank.number' placeholder=' ' required value=_.get(req,'user.bank.number'))
                   label(for='number') Número de cuenta
               .form-group
                 .form-control
                   select#type.input(name='bank.type' required)
-                    option(value='Ahorros' selected=_.get(user,'bank.type')=='Ahorros') Ahorros
-                    option(value='Corriente' selected=_.get(user,'bank.type')=='Corriente') Corriente
+                    option(value='Ahorros' selected=_.get(req,'user.bank.type')=='Ahorros') Ahorros
+                    option(value='Corriente' selected=_.get(req,'user.bank.type')=='Corriente') Corriente
                   label.nowrap(for='type') Tipo
               .form-group
                 .form-control
                   select#idType.input(name='bank.idType' required)
-                    option(value='CC' selected=_.get(user,'bank.idType')=='CC') Cédula de Ciudadanía
-                    option(value='NIT' selected=_.get(user,'bank.idType')=='NIT') Nit
-                    option(value='CE' selected=_.get(user,'bank.idType')=='CE') Cédula de extranjeria
+                    option(value='CC' selected=_.get(req,'user.bank.idType')=='CC') Cédula de Ciudadanía
+                    option(value='NIT' selected=_.get(req,'user.bank.idType')=='NIT') Nit
+                    option(value='CE' selected=_.get(req,'user.bank.idType')=='CE') Cédula de extranjeria
                   label.nowrap(for='idType') Tipo de identificación
               .form-group
                 .form-control
-                  input.input#id(type='text' name='bank.id' placeholder=' ' required value=_.get(user,'bank.id'))
+                  input.input#id(type='text' name='bank.id' placeholder=' ' required value=_.get(req,'user.bank.id'))
                   label(for='id') Número de identificación
               .form-group
                 .form-control

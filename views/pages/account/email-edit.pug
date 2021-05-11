@@ -22,7 +22,7 @@ block content
                     .form-control__eye
                 .form-group
                   .form-control.form-control--right
-                    input.input#email(type="email" name="email" placeholder=' ' required value=_.get(user,'email'))
+                    input.input#email(type="email" name="email" placeholder=' ' required value=_.get(req,'user.email'))
                     label(for='email') Correo
             .row
               .col-xs-12.tr

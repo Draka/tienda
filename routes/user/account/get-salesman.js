@@ -12,7 +12,7 @@ const breadcrumbs = [
 
 module.exports = (req, res) => {
   res.render('pages/common/get-salesman', {
-    session: req.user,
+    req,
     title: 'Quiero empezar a vender',
     breadcrumbs,
     js: 'page',

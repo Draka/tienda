@@ -15,39 +15,39 @@ block content
         tbody
           tr
             th.nowrap.ellipsis Titular de la cuenta
-            td.w-100 #{_.get(user,'bank.name')}
+            td.w-100 #{_.get(req,'user.bank.name')}
           tr
             th.nowrap.ellipsis Banco
-            td.w-100 #{_.get(user,'bank.nameBank')}
+            td.w-100 #{_.get(req,'user.bank.nameBank')}
           tr
             th.nowrap.ellipsis Número cuenta
-            td.w-100 #{_.get(user,'bank.number')}
+            td.w-100 #{_.get(req,'user.bank.number')}
           tr
             th.nowrap.ellipsis Tipo
-            td.w-100 #{_.get(user,'bank.type')}
+            td.w-100 #{_.get(req,'user.bank.type')}
           tr
             th.nowrap.ellipsis Identificación
-            td.w-100 #{_.get(user,'bank.idType')}: #{_.get(user,'bank.id')}
+            td.w-100 #{_.get(req,'user.bank.idType')}: #{_.get(req,'user.bank.id')}
           tr
             th.nowrap.ellipsis Estado
             td.w-100
-              if !_.get(user,'bank.file')
+              if !_.get(req,'user.bank.file')
                 .msg.mb-0-5
                   .flex.justify-content-center
                     i.fas.fa-exclamation.mr-0-25.w-2.tc
                     div Sin documentos
-              else if _.get(user,'bank.file') && _.get(user,'bank.fileCheck')
+              else if _.get(req,'user.bank.file') && _.get(req,'user.bank.fileCheck')
                 .msg.info.mb-0-5
                   .flex.justify-content-center
                     i.fas.fa-exclamation.mr-0-25.w-2.tc
                     div En revisión
-              else if _.get(user,'bank.file') && _.get(user,'check.bank.result')
+              else if _.get(req,'user.bank.file') && _.get(req,'user.check.bank.result')
                 .msg.action.mb-0-5
                   .flex.justify-content-center
                     i.fas.fa-check.mr-0-25.w-2.tc
                     div Aprobado
-              else if _.get(user,'bank.file') && !_.get(user,'check.bank.result')
+              else if _.get(req,'user.bank.file') && !_.get(req,'user.check.bank.result')
                 .msg.error.mb-0-5
                   .flex.justify-content-center
                     i.fas.fa-times.mr-0-25.w-2.tc
-                    .b #{_.get(user,'bank.rejectMsg')}
+                    .b #{_.get(req,'user.bank.rejectMsg')}

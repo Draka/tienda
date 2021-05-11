@@ -16,8 +16,7 @@ const breadcrumbs = [
 
 module.exports = (req, res) => {
   res.render('pages/account/personal-info-edit.pug', {
-    session: req.user,
-    user: req.user,
+    req,
     breadcrumbs,
     account: true,
     js: 'user',

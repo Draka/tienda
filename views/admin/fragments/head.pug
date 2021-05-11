@@ -27,10 +27,11 @@ title
   | #{title} | #{_.get(req, 'site.name')}
 
 //- preload
-link(rel='preload' href=appCnf.url.cdn+'webfonts/lato-v16-latin-700.woff2' as='font' crossorigin type='font/woff2')
-link(rel='preload' href=appCnf.url.cdn+'webfonts/lato-v16-latin-regular.woff2' as='font' crossorigin type='font/woff2')
-link(rel='preload' href=appCnf.url.cdn+'webfonts/fa-brands-400.woff2' as='font' crossorigin type='font/woff2')
-link(rel='preload' href=appCnf.url.cdn+'webfonts/fa-solid-900.woff2' as='font' crossorigin type='font/woff2')
+//- link(rel='preload' href=appCnf.url.cdn+'webfonts/lato-v16-latin-700.woff2' as='font' crossorigin type='font/woff2')
+//- link(rel='preload' href=appCnf.url.cdn+'webfonts/lato-v16-latin-regular.woff2' as='font' crossorigin type='font/woff2')
+//- link(rel='preload' href=appCnf.url.cdn+'webfonts/fa-brands-400.woff2' as='font' crossorigin type='font/woff2')
+//- link(rel='preload' href=appCnf.url.cdn+'webfonts/fa-solid-900.woff2' as='font' crossorigin type='font/woff2')
+
 link(rel='preload' href=appCnf.url.cdn+'admin/css/style.min.css?='+appCnf.v as='style')
 link(rel='preload' href=appCnf.url.cdn+'css/fonts.min.css?='+appCnf.v as='style' )
 

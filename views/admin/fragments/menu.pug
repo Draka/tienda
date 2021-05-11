@@ -19,7 +19,7 @@ nav
     ul.expandable__body.navigation
       li.navigation__item(class=menu=='tiendas'?'navigation--active':'')
         a.item(href=`/administracion/tiendas`) Lista
-      if _.get(user, 'options.storeSelect')
+      if _.get(req,'user.options.storeSelect')
         li.navigation__item(class=menu=='tienda'?'navigation--active':'')
           a.item(href=`/administracion/tiendas/${req.user.options.storeSelect}`) Configuración
         li.navigation__item(class=menu=='tienda-imagenes'?'navigation--active':'')

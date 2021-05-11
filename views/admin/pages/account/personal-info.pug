@@ -15,10 +15,10 @@ block content
         tbody
           tr
             th.nowrap.ellipsis Nombres
-            td.w-100 #{_.get(user,'personalInfo.firstname')}
+            td.w-100 #{_.get(req,'user.personalInfo.firstname')}
           tr
             th.nowrap.ellipsis Apellidos
-            td.w-100 #{_.get(user,'personalInfo.lastname')}
+            td.w-100 #{_.get(req,'user.personalInfo.lastname')}
           tr
             th.nowrap.ellipsis Célular
-            td.w-100 (#{_.get(user,'personalInfo.callsign')}) #{_.get(user,'personalInfo.cellphone')}
+            td.w-100 (#{_.get(req,'user.personalInfo.callsign')}) #{_.get(req,'user.personalInfo.cellphone')}

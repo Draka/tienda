@@ -34,7 +34,7 @@ header
                 span.out-screen #{__('Bucar productos')}
 
         if !req.user
-          ul.menu
+          ul.menu.ml-1
             li
               a.btn.btn--secondary(href='/registro') Registro
             li
@@ -50,6 +50,12 @@ header
                 i.fas.fa-chevron-down.fa-fw
             #menu-login.dropdown-list.right.sh
               ul(role='menu')
+                if req.user && req.user.admin
+                  li(role='menuitem')
+                    a.item(href='/administracion/super/configuracion')
+                      i.fas.fa-store
+                      | #{' '}Configuración General
+                  li.hr
                 if req.user && (req.user.admin || req.user.adminStore)
                   li(role='menuitem')
                     a.item(href='/administracion/tiendas')
@@ -78,30 +84,30 @@ header
                 .very-small Mi Carrito
               span.badge.inside.num-shopping-cart.m-1.secondary.start-hide
               span.out-screen Mi Carrito
-    //- if store && !notMenu
-    //-   nav.navbar.white.sh.mt-4
-    //-     .container
-    //-       a(href='/'+store.slug)
-    //-         if _.get(store, 'imageSizes.logo')
-    //-           img.h-3(src=_.get(store, 'imageSizes.logo.96x96_jpg') alt=store.name)
-    //-       ul
-    //-         li.flex
-    //-           a.nav-link.brand-logo(href='/'+store.slug)
-    //-             div.not-wrap.b #{store.name}
-    //-       .expand
-    //-       .relative
-    //-         a.dropdown(aria-controls='menu-categories')
-    //-           span
-    //-             i.fas.fa-list
-    //-             | #{' '}
-    //-             span Categorías
-    //-           span.icon.ml-1
-    //-             i.fas.fa-angle-down
-    //-         #menu-categories.dropdown-list.right.sh
-    //-           ul.list-categories(role='menu')
-    //-             each category in categories
-    //-               li(role='menuitem')
-    //-                 a.item(href='/'+store.slug+'/categorias/'+category.slugLong) #{category.name}
+    if store && _.get(req, 'site.modules.categories') && !notMenu
+      nav.navbar.white.sh.mt-4
+        .container
+          a(href='/'+store.slug)
+            if _.get(store, 'imageSizes.logo')
+              img.h-3(src=_.get(store, 'imageSizes.logo.96x96_jpg') alt=store.name)
+          ul
+            li.flex
+              a.nav-link.brand-logo(href='/'+store.slug)
+                div.not-wrap.b #{store.name}
+          .expand
+          .relative
+            a.dropdown(aria-controls='menu-categories')
+              span
+                i.fas.fa-list
+                | #{' '}
+                span Categorías
+              span.icon.ml-1
+                i.fas.fa-angle-down
+            #menu-categories.dropdown-list.right.sh
+              ul.list-categories(role='menu')
+                each category in categories
+                  li(role='menuitem')
+                    a.item(href='/'+store.slug+'/categorias/'+category.slugLong) #{category.name}
     if account
       nav.navbar.white.sh.mt-4
         .container
@@ -150,17 +156,24 @@ header
     nav.navbar.sh.fixed.bottom(class=_.get(req,'site.style.header')||'primary')
       ul.justify-content-center.menu.w-100
         li.flex-grow
+          a.sidenav-action.justify-content-center(href='#' data-target='#mobile-menu')
+            span
+              .social
+                i.fas.fa-bars.mb-0-25
+              .very-small Menú
+        li.flex-grow
           a.justify-content-center(href='/')
             span
               .social
                 i.fas.fa-home.mb-0-25
               .very-small Inicio
-        li.flex-grow.tc
-          a.sidenav-action.justify-content-center(href='#' data-target='#mobile-menu')
-            span
-              .tc.social
-                i.fas.fa-user-circle.mb-0-25
-              .very-small Mi Cuenta
+        if req.user
+          li.flex-grow.tc
+            a.justify-content-center(href='/usuario')
+              span
+                .tc.social
+                  i.fas.fa-user-circle.mb-0-25
+                .very-small Mi Cuenta
         li.flex-grow.tc
           a.link-shopping-cart.relative.justify-content-center(href='/carrito')
             span
@@ -179,50 +192,54 @@ header
           .w-100.title.tc.b Cuenta
         ul.list(role='menu')
           li(role='menuitem')
-            a.item(href='/usuario') Ver mis datos
+            a.item.pl-1(href='/usuario') Ver mis datos
           li(role='menuitem')
-            a.item(href='/usuario/correo') Cambiar correo electrónico
+            a.item.pl-1(href='/usuario/correo') Cambiar correo electrónico
           li(role='menuitem')
-            a.item(href='/usuario/contrasena') Cambiar mi contraseña
-          if !req.user.admin && !req.user.adminStore
-            li.hr
-            li(role='menuitem')
-              a.item(href='/usuario/vendedor') Volverme vendedor
+            a.item.pl-1(href='/usuario/contrasena') Cambiar mi contraseña
       if !req.user
         ul.list(role='menu')
           li(role='menuitem')
-            a(href='/iniciar-sesion') Iniciar Sesión
+            a.pl-1(href='/iniciar-sesion') Iniciar Sesión
           li(role='menuitem')
-            a(href='/registro') Registro
+            a.pl-1(href='/registro') Registro
       else
         .white-500.w-100.flex.h-3
           .w-100.title.tc.b Usuario
+
         ul.list(role='menu')
+          if req.user && req.user.admin
+            li(role='menuitem')
+              a.item.pl-1(href='/administracion/super/configuracion')
+                i.fas.fa-user-cog
+                | #{' '}Configuración General
+            li.hr
           if req.user && (req.user.admin || req.user.adminStore)
             li(role='menuitem')
-              a.item(href='/administracion/tiendas')
+              a.item.pl-1(href='/administracion/tiendas')
                 i.fas.fa-store
-                | #{' '}Administar Tiendas
+                | #{' '}Administar Tienda
             li.hr
           li(role='menuitem')
-            a.item(href='/usuario')
+            a.item.pl-1(href='/usuario')
               i.far.fa-address-card
               | #{' '}Ver Cuenta
           li(role='menuitem')
-            a.item(href='/usuario/pedidos')
+            a.item.pl-1(href='/usuario/pedidos')
               i.fas.fa-shopping-bag
               | #{' '}Pedidos
           li.hr
           li(role='menuitem')
-            a.item(href='/cerrar-sesion')
+            a.item.pl-1(href='/cerrar-sesion')
               i.fas.fa-sign-out-alt
               | #{' '}Cerrar Sesión
 
-      if store
+      if store && _.get(req, 'site.modules.categories')
         .white-500.w-100.flex.h-3
           .w-100.title.tc.b Categorías
-        ul.list(role='menu')
-          each category in req.categories
-            li(role='menuitem')
-              a.item(href='/'+store.slug+'/categorias/'+category.slugLong) #{category.name}
+        .ml-1
+          ul.list(role='menu')
+            each category in req.categories
+              li(role='menuitem')
+                a.item.pl-1(href='/'+store.slug+'/categorias/'+category.slugLong) #{category.name}
 

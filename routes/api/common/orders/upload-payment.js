@@ -140,7 +140,7 @@ module.exports = (req, res, next) => {
     }],
     mailerClient: ['update', (results, cb) => {
       sqsMailer({
-        to: { email: results.order.userData.email, name: (_.get(results.order, 'userData.name') || ' ').split(' ')[0] },
+        to: { email: results.order.userData.email, name: (_.get(results.order, 'user.Data.name') || ' ').split(' ')[0] },
         subject: `Orden #${results.order.orderID} Confirmada`,
         template: 'client-new-order',
         order: _.pick(results.order, ['_id', 'orderID']),

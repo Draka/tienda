@@ -16,13 +16,13 @@ block content
           tbody
             tr
               th.nowrap.ellipsis.b Nombres
-              td.w-100 #{_.get(user,'personalInfo.firstname')}
+              td.w-100 #{_.get(req,'user.personalInfo.firstname')}
             tr
               th.nowrap.ellipsis.b Apellidos
-              td.w-100 #{_.get(user,'personalInfo.lastname')}
+              td.w-100 #{_.get(req,'user.personalInfo.lastname')}
             tr
               th.nowrap.ellipsis.b Célular
-              td.w-100 (#{_.get(user,'personalInfo.callsign')}) #{_.get(user,'personalInfo.cellphone')}
+              td.w-100 (#{_.get(req,'user.personalInfo.callsign')}) #{_.get(req,'user.personalInfo.cellphone')}
             tr
               th.nowrap.ellipsis.b Correo electrónico
-              td.w-100 #{user.email}
+              td.w-100 #{_.get(req,'user.email')}

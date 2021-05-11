@@ -1,19 +1,12 @@
 const vars = {
   index: '',
-  menu: '[menu]'
-  + '[item]<a href="/paginas/precios">Precios</a>[/item][item]<a href="/ayuda">Ayuda</a>[/item][item]<a href="/usuario/vendedor">Vender</a>[/item]'
-  + '[/menu]',
-  'menu-mob': '[menu-mob]'
-  + '[item]<a href="/paginas/precios">Precios</a>[/item][item]<a href="/ayuda">Ayuda</a>[/item][item]<a href="/usuario/vendedor">Vender</a>[/item]'
-  + '[/menu]',
-  'footer-l-1-c-1': '[logo-cuadrado]'
-  + '<div class="small pt-1">TIENDAS EN PESOS COLOMBIANOS</div>',
+  menu: '[menu][item]<a href="/pagina/ofertas">Ofertas</a>[/item][item]<a href="/pagina/vender">Vende en Santrato</a>[/item][/menu]',
+  'menu-mob': '[menu-mob][item]<a href="/paginas/vendedor" class="pl-1">Vender</a>[/item][/menu-mob]',
+  'footer-l-1-c-1': '',
   'footer-l-1-c-2': '',
-  'footer-l-2-c-1': '<img class="h-2" src="https://cdn.santrato.com/images/logo-p4s.svg" alt="p4s logo">'
-  + '<div class="small">Apoyado por <a href="https://p4s.co">p4s</a></div>',
-  'footer-l-2-c-2': '<div class="small">COMPRA 100% SEGURA</div>',
-  'footer-l-2-c-3': '<img class="h-2" src="https://cdn.santrato.com/images/logo-name.svg" alt="Véndelo Mejor logo blanco">'
-  + '<div class="small">powered by: <a href="https://santrato.com/">Véndelo Mejor</a></div>',
+  'footer-l-1-c-3': '',
+  'footer-logo': '[logo-cuadrado]',
+  'footer-newsletter': '',
 };
 
 module.exports = vars;
