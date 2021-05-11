@@ -1,11 +1,11 @@
-exports.deleteKeysByPattern = (tenancy, key) => {
+exports.deleteKeysByPattern = (key) => {
   const stream = client.scanStream({
-    match: `_${tenancy}_${key}`,
+    match: key,
   });
 
   stream.on('data', (resultKeys) => {
     _.each(resultKeys, (k) => {
-      client.unlink(k.replace(`_${tenancy}_`, ''));
+      client.unlink(k);
     });
   });
 };

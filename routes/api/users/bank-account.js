@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypt-nodejs');
+const bcrypt = require('bcrypt');
 const fs = require('fs');
 
 const s3 = new AWS.S3({

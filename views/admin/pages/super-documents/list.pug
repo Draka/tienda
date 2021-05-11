@@ -1,4 +1,4 @@
-extends ../../layout-list
+extends /modules/admin/views/super/layout-list
 
 block list
   if items.length
@@ -28,7 +28,7 @@ block list
               | #{item.slug}
             td
               a.b(href=`/documentos/${item.slug}` target='_blank') #{item.slug}
-            
+
       tfoot
         tr
           th(colspan="5")

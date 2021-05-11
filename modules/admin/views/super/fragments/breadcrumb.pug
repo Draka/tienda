@@ -1,0 +1,9 @@
+ul.breadcrumb.mt-1
+  each breadcrumb in breadcrumbs
+    li.breadcrumb__item(class=breadcrumb.active?'breadcrumb--active':'')
+      if breadcrumb.link
+        a.item(href=breadcrumb.link) #{breadcrumb.text}
+      else
+        | #{breadcrumb.text}
+
+.hr.mh-1

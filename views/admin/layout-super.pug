@@ -1,0 +1,39 @@
+mixin multimedia(name, image, cssClass)
+  if (image)
+    img.lazy(data-src=image alt=name class=cssClass?cssClass:'w-100')
+  else
+    img.lazy(data-src=`${appCnf.url.cdn}images/imagen_no_disponible.svg` alt=name class=cssClass?cssClass:'w-100')
+
+mixin img(name, image, size = ['196x196_jpg', '392x392_jpg'], cssClass)
+  if (image)
+    img.lazy(data-src=image[size[0]] data-retina=image[size[1]] alt=name class=cssClass?cssClass:'w-100')
+  else
+    img(src=`${appCnf.url.cdn}images/imagen_no_disponible.svg` alt=name class=cssClass?cssClass:'w-100')
+
+doctype html
+html(lang='es')
+  head
+    include fragments/head.pug
+    include fragments/metatag.pug
+
+  body(data-url-api=appCnf.url.api)
+    if process.env.NODE_ENV == 'production' && appCnf.gtm
+      noscript
+        iframe(src='https://www.googletagmanager.com/ns.html?id='+appCnf.gtm height='0' width='0' style='display:none;visibility:hidden')
+
+    .stub
+      .stub__left.white.brr-1.hide-xs
+        nav.navbar.primary.fixed.sh
+          .container
+            | Admin
+        .container.pt-5
+          include fragments/menu-super.pug
+      .stub__right.w-100-xs
+        include fragments/header.pug
+        .container-fluid.left.navbar-fixed-t.ph-1.mt-4
+          block content
+
+
+    include fragments/footer.pug
+    include fragments/modals.pug
+    include fragments/scripts.pug

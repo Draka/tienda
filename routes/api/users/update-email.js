@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypt-nodejs');
+const bcrypt = require('bcrypt');
 
 function comparePassword(password, field) {
   return new Promise((resolve, reject) => {
@@ -60,7 +60,6 @@ module.exports = (req, res, next) => {
         .find({
           tenancy: req.tenancy,
           emailNormalized: body.emailNormalized,
-          tenancy: req.tenancy,
         })
         .exec(cb);
     }],

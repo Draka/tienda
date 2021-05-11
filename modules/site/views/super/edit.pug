@@ -1,4 +1,4 @@
-extends /modules/admin/views/layout-edit-cmp
+extends /modules/admin/views/super/layout-edit-cmp
 
 block edit
 
@@ -12,6 +12,7 @@ block edit
       a.item(data-tab='#p4') Imágenes
       a.item(data-tab='#p5') Colores
       a.item(data-tab='#p6') CSS
+      a.item(data-tab='#p7') Módulos
 
 
     .tabs-content
@@ -251,6 +252,78 @@ block edit
                 .form-control
                   textarea.input#base(name="style.base" placeholder=' ' rows=30) #{_.get(item, 'style.base')}
                   label(for='base') CSS
+
+
+          .row
+            .col-xs-12.tr
+              button.btn.btn--primary.w-100-xs(type="submit") Guardar Cambios
+
+      .tab#p7
+        form.validate-rest(
+          action=`${appCnf.url.api}admin/super/config`
+          method="put"
+          data-ok='Cambios guardados'
+          data-ok-color='action'
+          data-error="#form-results")
+          .row
+            .col-xs-12
+              h2.mb-1 Módulos
+              .form-group
+                .form-control
+                  label.switch
+                    input#coverageAreas(type="hidden" name="modules.coverageAreas" value=_.get(item, 'modules.coverageAreas')?'1':'0')
+                    span.check
+                    span.caption Zonas de coberturas
+              .form-group
+                .form-control
+                  label.switch
+                    input#deliveries(type="hidden" name="modules.deliveries" value=_.get(item, 'modules.deliveries')?'1':'0')
+                    span.check
+                    span.caption Opciones de entrega
+              .form-group
+                .form-control
+                  input.input#deliveryPrice(type="number" name="modules.deliveryPrice" placeholder=' ' required value=_.get(item, 'modules.deliveryPrice'))
+                  label(for='deliveryPrice') Precio envío
+              .form-group
+                .form-control
+                  input.input#deliveryFree(type="number" name="modules.deliveryFree" placeholder=' ' required value=_.get(item, 'modules.deliveryFree'))
+                  label(for='deliveryFree') Umbral para envío gratis
+              .form-group
+                .form-control
+                  label.switch
+                    input#payments(type="hidden" name="modules.payments" value=_.get(item, 'modules.payments')?'1':'0')
+                    span.check
+                    span.caption Opciones de pago
+              .form-group
+                .form-control
+                  label.switch
+                    input#socialMedia(type="hidden" name="modules.socialMedia" value=_.get(item, 'modules.socialMedia')?'1':'0')
+                    span.check
+                    span.caption Redes sociales
+              .form-group
+                .form-control
+                  label.switch
+                    input#places(type="hidden" name="modules.places" value=_.get(item, 'modules.places')?'1':'0')
+                    span.check
+                    span.caption Sedes
+              .form-group
+                .form-control
+                  label.switch
+                    input#categories(type="hidden" name="modules.categories" value=_.get(item, 'modules.categories')?'1':'0')
+                    span.check
+                    span.caption Categorías personalizadas
+              .form-group
+                .form-control
+                  input.input#storesMax(type="number" name="modules.storesMax" placeholder=' ' required value=_.get(item, 'modules.storesMax'))
+                  label(for='storesMax') Tiendas por usuario
+              .form-group
+                .form-control
+                  input.input#imagesMax(type="number" name="modules.imagesMax" placeholder=' ' required value=_.get(item, 'modules.imagesMax'))
+                  label(for='imagesMax') Imágenes por producto
+              .form-group
+                .form-control
+                  input.input#productsMax(type="number" name="modules.productsMax" placeholder=' ' required value=_.get(item, 'modules.productsMax'))
+                  label(for='productsMax') Productos versión de prueba
 
 
           .row

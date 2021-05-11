@@ -6,7 +6,7 @@ block content
     {
       "@context": "https://schema.org/",
       "@type": "BreadcrumbList",
-      "itemListElement": !{JSON.stringify(_.map(categoryIDs, (category, i)=>{return {"@type": "ListItem","position": i+1,"name": category.name,"item": `${appCnf.url.site}${store.slug}/categorias/${category.slugLong}`}}))}
+      "itemListElement": !{JSON.stringify(_.map(categoryIDs, (category, i)=>{return {"@type": "ListItem","position": i+1,"name": category.name,"item": `${appCnf.url.site}categorias/${category.slugLong}`}}))}
     }
 
   .container
@@ -14,12 +14,12 @@ block content
       .col-xs-12
         ul.breadcrumb
           li.breadcrumb__item
-            a.item(href=`/${store.slug}`) Inicio
+            a.item(href='/') Inicio
           li.breadcrumb__item
-            a.item(href=`/${store.slug}/categorias`) Categorías
+            a.item(href=`/categorias`) Categorías
           each category,index in categoryIDs
             li.breadcrumb__item
-              a.item(href=`/${store.slug}/categorias/${category.slugLong}` class=index+1==categoryIDs.length?'breadcrumb--active':'') #{category.name}
+              a.item(href=`/categorias/${category.slugLong}` class=index+1==categoryIDs.length?'breadcrumb--active':'') #{category.name}
 
         if category
           h1.tc #{category.name}
@@ -27,14 +27,12 @@ block content
           h1.tc Categorías
         .justify-content-center.spacer.t-primary
           each category in categoriesHeader
-            a.item(href=`/${store.slug}/categorias/${category.slugLong}`) #{category.name}
+            a.item(href=`/categorias/${category.slugLong}`) #{category.name}
       .col-xs-12.mt-1
         .list-products-grid
-          ul.row-xp.flex-wrap.justify-content-center
+          ul.list.row-xp.flex-wrap.justify-content-center
             each product,pos in products
               li
                 .w-230p.w-170p-xs.w-170p-sm.br-1.white.h-100
-                  +simpleProduct(store, product)
+                  +simpleProduct(product.storeID, product)
           nav.mt-3
-
-  include ../../fragments/footer_store.pug

@@ -1,30 +1,34 @@
 const departments = require('../../api/common/world/departments_db');
 
-const breadcrumbs = [
-  {
-    link: '/administracion',
-    text: 'Administración',
-  },
-  {
-    text: 'Tienda',
-  },
-  {
-    link: '/administracion/tiendas/nuevo',
-    text: 'Nueva',
-    active: true,
-  },
-];
-
 module.exports = (req, res, next) => {
-  query.user(req.user._id, (err, user) => {
+  async.auto({
+    user: (cb) => {
+      cb(null, req.user);
+    },
+  }, (err, results) => {
     if (err) {
       return next(err);
     }
+    const breadcrumbs = [
+      {
+        link: '/administracion',
+        text: 'Administración',
+      },
+      {
+        text: 'Tienda',
+      },
+      {
+        link: '/administracion/tiendas/nuevo',
+        text: 'Nueva',
+        active: true,
+      },
+    ];
+
     res.render('admin/pages/stores/store-new.pug', {
       req,
-      user,
+      user: results.user,
       title: 'Nueva tienda',
-      menu: 'tienda-nueva',
+      menu: 'tiendas',
       breadcrumbs,
       js: 'admin',
       departments,

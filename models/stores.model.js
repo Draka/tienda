@@ -1,5 +1,4 @@
 /* eslint-disable no-param-reassign */
-const { deleteKeysByPattern } = require('../libs/redis.lib');
 
 const schema = new mongoose.Schema({
   tenancy: {
@@ -213,7 +212,7 @@ const schema = new mongoose.Schema({
 }, { timestamps: true });
 
 function preUpdate(result, next) {
-  deleteKeysByPattern(result.tenancy, '__store*');
+  client.del(`__tenancy:${result.tenancy}__stores__${result.slug}`);
   if (result.slug) {
     result.slug = _.kebabCase(_.deburr(result.slug));
   }
@@ -223,7 +222,7 @@ function preUpdate(result, next) {
   next();
 }
 schema.post('validate', preUpdate);
-schema.index({ tenancy: 1, store: 1 }, { unique: true });
+schema.index({ tenancy: 1, slug: 1 }, { unique: true });
 const Model = mongoose.model(`${appCnf.dbPrefix}stores`, schema);
 
 module.exports = Model;

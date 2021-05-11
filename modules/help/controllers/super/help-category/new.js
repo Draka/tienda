@@ -35,7 +35,7 @@ module.exports = (req, res, next) => {
       req,
       items: results.items,
       title: 'Nueva Categoría',
-      menu: 'super-help-categorias',
+      menu: 'super-ayuda-categorias',
       breadcrumbs,
       js: 'admin',
       cke: true,

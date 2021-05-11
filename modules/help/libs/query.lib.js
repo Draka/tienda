@@ -1,7 +1,6 @@
 function categoryTree(categoryID, cb) {
   models.HelpCategory
     .find({
-      tenancy: req.tenancy,
       categoryID,
     })
     .select('_id name slugLong')

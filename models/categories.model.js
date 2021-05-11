@@ -1,3 +1,5 @@
+const { deleteKeysByPattern } = require('../libs/redis.lib');
+
 const schema = new mongoose.Schema({
   tenancy: {
     type: String,
@@ -32,14 +34,7 @@ const schema = new mongoose.Schema({
 }, { timestamps: true });
 
 function preUpdate(result, next) {
-  client.del(`__category__${result._id}`);
-  if (!result.storeID) {
-    client.del(`__category_tree__tenancy__${result.tenancy}`);
-  }
-  client.del(`__category_tree__${result.storeID}`);
-  if (result.slugLong) {
-    client.del(`__category__${result.storeID}__${result.slugLong}`);
-  }
+  deleteKeysByPattern(`__tenancy:${result.tenancy}__category__*`);
   if (result.name) {
     result.slug = _.kebabCase(_.deburr(_.get(result, 'name')));
   }

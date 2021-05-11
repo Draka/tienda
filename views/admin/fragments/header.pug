@@ -9,10 +9,6 @@ header
         ul.flex.menu
           li
             a(href='/administracion/tiendas/pedidos') Pedidos
-          li
-            a(href='/paginas/precios') Precios
-          li
-            a(href='/ayuda') Ayuda
         .relative
           a.dropdown(aria-controls='menu-login')
             span
@@ -23,6 +19,15 @@ header
               i.fas.fa-arrow-down.fa-fw
           #menu-login.dropdown-list.right.sh
             ul.list-categories(role='menu')
+              if req.user && req.user.admin
+                li(role='menuitem')
+                  a.item(href='/administracion/super/configuracion')
+                    i.fas.fa-user-cog
+                    | #{' '}Configuración General
+              li(role='menuitem')
+                a.item(href='/administracion/tiendas')
+                  i.fas.fa-store
+                  | #{' '}Administrar Tienda
               li(role='menuitem')
                 a.item(href='/cerrar-sesion')
                   i.fas.fa-sign-out-alt

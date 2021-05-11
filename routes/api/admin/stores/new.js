@@ -40,7 +40,18 @@ module.exports = (req, res, next) => {
       }
       cb();
     }],
-    create: ['check', (_results, cb) => {
+    count: ['check', (_results, cb) => {
+      models.Store
+        .countDocuments({
+          userID: req.user._id,
+        })
+        .exec(cb);
+    }],
+    create: ['count', (results, cb) => {
+      if (_.isInteger(_.get(req, 'site.modules.storesMax')) && _.get(req, 'site.modules.storesMax') <= results.count) {
+        errors.push({ field: 'store', msg: 'No se pueden crear nuevas tiendas' });
+        return cb(listErrors(409, null, errors));
+      }
       const store = new models.Store(body);
       store.save(cb);
     }],

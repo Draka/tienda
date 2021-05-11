@@ -1,7 +1,9 @@
 module.exports = (req, res, next) => {
   async.auto({
     user: (cb) => {
-      cb(null, req.user);
+      models.User
+        .findById(req.user._id)
+        .exec(cb);
     },
     store: ['user', (results, cb) => {
       models.Store

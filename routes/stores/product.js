@@ -23,28 +23,7 @@ module.exports = (req, res, next) => {
       putS3LogoPath(req, [results.store]);
       cb();
     }],
-    categories: ['store', (results, cb) => {
-      if (!results.store) {
-        return cb(null, []);
-      }
-      models.Category
-        .find({
-          tenancy: req.tenancy,
-          storeID: results.store._id,
-          categoryID: null,
-        })
-        .select({
-          name: 1,
-          slugLong: 1,
-          active: 1,
-        })
-        .sort({
-          name: 1,
-        })
-        .lean()
-        .exec(cb);
-    }],
-    product: ['store', (results, cb) => {
+    product: ['postFind', (results, cb) => {
       queryProduct.productBySKU(results.store._id, req.params.sku, cb);
     }],
     postFindProduct: ['product', (results, cb) => {
@@ -52,7 +31,7 @@ module.exports = (req, res, next) => {
         return cb(listErrors(404, null, [{ field: 'storeID', msg: 'El registro no existe.' }]));
       }
       results.product.isAvailable = isAvailable(results.product);
-      putS3Path([results.product], results.store);
+      putS3Path(req, [results.product], results.store);
       results.product.ldJson = _.map(results.product.imagesSizes, (i) => i.original);
       cb();
     }],
@@ -65,14 +44,14 @@ module.exports = (req, res, next) => {
           publish: 1,
         })
         .sort({
-          updateAt: -1,
+          updatedAt: -1,
         })
-        .limit(12)
+        .limit(24)
         .lean()
         .exec(cb);
     }],
     postFindProducts: ['products', (results, cb) => {
-      putS3Path(results.products, results.store);
+      putS3Path(req, results.products, results.store);
       _.each(results.products, (product) => {
         product.isAvailable = isAvailable(product);
       });
@@ -91,7 +70,7 @@ module.exports = (req, res, next) => {
     res.render('pages/stores/product.pug', {
       req,
       store: results.store,
-      categories: results.categories,
+      // categories: results.categories,
       product: results.product,
       products: results.products,
       item,

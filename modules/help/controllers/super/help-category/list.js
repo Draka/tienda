@@ -53,7 +53,7 @@ module.exports = (req, res, next) => {
       page,
       count: results.count,
       title: 'Ayuda Categorías',
-      menu: 'super-help-categorias',
+      menu: 'super-ayuda-categorias',
       xnew: '/administracion/super/ayuda-categorias/nuevo',
       breadcrumbs,
     });

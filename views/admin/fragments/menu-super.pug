@@ -1,0 +1,49 @@
+nav
+  if req.user && req.user.admin
+    .expandable
+      .expandable__header
+        .expandable__title Administración
+      ul.expandable__body.navigation
+        li.navigation__item(class=menu=='super-tiendas'?'navigation--active':'')
+          a.item(href=`/administracion/super/tiendas`) Aprobar Tiendas
+        li.navigation__item(class=menu=='super-usuarios-lista'?'navigation--active':'')
+          a.item(href=`/administracion/super/usuarios`) Usuarios
+        li.navigation__item(class=menu=='super-pedidos-lista'?'navigation--active':'')
+          a.item(href=`/administracion/super/tiendas/pedidos`) Pedidos
+    .expandable
+      .expandable__header
+        .expandable__title #{_.get(req, 'site.name')}
+      ul.expandable__body.navigation
+        li.navigation__item(class=menu=='super-site-config'?'navigation--active':'')
+          a.item(href=`/administracion/super/configuracion`) Configuración
+        li.navigation__item(class=menu=='super-planes'?'navigation--active':'')
+          a.item(href=`/administracion/super/planes`) Planes
+        li.navigation__item(class=menu=='super-multimedia'?'navigation--active':'')
+          a.item(href=`/administracion/super/multimedia`) Multimedia
+        li.navigation__item(class=menu=='super-paginas'?'navigation--active':'')
+          a.item(href=`/administracion/super/paginas`) Páginas
+        li.navigation__item(class=menu=='super-documentos'?'navigation--active':'')
+          a.item(href=`/administracion/super/documentos`) Documentos
+        li.navigation__item(class=menu=='super-faq-categorias'?'navigation--active':'')
+          a.item(href=`/administracion/super/faq-categorias`) FAQ Categorías
+        li.navigation__item(class=menu=='super-faq'?'navigation--active':'')
+          a.item(href=`/administracion/super/faq`) FAQ Preguntas
+        li.navigation__item(class=menu=='super-categorias'?'navigation--active':'')
+          a.item(href=`/administracion/super/categorias`) Categorías Generales
+    if req.tenancy=='santrato' || process.env.NODE_ENV !== 'production'
+      .expandable
+        .expandable__header
+          .expandable__title General
+        ul.expandable__body.navigation
+          li.navigation__item(class=menu=='super-ayuda-categorias'?'navigation--active':'')
+            a.item(href=`/administracion/super/ayuda-categorias`) Ayuda Categorías
+      .expandable
+        .expandable__header
+          .expandable__title Gestión de Correo
+        ul.expandable__body.navigation
+          li.navigation__item(class=menu=='super-emails-plantillas'?'navigation--active':'')
+            a.item(href=`/administracion/super/emails-plantillas`) Plantillas
+          li.navigation__item(class=menu=='super-emails-enviar'?'navigation--active':'')
+            a.item(href=`/administracion/super/emails-enviar`) Enviar correo
+    .hr.mh-1
+

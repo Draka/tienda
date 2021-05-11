@@ -1,6 +1,6 @@
-extends ../../layout-list
+extends /modules/admin/views/super/layout-view-cmp
 
-block list
+block view
   .row
     .col-xs-12
       if order.status == 'cancelled' || order.status == 'cancelledAdmin'

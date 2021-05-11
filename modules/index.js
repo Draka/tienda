@@ -7,6 +7,7 @@ const email = require('./email/routes');
 const amz = require('./amz/routes');
 const stores = require('./stores/routes');
 const categories = require('./categories/routes');
+const search = require('./search/routes');
 
 module.exports = (app) => {
   site(app);
@@ -15,7 +16,10 @@ module.exports = (app) => {
   multimedia(app);
   help(app);
   email(app);
-  amz(app);
   stores(app);
   categories(app);
+  search(app);
+  if (process.env.NODE_ENV !== 'production') {
+    amz(app);
+  }
 };

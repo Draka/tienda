@@ -1,4 +1,4 @@
-exports.stores = (cb) => {
+exports.xxxxstores = (cb) => {
   const key = '__stores__';
   client.get(key, (_err, reply) => {
     if (reply && process.env.NODE_ENV === 'production') {
@@ -18,7 +18,7 @@ exports.stores = (cb) => {
   });
 };
 
-exports.storesByPrimaryActivity = (primaryActivity, cb) => {
+exports.xxxxstoresByPrimaryActivity = (primaryActivity, cb) => {
   const key = `__stores__primaryActivity__${primaryActivity}`;
   client.get(key, (_err, reply) => {
     if (reply && process.env.NODE_ENV === 'production') {
@@ -40,8 +40,8 @@ exports.storesByPrimaryActivity = (primaryActivity, cb) => {
   });
 };
 
-exports.coveragesAreas = (storeID, cb) => {
-  const key = `__coverages-areas__${storeID}`;
+exports.coveragesAreas = (req, storeID, cb) => {
+  const key = `__tenancy:${req.tenancy}__coverages-areas__${storeID}`;
   client.get(key, (_err, reply) => {
     if (reply && process.env.NODE_ENV === 'production') {
       cb(null, JSON.parse(reply));
@@ -63,8 +63,8 @@ exports.coveragesAreas = (storeID, cb) => {
   });
 };
 
-exports.places = (storeID, cb) => {
-  const key = `__places__${storeID}`;
+exports.places = (req, storeID, cb) => {
+  const key = `__tenancy:${req.tenancy}__places__${storeID}`;
   client.get(key, (_err, reply) => {
     if (reply && process.env.NODE_ENV === 'production') {
       cb(null, JSON.parse(reply));
@@ -87,7 +87,7 @@ exports.places = (storeID, cb) => {
 };
 
 exports.storeBySlug = (req, slug, cb) => {
-  const key = `__store__${slug}`;
+  const key = `__tenancy:${req.tenancy}__store__${slug}`;
   client.get(key, (_err, reply) => {
     if (reply && process.env.NODE_ENV === 'production') {
       cb(null, JSON.parse(reply));
@@ -109,14 +109,17 @@ exports.storeBySlug = (req, slug, cb) => {
   });
 };
 
-exports.categoryByLongSlug = (storeID, slugLong, cb) => {
-  const key = `__category__${storeID}__${slugLong}`;
+exports.categoryByLongSlug = (req, slugLong, cb) => {
+  const key = `__tenancy:${req.tenancy}__category__${slugLong}`;
   client.get(key, (_err, reply) => {
     if (reply && process.env.NODE_ENV === 'production') {
       cb(null, JSON.parse(reply));
     } else {
       models.Category
-        .findOne({ tenancy: req.tenancy, storeID, slugLong })
+        .findOne({
+          tenancy: req.tenancy,
+          slugLong,
+        })
         .lean()
         .exec((err, doc) => {
           if (err) {

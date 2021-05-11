@@ -1,4 +1,4 @@
-extends ../../layout-view
+extends /modules/admin/views/super/layout-view-cmp
 
 block view
   table.small.table.table--lines
@@ -9,11 +9,11 @@ block view
           +boolean(item.active)
       tr
         th.nowrap.ellipsis Super Administrador
-        td.w-100 
+        td.w-100
           +boolean(item.admin)
       tr
         th.nowrap.ellipsis Administrador de Tiendas
-        td.w-100 
+        td.w-100
           +boolean(item.admin)
       tr
         th.nowrap.ellipsis Correo Electrónico

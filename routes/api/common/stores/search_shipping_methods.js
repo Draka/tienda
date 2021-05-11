@@ -11,31 +11,45 @@ module.exports = (req, res, next) => {
       queryStore.storeBySlug(req, req.params.storeSlug, cb);
     }],
     selectMethods: ['store', (results, cb) => {
-      const selectMethods = [];
+      let selectMethods = [];
       if (!results.store) {
         errors.push({ field: 'store', msg: 'El registro no existe.' });
       }
       if (errors.length) {
         return cb(listErrors(400, null, errors));
       }
-      _.each(results.store.deliveries, (d) => {
-        const dc = _.find(global.deliveries, { slug: d.slug });
-        if (d.active && dc) {
-          selectMethods.push({
-            name: dc.name,
-            slug: dc.slug,
-            description: dc.description,
-            price: d.value,
-            virtualDelivery: dc.virtualDelivery,
-            personalDelivery: dc.personalDelivery,
-            payments: dc.payments,
+      if (_.get(req, 'site.modules.deliveries')) {
+        _.each(results.store.deliveries, (d) => {
+          const dc = _.find(global.deliveries, { slug: d.slug });
+          if (d.active && dc) {
+            selectMethods.push({
+              name: dc.name,
+              slug: dc.slug,
+              description: dc.description,
+              price: d.value,
+              virtualDelivery: dc.virtualDelivery,
+              personalDelivery: dc.personalDelivery,
+              payments: dc.payments,
+            });
+          }
+        });
+      } else {
+        results.store.deliveries = _.clone(global.deliveriesMaster);
+        _.each(results.store.deliveries, (o) => {
+          o.price = _.get(req, 'site.modules.deliveryPrice');
+        });
+        if (_.get(req, 'site.modules.payments')) {
+          _.each(results.store.deliveries, (o) => {
+            o.payments = ['wompi', 'nequi', 'daviplata', 'bancolombia'];
           });
         }
-      });
+        selectMethods = results.store.deliveries;
+      }
+
       cb(null, selectMethods);
     }],
     coveragesAreas: ['store', (results, cb) => {
-      queryStore.coveragesAreas(results.store._id, cb);
+      queryStore.coveragesAreas(req, results.store._id, cb);
     }],
     inArea: ['coveragesAreas', (results, cb) => {
       if (!results.coveragesAreas.length || !req.body.location) {

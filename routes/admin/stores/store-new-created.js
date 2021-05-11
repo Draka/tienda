@@ -1,30 +1,35 @@
-const breadcrumbs = [
-  {
-    link: '/administracion',
-    text: 'Administración',
-  },
-  {
-    text: 'Tienda',
-  },
-  {
-    link: '/administracion/tiendas/nuevo',
-    text: 'Nueva',
-    active: true,
-  },
-];
-
 module.exports = (req, res, next) => {
   async.auto({
     user: (cb) => {
       cb(null, req.user);
     },
     store: ['user', (results, cb) => {
-      query.store(_.get(results, 'user.options.storeSelect'), cb);
+      models.Store
+        .findOne({
+          tenancy: req.tenancy,
+          _id: _.get(results, 'user.options.storeSelect'),
+        })
+        .lean()
+        .exec(cb);
     }],
   }, (err, results) => {
     if (err) {
       return next(err);
     }
+    const breadcrumbs = [
+      {
+        link: '/administracion',
+        text: 'Administración',
+      },
+      {
+        text: 'Tienda',
+      },
+      {
+        link: '/administracion/tiendas/nuevo',
+        text: 'Nueva',
+        active: true,
+      },
+    ];
 
     const msg = {
       color: 'action',

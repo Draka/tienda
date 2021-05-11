@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypt-nodejs');
+const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { detect } = require('detect-browser');
 
@@ -47,7 +47,6 @@ module.exports = (req, res, next) => {
     query: ['validate', (results, cb) => {
       models.User
         .findOne({
-          tenancy: req.tenancy,
           tenancy: req.tenancy,
           emailNormalized: validator.normalizeEmail(req.body.email),
         })

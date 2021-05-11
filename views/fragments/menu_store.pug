@@ -1,13 +1,4 @@
 nav.mt-2
-  .pw-1
-    .title CATEGORÍAS
-  .mb-2
-    .expandable
-      ul.expandable__body.navigation
-        each category in categories
-          li.navigation__item
-            a.item(href='/'+store.slug+'/categorias/'+category.slugLong) #{category.name}
-
   if center
     .p-1
       .title.mb-1 MAPA

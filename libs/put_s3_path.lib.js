@@ -1,8 +1,8 @@
-exports.putS3Path = (req, items, store) => {
+exports.putS3Path = (req, items) => {
   _.each(items, (o) => {
     o.imagesSizes = _.map(o.images, (i) => {
       const sizes = {};
-      const pathImg = `tenancy/${req.tenancy}/ecommerce/${appCnf.s3.folder}/${store._id}/products/${o._id}/${i}`;
+      const pathImg = `tenancy/${req.tenancy}/ecommerce/${appCnf.s3.folder}/${o.storeID._id}/products/${o._id}/${i}`;
 
       _.each(global.imagesSizes, (is) => {
         sizes[`${is.x}x${is.y}_jpg`] = `${appCnf.url.cdn}${pathImg}/${is.x}x${is.y}.jpg`;

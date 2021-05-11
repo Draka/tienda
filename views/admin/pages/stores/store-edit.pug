@@ -38,44 +38,45 @@ block edit
                   span.t-info.b Publicado:
                   | #{' '}
                   | Ajusta la tienda para que todos la puendan ver.
-              .form-group
-                .form-control
-                  label.switch
-                    input#showcase(type="hidden" name="showcase" value=store.showcase?'1':'0')
-                    span.check
-                    span.caption Vitrina
-              .remark.info.flex.mb-2
-                .h4.mr-1.t-info
-                  i.fas.fa-info-circle
-                div
-                  span.t-info.b Vitrina:
-                  | #{' '}
-                  | Activa esta opción si solo quieres mostrar productos, no se muestran precios, el carrito de compras estará deshabilitado.
+              if _.get(req, 'modules.individual')
+                .form-group
+                  .form-control
+                    label.switch
+                      input#showcase(type="hidden" name="showcase" value=store.showcase?'1':'0')
+                      span.check
+                      span.caption Vitrina
+                .remark.info.flex.mb-2
+                  .h4.mr-1.t-info
+                    i.fas.fa-info-circle
+                  div
+                    span.t-info.b Vitrina:
+                    | #{' '}
+                    | Activa esta opción si solo quieres mostrar productos, no se muestran precios, el carrito de compras estará deshabilitado.
 
-              .subtitle.mb-1.b Modo de presentación
-              .form-group
-                .form-control
-                  label
-                    input.radio(type='radio' checked=store.mode=='store'||!store.mode?true:false name='mode' value='store')
-                    span Tienda
-                    .remark.info.flex.mh-1
-                      .h4.mr-1.t-info
-                        i.fas.fa-info-circle
-                      div
-                        span.t-info.b Tienda:
-                        | #{' '}
-                        | Los productos se muestran en categorías con opciones de búsqueda, perfecto si hay muchos productos y muchas categorías.
-                .form-control
-                  label
-                    input.radio(type='radio' checked=store.mode=='restaurant'?true:false name='mode' value='restaurant')
-                    span Restaurante
-                    .remark.info.flex.mt-1
-                      .h4.mr-1.t-info
-                        i.fas.fa-info-circle
-                      div
-                        span.t-info.b Restaurante:
-                        | #{' '}
-                        | Todos los productos se muestran en la página de la tienda, ordenados en categorías.
+                .subtitle.mb-1.b Modo de presentación
+                .form-group
+                  .form-control
+                    label
+                      input.radio(type='radio' checked=store.mode=='store'||!store.mode?true:false name='mode' value='store')
+                      span Tienda
+                      .remark.info.flex.mh-1
+                        .h4.mr-1.t-info
+                          i.fas.fa-info-circle
+                        div
+                          span.t-info.b Tienda:
+                          | #{' '}
+                          | Los productos se muestran en categorías con opciones de búsqueda, perfecto si hay muchos productos y muchas categorías.
+                  .form-control
+                    label
+                      input.radio(type='radio' checked=store.mode=='restaurant'?true:false name='mode' value='restaurant')
+                      span Restaurante
+                      .remark.info.flex.mt-1
+                        .h4.mr-1.t-info
+                          i.fas.fa-info-circle
+                        div
+                          span.t-info.b Restaurante:
+                          | #{' '}
+                          | Todos los productos se muestran en la página de la tienda, ordenados en categorías.
 
           .row
             .col-xs-12.tr

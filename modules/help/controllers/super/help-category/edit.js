@@ -46,7 +46,7 @@ module.exports = (req, res, next) => {
       item: results.item,
       items: results.items,
       title: `Editar - ${results.item.name}`,
-      menu: 'super-help-categorias',
+      menu: 'super-ayuda-categorias',
       breadcrumbs,
       js: 'admin',
       cke: true,

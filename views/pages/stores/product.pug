@@ -71,7 +71,7 @@ mixin product(product)
       each group in product.groups
         .b.mb-0-5 #{group.feature}:
         each productID in group.productIDs
-          a.btn.btn--white.mr-0-5.mb-0-5(href=`/${store.slug}/productos/${productID.sku}`) #{_.find(productID.features, 'slug', group.featureSlug).value}
+          a.btn.btn--white.mr-0-5.mb-0-5(href=`/tiendas/${store.slug}/productos/${productID.sku}`) #{_.find(productID.features, 'slug', group.featureSlug).value}
   .product-description.mt-2.mb-2
     | !{product.shortDescription.replace("\n",'<br>')}
 
@@ -145,7 +145,7 @@ block content
     {
       "@context": "https://schema.org/",
       "@type": "BreadcrumbList",
-      "itemListElement": !{JSON.stringify(_.map(product.categoryIDs, (category, i)=>{return {"@type": "ListItem","position": i+1,"name": category.name,"item": `${appCnf.url.site}${store.slug}/categorias/${category.slugLong}`}}))}
+      "itemListElement": !{JSON.stringify(_.map(product.categoryIDs, (category, i)=>{return {"@type": "ListItem","position": i+1,"name": category.name,"item": `${appCnf.url.site}tiendas/${store.slug}/categorias/${category.slugLong}`}}))}
     }
 
   .container
@@ -153,12 +153,12 @@ block content
       .col-xs-12
         ul.breadcrumb
           li.breadcrumb__item
-            a.item(href=`/${store.slug}`) Inicio
+            a.item(href='/') Inicio
           li.breadcrumb__item
-            a.item(href=`/${store.slug}/categorias`) Categorías
+            a.item(href=`/categorias`) Categorías
           each category,index in product.categoryIDs
             li.breadcrumb__item
-              a.item(href=`/${store.slug}/categorias/${category.slugLong}`) #{category.name}
+              a.item(href=`/categorias/${category.slugLong}`) #{category.name}
           li.breadcrumb__item.breadcrumb--active #{product.name}
 
       .col-md-6
@@ -184,7 +184,7 @@ block content
           if (product.imagesSizes.length > 1)
             .mt-1.flex.oa
               each image in product.imagesSizes
-                .p-0-5.white.br-1.rd-0-2.mr-1.hand.oa-click(data-target='.carousel-list')
+                .p-0-5.white.br-1.rd-0-2.mr-1.hand.scroll-click(data-target='.carousel-list')
                   +img(product.name, image, ['96x96_jpg', '196x196_jpg'], 'h-96p')
 
         .show-xs.white.br-1.rd-0-2.p-1.mt-1
@@ -265,7 +265,7 @@ block content
                     i.fas.fa-chevron-left
 
                 .carousel-list
-                  ul
+                  ul.list
                     each product,pos in products
                       li
                         .w-230p.w-170p-xs.w-170p-sm.br-1.white.h-100
@@ -275,6 +275,3 @@ block content
                   .carousel-icon-right
                     .out-screen Mover a la derecha
                     i.fas.fa-chevron-right
-
-
-  include ../../fragments/footer_store.pug

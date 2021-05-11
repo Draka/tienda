@@ -39,7 +39,7 @@ module.exports = (req, res, next) => {
       cb();
     }],
     count: ['check', (_results, cb) => {
-      models.Product
+      models.Store
         .countDocuments(body)
         .exec(cb);
     }],
@@ -59,6 +59,11 @@ module.exports = (req, res, next) => {
         active: true,
       },
     ];
+    // Analiza si puede crear nuevas tiendas
+    let xnex = false;
+    if (_.isInteger(_.get(req, 'site.modules.storesMax')) && _.get(req, 'site.modules.storesMax') > results.count) {
+      xnex = true;
+    }
 
     res.render('admin/pages/stores/list.pug', {
       req,
@@ -70,7 +75,7 @@ module.exports = (req, res, next) => {
       q: req.query.q,
       title: 'Tiendas',
       menu: 'tiendas',
-      xnew: '/administracion/tiendas/nuevo',
+      xnew: xnex ? '/administracion/tiendas/nuevo' : '',
       breadcrumbs,
       js: 'admin',
     });

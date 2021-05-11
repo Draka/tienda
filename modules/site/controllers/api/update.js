@@ -20,6 +20,7 @@ module.exports = (req, res, next) => {
     'images',
     'sameAs',
     'style',
+    'modules',
   ]);
   body.tenancy = req.tenancy;
 
@@ -55,7 +56,6 @@ module.exports = (req, res, next) => {
     query: ['validate', (_results, cb) => {
       models.Site
         .findOne({
-          tenancy: req.tenancy,
           tenancy: req.tenancy,
         })
         .exec(cb);

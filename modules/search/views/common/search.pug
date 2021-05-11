@@ -1,0 +1,12 @@
+extends /modules/common/views/layout-index
+
+block view
+
+  .container
+    h1.mb-1 Resultados de la búsqueda
+
+  .container.ph-1.white-xs
+    .row.justify-content-center
+      each product,i in products
+        .col-xs-6.col-md-4.col-lg-3.pb-1
+          +simpleProduct(product)

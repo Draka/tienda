@@ -21,7 +21,7 @@ module.exports = (req, res, next) => {
       },
     ];
 
-    res.render('admin/pages/super-pages/new.pug', {
+    res.render('../modules/pages/views/super/new.pug', {
       req,
       title: 'Nueva Página',
       menu: 'super-paginas',

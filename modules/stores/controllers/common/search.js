@@ -27,7 +27,7 @@ module.exports = (req, res, next) => {
         .limit(limit)
         .skip(limit * page)
         .sort({
-          updateAt: -1,
+          updatedAt: -1,
         })
         .lean()
         .exec(cb);

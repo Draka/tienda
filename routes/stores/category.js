@@ -1,4 +1,3 @@
-const { putS3LogoPath } = require('../../libs/put_s3_path.lib');
 const queryStore = require('../../libs/query_store.lib');
 const { putS3Path } = require('../../libs/put_s3_path.lib');
 const categoriesUp = require('../../libs/categories_up.lib');
@@ -29,39 +28,21 @@ module.exports = (req, res, next) => {
   };
   async.auto({
     user: (cb) => {
-      if (!req.user || !req.user._id) {
-        return cb();
-      }
       cb(null, req.user);
     },
-    store: (cb) => {
-      queryStore.storeBySlug(req, req.params.storeSlug, cb);
+    category: (cb) => {
+      queryStore.categoryByLongSlug(req, req.params.categorySlugLong, cb);
     },
-    postFind: ['store', (results, cb) => {
-      if (!results.store) {
-        return cb(listErrors(404, null, [{ field: 'storeID', msg: 'El registro no existe.' }]));
-      }
-      putS3LogoPath(req, [results.store]);
-      query.storeID = results.store._id;
-      cb();
-    }],
-    category: ['postFind', (results, cb) => {
-      queryStore.categoryByLongSlug(results.store._id, req.params.categorySlugLong, cb);
-    }],
     categoryIDs: ['category', (results, cb) => {
       if (!req.params.categorySlugLong) {
         return cb(null, []);
       }
-      categoriesUp(req.params.categorySlugLong, cb);
+      categoriesUp(req, req.params.categorySlugLong, cb);
     }],
-    categories: ['store', (results, cb) => {
-      if (!results.store) {
-        return cb(null, []);
-      }
+    categories: (cb) => {
       models.Category
         .find({
           tenancy: req.tenancy,
-          storeID: results.store._id,
           categoryID: null,
         })
         .select({
@@ -74,7 +55,7 @@ module.exports = (req, res, next) => {
         })
         .lean()
         .exec(cb);
-    }],
+    },
     categoriesHeader: ['category', 'categories', (results, cb) => {
       if (!req.params.categorySlugLong) {
         return cb(null, results.categories);
@@ -82,7 +63,6 @@ module.exports = (req, res, next) => {
       models.Category
         .find({
           tenancy: req.tenancy,
-          storeID: results.store._id,
           categoryID: results.category._id,
         })
         .select({
@@ -102,13 +82,18 @@ module.exports = (req, res, next) => {
       models.Product
         .find(query)
         .sort({
-          updateAt: -1,
+          updatedAt: -1,
         })
+        .populate({
+          path: 'storeID',
+          select: 'name,slug',
+        })
+        .lean()
         .limit(42)
         .exec(cb);
     }],
     postFindProducts: ['products', (results, cb) => {
-      putS3Path(results.products, results.store);
+      putS3Path(req, results.products);
       _.each(results.products, (product) => {
         product.isAvailable = isAvailable(product);
       });
@@ -129,14 +114,13 @@ module.exports = (req, res, next) => {
 
     const item = {
       seo: results.category
-        ? `Encuentra ${results.category.name} en ${results.store.name}. ${results.store.slogan}`
-        : `Encuentra los mejores productos en ${results.store.name}. ${results.store.slogan}`,
+        ? `Encuentra ${results.category.name} en ${req.site.name}`
+        : `Encuentra los mejores productos en ${req.site.name}`,
     };
 
     res.render('pages/stores/category.pug', {
       req,
       user: results.user,
-      store: results.store,
       category: results.category,
       categories: results.categories,
       categoriesHeader: results.categoriesHeader,

@@ -201,6 +201,48 @@ const vars = {
       value: 'black',
     },
   ],
+  deliveriesMaster: [
+    {
+      active: true,
+      name: 'Encomienda Nacional',
+      slug: 'encomienda-nacional',
+      description: 'Se usa una empresa de encomiendas a nivel nacional',
+      price: 0,
+      payments: ['banco'],
+      virtualDelivery: false,
+      personalDelivery: false,
+    },
+  ],
+  paymentsMaster: [
+    {
+      slug: 'banco',
+      name: 'Transferencia Bancaria',
+      description: 'Transferencia cuenta a cuenta',
+      trust: true,
+      fields: [
+        {
+          type: 'text',
+          label: 'Banco',
+          slug: 'banco',
+        },
+        {
+          type: 'text',
+          label: 'Número de Cuenta',
+          slug: 'number',
+        },
+        {
+          type: 'select',
+          label: 'Tipo de Cuenta',
+          options: {
+            ahorros: 'Ahorros',
+            corriente: 'Corriente',
+          },
+          slug: 'type',
+        }],
+      instructions: 'Transfiera el monto de la orden a la cuenta bancaria y luego envíe el comprobante por medio de este formulario.',
+      file: true,
+    },
+  ],
 };
 _.forEach(vars, (v, i) => {
   global[i] = v;

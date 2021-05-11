@@ -109,7 +109,7 @@ module.exports = (req, res, next) => {
           }],
           coveragesAreas: ['delivery', 'payment', (results, cb) => {
             if (results.delivery && results.delivery.personalDelivery) {
-              queryStore.coveragesAreas(results.store._id, cb);
+              queryStore.coveragesAreas(req, results.store._id, cb);
             } else {
               return cb(null, []);
             }

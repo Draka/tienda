@@ -1,0 +1,53 @@
+
+extends /views/admin/layout-super
+
+mixin mes(valor)
+  if valor == 1
+    | #{valor} Mes
+  else
+    | #{valor} Meses
+
+mixin active(active)
+  if active
+    .action.p-0-25.rd-0-2.w-100.tc Activo
+  else
+    .error.p-0-25.rd-0-2.w-100.tc Inactivo
+
+mixin boolean(b)
+  if b
+    span.action.p-0-25.pw-0-5.rd-0-2.tc
+      i.fas.fa-check
+  else
+    span.error.ph-0-25.pw-0-5.rd-0-2.tc
+      i.fas.fa-times
+mixin paginator
+  .pagination.justify-content-right
+    a.item(href=`?page=0`)
+      i.fas.fa-chevron-left
+      - var n = 0;
+      while n < Math.ceil(count/limit)
+        a.item(href=`?page=${n++}`)= n
+    a.item(href=`?page=${Math.ceil(count/limit) - (count % limit == 0 ? 0 : 1)}`)
+      i.fas.fa-chevron-right
+
+mixin noItems(msg)
+    .white.br-1.rd-0-2.p-3
+      .remark.info.flex.mb-0-5
+        i.fas.fa-info-circle.h4.mr-1.t-info
+        | #{msg}
+
+block content
+  include fragments/breadcrumb
+
+  .row
+    .col-xs-6
+      h1 #{title}
+    .col-xs-6.tr
+      if edit
+        a.btn.btn--secondary(href=edit) Editar
+      if xnew
+        a.btn.btn--secondary(href=xnew) Nuevo
+
+  .row
+    .col-md-12
+      block list

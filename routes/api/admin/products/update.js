@@ -181,7 +181,6 @@ module.exports = (req, res, next) => {
                   sku,
                   storeID: req.params.storeID,
                 })
-                .lean()
                 .select('_id')
                 .exec(cb);
             },
@@ -195,6 +194,7 @@ module.exports = (req, res, next) => {
           }, cb);
         }, (err) => {
           if (err) return cb(err);
+          // almacena en todos los grupos
           body.groups.push({
             feature: group.feature,
             sku: skuF.join(','),

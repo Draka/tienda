@@ -77,7 +77,7 @@ module.exports = (req, res, next) => {
       models.Product
         .find(query)
         .sort({
-          updateAt: -1,
+          updatedAt: -1,
         })
         .limit(42)
         .exec(cb);
