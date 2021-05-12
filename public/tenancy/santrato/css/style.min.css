@@ -2214,6 +2214,11 @@ a:not(.btn):not(.item):not(.step) {
   .navbar a:not(button):not(.btn):not(.item) {
     height: 54px; }
 
+.navbar--normal {
+  height: 4em; }
+  .navbar--normal a:not(button):not(.btn):not(.item) {
+    height: 4em; }
+
 .navbar-fixed-t {
   margin-top: 54px; }
 
@@ -2225,6 +2230,10 @@ a:not(.btn):not(.item):not(.step) {
     height: 80px; }
     .navbar a:not(button):not(.btn):not(.item) {
       height: 80px; }
+  .navbar--normal {
+    height: 4em; }
+    .navbar--normal a:not(button):not(.btn):not(.item) {
+      height: 4em; }
   .navbar-fixed-t {
     margin-top: 80px; }
   .navbar-fixed-b {
@@ -2241,6 +2250,10 @@ a:not(.btn):not(.item):not(.step) {
     height: 80px; }
     .navbar a:not(button):not(.btn):not(.item) {
       height: 80px; }
+  .navbar--normal {
+    height: 4em; }
+    .navbar--normal a:not(button):not(.btn):not(.item) {
+      height: 4em; }
   .navbar-fixed-t {
     margin-top: 80px; }
   .navbar-fixed-b {
@@ -2257,6 +2270,10 @@ a:not(.btn):not(.item):not(.step) {
     height: 80px; }
     .navbar a:not(button):not(.btn):not(.item) {
       height: 80px; }
+  .navbar--normal {
+    height: 4em; }
+    .navbar--normal a:not(button):not(.btn):not(.item) {
+      height: 4em; }
   .navbar-fixed-t {
     margin-top: 80px; }
   .navbar-fixed-b {
@@ -2273,6 +2290,10 @@ a:not(.btn):not(.item):not(.step) {
     height: 80px; }
     .navbar a:not(button):not(.btn):not(.item) {
       height: 80px; }
+  .navbar--normal {
+    height: 4em; }
+    .navbar--normal a:not(button):not(.btn):not(.item) {
+      height: 4em; }
   .navbar-fixed-t {
     margin-top: 80px; }
   .navbar-fixed-b {

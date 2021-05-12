@@ -21,7 +21,7 @@ module.exports = (req, res, next) => {
     }],
     // valida que los productos existan
     validateItems: ['store', (results, cb) => {
-      validateProducts(results.store, body.items, cb);
+      validateProducts(req, results.store, body.items, cb);
     }],
   }, (err, results) => {
     if (err) {

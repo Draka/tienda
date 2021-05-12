@@ -53,13 +53,26 @@ module.exports = (req, res, next) => {
             if (errors.length) {
               return cb(listErrors(400, null, errors));
             }
+            store.images = results.store.images;
+            if (!_.get(req, 'site.modules.deliveries')) {
+              results.store.deliveries = _.clone(global.deliveriesMaster);
+              _.each(results.store.deliveries, (o) => {
+                o.value = _.get(req, 'site.modules.deliveryPrice');
+              });
+              if (_.get(req, 'site.modules.payments')) {
+                _.each(results.store.deliveries, (o) => {
+                  o.payments = _.map(global.payments, (i) => i.slug);
+                });
+              }
+            }
             const d = results.store.deliveries.find((d) => d.slug === store.shipping && d.active);
             if (!d) {
-              errors.push({ field: 'delivery', msg: __('El registro no existe.') });
+              errors.push({ field: 'delivery1', msg: __('El registro no existe.') });
             }
             if (errors.length) {
               return cb(listErrors(400, null, errors));
             }
+
             const delivery = _.find(global.deliveries, { slug: d.slug });
             cb(null, {
               name: delivery.name,
@@ -73,21 +86,31 @@ module.exports = (req, res, next) => {
             });
           }],
           payment: ['store', (results, cb) => {
-            const p = results.store.payments.find((d) => d.slug === store.payment && d.active);
+            let p;
+            let d;
+            let payment;
+            if (_.get(req, 'site.modules.payments')) {
+              p = results.store.payments.find((d) => d.slug === store.payment && d.active);
+              d = global.deliveries.find((d) => d.slug === store.shipping);
+              payment = _.find(global.payments, { slug: p.slug });
+            } else {
+              results.store.payments = _.clone(global.paymentsMaster);
+              p = results.store.payments.find((d) => d.slug === store.payment);
+              d = global.deliveriesMaster.find((d) => d.slug === store.shipping);
+              payment = _.find(global.paymentsMaster, { slug: p.slug });
+            }
             if (!p) {
-              errors.push({ field: 'delivery', msg: __('El registro no existe.') });
+              errors.push({ field: 'delivery2', msg: __('El registro no existe.') });
             }
             if (errors.length) {
               return cb(listErrors(400, null, errors));
             }
-            const d = global.deliveries.find((d) => d.slug === store.shipping);
             if (!d || d.payments.indexOf(p.slug) === -1) {
-              errors.push({ field: 'delivery', msg: __('El registro no existe.') });
+              errors.push({ field: 'delivery3', msg: __('El registro no existe.') });
             }
             if (errors.length) {
               return cb(listErrors(400, null, errors));
             }
-            const payment = _.find(global.payments, { slug: p.slug });
             cb(null, {
               active: _.get(d, 'active') || false,
               name: payment.name,
@@ -108,7 +131,7 @@ module.exports = (req, res, next) => {
             });
           }],
           coveragesAreas: ['delivery', 'payment', (results, cb) => {
-            if (results.delivery && results.delivery.personalDelivery) {
+            if (_.get(req, 'site.modules.coveragesAreas') && results.delivery && results.delivery.personalDelivery) {
               queryStore.coveragesAreas(req, results.store._id, cb);
             } else {
               return cb(null, []);
@@ -158,6 +181,7 @@ module.exports = (req, res, next) => {
           findUUIDOrders: ['delivery', (results, cb) => {
             models.Order
               .countDocuments({
+                tenancy: req.tenancy,
                 browserUUID: body.cartID,
                 storeID: results.store._id,
               })
@@ -173,7 +197,7 @@ module.exports = (req, res, next) => {
             cb();
           }],
           validateProducts: ['store', (results, cb) => {
-            validateProducts(results.store, store.cart, cb);
+            validateProducts(req, results.store, store.cart, cb);
           }],
           checkProducts: ['validateProducts', (results, cb) => {
             store.cart = results.validateProducts.items;
@@ -195,11 +219,12 @@ module.exports = (req, res, next) => {
             const items = _.values(order.validateProducts.items);
 
             const orderDoc = {
+              tenancy: req.tenancy,
               storeID: order.store._id,
               store: {
                 slug: order.store.slug,
                 name: order.store.name,
-                images: { logo: order.store.image },
+                images: { logo: _.get(order, 'store.images.logo') },
               },
               // Id del navegador, para evitar una misma orden varias veces
               browserUUID: body.cartID,
@@ -229,6 +254,7 @@ module.exports = (req, res, next) => {
                 userID: req.user._id,
               }],
             };
+
             if (orderDoc.payment.slug === 'contra-entrega' || orderDoc.total <= 0) {
               orderDoc.payment.pse = false;
             } else {

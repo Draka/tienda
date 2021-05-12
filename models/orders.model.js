@@ -189,18 +189,7 @@ const schema = new mongoose.Schema({
         trim: true,
       },
     }],
-    fileCheck: {
-      type: Boolean,
-    },
     file: {
-      type: String,
-      trim: true,
-    },
-    mime: {
-      type: String,
-      trim: true,
-    },
-    rejectMsg: {
       type: String,
       trim: true,
     },
@@ -241,12 +230,23 @@ const schema = new mongoose.Schema({
 function preSave(next) {
   const doc = this;
   if (this.isNew) {
-    models.Inc.findOneAndUpdate({ id: 'orderID' }, { $inc: { seq: 1 } }, (error, inc) => {
+    models.Inc.findOneAndUpdate({
+      tenancy: doc.tenancy,
+      id: 'orderID',
+    },
+    {
+      $inc: { seq: 1 },
+    },
+    (error, inc) => {
       if (error) {
         return next(error);
       }
       if (!inc) {
-        const inc = new models.Inc({ id: 'orderID', seq: 101 });
+        const inc = new models.Inc({
+          tenancy: doc.tenancy,
+          id: 'orderID',
+          seq: 101,
+        });
         inc.save((error) => {
           if (error) {
             return next(error);

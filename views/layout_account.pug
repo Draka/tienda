@@ -41,9 +41,10 @@ html(lang='es')
         iframe(src='https://www.googletagmanager.com/ns.html?id='+appCnf.gtm height='0' width='0' style='display:none;visibility:hidden')
 
     include fragments/header
-    .navbar-fixed-t-xs
+    .navbar-fixed-t
+      include fragments/header-account.pug
       block content
 
-
-    include fragments/footer.pug
+    .navbar-fixed-b-xs
+      include fragments/footer.pug
     include fragments/scripts.pug

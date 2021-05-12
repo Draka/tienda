@@ -28,7 +28,7 @@ module.exports = (req, res, next) => {
       cb();
     }],
     payment: ['check', (results, cb) => {
-      reference(results.order, req.user._id, cb);
+      reference(req, results.order, req.user._id, cb);
     }],
   }, (err, results) => {
     if (err) {

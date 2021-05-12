@@ -25,7 +25,7 @@ export class GetApi {
    * @param store Opcional, tienda activa
    */
   gs(path: string, store = Vars.store) {
-    return this.g(`${store}/${path}`);
+    return this.g(`stores/${store}/${path}`);
   }
 
   g(path: string) {
@@ -42,7 +42,7 @@ export class GetApi {
    * @param data Opcional, data
    */
   ps(path: string, data = {}) {
-    return this.p(`${Vars.store}/${path}`, data);
+    return this.p(`stores/${Vars.store}/${path}`, data);
   }
 
   p(path: string, data = {}) {

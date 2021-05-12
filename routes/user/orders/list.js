@@ -34,7 +34,7 @@ module.exports = (req, res, next) => {
         order.store._id = order.storeID;
         putS3LogoPath(req, [order.store]);
         order.payment.info = _.find(global.payments, { slug: order.payment.slug });
-        reference(order, req.user._id, cb);
+        reference(req, order, req.user._id, cb);
       }, cb);
     }],
     count: ['validate', (_results, cb) => {

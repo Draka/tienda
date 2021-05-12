@@ -8,7 +8,7 @@ const { isAvailable } = require('./util.lib');
  * @param {*} bodyItems Array<Object> | Object
  * @param {*} cb Function(err, data)
  */
-module.exports = (store, bodyItems, cb) => {
+module.exports = (req, store, bodyItems, cb) => {
   const items = {};
   const noActives = [];
   const changePrice = [];
@@ -39,7 +39,7 @@ module.exports = (store, bodyItems, cb) => {
         if (!results.product) {
           return cb();
         }
-        putS3Path([results.product], store);
+        putS3Path(req, [results.product], store);
         results.product.store = store.slug;
 
         items[results.product.sku] = _.pick(

@@ -40,7 +40,7 @@ module.exports = (req, res, next) => {
         });
         if (_.get(req, 'site.modules.payments')) {
           _.each(results.store.deliveries, (o) => {
-            o.payments = ['wompi', 'nequi', 'daviplata', 'bancolombia'];
+            o.payments = _.map(global.payments, (i) => i.slug);
           });
         }
         selectMethods = results.store.deliveries;

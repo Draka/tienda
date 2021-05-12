@@ -108,34 +108,6 @@ header
                 each category in categories
                   li(role='menuitem')
                     a.item(href='/'+store.slug+'/categorias/'+category.slugLong) #{category.name}
-    if account
-      nav.navbar.white.sh.mt-4
-        .container
-          ul
-            li.flex
-              a.nav-link.brand-logo(href='/usuario')
-                div.not-wrap.b #{req.user.personalInfo.name}
-          .expand
-          .relative
-            a.dropdown(aria-controls='menu-categories')
-              span
-                i.fas.fa-user-cog
-                | #{' '}
-                span Cuenta
-              span.icon.ml-1
-                i.fas.fa-angle-down
-            #menu-categories.dropdown-list.right.sh
-              ul(role='menu')
-                li(role='menuitem')
-                  a.item(href='/usuario') Ver mis datos
-                li(role='menuitem')
-                  a.item(href='/usuario/correo') Cambiar correo electrónico
-                li(role='menuitem')
-                  a.item(href='/usuario/contrasena') Cambiar mi contraseña
-                if !req.user.admin && !req.user.adminStore
-                  li.hr
-                  li(role='menuitem')
-                    a.item(href='/usuario/vendedor') Volverme vendedor
 
   .show-xs
     nav.navbar.sh.fixed.top(class=_.get(req,'site.style.header')||'primary')

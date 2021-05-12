@@ -13,7 +13,7 @@ module.exports = (req, res, next) => {
             cb(null, activity);
           },
           stores: (cb) => {
-            queryStore.storesByPrimaryActivity(activity, cb);
+            queryStore.storesByPrimaryActivity(req, activity, cb);
           },
           postFind: ['stores', (results, cb) => {
             putS3LogoPath(req, results.stores);

@@ -25,7 +25,7 @@ module.exports = (req, res, next) => {
       async.eachLimit(results.orders, 10, (order, cb) => {
         order.store._id = order.storeID;
         putS3LogoPath(req, [order.store]);
-        reference(order, req.user._id, cb);
+        reference(req, order, req.user._id, cb);
       }, cb);
     }],
     count: ['validate', (_results, cb) => {

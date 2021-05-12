@@ -23,7 +23,7 @@ block content
               i.fas.fa-money-check-alt
             .step-content
               .step-title Pago
-              .step-description Pago por Wompi
+              .step-description Seleccione el método de pago
 
   .container.req.user(data-map="false")
     h1 Hacer pago
@@ -32,11 +32,7 @@ block content
         .white.br-1.rd-0-2.p-1.mh-2
           .bigx2
             i.fas.fa-shopping-basket
-          h2 Tu orden fue confirmada
-          .remark.primary.mh-3
-            | Número de pedidos #{' '}
-            a(href='/usuario/pedidos')
-              b.number-order
+          h2.mb-3 Tu orden fue confirmada
           a.btn.btn--action(href='/usuario/pedidos') Lista de Pedidos
 
       .col-md-6
@@ -84,7 +80,7 @@ block content
                     tr
                       td
                         +img(product.name, _.first(product.imagesSizes), ['48x48_jpg', '96x96_jpg'], 'h-48p')
-                      td
+                      td.w-100
                         .b #{product.name}
                       td.tr #{formatMoney(product.price)}
                       td.tr #{product.quantity}
@@ -105,7 +101,7 @@ block content
                   table.small.table.table--striped
                     tbody
                       tr
-                        th.w-img-48
+                        th.w-img-48.tc
                           +img(product.name, _.first(product.imagesSizes), ['48x48_jpg', '96x96_jpg'], 'h-48p')
                         td.b.big #{product.name}
                       tr

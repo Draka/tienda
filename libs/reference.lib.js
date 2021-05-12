@@ -1,9 +1,10 @@
-module.exports = (order, userID, cb) => {
+module.exports = (req, order, userID, cb) => {
   if (order.status !== 'created' || !order.payment.pse) {
     return cb();
   }
   models.Payment
-    .findOne({ tenancy: req.tenancy,
+    .findOne({
+      tenancy: req.tenancy,
       orderID: order._id,
       status: { $in: ['created', 'approved'] },
     })
@@ -18,6 +19,7 @@ module.exports = (order, userID, cb) => {
           .exec((err, num) => {
             if (err) return cb(err);
             order.ref = new models.Payment({
+              tenancy: req.tenancy,
               amount: order.order.total,
               orderID: order._id,
               userID,

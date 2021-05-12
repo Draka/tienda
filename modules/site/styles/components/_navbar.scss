@@ -97,6 +97,12 @@ $sant: null;
           height: $size;
         }
       }
+      .navbar--normal {
+        height: 4em;
+        a:not(button):not(.btn):not(.item) {
+          height: 4em;
+        }
+      }
       .navbar-fixed-t {
         margin-top: $size;
       }

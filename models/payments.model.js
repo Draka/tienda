@@ -33,6 +33,17 @@ const schema = new mongoose.Schema({
   sentAt: {
     type: Date,
   },
+  fileCheck: {
+    type: Boolean,
+  },
+  mime: {
+    type: String,
+    trim: true,
+  },
+  rejectMsg: {
+    type: String,
+    trim: true,
+  },
 }, { timestamps: true });
 
 const Model = mongoose.model(`${appCnf.dbPrefix}payments`, schema);

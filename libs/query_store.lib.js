@@ -18,7 +18,7 @@ exports.xxxxstores = (cb) => {
   });
 };
 
-exports.xxxxstoresByPrimaryActivity = (primaryActivity, cb) => {
+exports.storesByPrimaryActivity = (req, primaryActivity, cb) => {
   const key = `__stores__primaryActivity__${primaryActivity}`;
   client.get(key, (_err, reply) => {
     if (reply && process.env.NODE_ENV === 'production') {

@@ -5,7 +5,8 @@ module.exports = (req, res, next) => {
   async.auto({
     order: (cb) => {
       models.Order
-        .findOne({ tenancy: req.tenancy,
+        .findOne({
+          tenancy: req.tenancy,
           orderID: req.params.orderID,
         })
         .lean()
@@ -19,7 +20,7 @@ module.exports = (req, res, next) => {
       putS3LogoPath(req, [results.order.store]);
       results.order.payment.info = _.find(global.payments, { slug: results.order.payment.slug });
       results.order.payment.file = `${appCnf.url.cdn}tenancy/${req.tenancy}/files/${appCnf.s3.folder}/orders/${results.order._id}/${results.order.payment.file}`;
-      reference(results.order, req.user._id, cb);
+      reference(req, results.order, req.user._id, cb);
     }],
   }, (err, results) => {
     if (err) {

@@ -19,7 +19,7 @@ exports.putS3Path = (req, items) => {
 
 exports.putS3LogoPath = (req, stores) => {
   _.each(stores, (store) => {
-    store.url = _.get(req.site, 'url') + store.slug;
+    store.url = `${_.get(req.site, 'url')}tiendas/${store.slug}`;
     if (!store.images) {
       return;
     }
