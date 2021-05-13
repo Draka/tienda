@@ -39,6 +39,7 @@ module.exports = (req, res, next) => {
     (cb) => {
       const key = `__site__${tenancy}__`;
       req.tenancy = tenancy;
+      req.urlSite = req.get('Host');
       client.get(key, (_err, reply) => {
         if (reply && process.env.NODE_ENV === 'production') {
           req.site = JSON.parse(reply);

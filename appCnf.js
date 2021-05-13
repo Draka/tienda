@@ -14,6 +14,7 @@ const enviroment = {
   s3: {
     accessKeyId: process.env.AWS_KEY || 'AKIATOVGUG4EOMZ52P5I',
     secretAccessKey: process.env.AWS_ACCESS || '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',
+    bucket: process.env.AWS_BUCKET || '',
     folder: process.env.AWS_FOLDER || 'local',
     sqs: process.env.AWS_SQS || 'https://sqs.us-east-1.amazonaws.com/237646395144/mail',
     urlExSQS: process.env.AWS_EX_SQS || 'https://santrato.com/v1/services/send-email',
@@ -22,7 +23,6 @@ const enviroment = {
   log: process.env.LOG || 'dev',
   url: {
     api: process.env.URL_API || 'http://localhost:3000/v1/', // url del sitio
-    site: process.env.URL_SITE || 'http://localhost:3000/', // url del sitio
     cdn: process.env.URL_CDN || 'http://localhost:3001/', // url de css, js, iconos, deberia ser un s3 pero en local puede ser la misma maquina
   },
   files: process.env.FILES || 'local',

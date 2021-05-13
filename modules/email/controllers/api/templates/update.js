@@ -40,7 +40,7 @@ module.exports = (req, res, next) => {
         return cb(listErrors(400, null, errors));
       }
       const options = {
-        url: appCnf.url.site,
+        url: req.urlSite,
         applyTableAttributes: true,
         removeHtmlSelectors: true,
       };

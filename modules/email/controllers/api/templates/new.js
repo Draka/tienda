@@ -41,7 +41,7 @@ module.exports = (req, res, next) => {
     }],
     toHTML: ['check', (results, cb) => {
       const options = {
-        url: appCnf.url.site,
+        url: req.urlSite,
         applyTableAttributes: true,
         removeHtmlSelectors: true,
       };

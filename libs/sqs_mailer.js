@@ -21,7 +21,7 @@ module.exports = (data, user, cb) => {
       ];
       data.site = {
         name: _.get(req, 'site.name'),
-        urlSite: appCnf.url.site,
+        urlSite: req.urlSite,
         urlStatic: appCnf.url.cdn,
         info: _.get(req, 'site.email.emailInfo'),
         title: _.get(req, 'site.email.title'),

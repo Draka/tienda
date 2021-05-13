@@ -6,7 +6,7 @@ block view
     {
       "@context": "https://schema.org/",
       "@type": "BreadcrumbList",
-      "itemListElement": !{JSON.stringify(_.map(categoryIDs, (category, i)=>{return {"@type": "ListItem","position": i+1,"name": category.name,"item": `${appCnf.url.site}categorias/${category.slugLong}`}}))}
+      "itemListElement": !{JSON.stringify(_.map(categoryIDs, (category, i)=>{return {"@type": "ListItem","position": i+1,"name": category.name,"item": `${req.urlSite}categorias/${category.slugLong}`}}))}
     }
 
   .container
