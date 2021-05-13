@@ -300,7 +300,7 @@ module.exports = (req, res, next) => {
             }, () => {
               const admin = _.get(results.order, 'storeID.userID');
               if (admin) {
-                sqsMailer({
+                sqsMailer(req, {
                   to: { email: admin.email, name: admin.personalInfo.name },
                   subject: `Nueva Orden #${results.order.orderID}`,
                   template: 'seller-new-order-payment-against-delivery',
@@ -317,7 +317,7 @@ module.exports = (req, res, next) => {
             if (results.order.status === 'created' || results.order.payment.pse) {
               return cb();
             }
-            sqsMailer({
+            sqsMailer(req, {
               to: { email: results.order.userData.email, name: results.order.userData.name },
               subject: `Orden #${results.order.orderID} Confirmada`,
               template: 'client-new-order-payment-against-delivery',

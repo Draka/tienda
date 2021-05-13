@@ -53,7 +53,7 @@ module.exports = (req, res, next) => {
         if (!results.query) {
           return cb();
         }
-        sqsMailer({
+        sqsMailer(req, {
           to: { email: results.query.email, name: results.query.personalInfo.name },
           subject: `${__('¿Olvidaste tu contraseña?')}`,
           template: 'password-reset',

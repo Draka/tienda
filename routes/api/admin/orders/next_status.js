@@ -86,7 +86,7 @@ module.exports = (req, res, next) => {
       }
     }],
     mailerClient: ['save', (results, cb) => {
-      sqsMailer({
+      sqsMailer(req, {
         to: { email: results.order.userData.email, name: results.order.userData.name },
         subject: `Orden #${results.order.orderID} a cambiado a ${global.statusText(results.order.status)}`,
         template: 'client-order-change-status',

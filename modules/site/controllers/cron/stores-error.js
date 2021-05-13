@@ -5,7 +5,8 @@ module.exports = (req, res, next) => {
   async.auto({
     query: (cb) => {
       models.Store
-        .find({ tenancy: req.tenancy,
+        .find({
+          tenancy: req.tenancy,
           publish: true,
         })
         .populate({
@@ -21,7 +22,7 @@ module.exports = (req, res, next) => {
     }],
     // mailer: ['check', (results, cb) => {
     //   async.eachLimit(results.query, 10, (store, cb) => {
-    //     sqsMailer({
+    //     sqsMailer(req, {
     //       noNow: true,
     //       to: { email: store.userID.email, name: store.userID.personalInfo.name },
     //       subject: 'Completa la información de tu tienda',

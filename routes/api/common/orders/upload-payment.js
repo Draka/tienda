@@ -135,7 +135,7 @@ module.exports = (req, res, next) => {
         const admin = _.get(results.order, 'storeID.userID');
         if (admin) {
           if (results.order.status === 'verifying') {
-            sqsMailer({
+            sqsMailer(req, {
               to: { email: admin.email, name: (_.get(admin, 'personalInfo.name') || ' ').split(' ')[0] },
               subject: `Nueva Orden #${results.order.orderID}`,
               template: 'seller-new-order',
@@ -153,7 +153,7 @@ module.exports = (req, res, next) => {
       });
     }],
     mailerClient: ['update', (results, cb) => {
-      sqsMailer({
+      sqsMailer(req, {
         to: { email: results.order.userData.email, name: (_.get(results.order, 'user.Data.name') || ' ').split(' ')[0] },
         subject: `Orden #${results.order.orderID} Confirmada`,
         template: 'client-new-order',
