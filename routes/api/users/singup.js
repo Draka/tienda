@@ -63,7 +63,7 @@ module.exports = (req, res, next) => {
       user.save(cb);
     }],
     mailer: ['create', (results, cb) => {
-      sqsMailerreq, {
+      sqsMailer(req, {
         to: { email: body.email, name: results.create.personalInfo.name },
         subject: `${__('Registro')}`,
         template: 'new-user',
