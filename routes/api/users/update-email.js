@@ -14,7 +14,6 @@ function comparePassword(password, field) {
 module.exports = (req, res, next) => {
   const errors = [];
   const body = _.pick(req.body, ['password', 'email']);
-  body.tenancy = req.tenancy;
 
   async.auto({
     validate: (cb) => {

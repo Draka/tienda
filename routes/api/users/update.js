@@ -9,7 +9,6 @@ module.exports = (req, res, next) => {
     'acceptance',
     'adminStore',
   ]);
-  body.tenancy = req.tenancy;
 
   async.auto({
     validate: (cb) => {
