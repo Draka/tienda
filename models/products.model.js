@@ -30,6 +30,24 @@ const schema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  offer: {
+    price: {
+      type: Number,
+      default: 0,
+    },
+    percentage: {
+      type: Number,
+      default: 0,
+    },
+    available: {
+      start: {
+        type: Date,
+      },
+      end: {
+        type: Date,
+      },
+    },
+  },
   inventory: {
     type: Boolean,
     default: false,
@@ -221,6 +239,12 @@ function preUpdate(result, next) {
     result.features.forEach((e) => {
       e.slug = _.kebabCase(_.deburr(e.name));
     });
+  }
+  const percentage = _.get(result, 'offer.percentage');
+  if (percentage) {
+    _.set(result, 'offer.price', (result.price * (1 - (percentage / 100))).toFixed(0));
+  } else {
+    _.set(result, 'offer.price', result.price);
   }
   // if (result.problems.digital.problem) {
   //   result.publish = false;

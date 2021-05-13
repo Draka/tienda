@@ -3,8 +3,8 @@ const { makeid } = require('../../../../../libs/util.lib');
 const modCnf = require('../../../modCnf');
 
 module.exports = (req, res, next) => {
-  if (req.files.upload) {
-    req.files.images = req.files.upload;
+  if (_.get(req, 'files.upload')) {
+    _.get(req, 'files.images', req.files.upload);
   }
   async.auto({
     validate: (cb) => {
@@ -38,6 +38,7 @@ module.exports = (req, res, next) => {
               sizes = _.map(modCnf.imagesSizes, 'x');
             }
             const multimedia = new models.Multimedia({
+              tenancy: req.tenancy,
               key,
               files,
               sizes,
@@ -49,9 +50,12 @@ module.exports = (req, res, next) => {
       }, cb);
     }],
     imagenUrl: ['uploadFile', (results, cb) => {
-      imagenUrl(_.map(results.uploadFile, (f) => f.save.toObject()), cb);
+      imagenUrl(req, _.map(results.uploadFile, (f) => f.save.toObject()), cb);
     }],
     urls: ['imagenUrl', (results, cb) => {
+      if (!req.files || !req.files.images) {
+        return cb();
+      }
       const first = _.first(results.imagenUrl);
       if (first.sizes.length) {
         return cb(null,

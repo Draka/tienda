@@ -1,4 +1,4 @@
-extends ../../layout_store
+extends ../../layout
 
 mixin product(product)
   //- remover en vitrina
@@ -91,7 +91,7 @@ mixin product(product)
           strong #{feature.name}:
           | &nbsp;#{feature.value}
 
-mixin img(name, image, size = ['196x196_jpg', '392x392_jpg'], cssClass)
+mixin imgLocal(name, image, size = ['196x196_jpg', '392x392_jpg'], cssClass)
   if (image)
     img.lazy(data-src=image[size[0]] data-retina=image[size[1]] alt=name class=cssClass?cssClass:'w-100')
   else
@@ -175,7 +175,7 @@ block content
                 each image in product.imagesSizes
                   li
                     .h-100.br-1.p-1.all.white
-                      +img(product.name, image, ['484x484_jpg', '484x484_jpg'])
+                      +imgLocal(product.name, image, ['484x484_jpg', '484x484_jpg'])
 
             .carousel-arrow.carousel-arrow-right
               .carousel-icon-right
@@ -185,7 +185,7 @@ block content
             .mt-1.flex.oa
               each image in product.imagesSizes
                 .p-0-5.white.br-1.rd-0-2.mr-1.hand.scroll-click(data-target='.carousel-list')
-                  +img(product.name, image, ['96x96_jpg', '196x196_jpg'], 'h-96p')
+                  +imgLocal(product.name, image, ['96x96_jpg', '196x196_jpg'], 'h-96p')
 
         .show-xs.white.br-1.rd-0-2.p-1.mt-1
           +product(product)
@@ -255,23 +255,7 @@ block content
         .flex.mt-2.mb-0-5
           .title.b.t-primary.w-100
             | Productos relacionados
-        .white.br-1.rd-0-2.p-1.mt-1
-          .row
-            .col-xs-12
-              .list-products-inline.carousel.primary
-                .carousel-arrow.carousel-arrow-left
-                  .carousel-icon-left
-                    .out-screen Mover a la izquierda
-                    i.fas.fa-chevron-left
-
-                .carousel-list
-                  ul.list
-                    each product,pos in products
-                      li
-                        .w-230p.w-170p-xs.w-170p-sm.br-1.white.h-100
-                          +simpleProduct(store, product)
-
-                .carousel-arrow.carousel-arrow-right
-                  .carousel-icon-right
-                    .out-screen Mover a la derecha
-                    i.fas.fa-chevron-right
+        .row
+          each product,i in products
+            .col-xs-6.col-md-4.col-lg-3.pb-1
+              +simpleProduct(product)

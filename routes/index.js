@@ -20,6 +20,8 @@ module.exports = (app) => {
       rss: memory.rss / 1048576,
       heapTotal: memory.heapTotal / 1048576,
       heapUsed: memory.heapUsed / 1048576,
+      server: req.get('X-Tenancy'),
+      store: req.get('X-Store'),
     });
   });
   app.get('/flush', (req, res) => {

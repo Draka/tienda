@@ -30,7 +30,7 @@ module.exports = (req, order, userID, cb) => {
           });
       } else {
         order.ref = doc;
-        cb();
+        cb(null, doc);
       }
     });
 };

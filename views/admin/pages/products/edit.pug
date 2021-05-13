@@ -1,4 +1,4 @@
-extends /modules/admin/views/super/layout-edit-cmp
+extends /modules/admin/views/layout-edit-cmp
 
 block edit
 
@@ -88,6 +88,27 @@ block edit
                 .form-control
                   input.input#price(type="number" name="price" placeholder=' ' required value=item.price)
                   label(for='price') Precio
+              .mh-1.br-1.p-1
+                .form-group
+                  .form-control
+                    input.input#offerPercentage(type="number" name="offer.percentage" placeholder=' ' value=_.get(item, 'offer.percentage'))
+                    label(for='offerPercentage') % Oferta
+                .form-group
+                  .form-control
+                    input.input.update#offerPrice(data-value='#price' data-percentage='#offerPercentage' type="number" name="offer.price" placeholder=' ' value=_.get(item, 'offer.price') readonly=true)
+                    label(for='offerPrice') Nuevo valor
+
+                .msg.info.mb-0-5.mt-1
+                  .flex
+                    i.fas.fa-exclamation.h2.mr-0-25.w-2.tc
+                    div Este campo indica la fechas en las que estará disponible la oferta, no es necesario escribir las dos fechas.
+                .form-group.flex
+                  .form-control
+                    input.input#offerAvailable-0(type="date" name="offer.available.start" placeholder='dd/mm/aaaa' value=_.get(item, 'offer.available.start')?moment(item.offer.available.start).format('YYYY-MM-DD'):null)
+                    label.nowrap(for='offerAvailable-0') Desde
+                  .form-control.pl-1
+                    input.input#offerAvailable-1(type="date" name="offer.available.end" placeholder='dd/mm/aaaa' value=_.get(item, 'offer.available.end')?moment(item.offer.available.end).format('YYYY-MM-DD'):null)
+                    label(for='offerAvailable-1') Hasta
               .form-group
                 .form-control
                   input.input#brandText(type="text" name="brandText" placeholder=' ' value=item.brandText)

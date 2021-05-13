@@ -189,6 +189,7 @@ const schema = new mongoose.Schema({
         trim: true,
       },
     }],
+    // url con ultimo pago
     file: {
       type: String,
       trim: true,

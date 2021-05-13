@@ -19,6 +19,7 @@ export class Util {
     this.openModalMsg();
     this.moveRow();
     this.showDetailOrder();
+    this.updateValue();
   }
 
   moveRow() {
@@ -122,6 +123,20 @@ export class Util {
   showDetailOrder() {
     $('.btn-cancel').on('click', () => {
       sclib.modalShow('#cancelOrder');
+    });
+  }
+
+  updateValue() {
+    $('.update').each((_i, el) => {
+      const $el = $(el);
+      $(`${$el.data('value')},${$el.data('percentage')}`).on('change', () => {
+        const value = parseFloat(<string>$($el.data('value')).val());
+        const percentage = parseFloat(<string>$($el.data('percentage')).val());
+        const fixed = parseFloat(<string>$($el.data('fixed')).val() || '0');
+        const newV = (value * (1 - (percentage / 100))).toFixed(fixed);
+
+        $el.val(newV);
+      });
     });
   }
 }

@@ -29,7 +29,7 @@ module.exports = (req, res, next) => {
         .exec(cb);
     }],
     imagenUrl: ['items', (results, cb) => {
-      imagenUrl(results.items, cb);
+      imagenUrl(req, results.items, cb);
     }],
     count: ['validate', (_results, cb) => {
       models.Multimedia

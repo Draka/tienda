@@ -7,7 +7,29 @@ module.exports = (req, res, next) => {
     newProducts: (cb) => {
       models.Product
         .aggregate([
-          { $match: { publish: true } },
+          {
+            $match: {
+              publish: true,
+              $and: [
+                {
+                  $or: [
+                    { 'available.start': { $exists: false } },
+                    { 'available.start': null },
+                    { 'available.start': '' },
+                    { 'available.start': { $lte: new Date() } },
+                  ],
+                },
+                {
+                  $or: [
+                    { 'available.end': { $exists: false } },
+                    { 'available.end': null },
+                    { 'available.end': '' },
+                    { 'available.end': { $gte: new Date() } },
+                  ],
+                },
+              ],
+            },
+          },
           { $sort: { crreatedAt: -1 } },
           {
             $group: {
@@ -46,8 +68,83 @@ module.exports = (req, res, next) => {
     newOffers: (cb) => {
       models.Product
         .aggregate([
-          { $match: { publish: true } },
-          { $sample: { size: 20 } },
+          {
+            $match: {
+              publish: true,
+              'offer.percentage': { $gt: 0 },
+              $and: [
+                {
+                  $and: [
+                    {
+                      $or: [
+                        { 'available.start': { $exists: false } },
+                        { 'available.start': null },
+                        { 'available.start': '' },
+                        { 'available.start': { $lte: new Date() } },
+                      ],
+                    },
+                    {
+                      $or: [
+                        { 'available.end': { $exists: false } },
+                        { 'available.end': null },
+                        { 'available.end': '' },
+                        { 'available.end': { $gte: new Date() } },
+                      ],
+                    }],
+                },
+                {
+                  $or: [
+                    {
+                      $and: [
+                        { 'offer.available.start': { $lte: new Date() } },
+                        { 'offer.available.end': { $gte: new Date() } },
+                      ],
+                    },
+                    {
+                      $and: [
+                        { 'offer.available.start': { $lte: new Date() } },
+                        {
+                          $or: [
+                            { 'offer.available.end': null },
+                            { 'offer.available.end': '' },
+                            { 'offer.available.end': { $exists: false } },
+                          ],
+                        },
+                      ],
+                    },
+                    {
+                      $and: [
+                        { 'offer.available.end': { $gte: new Date() } },
+                        {
+                          $or: [
+                            { 'offer.available.start': null },
+                            { 'offer.available.start': '' },
+                            { 'offer.available.start': { $exists: false } },
+                          ],
+                        },
+                      ],
+                    },
+                    {
+                      $and: [
+                        {
+                          $or: [
+                            { 'offer.available.end': null },
+                            { 'offer.available.end': '' },
+                            { 'offer.available.end': { $exists: false } },
+                          ],
+                        },
+                        {
+                          $or: [
+                            { 'offer.available.start': null },
+                            { 'offer.available.start': '' },
+                            { 'offer.available.start': { $exists: false } },
+                          ],
+                        },
+                      ],
+                    }],
+                }],
+            },
+          },
           {
             $group: {
               _id: { $first: '$categoryIDs' },
@@ -85,8 +182,29 @@ module.exports = (req, res, next) => {
     newFavorites: (cb) => {
       models.Product
         .aggregate([
-          { $match: { publish: true } },
-          { $sample: { size: 20 } },
+          {
+            $match: {
+              publish: true,
+              $and: [
+                {
+                  $or: [
+                    { 'available.start': { $exists: false } },
+                    { 'available.start': null },
+                    { 'available.start': '' },
+                    { 'available.start': { $lte: new Date() } },
+                  ],
+                },
+                {
+                  $or: [
+                    { 'available.end': { $exists: false } },
+                    { 'available.end': null },
+                    { 'available.end': '' },
+                    { 'available.end': { $gte: new Date() } },
+                  ],
+                },
+              ],
+            },
+          },
           {
             $group: {
               _id: { $first: '$categoryIDs' },
@@ -124,8 +242,30 @@ module.exports = (req, res, next) => {
     newFeatures: (cb) => {
       models.Product
         .aggregate([
-          { $match: { publish: true } },
-          { $sample: { size: 20 } },
+          {
+            $match: {
+              publish: true,
+              featured: true,
+              $and: [
+                {
+                  $or: [
+                    { 'available.start': { $exists: false } },
+                    { 'available.start': null },
+                    { 'available.start': '' },
+                    { 'available.start': { $lte: new Date() } },
+                  ],
+                },
+                {
+                  $or: [
+                    { 'available.end': { $exists: false } },
+                    { 'available.end': null },
+                    { 'available.end': '' },
+                    { 'available.end': { $gte: new Date() } },
+                  ],
+                },
+              ],
+            },
+          },
           {
             $group: {
               _id: { $first: '$categoryIDs' },

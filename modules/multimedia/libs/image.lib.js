@@ -51,7 +51,7 @@ function resizes(fileName, nameTemp, ext, sizes, cb) {
     }
   }, cb);
 }
-function uploadImages(fileName, nameTemp, ext, sizes, pathImg, key, cb) {
+function uploadImages(req, fileName, nameTemp, ext, sizes, pathImg, key, cb) {
   async.eachLimit(sizes, 5, (size, cb) => {
     const fileContent = fs.readFileSync(`./tmp/${size.x}_${nameTemp}.${ext}`);
     // ajustes de s3
@@ -146,15 +146,15 @@ exports.imageToS3 = (req, pathImg, key, localImg, sizes, cb) => {
           case 'webp':
             async.auto({
               jpg: (cb) => {
-                uploadImages(fileName, nameTemp, 'jpg', sizes, pathImg, key, cb);
+                uploadImages(req, fileName, nameTemp, 'jpg', sizes, pathImg, key, cb);
               },
               webp: (cb) => {
-                uploadImages(fileName, nameTemp, 'webp', sizes, pathImg, key, cb);
+                uploadImages(req, fileName, nameTemp, 'webp', sizes, pathImg, key, cb);
               },
             }, cb);
             break;
           case 'png':
-            uploadImages(fileName, nameTemp, 'png', sizes, pathImg, key, cb);
+            uploadImages(req, fileName, nameTemp, 'png', sizes, pathImg, key, cb);
             break;
           default:
             cb();
@@ -296,7 +296,7 @@ const deleteS3 = (file, cb) => {
 };
 exports.deleteS3 = deleteS3;
 
-exports.imagenUrl = (items, cb) => {
+exports.imagenUrl = (req, items, cb) => {
   _.each(items, (item, i) => {
     _.each(item.sizes, (size) => {
       _.each(item.files, (file) => {

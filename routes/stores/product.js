@@ -39,14 +39,18 @@ module.exports = (req, res, next) => {
       models.Product
         .find({
           tenancy: req.tenancy,
-          storeID: results.store._id,
+          // storeID: results.store._id,
           categoryIDs: { $in: _.clone(results.product.categoryIDs).reverse() },
           publish: 1,
         })
         .sort({
           updatedAt: -1,
         })
-        .limit(24)
+        .populate({
+          path: 'storeID',
+          select: 'slug',
+        })
+        .limit(4)
         .lean()
         .exec(cb);
     }],

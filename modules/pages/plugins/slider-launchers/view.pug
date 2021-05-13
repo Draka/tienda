@@ -9,7 +9,7 @@ mixin img(name, image, size = ['196x196_jpg', '392x392_jpg'], cssClass)
 mixin simpleProduct(product)
   +img(product.name, _.first(product.imagesSizes), ['196x196_jpg', '392x392_jpg'])
 
-.white.p-1-sm.p-1-md.p-1-lg.p-1-xl
+.white.p-1-sm.p-1-md.p-1-lg.p-1-xl.h-100
   .b.mb-0-5
     if slug=='launcher-new-offers'
       | Ofertas
@@ -27,7 +27,12 @@ mixin simpleProduct(product)
           .w-100.mt-1-sm.mt-1-md.mt-1-lg.mt-1-xl
             .small.oh.ellipsis.lines-2
               if slug=='launcher-new-offers'
-                | $#{formatMoney(item.productID.price)}
+                if _.get(item.productID, 'offer.percentage') && ( (_.get(item.productID, 'offer.available.start') && moment().isAfter(moment(item.productID.offer.available.start)) ) || !_.get(item.productID, 'offer.available.start') )  && ( (_.get(item.productID, 'offer.available.end') && moment().isBefore(moment(item.productID.offer.available.end)) ) || !_.get(item.productID, 'offer.available.end') )
+                  .b.t.t-gray-2 #{formatMoney(item.productID.price || 0)}
+                  .b #{formatMoney(item.productID.offer.price || 0)}
+                else
+                  .b #{formatMoney(item.productID.price || 0)}
               else
                 | #{_.first(item.productID.categoryText)}
+
 

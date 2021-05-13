@@ -29,6 +29,7 @@ module.exports = (req, res, next) => {
     'height',
     'width',
     'amz',
+    'offer',
   ]);
   body.tenancy = req.tenancy;
 
@@ -43,6 +44,20 @@ module.exports = (req, res, next) => {
   if (body.digital && typeof body.digital.is !== 'undefined' && !body.digital.is) {
     _.set(body, 'digital.is', false);
   }
+
+  if (_.get(body, 'available.start')) {
+    body.available.start = moment.tz(body.available.start, global.tz);
+  }
+  if (_.get(body, 'available.end')) {
+    body.available.end = moment.tz(body.available.end, global.tz);
+  }
+  if (_.get(body, 'offer.available.start')) {
+    body.offer.available.start = moment.tz(body.offer.available.start, global.tz);
+  }
+  if (_.get(body, 'offer.available.end')) {
+    body.offer.available.end = moment.tz(body.offer.available.end, global.tz);
+  }
+
   async.auto({
     validate: (cb) => {
       if (!_.trim(body.name)) {

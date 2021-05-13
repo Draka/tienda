@@ -33,7 +33,7 @@ function categoryTree(tenancy, categoryID, cb) {
  * @param {*} next
  */
 module.exports = (req, res, next) => {
-  const tenancy = req.get('x-tenancy') || 'santrato';
+  const tenancy = req.get('X-Tenancy') || 'santrato';
   async.parallel([
     // datos del site
     (cb) => {

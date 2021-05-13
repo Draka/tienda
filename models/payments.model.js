@@ -33,6 +33,10 @@ const schema = new mongoose.Schema({
   sentAt: {
     type: Date,
   },
+  file: {
+    type: String,
+    trim: true,
+  },
   fileCheck: {
     type: Boolean,
   },

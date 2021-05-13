@@ -1,5 +1,6 @@
 const fs = require('fs');
 const sqsMailer = require('../../../../libs/sqs_mailer');
+const reference = require('../../../../libs/reference.lib');
 
 const s3 = new AWS.S3({
   accessKeyId: appCnf.s3.accessKeyId,
@@ -28,12 +29,19 @@ module.exports = (req, res, next) => {
         return next(listErrors(404, null, errors));
       }
       if (results.order.status !== 'created' || !results.order.payment.pse) {
-        errors.push({ field: 'reference', msg: 'Esta orden no necesita pago' });
+        errors.push({ field: 'reference1', msg: 'Esta orden no necesita pago' });
         return cb(listErrors(400, null, errors));
       }
       cb();
     }],
-    uploadFile: ['check', (results, cb) => {
+    reference: ['order', (results, cb) => {
+      reference(req, results.order, req.user._id, cb);
+    }],
+    uploadFile: ['check', 'reference', (results, cb) => {
+      if (!results.reference || results.reference.status === 'approved') {
+        errors.push({ field: 'reference2', msg: 'Esta orden no necesita pago' });
+        return cb(listErrors(400, null, errors));
+      }
       if (!req.files || !req.files.file) {
         errors.push({ field: 'file', msg: 'Adjunte el comprobante de pago.' });
       }
@@ -59,7 +67,7 @@ module.exports = (req, res, next) => {
         default:
       }
 
-      const dir = `./public/tenancy/${req.tenancy}/files/${appCnf.s3.folder}/orders/${req.params.orderID}`;
+      const dir = `./public/tenancy/${req.tenancy}/files/${appCnf.s3.folder}/orders/${req.params.orderID}/${results.reference._id}`;
       async.auto({
         makedirLocal: (cb) => {
           if (process.env.NODE_ENV === 'production') {
@@ -76,7 +84,7 @@ module.exports = (req, res, next) => {
             // ajustes de s3
             const params = {
               Bucket: appCnf.s3.bucket,
-              Key: `tenancy/${req.tenancy}/files/${appCnf.s3.folder}/orders/${req.params.orderID}/payment${ext}`, // ruta donde va a quedar
+              Key: `tenancy/${req.tenancy}/files/${appCnf.s3.folder}/orders/${req.params.orderID}/${results.reference._id}/payment${ext}`, // ruta donde va a quedar
               Body: req.files.file.data,
               ContentType: req.files.file.mimetype,
               CacheControl: 'private, max-age=31536000',
@@ -94,10 +102,12 @@ module.exports = (req, res, next) => {
           if (process.env.NODE_ENV !== 'production') {
             req.files.file.mv(`${dir}/payment${ext}`);
           }
-          results.order.payment.file = `payment${ext}`;
-          results.order.payment.mime = req.files.file.mimetype;
-          results.order.payment.fileCheck = true;
-          results.order.payment.rejectMsg = '';
+          results.order.payment.file = `${results.reference._id}/payment${ext}`;
+          results.reference.sentAt = new Date();
+          results.reference.file = `payment${ext}`;
+          results.reference.mime = req.files.file.mimetype;
+          results.reference.fileCheck = true;
+          results.reference.rejectMsg = '';
           cb();
         }],
       }, cb);
@@ -108,6 +118,10 @@ module.exports = (req, res, next) => {
         status: 'verifying',
       });
       results.order.save(cb);
+    }],
+    updateReference: ['uploadFile', (results, cb) => {
+      results.reference.status = 'approved';
+      results.reference.save(cb);
     }],
     mailerAdmin: ['update', (results, cb) => {
       results.order.populate({

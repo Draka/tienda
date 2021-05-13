@@ -25,7 +25,6 @@ module.exports = (req, cb) => {
       models.Site
         .findOne({
           tenancy: req.tenancy,
-          tenancy: req.tenancy,
         })
         .exec(cb);
     }],
@@ -66,7 +65,7 @@ module.exports = (req, cb) => {
       sass.render({
         file: `./tmp/${req.tenancy}/style.scss`,
         outFile: toFile,
-        // outputStyle: 'compressed',
+        outputStyle: 'compressed',
       }, (err, result) => {
         if (err) {
           console.log(err);

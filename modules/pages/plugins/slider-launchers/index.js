@@ -66,6 +66,10 @@ module.exports = (req, obj, cb) => {
         } else if (slug === 'launcher-features') {
           url = 'destacados';
         }
+        const l = results.items.length;
+        for (let i = l; i < 4; i++) {
+          results.items.push(_.first(results.items));
+        }
         obj.text = obj.text.replace(match[0], template({
           req,
           items: results.items,

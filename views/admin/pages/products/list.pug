@@ -132,17 +132,32 @@ block list
                 | #{item.sku}
               td
                 a.b(href=`/administracion/tiendas/${store._id}/productos/${item._id}/editar`) #{item.name}
+                if _.get(item, 'offer.percentage')
+                  .mt-0-5
+                    b Oferta
+                    if _.get(item, 'offer.available.start')
+                      .nowrap
+                        i Inicio: #{moment.tz(item.offer.available.start, global.tz).format('DD-MM-YYYY HH:mm:ss [-5 GMT]')}
+                    if _.get(item, 'offer.available.end')
+                      .nowrap
+                        i Fin: #{moment.tz(item.offer.available.end, global.tz).format('DD-MM-YYYY HH:mm:ss [-5 GMT]')}
                 if item.available
-                  if item.available.start
-                    .nowrap
-                      i Inicio: #{moment.tz(item.available.start, global.tz).format('DD-MM-YYYY HH:mm:ss [-5 GMT]')}
-                  if item.available.end
-                    .nowrap
-                      i Fin: #{moment.tz(item.available.end, global.tz).format('DD-MM-YYYY HH:mm:ss [-5 GMT]')}
+                  .mt-0-5
+                    b Disponible
+                    if item.available.start
+                      .nowrap
+                        i Inicio: #{moment.tz(item.available.start, global.tz).format('DD-MM-YYYY HH:mm:ss [-5 GMT]')}
+                    if item.available.end
+                      .nowrap
+                        i Fin: #{moment.tz(item.available.end, global.tz).format('DD-MM-YYYY HH:mm:ss [-5 GMT]')}
               td
                 | !{item.categoryText.join(' <i class="fas fa-chevron-right"></i> ')}
               td.tr
-                .b.t-secondary #{formatMoney(item.price || 0)}
+                if _.get(item, 'offer.percentage') && ( (_.get(item, 'offer.available.start') && moment().isAfter(moment(item.offer.available.start)) ) || !_.get(item, 'offer.available.start') )  && ( (_.get(item, 'offer.available.end') && moment().isBefore(moment(item.offer.available.end)) ) || !_.get(item, 'offer.available.end') )
+                  .b.t #{formatMoney(item.price || 0)}
+                  .b.t-secondary #{formatMoney(item.offer.price || 0)}
+                else
+                  .b.t-secondary #{formatMoney(item.price || 0)}
                 if (item.amz && item.amz.usd)
                   .b.t-primary #{formatMoney(item.amz.usd || 0, 2, 'USD$')}
               td.tr
