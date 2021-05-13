@@ -37,3 +37,9 @@ sudo certbot --authenticator standalone --installer nginx -d santrato.com --pre-
 sudo certbot --authenticator standalone --installer nginx -d *.santrato.com --pre-hook "systemctl stop nginx.service" --post-hook "systemctl start nginx.service"
 
 sudo certbot renew --dry-run --pre-hook "systemctl stop nginx.service" --post-hook "systemctl start nginx.service"
+
+
+
+[default]
+aws_access_key_id=AKIAUWYSH2GR2PC775ET
+aws_secret_access_key=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

@@ -10,7 +10,7 @@ function hash(obj, key) {
       if (err) {
         return reject(err);
       }
-      bcrypt.hash(obj[key], salt, null, (err, hash) => {
+      bcrypt.hash(obj[key], salt, (err, hash) => {
         if (err) {
           return reject(err);
         }
@@ -31,7 +31,6 @@ module.exports = (req, res, next) => {
           .findOne({
             tenancy: req.tenancy,
             emailNormalized: validator.normalizeEmail(req.body.email),
-            tenancy: req.tenancy,
           })
           .select({
             email: 1,

@@ -10,7 +10,7 @@ function hash(obj, key) {
       if (err) {
         return reject(err);
       }
-      bcrypt.hash(obj[key], salt, null, (errh, hashh) => {
+      bcrypt.hash(obj[key], salt, (errh, hashh) => {
         if (errh) {
           return reject(errh);
         }
