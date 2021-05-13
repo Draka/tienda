@@ -22,7 +22,7 @@ module.exports = (app) => {
       heapUsed: memory.heapUsed / 1048576,
       server: req.get('X-Tenancy'),
       store: req.get('X-Store'),
-      host: req.get('host'),
+      host: req.urlSite,
     });
   });
   app.get('/flush', (req, res) => {
