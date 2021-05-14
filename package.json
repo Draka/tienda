@@ -5,6 +5,7 @@
   "scripts": {
     "start": "node ./bin/www",
     "debug": "DEBUG=tienda:* PORT=3000 nodemon  --ignore public --ignore 'dst/*' ./bin/www",
+    "cors": "DEBUG=tienda:* PORT=3000 URL_API= https://santrato.com/v1/ nodemon  --ignore public --ignore 'dst/*' ./bin/www",
     "s3": "PORT=3001 nodemon  --ignore public --ignore 'dst/*' s3.js",
     "s2": "PORT=3001 nodemon  --ignore public --ignore 'dst/*' s2.js"
   },
@@ -14,6 +15,7 @@
     "bcrypt": "^5.0.1",
     "bluebird": "^3.7.2",
     "cookie-parser": "~1.4.5",
+    "cors": "^2.8.5",
     "detect-browser": "^5.2.0",
     "express": "~4.17.1",
     "express-fileupload": "^1.2.1",

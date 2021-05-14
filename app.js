@@ -9,6 +9,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const shrinkRay = require('shrink-ray-current');
+const cors = require('cors');
 
 // Cache
 const Redis = require('ioredis');
@@ -91,6 +92,12 @@ mongoose.connect(appCnf.db, dbOptions).then(
 global.models = require('./models');
 
 const app = express();
+app.use(cors({
+  origin: [
+    /\.santratro\.com$/,
+    'localhost:3000',
+  ],
+}));
 // carga site
 app.use(site);
 
