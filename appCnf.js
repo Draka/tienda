@@ -16,7 +16,7 @@ const enviroment = {
     secretAccessKey: process.env.AWS_ACCESS || 'Q53je+OhZNNJqMj5hgyIVF7zSzPLQlN8jBT4JTi3',
     bucket: process.env.AWS_BUCKET || 'cdn.santrato.com',
     folder: process.env.AWS_FOLDER || 'local',
-    sqs: process.env.AWS_SQS || 'https://sqs.us-east-1.amazonaws.com/237646395144/mail',
+    sqs: process.env.AWS_SQS || 'https://sqs.us-east-1.amazonaws.com/323771421091/mail',
     urlExSQS: process.env.AWS_EX_SQS || 'https://santrato.com/v1/services/send-email',
     forced: false, // true para que en local se suba a s3, para pruebas
   },

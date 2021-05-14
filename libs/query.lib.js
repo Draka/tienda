@@ -169,7 +169,7 @@ function categoryTree(req, categoryID, cb) {
     });
 }
 exports.categoryTreeTenancy = (req, cb) => {
-  const key = `__category_tree__tenancy__${req.tenancy}`;
+  const key = `__tenancy:${req.tenancy}__category_tree__`;
   client.get(key, (_err, reply) => {
     if (reply && process.env.NODE_ENV === 'production') {
       cb(null, JSON.parse(reply));

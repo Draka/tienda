@@ -43,3 +43,23 @@ sudo certbot renew --dry-run --pre-hook "systemctl stop nginx.service" --post-ho
 [default]
 aws_access_key_id=AKIAUWYSH2GR2PC775ET
 aws_secret_access_key=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
+
+CORS de s3
+
+[
+  {
+    "AllowedHeaders": [
+      "Origin"
+    ],
+    "AllowedMethods": [
+      "HEAD",
+      "GET"
+    ],
+    "AllowedOrigins": [
+      "https://*.santrato.com",
+      "https://santrato.com"
+    ],
+    "ExposeHeaders": [],
+    "MaxAgeSeconds": 3000
+  }
+]

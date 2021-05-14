@@ -35,6 +35,7 @@ const schema = new mongoose.Schema({
 
 function preUpdate(result, next) {
   deleteKeysByPattern(`__tenancy:${result.tenancy}__category__*`);
+  client.del(`__tenancy:${result.tenancy}__category_tree__`);
   if (result.name) {
     result.slug = _.kebabCase(_.deburr(_.get(result, 'name')));
   }
