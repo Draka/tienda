@@ -15,6 +15,10 @@ exports.productBySKU = (req, storeID, sku, cb) => {
           path: 'groups.productIDs',
           select: 'name sku features',
         })
+        .populate({
+          path: 'storeID',
+          select: 'name slug approve publish',
+        })
         .lean()
         .exec((err, doc) => {
           if (err) {

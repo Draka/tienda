@@ -92,12 +92,14 @@ mongoose.connect(appCnf.db, dbOptions).then(
 global.models = require('./models');
 
 const app = express();
-app.use(cors({
-  origin: '*',
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-  preflightContinue: false,
-  optionsSuccessStatus: 204,
-}));
+if (process.env.NODE_ENV === 'production') {
+  app.use(cors({
+    origin: [/\.santratro\.com$/],
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
+  }));
+}
 // carga site
 app.use(site);
 
@@ -140,7 +142,7 @@ app.use((err, req, res, next) => {
   console.error(err);
   // set locals, only providing error in development
   res.locals.message = err.message;
-  if (process.env.NODE_ENV === 'production') {
+  if (process.env.NODE_ENV === 'production' && err.status !== 404) {
     res.locals.error = {};
     err.stack = '';
   } else {

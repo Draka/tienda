@@ -48,7 +48,7 @@ module.exports = (req, res, next) => {
         })
         .populate({
           path: 'storeID',
-          select: 'slug',
+          select: 'name slug approve publish',
         })
         .limit(4)
         .lean()

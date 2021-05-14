@@ -23,7 +23,7 @@ module.exports = (req, obj, cb) => {
             .limit(limit)
             .populate({
               path: 'storeID',
-              select: 'slug',
+              select: 'name slug approve publish',
             })
             .lean()
             .exec(cb);

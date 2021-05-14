@@ -126,7 +126,7 @@ module.exports = (req, res, next) => {
     mailerAdmin: ['update', (results, cb) => {
       results.order.populate({
         path: 'storeID',
-        select: 'name',
+        select: 'name slug approve publish',
         populate: {
           path: 'userID',
           select: 'email personalInfo',

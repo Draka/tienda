@@ -153,13 +153,12 @@ module.exports = (req, res, next) => {
       if (results.category) {
         query.categoryIDs = results.category._id;
       }
-      console.log(JSON.stringify(query));
       models.Product
         .find(query)
         .sort(sort)
         .populate({
           path: 'storeID',
-          select: 'name slug',
+          select: 'name slug approve publish',
         })
         .lean()
         .limit(24)

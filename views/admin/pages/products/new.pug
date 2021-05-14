@@ -4,7 +4,7 @@ block edit
   if store.amz
     form.validate-rest(
       id="updateProfileForm"
-      action=`http://local.santrato.com:3000/amz/name`
+      action=`${appCnf.url.api}amz/name`
       method="post"
       data-post='amz'
       data-error="#form-results1")
@@ -46,7 +46,7 @@ block edit
           .col-xs-12
             .form-group.flex
               .form-control
-                input.input.tr.b.t-secondary#amzTrm(type="number" name="amz.trm" placeholder=' ' value=_.get(req.site, 'trm.cop') || 0)
+                input.input.tr.b.t-secondary#amzTrm(type="number" name="amz.trm" placeholder=' ' value=_.get(req.site, 'trm.cop') || 0 step=".01")
                 label(for='amzTrm') TRM
               .form-control.pl-1
                 input.input.tr#amzUsd(type="number" name="amz.usd" placeholder=' ' value=0 step=".01")

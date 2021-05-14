@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node ./bin/www",
     "debug": "DEBUG=tienda:* PORT=3000 nodemon  --ignore public --ignore 'dst/*' ./bin/www",
-    "cors": "DEBUG=tienda:* PORT=3000 URL_API= https://santrato.com/v1/ nodemon  --ignore public --ignore 'dst/*' ./bin/www",
+    "cors": "DEBUG=tienda:* PORT=3000 MONGO_URL=mongodb://santrato.com/santrato AWS_FOLDER=prod NODE_ENV=production nodemon  --ignore public --ignore 'dst/*' ./bin/www",
     "s3": "PORT=3001 nodemon  --ignore public --ignore 'dst/*' s3.js",
     "s2": "PORT=3001 nodemon  --ignore public --ignore 'dst/*' s2.js"
   },

@@ -38,7 +38,7 @@ block edit
                     label(for='amzUrl') URL Amazon de EEUU
                 .form-group.flex
                   .form-control
-                    input.input.tr.b.t-secondary#amzTrm(type="number" name="amz.trm" placeholder=' ' value=_.get(item, 'amz.trm') || 0 readonly=true)
+                    input.input.tr.b.t-secondary#amzTrm(type="number" name="amz.trm" placeholder=' ' value=_.get(item, 'amz.trm') || 0 step=".01")
                     label(for='amzTrm') TRM
                   .form-control.pl-1
                     input.input.tr#amzUsd(type="number" name="amz.usd" placeholder=' ' value=_.get(item, 'amz.usd') step=".01")

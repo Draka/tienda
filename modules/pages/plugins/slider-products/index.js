@@ -29,7 +29,7 @@ module.exports = (req, obj, cb) => {
               path: 'productID',
               populate: {
                 path: 'storeID',
-                select: 'slug',
+                select: 'name slug approve publish',
               },
             })
             .exec(cb);
