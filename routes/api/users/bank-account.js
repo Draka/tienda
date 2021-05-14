@@ -8,6 +8,9 @@ const s3 = new AWS.S3({
 
 function comparePassword(password, field) {
   return new Promise((resolve, reject) => {
+    if (!field) {
+      return resolve(false);
+    }
     bcrypt.compare(password, field, (err, isMatch) => {
       if (err) {
         return reject(err);

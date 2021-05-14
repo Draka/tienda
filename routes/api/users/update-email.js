@@ -2,6 +2,9 @@ const bcrypt = require('bcrypt');
 
 function comparePassword(password, field) {
   return new Promise((resolve, reject) => {
+    if (!field) {
+      return resolve(false);
+    }
     bcrypt.compare(password, field, (err, isMatch) => {
       if (err) {
         return reject(err);
