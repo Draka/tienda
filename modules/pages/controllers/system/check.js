@@ -6,7 +6,8 @@ function check(req, slug, pDefault, cb) {
   }
   pDefault = pDefault || {};
   models.Page
-    .findOne({ tenancy: req.tenancy,
+    .findOne({
+      tenancy: req.tenancy,
       slug,
       tenancy: req.tenancy,
     })
@@ -50,13 +51,13 @@ module.exports = (req, res, next) => {
       check(req, 'footer-l-1-c-2', { html: modCnf['footer-l-1-c-2'], publish: false }, cb);
     },
     (cb) => {
-      check(req, 'footer-l-2-c-1', { html: modCnf['footer-l-2-c-1'], publish: false }, cb);
+      check(req, 'footer-l-1-c-3', { html: modCnf['footer-l-1-c-3'], publish: false }, cb);
     },
     (cb) => {
-      check(req, 'footer-l-2-c-2', { html: modCnf['footer-l-2-c-2'], publish: false }, cb);
+      check(req, 'footer-logo', { html: modCnf['footer-logo'], publish: false }, cb);
     },
     (cb) => {
-      check(req, 'footer-l-2-c-3', { html: modCnf['footer-l-2-c-3'], publish: false }, cb);
+      check(req, 'footer-newsletter', { html: modCnf['footer-newsletter'], publish: false }, cb);
     },
   ], (err) => {
     if (err) {
