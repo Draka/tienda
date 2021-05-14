@@ -93,10 +93,10 @@ global.models = require('./models');
 
 const app = express();
 app.use(cors({
-  origin: [
-    /\.santratro\.com$/,
-    'localhost:3000',
-  ],
+  origin: '*',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
 }));
 // carga site
 app.use(site);
