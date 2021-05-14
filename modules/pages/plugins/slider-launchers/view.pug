@@ -22,7 +22,7 @@ mixin simpleProduct(product)
   .flex.align-items-start
     each item,i in items
       .tc.h-100.relative.flex-grow.flex-basis.w-50.p-1p(class=(i>=2?'hide-xs hide-sm':'')+(i>=3?' hide-md':''))
-        if item.productID
+        if item && item.productID
           a.flex.col(href=`/grupos/${url}/${_.get(_.first(_.get(item, 'productID.categoryIDs')), 'slugLong')}`)
             +simpleProduct(item.productID)
             .w-100.mt-1-sm.mt-1-md.mt-1-lg.mt-1-xl
