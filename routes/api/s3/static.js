@@ -21,9 +21,13 @@ async function getFiles(dir) {
 }
 
 module.exports = (req, res, next) => {
+  let cont = 0;
   getFiles('./public')
     .then((files) => {
       async.mapLimit(files, 2, (file, cb) => {
+        if (file.search('tenancy') >= 0) {
+          return cb();
+        }
         const ext = path.extname(file);
         if ([
           '.jpg',
@@ -59,14 +63,16 @@ module.exports = (req, res, next) => {
             ACL: 'public-read',
             StorageClass: 'INTELLIGENT_TIERING',
           };
+          console.log(params);
 
           s3.upload(params, cb);
+          cont++;
         });
       }, (err) => {
         if (err) {
           return next(err);
         }
-        res.send({ num: files.length });
+        res.send({ num: cont });
       });
     })
     .catch((e) => next(e));

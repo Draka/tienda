@@ -3,6 +3,11 @@ const fs = require('fs');
 const fse = require('fs-extra');
 const modCnf = require('../modCnf');
 
+const s3 = new AWS.S3({
+  accessKeyId: appCnf.s3.accessKeyId,
+  secretAccessKey: appCnf.s3.secretAccessKey,
+});
+
 module.exports = (req, cb) => {
   console.log('genera css');
   const errors = [];
@@ -78,6 +83,29 @@ module.exports = (req, cb) => {
     save: ['css', (results, cb) => {
       results.query.style.css = _.random(10000, 99999);
       results.query.save(cb);
+    }],
+    upload: ['css', (results, cb) => {
+      if (process.env.NODE_ENV === 'production' || appCnf.s3.forced) {
+        const file = `${toFile}/style.min.css`;
+        fs.readFile(file, (err, fileContent) => {
+          const pathKey = file.split('/public/')[1];
+          const params = {
+            Bucket: appCnf.s3.bucket,
+            Key: pathKey, // ruta donde va a quedar
+            Body: fileContent,
+            CacheControl: 'private, max-age=31536000',
+            ContentType: 'text/css',
+            Expires: moment.tz().add(1, 'year').unix(),
+            ACL: 'public-read',
+            StorageClass: 'INTELLIGENT_TIERING',
+          };
+          console.log(params);
+
+          s3.upload(params, cb);
+        });
+      } else {
+        cb();
+      }
     }],
   }, cb);
 };

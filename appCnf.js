@@ -12,9 +12,9 @@ const enviroment = {
   dbPrefix: process.env.DB_PREFIX || '',
   keySecret: process.env.KEY_SECRET || 'key',
   s3: {
-    accessKeyId: process.env.AWS_KEY || 'AKIATOVGUG4EOMZ52P5I',
-    secretAccessKey: process.env.AWS_ACCESS || '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',
-    bucket: process.env.AWS_BUCKET || '',
+    accessKeyId: process.env.AWS_KEY || 'AKIAUWYSH2GR2PC775ET',
+    secretAccessKey: process.env.AWS_ACCESS || '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',
+    bucket: process.env.AWS_BUCKET || 'cdn.santrato.com',
     folder: process.env.AWS_FOLDER || 'local',
     sqs: process.env.AWS_SQS || 'https://sqs.us-east-1.amazonaws.com/237646395144/mail',
     urlExSQS: process.env.AWS_EX_SQS || 'https://santrato.com/v1/services/send-email',
