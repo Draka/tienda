@@ -45,14 +45,8 @@ function preUpdate(result, next) {
 schema.post('validate', preUpdate);
 
 schema.post('remove', (result) => {
-  client.del(`__category__${result._id}`);
-  client.del(`__category_tree__${result.storeID}`);
-  if (!result.storeID) {
-    client.del(`__category_tree__tenancy__${result.tenancy}`);
-  }
-  if (result.slugLong) {
-    client.del(`__category__${result.storeID}__${result.slugLong}`);
-  }
+  deleteKeysByPattern(`__tenancy:${result.tenancy}__category__*`);
+  client.del(`__tenancy:${result.tenancy}__category_tree__`);
 });
 
 schema.index({

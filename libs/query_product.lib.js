@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
-exports.productBySKU = (storeID, sku, cb) => {
-  const key = `__product__${storeID}__${sku}`;
+exports.productBySKU = (req, storeID, sku, cb) => {
+  const key = `__tenancy:${req.tenancy}__product__${storeID}__${sku}`;
   client.get(key, (_err, reply) => {
     if (reply && process.env.NODE_ENV === 'production') {
       cb(null, JSON.parse(reply));

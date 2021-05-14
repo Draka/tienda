@@ -4,7 +4,7 @@ module.exports = (req, res, next) => {
   async.auto({
     validate: (cb) => cb(),
     tree: ['validate', (results, cb) => {
-      categoryTree(cb);
+      categoryTree(req, cb);
     }],
     items: ['tree', (results, cb) => {
       const items = [];

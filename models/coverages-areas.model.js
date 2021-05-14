@@ -33,8 +33,8 @@ const schema = new mongoose.Schema({
 }, { timestamps: true });
 
 function preUpdate(result, next) {
-  client.del(`__coverages-areas__${result.storeID}`);
-  client.del(`__coverage-area__${result._id}`);
+  client.del(`__tenancy:${result.tenancy}__coverages-areas__${result.storeID}`);
+  client.del(`__tenancy:${result.tenancy}__coverage-area__${result._id}`);
   next();
 }
 schema.post('validate', preUpdate);

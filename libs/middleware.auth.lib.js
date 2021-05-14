@@ -15,7 +15,7 @@ module.exports = (req, res, next) => {
   const payload = isAuthenticated(token);
 
   if (payload) {
-    query.user(payload._id, (err, user) => {
+    query.user(req, payload._id, (err, user) => {
       req.user = user;
       return next(err);
     });

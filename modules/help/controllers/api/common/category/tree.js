@@ -4,7 +4,7 @@ module.exports = (req, res, next) => {
   async.auto({
     validate: (cb) => cb(),
     query: ['validate', (results, cb) => {
-      categoryTree(cb);
+      categoryTree(req, cb);
     }],
   }, (err, results) => {
     if (err) {

@@ -24,7 +24,7 @@ module.exports = (req, res, next) => {
       cb();
     }],
     product: ['postFind', (results, cb) => {
-      queryProduct.productBySKU(results.store._id, req.params.sku, cb);
+      queryProduct.productBySKU(req, results.store._id, req.params.sku, cb);
     }],
     postFindProduct: ['product', (results, cb) => {
       if (!results.store || !results.product) {

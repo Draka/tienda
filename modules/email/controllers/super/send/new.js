@@ -3,7 +3,7 @@ const { modelAll } = require('../../../../../libs/query.lib');
 module.exports = (req, res, next) => {
   async.auto({
     validate: (cb) => cb(),
-    templates: (cb) => modelAll('EmailTemplate', cb),
+    templates: (cb) => modelAll(req, 'EmailTemplate', cb),
   }, (err, results) => {
     if (err) {
       return next(err);

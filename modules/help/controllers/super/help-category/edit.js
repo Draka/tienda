@@ -14,7 +14,7 @@ module.exports = (req, res, next) => {
       cb();
     }],
     tree: ['check', (results, cb) => {
-      categoryTree(cb);
+      categoryTree(req, cb);
     }],
     items: ['tree', (results, cb) => {
       const items = [];

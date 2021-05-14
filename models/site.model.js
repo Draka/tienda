@@ -142,7 +142,7 @@ const schema = new mongoose.Schema({
 }, { timestamps: true });
 
 function preUpdate(result, next) {
-  client.del(`__site__${result.tenancy}__`);
+  client.del(`__tenancy:${result.tenancy}__site__`);
   next();
 }
 schema.post('validate', preUpdate);

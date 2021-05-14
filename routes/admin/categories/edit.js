@@ -30,7 +30,7 @@ module.exports = (req, res, next) => {
         .exec(cb);
     }],
     tree: ['check', (results, cb) => {
-      query.categoryTree(req.params.storeID, cb);
+      query.categoryTree(req, req.params.storeID, cb);
     }],
     items: ['tree', (results, cb) => {
       const items = [];

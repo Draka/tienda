@@ -19,7 +19,7 @@ module.exports = (req, store, bodyItems, cb) => {
         if (!store) {
           return cb();
         }
-        productBySKU(store._id, item.sku, (err, doc) => {
+        productBySKU(req, store._id, item.sku, (err, doc) => {
           if (err) {
             return cb(err);
           }

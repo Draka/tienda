@@ -16,13 +16,16 @@ const breadcrumbs = [
 ];
 
 module.exports = (req, res, next) => {
-  query.user(req.user._id, (err, user) => {
+  query.user(req, req.user._id, (err, user) => {
     if (err) {
       return next(err);
     }
     res.render('admin/pages/account/email-edit.pug', {
       req,
-      user, menu: 'correo', active: 'editar', breadcrumbs,
+      user,
+      menu: 'correo',
+      active: 'editar',
+      breadcrumbs,
     });
   });
 };

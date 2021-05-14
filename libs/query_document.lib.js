@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
-exports.documentBySlug = (slug, cb) => {
-  const key = `__document__${slug}`;
+exports.documentBySlug = (req, slug, cb) => {
+  const key = `__tenancy:${req.tenancy}__document__${slug}`;
   client.get(key, (_err, reply) => {
     if (reply && process.env.NODE_ENV === 'production') {
       cb(null, JSON.parse(reply));

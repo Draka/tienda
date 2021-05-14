@@ -1,4 +1,4 @@
-exports.xxxxstores = (cb) => {
+exports.xxxxstores = (req, cb) => {
   const key = '__stores__';
   client.get(key, (_err, reply) => {
     if (reply && process.env.NODE_ENV === 'production') {
@@ -19,7 +19,7 @@ exports.xxxxstores = (cb) => {
 };
 
 exports.storesByPrimaryActivity = (req, primaryActivity, cb) => {
-  const key = `__stores__primaryActivity__${primaryActivity}`;
+  const key = `__tenancy:${req.tenancy}__stores__primaryActivity__${primaryActivity}`;
   client.get(key, (_err, reply) => {
     if (reply && process.env.NODE_ENV === 'production') {
       cb(null, JSON.parse(reply));

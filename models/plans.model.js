@@ -46,11 +46,11 @@ const schema = new mongoose.Schema({
 }, { timestamps: true });
 
 function preUpdate(result, next) {
-  client.del('__plans__publish__');
-  client.del(`__plan__${result._id}`);
+  client.del(`__tenancy:${result.tenancy}__plans__publish__`);
+  client.del(`__tenancy:${result.tenancy}__plan__${result._id}`);
   if (result.slug) {
     result.slug = _.kebabCase(_.deburr(result.slug));
-    client.del(`__plan__${result.slug}`);
+    client.del(`__tenancy:${result.tenancy}__plan__${result.slug}`);
   }
   if (result.name && !result.slug) {
     result.slug = _.kebabCase(_.deburr(result.name));

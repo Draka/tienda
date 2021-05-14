@@ -19,7 +19,7 @@ module.exports = (req, res, next) => {
       cb();
     }],
     product: ['check', (results, cb) => {
-      queryProduct.productBySKU(results.store._id, req.params.productSKU, cb);
+      queryProduct.productBySKU(req, results.store._id, req.params.productSKU, cb);
     }],
     postFind: ['product', (results, cb) => {
       if (!results.product) {

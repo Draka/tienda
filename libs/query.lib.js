@@ -1,6 +1,6 @@
 exports.model = (req, model, id, cb) => {
   const name = _.kebabCase(_.deburr(model));
-  const key = `__${name}__tenancy:${req.tenancy}_${id}`;
+  const key = `__tenancy:${req.tenancy}__${name}__${id}`;
   client.get(key, (_err, reply) => {
     if (reply && process.env.NODE_ENV === 'production') {
       cb(null, JSON.parse(reply));
@@ -22,7 +22,7 @@ exports.model = (req, model, id, cb) => {
 exports.modelSlug = (req, model, slug, cb) => {
   const name = _.kebabCase(_.deburr(model));
   slug = _.kebabCase(_.deburr(slug));
-  const key = `__${name}__tenancy:${req.tenancy}_${slug}`;
+  const key = `__tenancy:${req.tenancy}__${name}__${slug}`;
   client.get(key, (_err, reply) => {
     if (reply && process.env.NODE_ENV === 'production') {
       cb(null, JSON.parse(reply));
@@ -42,7 +42,7 @@ exports.modelSlug = (req, model, slug, cb) => {
 };
 
 exports.xxxxxxxmodelAllPublish = (req, model, cb) => {
-  const key = `__${models[model].collection.collectionName}__tenancy:${req.tenancy}_publish__`;
+  const key = `__tenancy:${req.tenancy}__${models[model].collection.collectionName}__publish__`;
   client.get(key, (_err, reply) => {
     if (reply && process.env.NODE_ENV === 'production') {
       cb(null, JSON.parse(reply));
@@ -61,8 +61,8 @@ exports.xxxxxxxmodelAllPublish = (req, model, cb) => {
   });
 };
 
-exports.modelAll = (model, cb) => {
-  const key = `__${models[model].collection.collectionName}__`;
+exports.modelAll = (req, model, cb) => {
+  const key = `__tenancy:${req.tenancy}__${models[model].collection.collectionName}__`;
   client.get(key, (_err, reply) => {
     if (reply && process.env.NODE_ENV === 'production') {
       cb(null, JSON.parse(reply));
@@ -81,8 +81,8 @@ exports.modelAll = (model, cb) => {
   });
 };
 
-exports.user = (id, cb) => {
-  const key = `__user__${id}`;
+exports.user = (req, id, cb) => {
+  const key = `__tenancy:${req.tenancy}__user__${id}`;
   client.get(key, (_err, reply) => {
     if (reply && process.env.NODE_ENV === 'production') {
       cb(null, JSON.parse(reply));
@@ -101,8 +101,8 @@ exports.user = (id, cb) => {
   });
 };
 
-exports.xxxxxxstore = (id, cb) => {
-  const key = `__store__${id}`;
+exports.xxxxxxstore = (req, id, cb) => {
+  const key = `__tenancy:${req.tenancy}__store__${id}`;
   client.get(key, (_err, reply) => {
     if (reply && process.env.NODE_ENV === 'production') {
       cb(null, JSON.parse(reply));
@@ -121,8 +121,8 @@ exports.xxxxxxstore = (id, cb) => {
   });
 };
 
-exports.place = (id, cb) => {
-  const key = `__place__${id}`;
+exports.place = (req, id, cb) => {
+  const key = `__tenancy:${req.tenancy}__place__${id}`;
   client.get(key, (_err, reply) => {
     if (reply && process.env.NODE_ENV === 'production') {
       cb(null, JSON.parse(reply));

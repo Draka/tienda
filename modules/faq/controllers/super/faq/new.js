@@ -4,7 +4,7 @@ module.exports = (req, res, next) => {
   async.auto({
     validate: (cb) => cb(),
     categories: ['validate', (_results, cb) => {
-      modelAll('FaqCategory', cb);
+      modelAll(req, 'FaqCategory', cb);
     }],
   }, (err, results) => {
     if (err) {

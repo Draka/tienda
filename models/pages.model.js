@@ -42,15 +42,15 @@ const schema = new mongoose.Schema({
 }, { timestamps: true });
 
 function preUpdate(result, next) {
-  deleteKeysByPattern(result.tenancy, `__page_render__tenancy:${result.tenancy}_*`);
-  client.del(`__page__tenancy:${result.tenancy}_${result._id}`);
+  deleteKeysByPattern(`__tenancy:${result.tenancy}__page_render__*`);
+  client.del(`__tenancy:${result.tenancy}__page__${result._id}`);
   if (result.slug) {
     result.slug = _.kebabCase(_.deburr(result.slug));
-    client.del(`__page__tenancy:${result.tenancy}_${result.slug}`);
+    client.del(`__tenancy:${result.tenancy}__page__${result.slug}`);
   }
   if (result.title && !result.slug) {
     result.slug = _.kebabCase(_.deburr(result.title));
-    client.del(`__page__tenancy:${result.tenancy}_${result.slug}`);
+    client.del(`__tenancy:${result.tenancy}__page__${result.slug}`);
   }
   next();
 }

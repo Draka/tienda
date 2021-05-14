@@ -8,7 +8,7 @@ module.exports = (req, res, next) => {
         .exec(cb);
     },
     categories: ['item', (_results, cb) => {
-      modelAll('FaqCategory', cb);
+      modelAll(req, 'FaqCategory', cb);
     }],
     check: ['item', (results, cb) => {
       if (!results.item) {

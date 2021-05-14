@@ -24,8 +24,8 @@ function categoryTree(categoryID, cb) {
     });
 }
 
-exports.categoryTree = (cb) => {
-  const key = '__help-categories__';
+exports.categoryTree = (req, cb) => {
+  const key = `__tenancy:${req.tenancy}__help-categories__`;
   client.get(key, (_err, reply) => {
     if (reply && process.env.NODE_ENV === 'production') {
       cb(null, JSON.parse(reply));
@@ -53,7 +53,7 @@ exports.treePush = treePush;
 
 function up(categoryID, cb) {
   models.HelpCategory
-    .findOne({ tenancy: req.tenancy, _id: categoryID })
+    .findOne({ _id: categoryID })
     .select('slugLong')
     .exec((err, doc) => {
       if (err) {

@@ -25,9 +25,9 @@ const schema = new mongoose.Schema({
 }, { timestamps: true });
 
 function preUpdate(result, next) {
-  client.del('__multimedias__');
+  client.del(`__tenancy:${result.tenancy}__multimedias__`);
   if (result.key) {
-    client.del(`__multimedia__${result.key}`);
+    client.del(`__tenancy:${result.tenancy}__multimedia__${result.key}`);
   }
   next();
 }

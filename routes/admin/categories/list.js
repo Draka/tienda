@@ -31,7 +31,7 @@ module.exports = (req, res, next) => {
       return cb(listErrors(401, null, [{ field: 'storeID', msg: 'No puedes ver esta tienda' }]));
     }],
     tree: ['check', (results, cb) => {
-      query.categoryTree(req.params.storeID, cb);
+      query.categoryTree(req, req.params.storeID, cb);
     }],
     items: ['tree', (results, cb) => {
       const items = [];

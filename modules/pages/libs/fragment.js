@@ -4,7 +4,7 @@ const { metaNoCache } = require('./meta');
 const fragments = {};
 
 function getPage(req, slug, cb) {
-  const key = `__xpage_render__${slug}`;
+  const key = `__tenancy:${req.tenancy}__xpage_render__${slug}`;
   client.get(key, (_err, reply) => {
     if (reply) {
       cb(reply);

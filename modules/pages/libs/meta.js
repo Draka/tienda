@@ -106,7 +106,7 @@ const _meta = (req, text, html, cb) => {
             const slugs = match[1].split(',');
             async.auto({
               items: (cb) => {
-                modelAllPlans(cb);
+                modelAllPlans(req, cb);
               },
               features: ['items', (results, cb) => {
                 const features = {};
@@ -329,7 +329,7 @@ const _meta = (req, text, html, cb) => {
 };
 
 const meta = (req, slug, text, html, cb) => {
-  const key = `__page_render__tenancy:${req.tenancy}_${slug}`;
+  const key = `__tenancy:${req.tenancy}__page_render__`;
   client.get(key, (_err, reply) => {
     if (reply && process.env.NODE_ENV === 'production') {
       cb(null, reply);

@@ -30,7 +30,7 @@ const schema = new mongoose.Schema({
 }, { timestamps: true });
 
 function preUpdate(result, next) {
-  client.del(`__session__${result._id}`);
+  client.del(`__tenancy:${result.tenancy}__session__${result._id}`);
   next();
 }
 schema.post('validate', preUpdate);

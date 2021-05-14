@@ -5,7 +5,7 @@ module.exports = (app) => {
   app.get('/documentos/:documentSlug', (req, res, next) => {
     async.auto({
       item: (cb) => {
-        queryDocument.documentBySlug(req.params.documentSlug, cb);
+        queryDocument.documentBySlug(req, req.params.documentSlug, cb);
       },
       check: ['item', (results, cb) => {
         if (!results.item) {
