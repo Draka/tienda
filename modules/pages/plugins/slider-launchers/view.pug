@@ -22,17 +22,18 @@ mixin simpleProduct(product)
   .flex.align-items-start
     each item,i in items
       .tc.h-100.relative.flex-grow.flex-basis.w-50.p-1p(class=(i>=2?'hide-xs hide-sm':'')+(i>=3?' hide-md':''))
-        a.flex.col(href=`/grupos/${url}/${_.get(_.first(item.productID.categoryIDs), 'slugLong')}`)
-          +simpleProduct(item.productID)
-          .w-100.mt-1-sm.mt-1-md.mt-1-lg.mt-1-xl
-            .small.oh.ellipsis.lines-2
-              if slug=='launcher-new-offers'
-                if _.get(item.productID, 'offer.percentage') && ( (_.get(item.productID, 'offer.available.start') && moment().isAfter(moment(item.productID.offer.available.start)) ) || !_.get(item.productID, 'offer.available.start') )  && ( (_.get(item.productID, 'offer.available.end') && moment().isBefore(moment(item.productID.offer.available.end)) ) || !_.get(item.productID, 'offer.available.end') )
-                  .b.t.t-gray-2 #{formatMoney(item.productID.price || 0)}
-                  .b #{formatMoney(item.productID.offer.price || 0)}
+        if item.productID
+          a.flex.col(href=`/grupos/${url}/${_.get(_.first(_.get(item, 'productID.categoryIDs')), 'slugLong')}`)
+            +simpleProduct(item.productID)
+            .w-100.mt-1-sm.mt-1-md.mt-1-lg.mt-1-xl
+              .small.oh.ellipsis.lines-2
+                if slug=='launcher-new-offers'
+                  if _.get(item.productID, 'offer.percentage') && ( (_.get(item.productID, 'offer.available.start') && moment().isAfter(moment(item.productID.offer.available.start)) ) || !_.get(item.productID, 'offer.available.start') )  && ( (_.get(item.productID, 'offer.available.end') && moment().isBefore(moment(item.productID.offer.available.end)) ) || !_.get(item.productID, 'offer.available.end') )
+                    .b.t.t-gray-2 #{formatMoney(item.productID.price || 0)}
+                    .b #{formatMoney(item.productID.offer.price || 0)}
+                  else
+                    .b #{formatMoney(item.productID.price || 0)}
                 else
-                  .b #{formatMoney(item.productID.price || 0)}
-              else
-                | #{_.first(item.productID.categoryText)}
+                  | #{_.first(item.productID.categoryText)}
 
 
