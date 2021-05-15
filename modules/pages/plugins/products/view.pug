@@ -1,9 +1,9 @@
 mixin img(name, image, size = ['196x196_jpg', '392x392_jpg'], cssClass)
   .relative.rd-0-5.oh
     if (image)
-      img.w-100.lazy(data-src=image[size[0]] data-retina=image[size[1]] alt=name class=cssClass?cssClass:'')
+      img.w-100.lazy(data-src=image[size[0]] data-retina=image[size[1]] alt=_.truncate(name, {'length': 30,'separator': ' '}) class=cssClass?cssClass:'')
     else
-      img.w-100.lazy(data-src=`${appCnf.url.cdn}images/imagen_no_disponible.svg` alt=name class=cssClass?cssClass:'')
+      img.w-100.lazy(data-src=`${appCnf.url.cdn}images/imagen_no_disponible.svg` alt=_.truncate(name, {'length': 30,'separator': ' '}) class=cssClass?cssClass:'')
     .absolute.top.black.op-0-05.w-100.h-100
 
 .row
