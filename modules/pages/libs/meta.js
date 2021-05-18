@@ -329,7 +329,7 @@ const _meta = (req, text, html, cb) => {
 };
 
 const meta = (req, slug, text, html, cb) => {
-  const key = `__tenancy:${req.tenancy}__page_render__`;
+  const key = `__tenancy:${req.tenancy}__page_render__${slug}`;
   client.get(key, (_err, reply) => {
     if (reply && process.env.NODE_ENV === 'production') {
       cb(null, reply);

@@ -23,7 +23,6 @@ exports.modelSlug = (req, model, slug, cb) => {
   const name = _.kebabCase(_.deburr(model));
   slug = _.kebabCase(_.deburr(slug));
   const key = `__tenancy:${req.tenancy}__${name}__${slug}`;
-  console.log('XXXXX', key);
   client.get(key, (_err, reply) => {
     if (reply && process.env.NODE_ENV === 'production') {
       cb(null, JSON.parse(reply));
