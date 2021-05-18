@@ -1,6 +1,5 @@
 @each $key, $val in $sizes-text {
   &.#{$key} {
     font-size: 1em * $val;
-    line-height: 110%;
   }
 }

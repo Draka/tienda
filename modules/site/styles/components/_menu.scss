@@ -8,7 +8,7 @@
   > * {
     white-space: nowrap;
   }
-  a {
+  a:not(.btn) {
     padding: 0 (1em / 2);
     &:hover,
     &:focus {

@@ -6,11 +6,6 @@
 @import "components/base";
 @import "components/util";
 
-@import "base/grid";
-@import "base/color";
-@import "base/typography";
-@import "base/link";
-
 @import "components/button";
 @import "components/badge";
 @import "components/navbar";
@@ -31,3 +26,8 @@
 @import "util";
 
 @import "javascript";
+
+@import "base/grid";
+@import "base/color";
+@import "base/link";
+@import "base/typography";

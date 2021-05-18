@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const sqsMailer = require('../../../libs/sqs_mailer');
+const sqsMailer = require('../../../libs/sqs-mailer.lib');
 
 function hash(obj, key) {
   return new Promise((resolve, reject) => {
