@@ -4,6 +4,7 @@ const sliderHero = require('./slider-hero');
 const categoriesBestSellers = require('./categories-best-sellers');
 const categoriesSlider = require('./categories-slider');
 const products = require('./products');
+const getSalesman = require('./get-salesman');
 
 module.exports = [
   sliderProducts,
@@ -12,4 +13,5 @@ module.exports = [
   categoriesBestSellers,
   categoriesSlider,
   products,
+  getSalesman,
 ];

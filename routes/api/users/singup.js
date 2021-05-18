@@ -46,7 +46,6 @@ module.exports = (req, res, next) => {
       models.User
         .find({
           tenancy: req.tenancy,
-          tenancy: req.tenancy,
           emailNormalized: body.emailNormalized,
         })
         .exec(cb);

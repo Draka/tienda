@@ -102,3 +102,23 @@ exports.mapImg = (order) => {
   const img = `${url}(${latlng})/${latlng},${zoom},0,0/484x484?access_token=${accessToken}`;
   return img;
 };
+
+exports.setPrice = (product) => {
+  product.originalPrice = product.price;
+  if (
+    _.get(product, 'offer.percentage')
+  && (
+    (_.get(product, 'offer.available.start')
+  && moment().isAfter(moment(product.offer.available.start)))
+  || !_.get(product, 'offer.available.start')
+  )
+  && (
+    (_.get(product, 'offer.available.end')
+    && moment().isBefore(moment(product.offer.available.end))
+    )
+  || !_.get(product, 'offer.available.end')
+  )
+  ) {
+    product.price = product.offer.price;
+  }
+};

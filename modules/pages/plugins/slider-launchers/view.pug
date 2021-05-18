@@ -19,7 +19,7 @@ mixin simpleProduct(product)
       | Favoritos
     else if slug=='launcher-features'
       | Destacados
-  .flex.align-items-start
+  .flex.ai-s
     each item,i in items
       .tc.h-100.relative.flex-grow.flex-basis.w-50.p-1p(class=(i>=2?'hide-xs hide-sm':'')+(i>=3?' hide-md':''))
         if item && item.productID

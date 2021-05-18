@@ -33,7 +33,7 @@ module.exports = (app) => {
         active: true,
       },
     ];
-    res.render('pages/common/signup', {
+    res.render('pages/common/singup', {
       req,
       title: 'Registrarse como cliente',
       description: `Inscríbase en ${_.get(req, 'site.name')}, navegue por nuestra vitrina virtual, seleccione sus productos y pague online`,
@@ -54,7 +54,7 @@ module.exports = (app) => {
         active: true,
       },
     ];
-    res.render('pages/common/signup-confirm', {
+    res.render('pages/common/singup-confirm', {
       req,
       title: 'Registro Confirmación',
       breadcrumbs,

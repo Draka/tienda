@@ -6,6 +6,7 @@ module.exports = (req, res, next) => {
       return next(listErrors(401));
     }
     res.status(401).render('pages/common/login', {
+      req,
       title: 'Iniciar Sesión',
       js: 'page',
       returnPage: req.originalUrl,

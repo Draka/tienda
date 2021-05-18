@@ -1,12 +1,12 @@
 a:not(.btn):not(.item):not(.step) {
-  color: map-get($colors-sections, "black");
+  color: $color-foreground;
   cursor: pointer;
   text-decoration: none;
   transition: background-color 0.3s linear, color 0.3s linear;
 
   &:hover,
   &:focus {
-    color: darken($color: map-get($colors-sections, "black"), $amount: 20);
+    color: darken($color: $color-foreground, $amount: 20);
   }
 
   &:hover {

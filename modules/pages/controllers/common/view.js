@@ -11,7 +11,7 @@ module.exports = (req, res, next) => {
         return cb(listErrors(404, null, [{ field: 'pageID', msg: 'El registro no existe.' }]));
       }
       // Busca todos los meta para convertir
-      meta(req.params.slug, results.item.html, true, cb);
+      meta(req, req.params.slug, results.item.html, true, cb);
     }],
   }, (err, results) => {
     if (err) {

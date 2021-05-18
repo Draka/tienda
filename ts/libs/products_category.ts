@@ -26,8 +26,10 @@ export class ProductCategory {
   placeProduct() {
     $('.place-product').each((_i, el) => {
       const $el = $(el);
-      const product = $el.data('product');
+      const data = $el.data('product');
       const objValue = $('.box-controls .value');
+
+      const product = this.cart.getProduct(data.store, data.sku) || data;
 
       // Controles de aumento y disminución
       $('.box-controls .minus').on('click', () => {
@@ -40,8 +42,13 @@ export class ProductCategory {
         const v = parseInt(objValue.html(), 10);
         objValue.html(`${v + 1}`);
       });
-      $('.quantity .add').on('click', () => {
-        this.cart.setQuantity(product, parseInt(objValue.html(), 10), `${product.store}/view_product`);
+      $('.quantity .add').on('click', (event) => {
+        const $el = $(event.currentTarget);
+        if ($el.data('value')) {
+          this.cart.setQuantity(product, (product?.quantity || 0) + parseInt($el.data('value'), 10), `${product.store}/view_product`);
+        } else {
+          this.cart.setQuantity(product, parseInt(objValue.html(), 10), `${product.store}/view_product`);
+        }
       });
       this.gtag.viewItem(product, `${product.store}/view_product`);
       // pone la cantidad del producto en el campo

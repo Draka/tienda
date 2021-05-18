@@ -12,7 +12,7 @@ block content
           .p-1
             .msg.error#form-results
             .row
-              form.col-xs-12.validate-rest(id="signupForm" action=`${appCnf.url.api}users` method="post" data-page=`registro-confirmacion` data-error="#form-results")
+              form.col-xs-12.validate-rest(id="singupForm" action=`${appCnf.url.api}users` method="post" data-page=`registro-confirmacion` data-error="#form-results")
                 .row
                   .col-xs-12
                     .form-group
@@ -48,17 +48,17 @@ block content
                       .form-control
                         label
                           input.checkbox#tyc(
-                            type="checkbox" 
-                            name="tyc" 
-                            value='1' 
-                            requireCheck 
+                            type="checkbox"
+                            name="tyc"
+                            value='1'
+                            requireCheck
                             data-msg-error="Debe aceptar los Términos y Condiciones de Cliente para continuar"
                           )
                           span Acepto Términos y condiciones de Cliente
                   .col-xs-12
                     .form-group
                       .form-control
-                        a.b(href='/documentos/terminos-y-condiciones-cliente') 
+                        a.b(href='/documentos/terminos-y-condiciones-cliente')
                           | Ver Términos y Condiciones Cliente
                           | #{' '}
                           i.fas.fa-external-link-alt
@@ -67,17 +67,17 @@ block content
                       .form-control
                         label
                           input.checkbox#pptd(
-                            type="checkbox" 
-                            name="pptd" 
-                            value='1' 
-                            requireCheck 
+                            type="checkbox"
+                            name="pptd"
+                            value='1'
+                            requireCheck
                             data-msg-error="Debe aceptar la Política de Privacidad y Tratamiento de Datos para continuar"
                           )
                           span Acepto la Política de Privacidad y Tratamiento de Datos
                   .col-xs-12
                     .form-group
                       .form-control
-                        a.b(href='/documentos/politica-de-privacidad-y-tratamiento-de-datos') 
+                        a.b(href='/documentos/politica-de-privacidad-y-tratamiento-de-datos')
                           | Ver Política de Privacidad y Tratamiento de Datos
                           | #{' '}
                           i.fas.fa-external-link-alt

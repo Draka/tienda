@@ -1,7 +1,8 @@
 .btn {
   border-radius: $border-radius-base;
-  height: 2.25em;
-  padding: 0 1em;
+  min-height: 2.25em;
+  padding: .5em .75em;
+  line-height: 1.5;
   user-select: none;
   white-space: nowrap;
   cursor: pointer;
@@ -15,10 +16,6 @@
   display: inline-block;
   text-decoration: none;
   border: none;
-}
-
-.btn:not(button) {
-  line-height: 2.25em;
 }
 
 .btn {

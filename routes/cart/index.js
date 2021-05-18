@@ -1,7 +1,10 @@
 /* eslint-disable global-require */
+const cartAddress = require('./cart-address');
+const cartFinish = require('./cart-finish');
+
 module.exports = (app) => {
   // Carrito
   app.get('/carrito', require('./cart'));
-  app.get('/carrito-direccion', checkAuth, require('./cart-address'));
-  app.get('/carrito-resumen', checkAuth, require('./cart-finish'));
+  app.get('/carrito-direccion', checkAuth, cartAddress);
+  app.get('/carrito-resumen', checkAuth, cartFinish);
 };

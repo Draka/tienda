@@ -1,8 +1,11 @@
 .flex {
   display: flex;
   align-items: center;
-  &.align-items-start{
+  &.ai-s{
     align-items: start;
+  }
+  &.ai-fe{
+    align-items: flex-end;
   }
   &.col{
     flex-direction: column;

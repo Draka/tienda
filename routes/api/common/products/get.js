@@ -1,6 +1,7 @@
 const queryStore = require('../../../../libs/query_store.lib');
 const queryProduct = require('../../../../libs/query_product.lib');
 const { putS3Path } = require('../../../../libs/put_s3_path.lib');
+const { setPrice } = require('../../../../libs/util.lib');
 
 module.exports = (req, res, next) => {
   const errors = [];
@@ -56,7 +57,10 @@ module.exports = (req, res, next) => {
       'features',
       'storeID',
       'groups',
+      'offer',
     ]);
+    setPrice(product);
+
     product.storeName = results.store.name;
     res.send(product);
   });

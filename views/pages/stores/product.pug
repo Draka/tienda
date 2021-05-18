@@ -40,7 +40,11 @@ mixin product(product)
       .small.t-primary.mr-5
         | PRECIO:
       .social.t-secondary
-        | #{formatMoney(product.price)}
+        if _.get(product, 'offer.percentage') && ( (_.get(product, 'offer.available.start') && moment().isAfter(moment(product.offer.available.start)) ) || !_.get(product, 'offer.available.start') )  && ( (_.get(product, 'offer.available.end') && moment().isBefore(moment(product.offer.available.end)) ) || !_.get(product, 'offer.available.end') )
+          .b.t.t-gray-2 #{formatMoney(product.price || 0)}
+          .b #{formatMoney(product.offer.price || 0)}
+        else
+          .b #{formatMoney(product.price || 0)}
         .message
     .t-action.small.mb-1
       if product.inventory
@@ -54,16 +58,19 @@ mixin product(product)
         | En stock
     if (product.publish && product.isAvailable) && ((product.inventory && product.stock) > 0 || !product.inventory)
       .quantity.flex.mt-1
-        .box-controls.flex
-          button.btn.btn--primary.small.mr-0-5.minus
-            i.fas.fa-minus
-            span.out-screen Disminuir cantidad
-          .value.w-48p.mr-0-5.tc.b.p-0-25.br-1.rd-0-2.h-100(id='value_'+product.sku)
-            | 0
-          button.btn.btn--primary.small.mr-0-5.plus
-            i.fas.fa-plus
-            span.out-screen Aumentar cantidad
-        button.btn.btn--primary.small.add AÑADIR AL CARRITO
+        if _.get(req, 'site.cartValues')
+          .box-controls.flex
+            button.btn.btn--primary.small.mr-0-5.minus
+              i.fas.fa-minus
+              span.out-screen Disminuir cantidad
+            .value.w-48p.mr-0-5.tc.b.p-0-25.br-1.rd-0-2.h-100(id='value_'+product.sku)
+              | 1
+            button.btn.btn--primary.small.mr-0-5.plus
+              i.fas.fa-plus
+              span.out-screen Aumentar cantidad
+          button.btn.btn--primary.small.add AÑADIR AL CARRITO
+        else
+          button.btn.btn--primary.small.add(data-value=1) AÑADIR AL CARRITO
     if (_.get(product, 'digital.is'))
       .remark.info.mh-1 Producto de transmisión por internet
   if product.groups

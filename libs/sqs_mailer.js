@@ -7,6 +7,7 @@ const sqs = new AWS.SQS({
 });
 
 module.exports = (req, data, user, cb) => {
+  return cb();
   if (process.env.NODE_ENV !== 'production') {
     return cb();
   }

@@ -1,6 +1,6 @@
 const { putS3Path } = require('./put_s3_path.lib');
 const { productBySKU } = require('./query_product.lib');
-const { isAvailable } = require('./util.lib');
+const { isAvailable, setPrice } = require('./util.lib');
 
 /**
  *
@@ -28,6 +28,7 @@ module.exports = (req, store, bodyItems, cb) => {
             noActives.push(item);
             return cb();
           }
+          setPrice(doc);
           if (item.price !== doc.price) {
             changePrice.push(item);
           }

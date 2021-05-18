@@ -1,7 +1,10 @@
 body {
   font-family: $font-family;
-  font-size: $font-size-base;
+  font-size: 1rem;
   line-height: $font-line-height;
   background-color: $color-background;
   color: $color-foreground;
+}
+html,body {
+  height: 100%;
 }

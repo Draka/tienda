@@ -170,6 +170,10 @@ export class Cart {
     });
   }
 
+  getProduct(store: string, sku: string) {
+    return this.stores[store]?.cart[sku];
+  }
+
   /**
    * Suma el valor de los productos
    */
