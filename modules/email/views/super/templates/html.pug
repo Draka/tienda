@@ -27,12 +27,12 @@ block edit
             .form-control
               textarea.input#description(name="description" placeholder=' ') #{item.description}
               label(for='description') Descripción
-          .form-group.ph-1
-            .subtitle.mb-0-5 Texo
+          .form-group
             .form-control
-              textarea.cke-admin#text(name="text" placeholder=' ') #{item.text}
+              textarea.input#description(name="text" placeholder=' ' rows=20) #{item.text}
+              label(for='text') Texo HTML
       .row
         .col-xs-12.tr
-          a.btn.btn--info.w-100-xs.mt-1-xs(href=`/administracion/super/emails-plantillas/${item._id}/html`) Modo HTML
+          a.btn.btn--info.w-100-xs.mt-1-xs(href=`/administracion/super/emails-plantillas/${item._id}/edit`) Modo Normal
           | #{' '}
           button.btn.btn--primary.w-100-xs.mt-1-xs(type="submit") Guardar Plantilla

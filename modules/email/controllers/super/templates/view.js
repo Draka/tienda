@@ -20,9 +20,7 @@ module.exports = (req, res, next) => {
           name: _.get(req, 'site.email.title'),
           email: _.get(req, 'site.email.emailInfo'),
         },
-        replyToAddresses: [
-          _.get(req, 'site.email.emailNoreply'),
-        ],
+        replyToAddresses: _.get(req, 'site.email.emailNoreply'),
         site: {
           name: _.get(req, 'site.name'),
           urlSite: _.get(req, 'site.url'),

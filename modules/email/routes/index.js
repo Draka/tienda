@@ -1,6 +1,7 @@
 const emailTemplateList = require('../controllers/super/templates/list');
 const emailTemplateNew = require('../controllers/super/templates/new');
 const emailTemplateEdit = require('../controllers/super/templates/edit');
+const emailTemplateHtml = require('../controllers/super/templates/html');
 const emailTemplateView = require('../controllers/super/templates/view');
 const emailTemplateApiUpdate = require('../controllers/api/templates/update');
 const emailTemplateApiNew = require('../controllers/api/templates/new');
@@ -18,6 +19,7 @@ module.exports = (app) => {
   app.get('/administracion/super/emails-plantillas', checkAuthAdmin, emailTemplateList);
   app.get('/administracion/super/emails-plantillas/nuevo', checkAuthAdmin, emailTemplateNew);
   app.get('/administracion/super/emails-plantillas/:emailTemplateID/editar', checkAuthAdmin, emailTemplateEdit);
+  app.get('/administracion/super/emails-plantillas/:emailTemplateID/html', checkAuthAdmin, emailTemplateHtml);
   app.get('/administracion/super/emails-plantillas/:emailTemplateID/ver', checkAuthAdmin, emailTemplateView);
   app.post('/v1/admin/super/emails-templates', checkAuthAdmin, emailTemplateApiNew);
   app.put('/v1/admin/super/emails-templates/:emailTemplateID', checkAuthAdmin, emailTemplateApiUpdate);

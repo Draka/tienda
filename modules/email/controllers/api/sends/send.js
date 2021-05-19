@@ -1,5 +1,3 @@
-const Handlebars = require('handlebars');
-// const fs = require('fs');
 const mailer = require('../../../../../libs/mailer');
 
 module.exports = (req, res, next) => {
@@ -13,6 +11,7 @@ module.exports = (req, res, next) => {
     'test',
     'emails',
     'data',
+    'replyToAddresses',
   ]);
   body.tenancy = req.tenancy;
 
@@ -35,33 +34,19 @@ module.exports = (req, res, next) => {
       if (errors.length) {
         return cb(listErrors(400, null, errors));
       }
-      const template = Handlebars.compile(results.query.html);
       async.map(body.emails.split(','), (email, cb) => {
         email = _.trim(email);
         if (!email) {
           return cb();
         }
-        const data = {
-          subject: results.query.subject,
-          source: {
-            name: _.get(req, 'site.email.title'),
-            email: _.get(req, 'site.email.emailInfo'),
-          },
-          replyToAddresses: [
-            _.get(req, 'site.email.emailNoreply'),
-          ],
-          site: {
-            name: _.get(req, 'site.name'),
-            urlSite: req.urlSite,
-            urlStatic: appCnf.url.cdn,
-            info: _.get(req, 'site.email.emailInfo'),
-            title: _.get(req, 'site.email.title'),
-            color: _.get(req, 'site.color'),
-            logoEmail: _.get(req, 'site.images.logoEmail.jpg'),
-          },
+        // Une los datos del body
+        const data = _.merge({
+          replyToAddresses: body.replyToAddresses,
           tenancy: req.tenancy,
+          template: results.query.slug,
           v: appCnf.v,
-        };
+        }, _.clone(JSON.parse(body.data)));
+
         async.auto({
           user: (cb) => {
             if (body.test) {
@@ -87,10 +72,8 @@ module.exports = (req, res, next) => {
                 return cb(null, doc);
               });
           },
-          template: ['user', (results, cb) => cb('', template(data))],
-          send: ['template', (results, cb) => {
-            // fs.writeFile('./public/email.html', results.template, (cb));
-            mailer(data, results.user, results.template, cb);
+          send: ['user', (_results, cb) => {
+            mailer(data, cb);
           }],
         }, cb);
       }, cb);

@@ -35,6 +35,7 @@ module.exports = (req, res, next) => {
               data,
               cb,
             );
+            cb();
           },
           deleteSQS: ['mail', (results, cb) => {
             const deleteParams = {

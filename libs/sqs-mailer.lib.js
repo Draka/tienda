@@ -16,9 +16,7 @@ module.exports = (req, data, user, cb) => {
         name: _.get(req, 'site.email.title'),
         email: _.get(req, 'site.email.emailInfo'),
       };
-      data.replyToAddresses = [
-        _.get(req, 'site.email.emailNoreply'),
-      ];
+      data.replyToAddresses = _.get(req, 'site.email.emailNoreply');
       const params = {
         DelaySeconds: 0,
         MessageAttributes: {

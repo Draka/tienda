@@ -143,6 +143,9 @@ const schema = new mongoose.Schema({
 
 function preUpdate(result, next) {
   client.del(`__tenancy:${result.tenancy}__site__`);
+  if (result.url && result.url[result.url.length - 1] !== '/') {
+    result.url += '/';
+  }
   next();
 }
 schema.post('validate', preUpdate);

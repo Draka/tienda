@@ -1,4 +1,5 @@
 const Handlebars = require('handlebars');
+const fs = require('fs');
 const utf8 = require('utf8');
 const { htmlToText } = require('html-to-text');
 
@@ -43,7 +44,7 @@ module.exports = (data, cb) => {
         email: _.get(results, 'site.email.emailInfo') || 'no-reply@santrato.com',
       };
       data.replyToAddresses = [
-        _.get(results, 'site.email.emailNoreply') || 'no-reply@santrato.com',
+        data.replyToAddresses || _.get(results, 'site.email.emailNoreply') || 'no-reply@santrato.com',
       ];
       data.site = {
         name: _.get(results, 'site.name'),
@@ -56,6 +57,7 @@ module.exports = (data, cb) => {
       };
       data.v = appCnf.v;
       results.site.html = template(data);
+      fs.writeFile('./public/email2.html', results.site.html, () => {});
 
       const subject = Handlebars.compile(results.query.subject);
       data.subject = `${subject(data)} - ${_.get(results, 'site.name')}`;

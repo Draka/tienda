@@ -293,7 +293,10 @@ module.exports = (req, res, next) => {
                 image: _.get(product, 'imagesSizes.0.48x48_jpg'),
                 digital: _.get(product, 'digital.is'),
               })),
-              order: orderDoc.order,
+              items: orderDoc.order.items,
+              subtotal: formatMoney(orderDoc.order.subtotal),
+              shipping: formatMoney(orderDoc.order.shipping),
+              total: formatMoney(orderDoc.order.total),
               store: orderDoc.name,
               address: _.get(orderDoc, 'delivery.address.address'),
               cellphone: _.get(orderDoc, 'delivery.address.cellphone'),
@@ -306,9 +309,9 @@ module.exports = (req, res, next) => {
           },
           mailerAdmin: ['order', (results, cb) => {
             // correo solo para contra entrega
-            if (results.order.status === 'created' || results.order.payment.pse) {
-              return cb();
-            }
+            // if (results.order.status === 'created' || results.order.payment.pse) {
+            //   return cb();
+            // }
             results.order.populate({
               path: 'storeID',
               select: 'name slug approve publish',
@@ -332,9 +335,9 @@ module.exports = (req, res, next) => {
           }],
           mailerClient: ['order', (results, cb) => {
             // correo solo para contra entrega
-            if (results.order.status === 'created' || results.order.payment.pse) {
-              return cb();
-            }
+            // if (results.order.status === 'created' || results.order.payment.pse) {
+            //   return cb();
+            // }
             sqsMailer(req, {
               to: { email: results.order.userData.email, name: results.order.userData.name },
               template: 'client-new-order',

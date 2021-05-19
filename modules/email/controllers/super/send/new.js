@@ -19,7 +19,7 @@ module.exports = (req, res, next) => {
       },
       {
         link: '/administracion/super/emails-enviar',
-        text: 'Enviar Email',
+        text: 'Enviar desde Plantilla',
         active: true,
       },
     ];
@@ -27,7 +27,7 @@ module.exports = (req, res, next) => {
     res.render('../modules/email/views/super/send/new.pug', {
       req,
       templates: results.templates,
-      title: 'Nueva Plantilla',
+      title: 'Enviar desde Plantilla',
       menu: 'super-emails-enviar',
       breadcrumbs,
       js: 'admin',
