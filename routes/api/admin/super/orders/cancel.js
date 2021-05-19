@@ -15,7 +15,10 @@ module.exports = (req, res, next) => {
     },
     order: ['validate', (_results, cb) => {
       models.Order
-        .findById(req.params.orderID)
+        .findOne({
+          tenancy: req.tenancy,
+          _id: req.params.orderID,
+        })
         .exec(cb);
     }],
     cancel: ['order', (results, cb) => {

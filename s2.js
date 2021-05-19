@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable import/no-extraneous-dependencies */
 
 require('./constants');
@@ -7,10 +8,8 @@ const http = require('http');
 const debug = require('debug')('tienda:server');
 
 const port = process.env.PORT || '3001';
-const spdy = require('spdy');
 const express = require('express');
 const path = require('path');
-const fs = require('fs');
 
 const app = express();
 // Configurar cabeceras y cors
@@ -32,32 +31,6 @@ app.get('/', (req, res) => {
 
 const server = http.createServer(app);
 server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
-
-/**
- * Normalize a port into a number, string, or false.
- */
-
-function normalizePort(val) {
-  const port = parseInt(val, 10);
-
-  if (isNaN(port)) {
-    // named pipe
-    return val;
-  }
-
-  if (port >= 0) {
-    // port number
-    return port;
-  }
-
-  return false;
-}
-
-/**
-   * Event listener for HTTP server "error" event.
-   */
 
 function onError(error) {
   if (error.syscall !== 'listen') {
@@ -91,3 +64,5 @@ function onListening() {
   debug(`Listening on ${bind}`);
   console.log(`Listening on ${bind}`);
 }
+server.on('error', onError);
+server.on('listening', onListening);

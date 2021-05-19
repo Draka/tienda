@@ -8,7 +8,10 @@ module.exports = (req, res, next) => {
     },
     query: ['validate', (_results, cb) => {
       models.Multimedia
-        .findById(req.params.multimediaID)
+        .findOne({
+          tenancy: req.tenancy,
+          _id: req.params.multimediaID,
+        })
         .exec(cb);
     }],
     deleteS3: ['query', (results, cb) => {

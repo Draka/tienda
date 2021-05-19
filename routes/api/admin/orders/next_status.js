@@ -1,4 +1,4 @@
-const sqsMailer = require('../../../../libs/sqs_mailer');
+const sqsMailer = require('../../../../libs/sqs-mailer.lib');
 
 module.exports = (req, res, next) => {
   const errors = [];
@@ -88,7 +88,6 @@ module.exports = (req, res, next) => {
     mailerClient: ['save', (results, cb) => {
       sqsMailer(req, {
         to: { email: results.order.userData.email, name: results.order.userData.name },
-        subject: `Orden #${results.order.orderID} a cambiado a ${global.statusText(results.order.status)}`,
         template: 'client-order-change-status',
         order: _.pick(results.order, ['_id', 'orderID', 'status']),
       }, { _id: results.order.userID },

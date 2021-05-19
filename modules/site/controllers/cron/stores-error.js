@@ -1,5 +1,5 @@
 const { checkStore } = require('../../libs/check-store.lib');
-const sqsMailer = require('../../../../libs/sqs_mailer');
+// const sqsMailer = require('../../../../libs/sqs-mailer');
 
 module.exports = (req, res, next) => {
   async.auto({

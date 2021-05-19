@@ -1,5 +1,3 @@
-const query = require('../../../libs/query.lib');
-
 module.exports = (req, res, next) => {
   async.auto({
     user: (cb) => {

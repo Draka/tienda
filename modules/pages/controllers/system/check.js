@@ -9,7 +9,6 @@ function check(req, slug, pDefault, cb) {
     .findOne({
       tenancy: req.tenancy,
       slug,
-      tenancy: req.tenancy,
     })
     .lean()
     .exec((err, doc) => {

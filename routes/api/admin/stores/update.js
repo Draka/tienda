@@ -29,7 +29,7 @@ module.exports = (req, res, next) => {
     'mode',
     'messages',
   ]);
-  body.tenancy=req.tenancy;
+  body.tenancy = req.tenancy;
 
   if (req.body.lat && req.body.lng) {
     body['location.type'] = 'Point';

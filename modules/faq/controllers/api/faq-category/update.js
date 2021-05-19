@@ -7,7 +7,7 @@ module.exports = (req, res, next) => {
   const body = _.pick(fbody, [
     'name',
   ]);
-  body.tenancy=req.tenancy;
+  body.tenancy = req.tenancy;
 
   async.auto({
     validate: (cb) => {
@@ -21,7 +21,10 @@ module.exports = (req, res, next) => {
     },
     query: ['validate', (_results, cb) => {
       models.FaqCategory
-        .findById(req.params.faqCategoryID)
+        .findOne({
+          tenancy: req.tenancy,
+          _id: req.params.faqCategoryID,
+        })
         .exec(cb);
     }],
     save: ['query', (results, cb) => {

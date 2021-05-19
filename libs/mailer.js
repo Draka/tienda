@@ -1,4 +1,4 @@
-const pug = require('pug');
+const Handlebars = require('handlebars');
 const utf8 = require('utf8');
 const { htmlToText } = require('html-to-text');
 
@@ -8,55 +8,100 @@ const ses = new AWS.SES({
   region: 'us-east-1',
 });
 
-function template(data) {
-  const fn = pug.compileFile(`./views/tenancy/${data.tenancy || req.tenancy}/email/${data.template}.pug`, {});
-  const html = fn(data);
-  return html;
-}
-module.exports = (data, userID, html, cb) => {
-  if (!html) {
-    html = template(data);
-  }
-  const params = {
-    Destination: { /* required */
-      ToAddresses: [
-        `${utf8.encode(_.get(data, 'to.name') || '')}<${_.get(data, 'to.email')}>`,
-      ],
-    },
-    Message: { /* required */
-      Body: { /* required */
-        Html: {
-          Charset: 'UTF-8',
-          Data: html,
-        },
-        Text: {
-          Charset: 'UTF-8',
-          Data: htmlToText(html, {
-            wordwrap: 130,
-          }),
-        },
-      },
-      Subject: {
-        Charset: 'UTF-8',
-        Data: `${data.subject} - ${data.site.title}`,
-      },
-    },
-    // Source: `${_.get(data, 'from.name') || site.title}<${site.emailInfo}>`, /* required */
-    Source: `${utf8.encode(_.get(data, 'source.name') || '')}<${_.get(data, 'source.email')}>`, /* required */
-    ReplyToAddresses: data.replyToAddresses,
-  };
+module.exports = (data, cb) => {
+  const errors = [];
+
   async.auto({
-    send: (cb) => {
-      const sendPromise = ses.sendEmail(params).promise();
+    query: (cb) => {
+      models.EmailTemplate
+        .findOne({
+          tenancy: data.tenancy,
+          slug: data.template,
+        })
+        .lean()
+        .exec(cb);
+    },
+    site: (cb) => {
+      models.Site
+        .findOne({
+          tenancy: data.tenancy,
+        })
+        .lean()
+        .exec(cb);
+    },
+    template: ['query', 'site', (results, cb) => {
+      if (!results.query) {
+        errors.push({ field: data.template, msg: 'El registro no existe.' });
+      }
+      if (errors.length) {
+        return cb(listErrors(400, null, errors));
+      }
+
+      const template = Handlebars.compile(results.query.html);
+      data.source = {
+        name: _.get(results, 'site.email.title') || 'Correo Santrato',
+        email: _.get(results, 'site.email.emailInfo') || 'no-reply@santrato.com',
+      };
+      data.replyToAddresses = [
+        _.get(results, 'site.email.emailNoreply') || 'no-reply@santrato.com',
+      ];
+      data.site = {
+        name: _.get(results, 'site.name'),
+        urlSite: _.get(results, 'site.url'),
+        urlStatic: appCnf.url.cdn,
+        info: _.get(results, 'site.email.emailInfo'),
+        title: _.get(results, 'site.email.title'),
+        color: _.get(results, 'site.color'),
+        logoEmail: _.get(results, 'site.images.logoEmail.jpg'),
+      };
+      data.v = appCnf.v;
+      results.site.html = template(data);
+
+      const subject = Handlebars.compile(results.query.subject);
+      data.subject = `${subject(data)} - ${_.get(results, 'site.name')}`;
+
+      const params = {
+        Destination: { /* required */
+          ToAddresses: [
+            `${utf8.encode(_.get(data, 'to.name') || '')}<${_.get(data, 'to.email')}>`,
+          ],
+        },
+        Message: { /* required */
+          Body: { /* required */
+            Html: {
+              Charset: 'UTF-8',
+              Data: results.site.html,
+            },
+            Text: {
+              Charset: 'UTF-8',
+              Data: htmlToText(results.site.html, {
+                wordwrap: 130,
+              }),
+            },
+          },
+          Subject: {
+            Charset: 'UTF-8',
+            Data: data.subject,
+          },
+        },
+        // Source: `${_.get(data, 'from.name') || site.title}<${site.emailInfo}>`, /* required */
+        Source: `${utf8.encode(data.source.name)}<${data.source.email}>`, /* required */
+        ReplyToAddresses: data.replyToAddresses,
+      };
+      cb(null, params);
+    }],
+    send: ['template', (results, cb) => {
+      const sendPromise = ses.sendEmail(results.template).promise();
       sendPromise.then(
         (data) => {
           cb(null, data);
         },
       ).catch(cb);
-    },
+    }],
     register: ['send', (results, cb) => {
       const mail = new models.Email({
-        userID,
+        tenancy: data.tenancy,
+        userID: data.userID,
         template: data.template,
         subject: data.subject,
         email: _.get(data, 'to.email'),
@@ -67,7 +112,8 @@ module.exports = (data, userID, html, cb) => {
   }, (err, results) => {
     if (err) {
       const mail = new models.Email({
-        userID,
+        tenancy: data.tenancy,
+        userID: data.userID,
         template: data.template,
         subject: data.subject,
         email: _.get(data, 'to.email'),
@@ -75,7 +121,8 @@ module.exports = (data, userID, html, cb) => {
         error: true,
       });
       mail.save(cb);
+    } else {
+      cb(null, results);
     }
-    cb(null, results);
   });
 };

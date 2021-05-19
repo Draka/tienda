@@ -26,7 +26,10 @@ module.exports = (req, res, next) => {
     }],
     query: ['check', (_results, cb) => {
       models.Place
-        .findById(req.params.placeID)
+        .findOne({
+          tenancy: req.tenancy,
+          _id: req.params.placeID,
+        })
         .exec(cb);
     }],
     check2: ['query', (results, cb) => {

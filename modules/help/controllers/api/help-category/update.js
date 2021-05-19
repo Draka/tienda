@@ -30,7 +30,10 @@ module.exports = (req, res, next) => {
     },
     query: ['validate', (_results, cb) => {
       models.HelpCategory
-        .findById(req.params.helpCategoryID)
+        .findOne({
+          tenancy: req.tenancy,
+          _id: req.params.helpCategoryID,
+        })
         .exec(cb);
     }],
     save: ['query', (results, cb) => {

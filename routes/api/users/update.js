@@ -61,7 +61,10 @@ module.exports = (req, res, next) => {
     },
     query: ['validate', (results, cb) => {
       models.User
-        .findById(req.user._id)
+        .findOne({
+          tenancy: req.tenancy,
+          _id: req.user._id,
+        })
         .exec(cb);
     }],
     update: ['query', (results, cb) => {

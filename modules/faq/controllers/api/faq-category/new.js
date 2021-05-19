@@ -7,7 +7,7 @@ module.exports = (req, res, next) => {
   const body = _.pick(fbody, [
     'name',
   ]);
-  body.tenancy=req.tenancy;
+  body.tenancy = req.tenancy;
 
   async.auto({
     validate: (cb) => {

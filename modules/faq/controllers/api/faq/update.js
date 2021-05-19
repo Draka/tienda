@@ -10,7 +10,7 @@ module.exports = (req, res, next) => {
     'question',
     'answer',
   ]);
-  body.tenancy=req.tenancy;
+  body.tenancy = req.tenancy;
 
   if (typeof req.body.active !== 'undefined' && !body.active) {
     body.active = false;
@@ -30,7 +30,10 @@ module.exports = (req, res, next) => {
     },
     query: ['validate', (_results, cb) => {
       models.Faq
-        .findById(req.params.faqID)
+        .findOne({
+          tenancy: req.tenancy,
+          _id: req.params.faqID,
+        })
         .exec(cb);
     }],
     save: ['query', (results, cb) => {

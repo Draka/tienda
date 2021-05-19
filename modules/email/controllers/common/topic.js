@@ -1,4 +1,3 @@
-const { first } = require('lodash');
 const { api } = require('../../libs/api.lib');
 
 module.exports = (req, res, next) => {

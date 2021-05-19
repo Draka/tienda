@@ -9,7 +9,9 @@ function refCircular(categoryID, ids, cb) {
   }
   ids.push(categoryID);
   models.Category
-    .findById(categoryID)
+    .findOne({
+      _id: categoryID,
+    })
     .exec((err, doc) => {
       if (err) {
         return cb(err);

@@ -6,7 +6,10 @@ exports.model = (req, model, id, cb) => {
       cb(null, JSON.parse(reply));
     } else {
       models[model]
-        .findById(id)
+        .findOne({
+          tenancy: req.tenancy,
+          _id: id,
+        })
         .lean()
         .exec((err, doc) => {
           if (err) {
@@ -88,7 +91,10 @@ exports.user = (req, id, cb) => {
       cb(null, JSON.parse(reply));
     } else {
       models.User
-        .findById(id)
+        .findOne({
+          tenancy: req.tenancy,
+          _id: id,
+        })
         .lean()
         .exec((err, doc) => {
           if (err) {
@@ -108,7 +114,10 @@ exports.xxxxxxstore = (req, id, cb) => {
       cb(null, JSON.parse(reply));
     } else {
       models.Store
-        .findById(id)
+        .findOne({
+          tenancy: req.tenancy,
+          _id: id,
+        })
         .lean()
         .exec((err, doc) => {
           if (err) {
@@ -128,7 +137,10 @@ exports.place = (req, id, cb) => {
       cb(null, JSON.parse(reply));
     } else {
       models.Place
-        .findById(id)
+        .findOne({
+          tenancy: req.tenancy,
+          _id: id,
+        })
         .lean()
         .exec((err, doc) => {
           if (err) {

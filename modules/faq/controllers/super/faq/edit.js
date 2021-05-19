@@ -4,7 +4,10 @@ module.exports = (req, res, next) => {
   async.auto({
     item: (cb) => {
       models.Faq
-        .findById(req.params.faqID)
+        .findOne({
+          tenancy: req.tenancy,
+          _id: req.params.faqID,
+        })
         .exec(cb);
     },
     categories: ['item', (_results, cb) => {

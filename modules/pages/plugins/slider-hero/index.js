@@ -10,10 +10,6 @@ module.exports = (req, obj, cb) => {
       matchs.push(match);
     }
     async.eachLimit(matchs, 5, (match, cb) => {
-      const data = (match[1] || '').split(',');
-      const slug = data[0];
-      const limit = Math.max(parseInt(data[1], 10), 1) || 4;
-
       async.auto({
         items: (cb) => {
           cb(null);

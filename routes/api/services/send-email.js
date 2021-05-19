@@ -30,10 +30,9 @@ module.exports = (req, res, next) => {
           mail: (cb) => {
             const data = JSON.parse(_.get(msg, 'MessageAttributes.Data.StringValue') || '{}');
             data.tenancy = _.get(msg, 'MessageAttributes.Tenancy.StringValue');
+            data.userID = _.get(msg, 'MessageAttributes.UserID.StringValue');
             mailer(
               data,
-              _.get(msg, 'MessageAttributes.UserID.StringValue'),
-              '',
               cb,
             );
           },
@@ -52,6 +51,6 @@ module.exports = (req, res, next) => {
     if (err) {
       return next(err);
     }
-    res.send(results);
+    res.send({ ok: results.mailer.length });
   });
 };

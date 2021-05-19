@@ -9,7 +9,6 @@ const s3 = new AWS.S3({
 });
 
 module.exports = (req, cb) => {
-  console.log('genera css');
   const errors = [];
   const toFile = `./public/tenancy/${req.tenancy}/css`;
   async.auto({
@@ -73,6 +72,7 @@ module.exports = (req, cb) => {
         outputStyle: 'compressed',
       }, (err, result) => {
         if (err) {
+          // eslint-disable-next-line no-console
           console.log(err);
           errors.push({ field: 'site', msg: 'Errores en la configuración del CSS' });
           return cb(listErrors(400, null, errors));
@@ -99,7 +99,6 @@ module.exports = (req, cb) => {
             ACL: 'public-read',
             StorageClass: 'INTELLIGENT_TIERING',
           };
-          console.log(params);
 
           s3.upload(params, cb);
         });

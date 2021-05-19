@@ -32,7 +32,10 @@ module.exports = (req, res, next) => {
     },
     query: ['validate', (_results, cb) => {
       models.Page
-        .findById(req.params.pageID)
+        .findOne({
+          tenancy: req.tenancy,
+          _id: req.params.pageID,
+        })
         .exec(cb);
     }],
     save: ['query', (results, cb) => {

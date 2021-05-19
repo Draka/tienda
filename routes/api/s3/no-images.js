@@ -51,7 +51,6 @@ module.exports = (req, res, next) => {
             ACL: 'public-read',
             StorageClass: 'INTELLIGENT_TIERING',
           };
-          console.log(`sube: ${pathKey}`);
 
           s3.upload(params, cb);
         });

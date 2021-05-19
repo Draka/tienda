@@ -26,7 +26,10 @@ module.exports = (req, res, next) => {
     }],
     query: ['check', (_results, cb) => {
       models.CoverageArea
-        .findById(req.params.coverageAreaID)
+        .findOne({
+          tenancy: req.tenancy,
+          _id: req.params.coverageAreaID,
+        })
         .exec(cb);
     }],
     check2: ['query', (results, cb) => {

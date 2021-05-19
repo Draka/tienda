@@ -1,5 +1,3 @@
-import { GetApi } from './get_api';
-
 export class Session {
   token: string
 
@@ -34,11 +32,11 @@ export class Session {
       animation: 'UklGRlIAAABXRUJQVlA4WAoAAAASAAAAAAAAAAAAQU5JTQYAAAD/////AABBTk1GJgAAAAAAAAAAAAAAAAAAAGQAAABWUDhMDQAAAC8AAAAQBxAREYiI/gcA',
     };
     const img = new Image();
-    img.onload = function () {
+    img.onload = () => {
       const result = (img.width > 0) && (img.height > 0);
       callback(feature, result);
     };
-    img.onerror = function () {
+    img.onerror = () => {
       callback(feature, false);
     };
     img.src = `data:image/webp;base64,${kTestImages[feature]}`;

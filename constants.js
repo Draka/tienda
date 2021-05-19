@@ -11,6 +11,7 @@ global.checkAuthAdmin = require('./libs/check_auth_store.lib');
 global.checkAuthAdminStore = require('./libs/check_auth_store.lib');
 
 const vars = {
+  ts: false,
   tz: 'America/Bogota',
   minPassword: 6,
   langDefault: 'es',

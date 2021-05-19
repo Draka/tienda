@@ -30,7 +30,10 @@ module.exports = (req, res, next) => {
     },
     query: ['validate', (results, cb) => {
       models.User
-        .findById(req.user._id)
+        .findOne({
+          tenancy: req.tenancy,
+          _id: req.user._id,
+        })
         .select({
           email: 1,
           password: 1,

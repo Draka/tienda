@@ -2,7 +2,10 @@ module.exports = (req, res, next) => {
   async.auto({
     item: (cb) => {
       models.Plan
-        .findById(req.params.planID)
+        .findOne({
+          tenancy: req.tenancy,
+          _id: req.params.planID,
+        })
         .exec(cb);
     },
     check: ['item', (results, cb) => {

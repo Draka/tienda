@@ -1,4 +1,4 @@
-const sqsMailer = require('../../../libs/sqs_mailer');
+const sqsMailer = require('../../../libs/sqs-mailer.lib');
 
 module.exports = (req, res, next) => {
   const errors = [];
@@ -64,7 +64,6 @@ module.exports = (req, res, next) => {
     mailer: ['create', (results, cb) => {
       sqsMailer(req, {
         to: { email: body.email, name: results.create.personalInfo.name },
-        subject: `${__('Registro')}`,
         template: 'new-user',
       },
       results.create,

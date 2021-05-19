@@ -11,9 +11,10 @@ module.exports = (req, res, next) => {
     'point',
     'schedule',
   ]);
-  body.tenancy=req.tenancy;
+  body.tenancy = req.tenancy;
 
-  const adminQuery = { tenancy: req.tenancy,
+  const adminQuery = {
+    tenancy: req.tenancy,
     _id: req.params.storeID,
     userID: req.user._id,
   };
@@ -52,7 +53,10 @@ module.exports = (req, res, next) => {
     }],
     query: ['check', (_results, cb) => {
       models.Place
-        .findById(req.params.placeID)
+        .findOne({
+          tenancy: req.tenancy,
+          _id: req.params.placeID,
+        })
         .exec(cb);
     }],
     save: ['query', (results, cb) => {

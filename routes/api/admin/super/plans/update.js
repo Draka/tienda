@@ -15,7 +15,7 @@ module.exports = (req, res, next) => {
     'test',
     'period',
   ]);
-  body.tenancy=req.tenancy;
+  body.tenancy = req.tenancy;
 
   if (typeof req.body.publish !== 'undefined' && !body.publish) {
     body.publish = false;
@@ -32,7 +32,10 @@ module.exports = (req, res, next) => {
     },
     query: ['validate', (_results, cb) => {
       models.Plan
-        .findById(req.params.planID)
+        .findOne({
+          tenancy: req.tenancy,
+          _id: req.params.planID,
+        })
         .exec(cb);
     }],
     save: ['query', (results, cb) => {

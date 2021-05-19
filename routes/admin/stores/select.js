@@ -2,7 +2,10 @@ module.exports = (req, res, next) => {
   async.auto({
     user: (cb) => {
       models.User
-        .findById(req.user._id)
+        .findOne({
+          tenancy: req.tenancy,
+          _id: req.user._id,
+        })
         .exec(cb);
     },
     store: ['user', (results, cb) => {

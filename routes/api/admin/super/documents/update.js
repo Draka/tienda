@@ -28,7 +28,10 @@ module.exports = (req, res, next) => {
     },
     query: ['validate', (_results, cb) => {
       models.Document
-        .findById(req.params.documentID)
+        .findOne({
+          tenancy: req.tenancy,
+          _id: req.params.documentID,
+        })
         .exec(cb);
     }],
     save: ['query', (results, cb) => {

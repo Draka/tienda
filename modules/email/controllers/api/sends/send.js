@@ -22,7 +22,10 @@ module.exports = (req, res, next) => {
     },
     query: ['validate', (_results, cb) => {
       models.EmailTemplate
-        .findById(req.body.template)
+        .findOne({
+          tenancy: req.tenancy,
+          _id: req.body.template,
+        })
         .exec(cb);
     }],
     send: ['query', (results, cb) => {
@@ -72,7 +75,6 @@ module.exports = (req, res, next) => {
               .findOne({
                 tenancy: req.tenancy,
                 email,
-                tenancy: req.tenancy,
               })
               .exec((err, doc) => {
                 if (err || !doc) {

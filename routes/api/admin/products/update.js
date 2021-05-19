@@ -91,7 +91,10 @@ module.exports = (req, res, next) => {
     }],
     query: ['check', (_results, cb) => {
       models.Product
-        .findById(req.params.productID)
+        .findOne({
+          tenancy: req.tenancy,
+          _id: req.params.productID,
+        })
         .exec(cb);
     }],
     uploadFile: ['query', (results, cb) => {

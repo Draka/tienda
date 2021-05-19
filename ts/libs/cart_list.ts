@@ -310,7 +310,7 @@ export class CartList {
         address,
         pptu: $('#pptu').is(':checked'),
       })
-        .done((data: any) => {
+        .done(() => {
           Cart.reset();
           document.location.href = `${window.location.origin}/carrito-resumen`;
         })

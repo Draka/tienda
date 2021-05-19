@@ -8,7 +8,10 @@ module.exports = (req, res, next) => {
     validate: (cb) => cb(),
     query: ['validate', (_results, cb) => {
       models.Product
-        .findById(req.params.productID)
+        .findOne({
+          tenancy: req.tenancy,
+          _id: req.params.productID,
+        })
         .exec(cb);
     }],
     getUrl: ['validate', (results, cb) => {

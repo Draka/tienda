@@ -4,7 +4,10 @@ module.exports = (req, res, next) => {
   async.auto({
     item: (cb) => {
       models.HelpCategory
-        .findById(req.params.helpCategoryID)
+        .findOne({
+          tenancy: req.tenancy,
+          _id: req.params.helpCategoryID,
+        })
         .exec(cb);
     },
     check: ['item', (results, cb) => {

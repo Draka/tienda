@@ -13,5 +13,7 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
-  "trailing-spaces.trimOnSave": true
+  "trailing-spaces.trimOnSave": true,
+  "eslint.lintTask.enable": true,
+  "eslint.lintTask.options": "-c /Users/juan.c.a.martinez/www/iPersonal/ecommerce/tienda/.eslintrc.json --ignore-path /Users/juan.c.a.martinez/www/iPersonal/ecommerce/tienda/.eslintignore ."
 }

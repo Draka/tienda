@@ -34,7 +34,7 @@ const schema = new mongoose.Schema({
 
 function preUpdate(result, next) {
   client.del(`__tenancy:${result.tenancy}__email-template__${result._id}`);
-  if (result.name) {
+  if (result.name && !result.slug) {
     result.slug = _.kebabCase(_.deburr(_.get(result, 'name')));
   }
   next();

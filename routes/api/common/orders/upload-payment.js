@@ -1,5 +1,5 @@
 const fs = require('fs');
-const sqsMailer = require('../../../../libs/sqs_mailer');
+const sqsMailer = require('../../../../libs/sqs-mailer.lib');
 const reference = require('../../../../libs/reference.lib');
 
 const s3 = new AWS.S3({

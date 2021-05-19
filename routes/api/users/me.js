@@ -1,6 +1,9 @@
 module.exports = (req, res, _next) => {
   models.User
-    .findById(req.user._id)
+    .findOne({
+      tenancy: req.tenancy,
+      _id: req.user._id,
+    })
     .select({
       email: 1,
       personalInfo: 1,

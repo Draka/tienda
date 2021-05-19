@@ -1,9 +1,5 @@
 import { Cart } from './cart';
 
-interface ErrorInterface {
-  responseJSON: any
-}
-
 export class ShowMsg {
   // Muestra los errores del back
   static show(errors:any, alert = 'secondary') {

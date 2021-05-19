@@ -118,7 +118,7 @@ $sant: null;
           margin-top: $sant;
         }
         .navbar-fixed-b-#{$ant} {
-          margin-bottom: $sant;
+          padding-bottom: $sant;
         }
       }
     }
@@ -131,7 +131,7 @@ $sant: null;
     margin-top: $sant;
   }
   .navbar-fixed-b-#{$ant} {
-    margin-bottom: $sant;
+    padding-bottom: $sant;
   }
 }
 

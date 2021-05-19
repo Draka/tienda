@@ -29,7 +29,10 @@ module.exports = (req, res, next) => {
     },
     query: ['validate', (_results, cb) => {
       models.EmailTemplate
-        .findById(req.params.emailTemplateID)
+        .findOne({
+          tenancy: req.tenancy,
+          _id: req.params.emailTemplateID,
+        })
         .exec(cb);
     }],
     toHTML: ['query', (results, cb) => {

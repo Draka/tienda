@@ -2,11 +2,6 @@ const query = require('../../libs/query.lib');
 
 module.exports = (req, res, next) => {
   const errors = [];
-  const adminQuery = {
-    tenancy: req.tenancy,
-    _id: req.params.storeID,
-    userID: req.user._id,
-  };
   async.auto({
     validate: (cb) => cb(),
     query: ['validate', (_results, cb) => {

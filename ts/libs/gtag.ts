@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import '../util/products.d';
 
 declare global {

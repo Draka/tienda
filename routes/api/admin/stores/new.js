@@ -57,7 +57,10 @@ module.exports = (req, res, next) => {
     }],
     putOption: ['create', (results, cb) => {
       models.User
-        .findById(req.user._id)
+        .findOne({
+          tenancy: req.tenancy,
+          _id: req.user._id,
+        })
         .exec((err, doc) => {
           if (err) {
             return cb(err);

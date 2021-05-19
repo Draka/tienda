@@ -1,4 +1,4 @@
-const sqsMailer = require('../../../libs/sqs_mailer');
+const sqsMailer = require('../../../libs/sqs-mailer.lib');
 
 module.exports = (req, res) => {
   const errors = [];

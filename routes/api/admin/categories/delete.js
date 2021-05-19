@@ -28,7 +28,10 @@ module.exports = (req, res, next) => {
     }],
     query: ['check', (_results, cb) => {
       models.Category
-        .findById(req.params.categoryID)
+        .findOne({
+          tenancy: req.tenancy,
+          _id: req.params.categoryID,
+        })
         .exec(cb);
     }],
     check2: ['query', (results, cb) => {

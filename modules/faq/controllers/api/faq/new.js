@@ -10,7 +10,7 @@ module.exports = (req, res, next) => {
     'question',
     'answer',
   ]);
-  body.tenancy=req.tenancy;
+  body.tenancy = req.tenancy;
 
   if (typeof req.body.active !== 'undefined' && !body.active) {
     body.active = false;

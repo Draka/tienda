@@ -1,7 +1,8 @@
 const geolib = require('geolib');
 const validateProducts = require('../../../../libs/validate_products.lib');
 const queryStore = require('../../../../libs/query_store.lib');
-const sqsMailer = require('../../../../libs/sqs_mailer');
+const sqsMailer = require('../../../../libs/sqs-mailer.lib');
+const { formatMoney } = require('../../../../libs/util.lib');
 
 module.exports = (req, res, next) => {
   const errors = [];
@@ -214,6 +215,7 @@ module.exports = (req, res, next) => {
     }],
     save: ['orders', (results, cb) => {
       async.map(results.orders, (order, cb) => {
+        let orderMail = {};
         async.auto({
           order: (cb) => {
             const items = _.values(order.validateProducts.items);
@@ -282,6 +284,23 @@ module.exports = (req, res, next) => {
                 userID: req.user._id,
               });
             }
+            orderMail = {
+              orderID: orderDoc.orderID,
+              products: orderDoc.products.map((product) => ({
+                name: product.name,
+                quantity: product.quantity,
+                price: formatMoney(product.price),
+                image: _.get(product, 'imagesSizes.0.48x48_jpg'),
+                digital: _.get(product, 'digital.is'),
+              })),
+              order: orderDoc.order,
+              store: orderDoc.name,
+              address: _.get(orderDoc, 'delivery.address.address'),
+              cellphone: _.get(orderDoc, 'delivery.address.cellphone'),
+              delivery: _.get(orderDoc, 'delivery.name'),
+              payment: _.get(orderDoc, 'payment.name'),
+              userData: _.get(orderDoc, 'userData.name'),
+            };
             const xorder = new models.Order(orderDoc);
             xorder.save(cb);
           },
@@ -302,9 +321,8 @@ module.exports = (req, res, next) => {
               if (admin) {
                 sqsMailer(req, {
                   to: { email: admin.email, name: admin.personalInfo.name },
-                  subject: `Nueva Orden #${results.order.orderID}`,
-                  template: 'seller-new-order-payment-against-delivery',
-                  order: _.pick(results.order, ['_id', 'orderID']),
+                  template: 'seller-new-order',
+                  order: orderMail,
                 }, admin,
                 cb);
               } else {
@@ -319,9 +337,8 @@ module.exports = (req, res, next) => {
             }
             sqsMailer(req, {
               to: { email: results.order.userData.email, name: results.order.userData.name },
-              subject: `Orden #${results.order.orderID} Confirmada`,
-              template: 'client-new-order-payment-against-delivery',
-              order: _.pick(results.order, ['_id', 'orderID']),
+              template: 'client-new-order',
+              order: orderMail,
             }, { _id: results.order.userID },
             cb);
           }],

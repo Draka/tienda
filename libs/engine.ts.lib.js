@@ -13,7 +13,7 @@ module.exports = () => {
     return;
   }
   async.each(getFiles('./ts'), (d, cb) => {
-    if (0 && process.env.NODE_ENV !== 'production') {
+    if (global.ts && process.env.NODE_ENV !== 'production') {
       execSync(
         `npx tsc ${d} --module system --esModuleInterop true --target es5 --lib es2015,dom --outFile public/js/${path.parse(d).name}.js && echo 'System.active();' >> public/js/${path.parse(d).name}.js`,
       );

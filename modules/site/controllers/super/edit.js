@@ -2,7 +2,7 @@ module.exports = (req, res, next) => {
   async.auto({
     site: (cb) => {
       models.Site
-        .findOne({ tenancy: req.tenancy,
+        .findOne({
           tenancy: req.tenancy,
         })
         .lean()

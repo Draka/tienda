@@ -4,7 +4,10 @@ module.exports = (req, res, next) => {
   async.auto({
     item: (cb) => {
       models.EmailTemplate
-        .findById(req.params.emailTemplateID)
+        .findOne({
+          tenancy: req.tenancy,
+          _id: req.params.emailTemplateID,
+        })
         .exec(cb);
     },
     check: ['item', (results, cb) => {
@@ -22,7 +25,7 @@ module.exports = (req, res, next) => {
         ],
         site: {
           name: _.get(req, 'site.name'),
-          urlSite: req.urlSite,
+          urlSite: _.get(req, 'site.url'),
           urlStatic: appCnf.url.cdn,
           info: _.get(req, 'site.email.emailInfo'),
           title: _.get(req, 'site.email.title'),
