@@ -39,7 +39,6 @@ module.exports = (req, res, next) => {
       reference(req, results.order, req.user._id, cb);
     }],
     uploadFile: ['check', 'reference', (results, cb) => {
-      console.log(results.reference);
       if (!results.reference || results.reference.status === 'approved') {
         errors.push({ field: 'reference', msg: 'Esta orden no necesita pago' });
         return cb(listErrors(400, null, errors));
@@ -81,7 +80,7 @@ module.exports = (req, res, next) => {
             cb();
           }
         },
-        moveFile: ['makedirLocal', (results, cb) => {
+        moveFile: ['makedirLocal', (_results, cb) => {
           if (process.env.NODE_ENV === 'production') {
             // ajustes de s3
             const params = {
