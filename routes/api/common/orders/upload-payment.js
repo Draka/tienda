@@ -30,7 +30,7 @@ module.exports = (req, res, next) => {
         return next(listErrors(404, null, errors));
       }
       if (results.order.status !== 'created' || !results.order.payment.pse) {
-        errors.push({ field: 'reference1', msg: 'Esta orden no necesita pago' });
+        errors.push({ field: 'reference', msg: 'Esta orden no necesita pago' });
         return cb(listErrors(400, null, errors));
       }
       cb();
@@ -39,8 +39,9 @@ module.exports = (req, res, next) => {
       reference(req, results.order, req.user._id, cb);
     }],
     uploadFile: ['check', 'reference', (results, cb) => {
+      console.log(results.reference);
       if (!results.reference || results.reference.status === 'approved') {
-        errors.push({ field: 'reference2', msg: 'Esta orden no necesita pago' });
+        errors.push({ field: 'reference', msg: 'Esta orden no necesita pago' });
         return cb(listErrors(400, null, errors));
       }
       if (!req.files || !req.files.file) {
