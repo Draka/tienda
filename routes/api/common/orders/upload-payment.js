@@ -90,7 +90,7 @@ module.exports = (req, res, next) => {
               ContentType: req.files.file.mimetype,
               CacheControl: 'private, max-age=31536000',
               Expires: moment.tz().add(1, 'year').unix(),
-              ACL: 'private',
+              ACL: 'public-read',
               StorageClass: 'INTELLIGENT_TIERING',
             };
             // sube el archivo
