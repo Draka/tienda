@@ -1,6 +1,7 @@
 const fs = require('fs');
 const sqsMailer = require('../../../../libs/sqs-mailer.lib');
 const reference = require('../../../../libs/reference.lib');
+const { orderToMail } = require('../../../../libs/util.lib');
 
 const s3 = new AWS.S3({
   accessKeyId: appCnf.s3.accessKeyId,
@@ -135,12 +136,11 @@ module.exports = (req, res, next) => {
         const admin = _.get(results.order, 'storeID.userID');
         if (admin) {
           if (results.order.status === 'verifying') {
+            const orderFormat = orderToMail(results.order);
             sqsMailer(req, {
-              to: { email: admin.email, name: (_.get(admin, 'personalInfo.name') || ' ').split(' ')[0] },
-              subject: `Nueva Orden #${results.order.orderID}`,
+              to: { email: admin.email, name: _.get(admin, 'personalInfo.name') },
               template: 'seller-new-order',
-              order: _.pick(results.order, ['_id', 'orderID']),
-              paymentName: results.order.payment.name,
+              order: orderFormat,
             },
             admin,
             cb);
@@ -153,11 +153,12 @@ module.exports = (req, res, next) => {
       });
     }],
     mailerClient: ['update', (results, cb) => {
+      const orderFormat = orderToMail(results.order);
+
       sqsMailer(req, {
-        to: { email: results.order.userData.email, name: (_.get(results.order, 'user.Data.name') || ' ').split(' ')[0] },
-        subject: `Orden #${results.order.orderID} Confirmada`,
+        to: { email: results.order.userData.email, name: _.get(results.order, 'user.Data.name') },
         template: 'client-new-order',
-        order: _.pick(results.order, ['_id', 'orderID']),
+        order: orderFormat,
       },
       { _id: results.order.userID },
       cb);

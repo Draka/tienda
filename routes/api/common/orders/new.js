@@ -2,7 +2,7 @@ const geolib = require('geolib');
 const validateProducts = require('../../../../libs/validate_products.lib');
 const queryStore = require('../../../../libs/query_store.lib');
 const sqsMailer = require('../../../../libs/sqs-mailer.lib');
-const { formatMoney } = require('../../../../libs/util.lib');
+const { orderToMail } = require('../../../../libs/util.lib');
 
 module.exports = (req, res, next) => {
   const errors = [];
@@ -215,7 +215,7 @@ module.exports = (req, res, next) => {
     }],
     save: ['orders', (results, cb) => {
       async.map(results.orders, (order, cb) => {
-        let orderMail = {};
+        let orderFormat = {};
         async.auto({
           order: (cb) => {
             const items = _.values(order.validateProducts.items);
@@ -284,34 +284,15 @@ module.exports = (req, res, next) => {
                 userID: req.user._id,
               });
             }
-            orderMail = {
-              orderID: orderDoc.orderID,
-              products: orderDoc.products.map((product) => ({
-                name: product.name,
-                quantity: product.quantity,
-                price: formatMoney(product.price),
-                image: _.get(product, 'imagesSizes.0.48x48_jpg'),
-                digital: _.get(product, 'digital.is'),
-              })),
-              items: orderDoc.order.items,
-              subtotal: formatMoney(orderDoc.order.subtotal),
-              shipping: formatMoney(orderDoc.order.shipping),
-              total: formatMoney(orderDoc.order.total),
-              store: orderDoc.name,
-              address: _.get(orderDoc, 'delivery.address.address'),
-              cellphone: _.get(orderDoc, 'delivery.address.cellphone'),
-              delivery: _.get(orderDoc, 'delivery.name'),
-              payment: _.get(orderDoc, 'payment.name'),
-              userData: _.get(orderDoc, 'userData.name'),
-            };
+            orderFormat = orderToMail(orderDoc);
             const xorder = new models.Order(orderDoc);
             xorder.save(cb);
           },
           mailerAdmin: ['order', (results, cb) => {
             // correo solo para contra entrega
-            // if (results.order.status === 'created' || results.order.payment.pse) {
-            //   return cb();
-            // }
+            if (results.order.status === 'created' || results.order.payment.pse) {
+              return cb();
+            }
             results.order.populate({
               path: 'storeID',
               select: 'name slug approve publish',
@@ -325,7 +306,7 @@ module.exports = (req, res, next) => {
                 sqsMailer(req, {
                   to: { email: admin.email, name: admin.personalInfo.name },
                   template: 'seller-new-order',
-                  order: orderMail,
+                  order: orderFormat,
                 }, admin,
                 cb);
               } else {
@@ -335,13 +316,13 @@ module.exports = (req, res, next) => {
           }],
           mailerClient: ['order', (results, cb) => {
             // correo solo para contra entrega
-            // if (results.order.status === 'created' || results.order.payment.pse) {
-            //   return cb();
-            // }
+            if (results.order.status === 'created' || results.order.payment.pse) {
+              return cb();
+            }
             sqsMailer(req, {
               to: { email: results.order.userData.email, name: results.order.userData.name },
               template: 'client-new-order',
-              order: orderMail,
+              order: orderFormat,
             }, { _id: results.order.userID },
             cb);
           }],

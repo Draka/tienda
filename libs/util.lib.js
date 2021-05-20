@@ -10,12 +10,13 @@ exports.makeid = (length) => {
   return result;
 };
 
-exports.formatMoney = (number, decPlaces = 0, simbol = '$', decSep = ',', thouSep = '.') => {
+const formatMoney = (number, decPlaces = 0, simbol = '$', decSep = ',', thouSep = '.') => {
   const re = `\\d(?=(\\d{${3}})+${decPlaces > 0 ? '\\D' : '$'})`;
   // eslint-disable-next-line no-bitwise
   const num = number.toFixed(Math.max(0, ~~decPlaces));
   return simbol + num.replace('.', thouSep).replace(new RegExp(re, 'g'), `$&${decSep}`);
 };
+exports.formatMoney = formatMoney;
 
 exports.capitalized = (str) => {
   const splitStr = str.toLowerCase().split(' ');
@@ -122,3 +123,24 @@ exports.setPrice = (product) => {
     product.price = product.offer.price;
   }
 };
+
+exports.orderToMail = (orderDoc) => ({
+  orderID: orderDoc.orderID,
+  products: orderDoc.products.map((product) => ({
+    name: product.name,
+    quantity: product.quantity,
+    price: formatMoney(product.price),
+    image: _.get(product, 'imagesSizes.0.48x48_jpg'),
+    digital: _.get(product, 'digital.is'),
+  })),
+  items: orderDoc.order.items,
+  subtotal: formatMoney(orderDoc.order.subtotal),
+  shipping: formatMoney(orderDoc.order.shipping),
+  total: formatMoney(orderDoc.order.total),
+  store: orderDoc.name,
+  address: _.get(orderDoc, 'delivery.address.address'),
+  cellphone: _.get(orderDoc, 'delivery.address.cellphone'),
+  delivery: _.get(orderDoc, 'delivery.name'),
+  payment: _.get(orderDoc, 'payment.name'),
+  userData: _.get(orderDoc, 'userData.name'),
+});

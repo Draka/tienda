@@ -1,4 +1,5 @@
 const sqsMailer = require('../../../libs/sqs-mailer.lib');
+const { orderToMail } = require('../../../libs/util.lib');
 
 module.exports = (req, res) => {
   const errors = [];
@@ -107,11 +108,12 @@ module.exports = (req, res) => {
       const admin = _.get(results.order, 'storeID.userID');
       if (admin) {
         if (results.query.status === 'approved') {
+          const orderFormat = orderToMail(results.order);
+
           sqsMailer(req, {
             to: { email: admin.email, name: admin.personalInfo.name },
-            subject: `Nueva Orden #${results.order.orderID}`,
             template: 'seller-new-order',
-            order: _.pick(results.order, ['_id', 'orderID']),
+            order: orderFormat,
           },
           admin,
           cb);
@@ -126,21 +128,20 @@ module.exports = (req, res) => {
       if (!results.order) {
         return cb();
       }
+      const orderFormat = orderToMail(results.order);
       if (results.query.status === 'approved') {
         sqsMailer(req, {
           to: { email: results.order.userData.email, name: results.order.userData.name },
-          subject: `Orden #${results.order.orderID} Confirmada`,
           template: 'client-new-order',
-          order: _.pick(results.order, ['_id', 'orderID']),
+          order: orderFormat,
         },
         { _id: results.order.userID },
         cb);
       } else if (firstStatus === 'approved' && results.query.status === 'voided') {
         sqsMailer(req, {
           to: { email: results.order.userData.email, name: results.order.userData.name },
-          subject: `Pago de Orden #${results.order.orderID} Reversado`,
           template: 'client-voided-order',
-          order: _.pick(results.order, ['_id', 'orderID']),
+          order: orderFormat,
         },
         { _id: results.order.userID },
         cb);

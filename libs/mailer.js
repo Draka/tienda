@@ -65,7 +65,7 @@ module.exports = (data, cb) => {
       const params = {
         Destination: { /* required */
           ToAddresses: [
-            `${utf8.encode(_.get(data, 'to.name') || '')}<${_.get(data, 'to.email')}>`,
+            `${utf8.encode((_.get(data, 'to.name') || ' ').split(' ')[0])}<${_.get(data, 'to.email')}>`,
           ],
         },
         Message: { /* required */

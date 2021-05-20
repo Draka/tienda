@@ -31,11 +31,7 @@ module.exports = (req, res, next) => {
             const data = JSON.parse(_.get(msg, 'MessageAttributes.Data.StringValue') || '{}');
             data.tenancy = _.get(msg, 'MessageAttributes.Tenancy.StringValue');
             data.userID = _.get(msg, 'MessageAttributes.UserID.StringValue');
-            mailer(
-              data,
-              cb,
-            );
-            cb();
+            mailer(data, cb);
           },
           deleteSQS: ['mail', (results, cb) => {
             const deleteParams = {
