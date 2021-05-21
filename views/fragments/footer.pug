@@ -1,24 +1,22 @@
 footer.mt-8
   .container-fluid(class=_.get(req,'site.style.footer')||'primary')
     .container
-      .row
-        .col-md-12
-          .mh-3 !{getFragment(req, 'footer-newsletter')}
+      //- .row
+      //-   .col-md-12
+      //-     .mh-3 !{getFragment(req, 'footer-newsletter')}
       .row.pb-4
         .col-md-4
           | !{getFragment(req, 'footer-logo')}
         .col-md-8
-          .row
+          .row.justify-content-center
             .col-md-4.vertical-align-center.mb-3-xs.mb-3-sm.mb-3-md
               | !{getFragment(req, 'footer-l-1-c-1')}
             .col-md-4.vertical-align-center
               | !{getFragment(req, 'footer-l-1-c-2')}
-            .col-md-4.vertical-align-center
-              | !{getFragment(req, 'footer-l-1-c-3')}
   .container-fluid(class=(_.get(req,'site.style.footer')||'primary')+'-500')
     .container.tc.ph-1
       .row
-        .col-md-12.m-1-xs.m-1-sm.m-1-md.b.big
+        .col-md-12.m-1-xs.m-1-sm.m-1-md.b
           | Santrato | Copyrigth 2020
 
   if !store && _.find(_.get(req, 'site.contacts'), {slug: 'whatsapp'})

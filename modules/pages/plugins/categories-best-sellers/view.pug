@@ -1,10 +1,10 @@
 
 .br-1.pt-1.pl-1
   .pr-1
-    .big LOS MÁS VENDIDOS
-    .mh-1
-      ul.list.white
+    .small.b LOS MÁS VENDIDOS
+    .mh-0-5
+      ul.list
         each item,i in items
           li
-            a.title(href=`/categorias/${item.slugLong}/`)
+            a.title.lh-2.t-primary.white(href=`/categorias/${item.slugLong}/`)
               | #{item.name}

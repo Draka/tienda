@@ -13,7 +13,7 @@ form {
     .form-control {
       &__icon,
       &__eye {
-        right: 0;
+        right: $gutter;
       }
     }
   }
@@ -47,7 +47,7 @@ select {
     border-top-right-radius: 0.2em;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
-    padding: .5em .75em;
+    padding: $gutter.75em;
     cursor: text;
     background-color: darken($color-white, 2);
     outline: 0;

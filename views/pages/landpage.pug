@@ -48,12 +48,12 @@ block content
                 .col-xs-6.col-md-4.ph-1.pw-1-xs.mw-1-sm
                   .relative.br-1.p-1.pb-3.h-100.brt-10.rd-0-5.white
                     .tc
-                      a(href=`/${store.slug}`)
+                      a(href=`/tiendas/${store.slug}`)
                         +img(`Logo de la tienda ${store.name}`, _.get(store, 'imageSizes.logo'))
                     .title.mt-0-5.b #{store.name}
                     .subtitle.pb-1 #{store.slogan}
                     .absolute.bottom.tc.pb-1.w-100c2
-                      a.btn.btn--secondary.w-100(href=`/${store.slug}`) Visitar
+                      a.btn.btn--secondary.w-100(href=`/tiendas/${store.slug}`) Visitar
 
   include ../fragments/landpage-invite.pug
 

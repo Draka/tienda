@@ -1,0 +1,29 @@
+@each $key, $val in $sizes-objects {
+  .lh-#{$key} {
+    line-height: $val;
+  }
+}
+
+
+$ant: null;
+$var: null;
+
+@each $key, $val in $breakpoints {
+
+  $var: index(($breakpoints), ($key $val));
+
+  @if $var !=1 {
+    @include media-breakpoint(map-get($breakpoints, $ant), map-get($breakpoints, $key) - 0.1) {
+
+      @each $key, $val in $sizes-objects {
+        .lh-#{$key}-#{$ant} {
+            line-height: $val;
+        }
+      }
+    }
+
+  }
+
+  $ant: $key;
+}
+

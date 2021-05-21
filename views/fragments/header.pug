@@ -23,11 +23,11 @@ header
                     | #{category.name}
         | !{getFragment(req, 'menu')}
 
-        .expand
+        .expand.pw-1
           form.flex(class="search" action=`${req.urlSite}buscar`)
             .flex.w-100.rdtl-50.rdbl-50.oh.white.h-40p
               label.out-screen(for='query-d') Buscar productos
-              input#query-d.input--simple.h-100.w-100.ph-0-25.pl-0-5.title(type="text" name="q" placeholder='Buscar productos' required value=q)
+              input#query-d.input--simple.h-100.w-100.ph-0-25.pl-2(type="text" name="q" placeholder='Buscar productos' required value=q)
             button.btn-flat.btn--white.rdtr-50.rdbr-50.h-40p
               .title.pl-0-5.pr-1
                 i.fas.fa-search
@@ -36,7 +36,7 @@ header
         if !req.user
           ul.menu.ml-1
             li
-              a.btn.btn--secondary(href='/registro') Registro
+              a.btn.btn--secondary.mr-1(href='/registro') Registro
             li
               a(href='/iniciar-sesion') Iniciar Sesión
         else
@@ -113,13 +113,13 @@ header
     nav.navbar.sh.fixed.top(class=_.get(req,'site.style.header')||'primary')
       ul.menu.w-100
         li
-          a.logo.justify-content-center(href='/')
+          a.logo.justify-content-center.pr-0(href='/')
             img(src=_.get(req, 'site.images.logoTop.svg') alt=`${_.get(req, 'site.name')} logo`)
-        li.expand.pr-1
+        li.expand.pw-0-5
           form.flex(class="search" action=`${req.urlSite}buscar`)
             .flex.w-100.rdtl-50.rdbl-50.oh.white.h-32p
               label.out-screen(for='query-m') Buscar productos
-              input#query-m.input--simple.h-100.w-100.ph-0-25.pl-0-5.title(type="text" name="q" placeholder='Buscar productos' required value=q)
+              input#query-m.input--simple.h-100.w-100.ph-0-25.pl-1(type="text" name="q" placeholder='Buscar productos' required value=q)
             button.btn-flat.btn--white.rdtr-50.rdbr-50.h-32p
               .title.pl-0-5.pr-1
                 i.fas.fa-search

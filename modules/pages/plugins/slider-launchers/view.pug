@@ -12,16 +12,24 @@ mixin simpleProduct(product)
 .white.p-1-sm.p-1-md.p-1-lg.p-1-xl.h-100
   .b.mb-0-5
     if slug=='launcher-new-offers'
-      | Ofertas
+      .flex
+        i.pl-0-25.fa.fa-bullhorn
+        .pl-0-5 Ofertas
     else if slug=='launcher-new-products'
-      | Nuevos productos
+      .flex
+        i.pl-0-25.fa.fa-shopping-bag
+        .pl-0-5 Nuevos productos
     else if slug=='launcher-favorites'
-      | Favoritos
+      .flex
+        i.pl-0-25.fa.fa-star
+        .pl-0-5 Favoritos
     else if slug=='launcher-features'
-      | Destacados
+      .flex
+        i.pl-0-25.fa.fa-bookmark
+        .pl-0-5 Destacados
   .flex.ai-s
     each item,i in items
-      .tc.h-100.relative.flex-grow.flex-basis.w-50.p-1p(class=(i>=2?'hide-xs hide-sm':'')+(i>=3?' hide-md':''))
+      .tc.h-100.relative.flex-grow.flex-basis.w-50.p-3p(class=(i>=2?'hide-xs hide-sm':'')+(i>=3?' hide-md':''))
         if item && item.productID
           a.flex.col(href=`/grupos/${url}/${_.get(_.first(_.get(item, 'productID.categoryIDs')), 'slugLong')}`)
             +simpleProduct(item.productID)

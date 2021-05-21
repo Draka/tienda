@@ -26,6 +26,8 @@ meta(http-equiv='content-type' content='text/html; charset=UTF-8')
 title
   if store
     | #{title}
+  else if title==_.get(req, 'site.name')
+    | #{title}
   else
     | #{title} | #{_.get(req, 'site.name')}
 

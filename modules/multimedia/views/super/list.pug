@@ -1,6 +1,14 @@
 extends /modules/admin/views/super/layout-list
 
 block list
+  style.
+    .bg{
+      background-color: #ffffff;
+      opacity: 1;
+      background-image:  repeating-linear-gradient(45deg, #f3f3f3 25%, transparent 25%, transparent 75%, #f3f3f3 75%, #f3f3f3), repeating-linear-gradient(45deg, #f3f3f3 25%, #ffffff 25%, #ffffff 75%, #f3f3f3 75%, #f3f3f3);
+      background-position: 0 0, 10px 10px;
+      background-size: 20px 20px;
+    }
   if items.length
     .row
       each item of items
@@ -28,7 +36,7 @@ block list
                   )
                   i.fas.fa-trash-alt
             .hr.mt-1
-            a(href=`/administracion/super/multimedia/${item._id}/editar` title='Editar')
+            a.show(href=`/administracion/super/multimedia/${item._id}/editar` title='Editar' class="bg")
               if item.urlSize
                 +img(item.title, _.get(item, `urlSize.${item.files[0]}`), ['196','392'])
               else if item.url

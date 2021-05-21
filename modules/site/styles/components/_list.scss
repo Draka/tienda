@@ -7,13 +7,12 @@
 
     a {
       font-size: 90%;
-      line-height: 4em;
       margin: 0;
       display: block;
       text-decoration: none;
       border-bottom: 1px solid $color-default;
       background-color: set-lightness-color($color-default, 95) !important;
-      color: $color-foreground !important;
+      color: $color-foreground;
 
       &:hover,
       &:focus {
@@ -28,6 +27,14 @@
           &:hover,
           &:focus {
             background-color: set-lightness-color($val, 90) !important;
+          }
+        }
+      }
+      @each $key, $val in $colors-sections {
+        &.t-#{$key} {
+          &:hover,
+          &:focus {
+            color: $val !important;
           }
         }
       }

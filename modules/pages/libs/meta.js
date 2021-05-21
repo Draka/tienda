@@ -171,8 +171,8 @@ const _meta = (req, text, html, cb) => {
         }
       },
       imgRes: (cb) => {
-        if (/\[img-res key="([a-zA-Z0-9-]*)" sizes="([x0-9,]*)"\]/.test(obj.text)) {
-          const re = new RegExp('\\[img-res key="([a-z0-9-]*)" sizes="([x0-9,]*)"\\]', 'igm');
+        if (/\[img-res key="([a-zA-Z0-9-]*)" sizes="([x0-9,]*|default)"\]/.test(obj.text)) {
+          const re = new RegExp('\\[img-res key="([a-z0-9-]*)" sizes="([x0-9,]*|default)"\\]', 'igm');
           const matchAll = obj.text.matchAll(re);
           const matchs = [];
           for (const match of matchAll) {
@@ -182,7 +182,7 @@ const _meta = (req, text, html, cb) => {
             const key = match[1];
             async.auto({
               item: (cb) => {
-                multimediaByKey(key, cb);
+                multimediaByKey(req, key, cb);
               },
             }, (err, results) => {
               if (!results.item) {

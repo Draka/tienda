@@ -12,9 +12,9 @@ module.exports = (req, res, next) => {
           tenancy: req.tenancy,
           active: true,
           publish: true,
-          title: 'Portal de Tiendas',
+          title: req.site.title,
           slug: 'index',
-          seo: 'Escriba la descripción de su portal',
+          seo: req.site.description,
           html: '',
         });
         page.save(cb);

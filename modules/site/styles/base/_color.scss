@@ -1,14 +1,14 @@
 @each $key, $val in $colors-sections {
   .#{$key}:not(.form-group):not(.msg):not(button):not(.btn):not(.remark):not(.carousel) {
     background-color: $val !important;
-    color: set-text-color($val) !important;
+    color: set-text-color($val);
   }
   //alpha
   @each $ckey, $cval in $colors-alpha {
     $background-color: $val;
     &.a-#{$key}-#{$ckey}:not(.form-group):not(.msg):not(button):not(.btn):not(.remark):not(.carousel) {
       background-color: set-alpha-color($val, $cval) !important;
-      color: set-text-color($val) !important;
+      color: set-text-color($val);
     }
   }
 
@@ -31,7 +31,7 @@
         );
       }
       background-color: $background-color !important;
-      color: set-text-color($background-color) !important;
+      color: set-text-color($background-color);
     }
     .t-#{$key}-#{$ckey} {
       color: $background-color;
@@ -47,7 +47,7 @@
       @include media-breakpoint(map-get($breakpoints, $ant), map-get($breakpoints, $ckey) - 0.1) {
         .#{$key}-#{$ant}:not(.form-group):not(.msg):not(button):not(.btn):not(.remark):not(.carousel) {
           background-color: $val !important;
-          color: set-text-color($val) !important;
+          color: set-text-color($val);
         }
       }
     }
@@ -56,7 +56,7 @@
   @include media-breakpoint(map-get($breakpoints, $ant)) {
     .#{$key}-#{$ant}:not(.form-group):not(.msg):not(button):not(.btn):not(.remark):not(.carousel) {
       background-color: $val !important;
-      color: set-text-color($val) !important;
+      color: set-text-color($val);
     }
   }
 }
