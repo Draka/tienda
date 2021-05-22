@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypt-nodejs');
+const bcrypt = require('bcrypt');
 const sqsMailer = require('../../../libs/sqs_mailer');
 
 function hash(obj, key) {

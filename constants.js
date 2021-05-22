@@ -175,6 +175,7 @@ const vars = {
     'Decoración',
     'Estética',
     'Libros',
+    'Regalos',
     'Ropa y Accesorios',
     'Salud y Bienestar',
     'Servicios',

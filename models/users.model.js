@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-const bcrypt = require('bcrypt-nodejs');
+const bcrypt = require('bcrypt');
 
 function hash(obj, key) {
   return new Promise((resolve, reject) => {
