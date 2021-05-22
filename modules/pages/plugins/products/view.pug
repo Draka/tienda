@@ -20,7 +20,7 @@ mixin img(name, image, size = ['196x196_jpg', '392x392_jpg'], cssClass)
 
               if _.get(item, 'offer.percentage') && ( (_.get(item, 'offer.available.start') && moment().isAfter(moment(item.offer.available.start)) ) || !_.get(item, 'offer.available.start') )  && ( (_.get(item, 'offer.available.end') && moment().isBefore(moment(item.offer.available.end)) ) || !_.get(item, 'offer.available.end') )
                 .b.t.t-gray-2 #{formatMoney(item.price || 0)}
-                .b #{formatMoney(item.offer.price || 0)}
+                .b.t-primary #{formatMoney(item.offer.price || 0)}
               else
-                .b #{formatMoney(item.price || 0)}
+                .b.t-primary #{formatMoney(item.price || 0)}
 

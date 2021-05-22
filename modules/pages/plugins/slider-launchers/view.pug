@@ -13,19 +13,19 @@ mixin simpleProduct(product)
   .b.mb-0-5
     if slug=='launcher-new-offers'
       .flex
-        i.pl-0-25.fa.fa-bullhorn
+        i.pl-0-25.fa.fa-bullhorn.t-primary
         .pl-0-5 Ofertas
     else if slug=='launcher-new-products'
       .flex
-        i.pl-0-25.fa.fa-shopping-bag
+        i.pl-0-25.fa.fa-shopping-bag.t-primary
         .pl-0-5 Nuevos productos
     else if slug=='launcher-favorites'
       .flex
-        i.pl-0-25.fa.fa-star
+        i.pl-0-25.fa.fa-star.t-primary
         .pl-0-5 Favoritos
     else if slug=='launcher-features'
       .flex
-        i.pl-0-25.fa.fa-bookmark
+        i.pl-0-25.fa.fa-bookmark.t-primary
         .pl-0-5 Destacados
   .flex.ai-s
     each item,i in items
@@ -38,9 +38,9 @@ mixin simpleProduct(product)
                 if slug=='launcher-new-offers'
                   if _.get(item.productID, 'offer.percentage') && ( (_.get(item.productID, 'offer.available.start') && moment().isAfter(moment(item.productID.offer.available.start)) ) || !_.get(item.productID, 'offer.available.start') )  && ( (_.get(item.productID, 'offer.available.end') && moment().isBefore(moment(item.productID.offer.available.end)) ) || !_.get(item.productID, 'offer.available.end') )
                     .b.t.t-gray-2 #{formatMoney(item.productID.price || 0)}
-                    .b #{formatMoney(item.productID.offer.price || 0)}
+                    .b.t-primary #{formatMoney(item.productID.offer.price || 0)}
                   else
-                    .b #{formatMoney(item.productID.price || 0)}
+                    .b.t-primary #{formatMoney(item.productID.price || 0)}
                 else
                   | #{_.first(item.productID.categoryText)}
 

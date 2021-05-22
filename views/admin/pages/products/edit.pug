@@ -173,7 +173,7 @@ block edit
         data-error="#form-results"
       )
         .white.br-1.rd-0-2.pw-2.pt-1.pb-2.mb-1
-          input(type='hidden' name='redirect' value=`/administracion/tiendas/${store._id}/productos/${item._id}/editar#p3`)
+          input(type='hidden' name='redirect' value=`/administracion/tiendas/${store._id}/productos/${item._id}/editar`)
 
           .row
             .col-xs-12
@@ -199,7 +199,7 @@ block edit
       form.validate-rest(
         action=`${appCnf.url.api}admin/stores/${store._id}/products/${item._id}`
         method="put"
-        data-page=`/administracion/tiendas/${store._id}/productos/${item._id}`
+        data-page=`/administracion/tiendas/${store._id}/productos/${item._id}/editar`
         data-error="#form-results"
       )
         .white.br-1.rd-0-2.pw-2.pt-1.pb-2.mb-1

@@ -23,9 +23,9 @@ mixin simpleProduct(product)
             | #{product.name}
         if _.get(product, 'offer.percentage') && ( (_.get(product, 'offer.available.start') && moment().isAfter(moment(product.offer.available.start)) ) || !_.get(product, 'offer.available.start') )  && ( (_.get(product, 'offer.available.end') && moment().isBefore(moment(product.offer.available.end)) ) || !_.get(product, 'offer.available.end') )
           .b.t.t-gray-2 #{formatMoney(product.price || 0)}
-          .b #{formatMoney(product.offer.price || 0)}
+          .b.t-primary #{formatMoney(product.offer.price || 0)}
         else
-          .b #{formatMoney(product.price || 0)}
+          .b.t-primary #{formatMoney(product.price || 0)}
 
 
 

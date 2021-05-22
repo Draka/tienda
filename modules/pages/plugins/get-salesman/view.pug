@@ -1,41 +1,54 @@
 .container
-  .oh.white.br-1.rd-0-2.mh-2.p-1
-    .msg.error#form-results
-    form.validate-rest(id="passwordResetForm" action=`${appCnf.url.api}users` method="put" data-page=`/administracion/tiendas` data-error="#form-results")
+  if !req.user
+    .oh.white.br-1.rd-0-2.mb-2
+      .p-1.tc
+        .big
+          | Para continuar necesitas
+          | #{' '}
+          a.b.t-primary(href="/iniciar-sesion") iniciar sesión
+          | #{' '}
+          | o
+          | #{' '}
+          a.b.t-primary(href="/registro") crear una cuenta
+          | .
+  else
+    .oh.white.br-1.rd-0-2.mh-2.p-1
+      .msg.error#form-results
+      form.validate-rest(id="passwordResetForm" action=`${appCnf.url.api}users` method="put" data-page=`/administracion/tiendas` data-error="#form-results")
 
-      .row
-        .col-xs-12
-          .form-group
-            .form-control
-              label
-                input(type="hidden" name="adminStore" value="1")
-                input.checkbox#tycv(
-                  type="checkbox"
-                  name="acceptance.tycv"
-                  value='1'
-                  requireCheck
-                  data-msg-error="Debe aceptar los Términos y Condiciones de Vendedor para continuar"
-                )
-                span Acepto términos y condiciones de vendedor
-          .form-group
-            .form-control
-              a.b(href='/documentos/terminos-y-condiciones-vendedor')
-                | Ver Términos y Condiciones Vendedor
-                | #{' '}
-                i.fas.fa-external-link-alt
-          .form-group
-            .form-control
-              label
-                input.checkbox#adult(
-                  type="checkbox"
-                  name="acceptance.adult"
-                  value='1'
-                  requireCheck
-                  data-msg-error="Debe ser mayor de edad para usar el portal como vendedor"
-                )
-                span Soy mayor de edad
-      .row
-        .col-xs-12.tr
-          button.btn.btn--primary.w-100-xs(type="submit") Mejorar mi cuenta a vendedor
+        .row
+          .col-xs-12
+            .form-group
+              .form-control
+                label
+                  input(type="hidden" name="adminStore" value="1")
+                  input.checkbox#tycv(
+                    type="checkbox"
+                    name="acceptance.tycv"
+                    value='1'
+                    requireCheck
+                    data-msg-error="Debe aceptar los Términos y Condiciones de Vendedor para continuar"
+                  )
+                  span Acepto términos y condiciones de vendedor
+            .form-group
+              .form-control
+                a.b(href='/documentos/terminos-y-condiciones-vendedor')
+                  | Ver Términos y Condiciones Vendedor
+                  | #{' '}
+                  i.fas.fa-external-link-alt
+            .form-group
+              .form-control
+                label
+                  input.checkbox#adult(
+                    type="checkbox"
+                    name="acceptance.adult"
+                    value='1'
+                    requireCheck
+                    data-msg-error="Debe ser mayor de edad para usar el portal como vendedor"
+                  )
+                  span Soy mayor de edad
+        .row
+          .col-xs-12.tr
+            button.btn.btn--primary.w-100-xs(type="submit") Mejorar mi cuenta a vendedor
 
 

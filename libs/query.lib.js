@@ -85,7 +85,8 @@ exports.modelAll = (req, model, cb) => {
 };
 
 exports.user = (req, id, cb) => {
-  const key = `__tenancy:${req.tenancy}__user__${id}`;
+  // NOTA: NO AGREGUE EL TENANCY ACA, TENANCY NO EXISTE EN ESTE AMBITO
+  const key = `__user__${id}`;
   client.get(key, (_err, reply) => {
     if (reply && process.env.NODE_ENV === 'production') {
       cb(null, JSON.parse(reply));

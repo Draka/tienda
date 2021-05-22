@@ -22,7 +22,7 @@ function hash(obj, key) {
 }
 
 function preUpdate(result, next) {
-  client.del(`__tenancy:${result.tenancy}__user__${result._id}`);
+  client.del(`__user__${result._id}`);
   if (_.get(result, 'personalInfo.firstname') && _.get(result, 'personalInfo.lastname')) {
     result.personalInfo.name = `${_.trim(result.personalInfo.firstname)} ${_.trim(result.personalInfo.lastname)}`;
   }
