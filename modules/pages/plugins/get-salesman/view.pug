@@ -5,11 +5,13 @@
         .big
           | Para continuar necesitas
           | #{' '}
-          a.b.t-primary(href="/iniciar-sesion") iniciar sesión
+          a.b(href="/iniciar-sesion")
+            span.t-primary iniciar sesión
           | #{' '}
           | o
           | #{' '}
-          a.b.t-primary(href="/registro") crear una cuenta
+          a.b.t-primary(href="/registro")
+            span.t-primary crear una cuenta
           | .
   else
     .oh.white.br-1.rd-0-2.mh-2.p-1

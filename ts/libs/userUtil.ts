@@ -62,6 +62,9 @@ export class Util {
         }
       },
     });
+    $('.carousel-arrow-right').on('click', () => {
+      $(window).trigger('scroll');
+    });
   }
 
   showDetailOrder() {
