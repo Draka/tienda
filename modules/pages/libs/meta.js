@@ -172,7 +172,7 @@ const _meta = (req, text, html, cb) => {
       },
       imgRes: (cb) => {
         if (/\[img-res key="([a-zA-Z0-9-]*)" sizes="([x0-9,]*|xdefault)"\]/.test(obj.text)) {
-          const re = new RegExp('\\[img-res key="([a-z0-9-]*)" sizes="([x0-9,]*|xdefault)"\\]', 'igm');
+          const re = new RegExp('\\[img-res key="([a-zA-Z0-9-]*)" sizes="([x0-9,]*|xdefault)"\\]', 'igm');
           const matchAll = obj.text.matchAll(re);
           const matchs = [];
           for (const match of matchAll) {
