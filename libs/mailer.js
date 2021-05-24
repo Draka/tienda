@@ -52,7 +52,7 @@ module.exports = (data, cb) => {
         folder: appCnf.s3.folder,
         info: _.get(results, 'site.email.emailInfo'),
         title: _.get(results, 'site.email.title'),
-        color: _.get(results, 'site.color'),
+        color: _.get(results, 'site.style.emailColor'),
         logoEmail: _.get(results, 'site.images.logoEmail.jpg'),
       };
       data.v = appCnf.v;

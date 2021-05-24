@@ -217,6 +217,10 @@ block edit
               h2.mb-1 Colores
               .form-group
                 .form-control
+                  input.input#emailColor(type="color" name='style.emailColor' value=_.get(item, 'style.emailColor'))
+                  label(for='emailColor') Color línea correos
+              .form-group
+                .form-control
                   select.input#header(name='style.header' required)
                     option(value='') --
                     each color in colors

@@ -63,6 +63,10 @@ const schema = new mongoose.Schema({
     trim: true,
   }],
   style: {
+    emailColor: {
+      type: String,
+      trim: true,
+    },
     base: {
       type: String,
       trim: true,
