@@ -1,5 +1,4 @@
 const Handlebars = require('handlebars');
-const fs = require('fs');
 const utf8 = require('utf8');
 const { htmlToText } = require('html-to-text');
 
@@ -50,6 +49,7 @@ module.exports = (data, cb) => {
         name: _.get(results, 'site.name'),
         urlSite: _.get(results, 'site.url'),
         urlStatic: appCnf.url.cdn,
+        folder: appCnf.s3.folder,
         info: _.get(results, 'site.email.emailInfo'),
         title: _.get(results, 'site.email.title'),
         color: _.get(results, 'site.color'),
@@ -57,7 +57,6 @@ module.exports = (data, cb) => {
       };
       data.v = appCnf.v;
       results.site.html = template(data);
-      fs.writeFile('./public/email2.html', results.site.html, () => {});
 
       const subject = Handlebars.compile(results.query.subject);
       data.subject = `${subject(data)} - ${_.get(results, 'site.name')}`;
