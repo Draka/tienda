@@ -38,7 +38,7 @@ block list
             .hr.mt-1
             a.show(href=`/administracion/super/multimedia/${item._id}/editar` title='Editar' class="bg")
               if item.urlSize
-                +img(item.title, _.get(item, `urlSize.${item.files[0]}`), ['196','392'])
+                +img(item.title, _.get(item, `urlSize.${item.files[0]}`), ['392','392'])
               else if item.url
                 +multimedia(item.title, _.get(item, `url.${item.files[0]}`))
             .hr.mt-1

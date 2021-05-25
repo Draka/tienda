@@ -9,6 +9,9 @@ block list
       b P
       | #{' '} = Publicado
       | #{' '}
+      b S
+      | #{' '} = Sesión
+      | #{' '}
     table.small.table.table--lines.table--striped
       thead
         tr
@@ -16,6 +19,7 @@ block list
             i.fas.fa-cog
           th.b.tc A
           th.b.tc P
+          th.b.tc S
           th.b Nombre
           th.b Slug
       tbody
@@ -32,6 +36,8 @@ block list
               +boolean(item.active)
             td.tc
               +boolean(item.publish)
+            td.tc
+              +boolean(item.auth)
             td
               a.b(href=`/administracion/super/paginas/editar/${item._id}`) #{item.title}
             td

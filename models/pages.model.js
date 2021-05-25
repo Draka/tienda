@@ -22,6 +22,11 @@ const schema = new mongoose.Schema({
     index: true,
     default: false,
   },
+  auth: {
+    type: Boolean,
+    index: true,
+    default: false,
+  },
   title: {
     type: String,
     trim: true,

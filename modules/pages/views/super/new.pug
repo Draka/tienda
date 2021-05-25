@@ -25,6 +25,12 @@ block edit
                 span.caption Publicado
           .form-group
             .form-control
+              label.switch
+                input#auth(type="hidden" name="auth" value='0')
+                span.check
+                span.caption Sesión
+          .form-group
+            .form-control
               input.input#title(type="text" name="title" placeholder=' ' required)
               label(for='title') Título
           .form-group

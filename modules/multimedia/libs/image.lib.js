@@ -11,9 +11,10 @@ const s3 = new AWS.S3({
 
 function resizes(fileName, nameTemp, ext, sizes, cb) {
   async.eachLimit(sizes, 5, (size, cb) => {
+    const image = sharp(fileName);
     switch (ext) {
       case 'jpg':
-        sharp(fileName)
+        image
           .flatten({
             background: {
               r: 255, g: 255, b: 255, alpha: 1,
@@ -26,7 +27,7 @@ function resizes(fileName, nameTemp, ext, sizes, cb) {
           .toFile(`./tmp/${size.x}_${nameTemp}.jpg`, cb);
         break;
       case 'webp':
-        sharp(fileName)
+        image
           .flatten({
             background: {
               r: 255, g: 255, b: 255, alpha: 1,
@@ -39,12 +40,20 @@ function resizes(fileName, nameTemp, ext, sizes, cb) {
           .toFile(`./tmp/${size.x}_${nameTemp}.webp`, cb);
         break;
       case 'png':
-        sharp(fileName)
-          .resize({
-            fit: sharp.fit.contain,
-            width: _.isInteger(size.x) ? size.x : null,
-          }).png()
-          .toFile(`./tmp/${size.x}_${nameTemp}.png`, cb);
+        image
+          .metadata()
+          .then((metadata) => {
+            const d = metadata.density / 72;
+            image
+              .resize(Math.round(metadata.width / d))
+              .resize({
+                fit: sharp.fit.contain,
+                width: _.isInteger(size.x) ? size.x : null,
+              })
+              .withMetadata({ density: 72 })
+              .png()
+              .toFile(`./tmp/${size.x}_${nameTemp}.png`, cb);
+          });
         break;
       default:
         cb();

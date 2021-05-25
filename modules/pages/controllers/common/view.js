@@ -17,6 +17,10 @@ module.exports = (req, res, next) => {
     if (err) {
       return next(err);
     }
+    // auth
+    if (results.item.auth && !req.user) {
+      return res.redirect('/iniciar-sesion');
+    }
     if (!results.site) {
       results.site = {};
     }
