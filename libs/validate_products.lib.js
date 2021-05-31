@@ -40,7 +40,7 @@ module.exports = (req, store, bodyItems, cb) => {
         if (!results.product) {
           return cb();
         }
-        putS3Path(req, [results.product], store);
+        putS3Path(req, [results.product]);
         results.product.store = store.slug;
 
         items[results.product.sku] = _.pick(

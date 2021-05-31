@@ -27,7 +27,7 @@ module.exports = (req, res, next) => {
         errors.push({ field: 'product', msg: 'El registro no existe.' });
         return cb(listErrors(404, null, errors));
       }
-      putS3Path(req, [results.product], results.store);
+      putS3Path(req, [results.product]);
       results.product.store = req.params.storeSlug;
       results.product.storeName = results.store.name;
       cb();

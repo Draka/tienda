@@ -51,7 +51,7 @@ module.exports = (req, res, next) => {
         .exec(cb);
     }],
     postFind: ['items', (results, cb) => {
-      putS3Path(req, results.items, results.store);
+      putS3Path(req, results.items);
       cb();
     }],
     count: ['check', (_results, cb) => {

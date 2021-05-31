@@ -9,5 +9,5 @@ module.exports = (app) => {
   app.get('/usuario/correo', checkAuth, require('./email-edit'));
   app.get('/usuario/correo-cambiado', checkAuth, require('./email-edit-successful'));
 
-  app.get('/usuario/vendedor', require('./get-salesman'));
+  app.get('/usuario/historial', checkAuth, require('./history'));
 };

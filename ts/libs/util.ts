@@ -10,7 +10,7 @@ export class Util {
 
   constructor() {
     this.session = new Session();
-    this.getApi = new GetApi(this.session.token);
+    this.getApi = new GetApi();
     this.count();
     this.lazy();
     this.changeTowns();

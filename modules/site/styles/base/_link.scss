@@ -52,7 +52,7 @@ a:not(.btn):not(.item):not(.step) {
     color: darken($color: $color-foreground, $amount: 20);
   }
 
-  &:hover {
+  &:not(.nh):hover {
     text-decoration: underline;
   }
   @each $key, $val in $colors-sections {

@@ -19,7 +19,7 @@
   .expand {
     flex: 0 1 100%;
   }
-  a:not(button):not(.btn):not(.item) {
+  a:not(button):not(.btn):not(.item):not(.nh) {
     padding: 0 $gutter;
     display: flex;
     align-items: center;
@@ -86,79 +86,52 @@
     }
   }
 }
+@each $key, $val in $sizes-objects {
+  .navbar-#{$key} {
+    height: $val;
+    a:not(button):not(.btn):not(.item):not(.nh) {
+      height: $val;
+    }
+  }
+  .navbar-fixed-t-#{$key} {
+    margin-top: $val;
+  }
+  .navbar-fixed-b-#{$key} {
+    padding-bottom: $val;
+  }
+}
+
 $ant: null;
-$sant: null;
-@each $key, $size in $navar {
-  @if map-has-key($breakpoints, $key) {
-    @include media-breakpoint-up(map-get($breakpoints, $key)) {
-      .navbar {
-        height: $size;
-        a:not(button):not(.btn):not(.item) {
-          height: $size;
-        }
-      }
-      .navbar--normal {
-        height: 4em;
-        a:not(button):not(.btn):not(.item) {
-          height: 4em;
-        }
-      }
-      .navbar-fixed-t {
-        margin-top: $size;
-      }
-      .navbar-fixed-b {
-        margin-bottom: $size;
-      }
-    }
-    $var: index(($breakpoints), ($key map-get($breakpoints, $key)));
+$var: null;
 
-    @if $var !=1 {
-      @include media-breakpoint(map-get($breakpoints, $ant), map-get($breakpoints, $key) - 0.1) {
-        .navbar-fixed-t-#{$ant} {
-          margin-top: $sant;
+@each $key, $val in $breakpoints {
+
+  $var: index(($breakpoints), ($key $val));
+
+  @if $var !=1 {
+    @include media-breakpoint(map-get($breakpoints, $ant), map-get($breakpoints, $key) - 0.1) {
+
+      @each $key, $val in $sizes-objects {
+        .navbar-fixed-t-#{$key}-#{$ant} {
+          margin-top: $val;
         }
-        .navbar-fixed-b-#{$ant} {
-          padding-bottom: $sant;
+        .navbar-fixed-b-#{$key}-#{$ant} {
+          padding-bottom: $val;
         }
       }
     }
-    $ant: $key;
-    $sant: $size;
+
+  }
+
+  $ant: $key;
+
+  @include media-breakpoint(map-get($breakpoints, $ant)) {
+    .navbar-fixed-t-#{$key}-#{$ant} {
+      margin-top: $val;
+    }
+    .navbar-fixed-b-#{$key}-#{$ant} {
+      padding-bottom: $val;
+    }
   }
 }
-@include media-breakpoint(map-get($breakpoints, $ant)) {
-  .navbar-fixed-t-#{$ant} {
-    margin-top: $sant;
-  }
-  .navbar-fixed-b-#{$ant} {
-    padding-bottom: $sant;
-  }
-}
 
-// $ant: null;
-// $vant: null;
-// @each $ckey, $cval in $breakpoints {
-//   $var: index(($breakpoints), ($ckey $cval));
-
-//   @if $var !=1 {
-//     @include media-breakpoint(map-get($breakpoints, $ant), map-get($breakpoints, $ckey) - 0.1) {
-//       .navbar-fixed-t-#{$ant} {
-//         margin-top: $vant;
-//       }
-//       .navbar-fixed-b-#{$ant} {
-//         margin-bottom: $vant;
-//       }
-//     }
-//   }
-// }
-
-// $ant: $ckey;
-// $vant: $cval;
-// @include media-breakpoint(map-get($breakpoints, $ant)) {
-//   .navbar-fixed-t-#{$ant} {
-//     margin-top: $vant;
-//   }
-//   .navbar-fixed-b-#{$ant} {
-//     margin-bottom: $vant;
-//   }
-// }

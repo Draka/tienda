@@ -31,7 +31,7 @@ module.exports = (req, res, next) => {
         return cb(listErrors(404, null, [{ field: 'storeID', msg: 'El registro no existe.' }]));
       }
       results.product.isAvailable = isAvailable(results.product);
-      putS3Path(req, [results.product], results.store);
+      putS3Path(req, [results.product]);
       results.product.ldJson = _.map(results.product.imagesSizes, (i) => i.original);
       cb();
     }],
@@ -55,7 +55,7 @@ module.exports = (req, res, next) => {
         .exec(cb);
     }],
     postFindProducts: ['products', (results, cb) => {
-      putS3Path(req, results.products, results.store);
+      putS3Path(req, results.products);
       _.each(results.products, (product) => {
         product.isAvailable = isAvailable(product);
       });

@@ -1,29 +1,4 @@
 export class Session {
-  token: string
-
-  user: any
-
-  constructor() {
-    this.token = <string>localStorage.getItem('token');
-    try {
-      this.user = JSON.parse(<string>localStorage.getItem('user'));
-
-      if (this.token) {
-        if (this.user?.personalInfo?.firstname) {
-          $('.userFirstname').html(this.user.personalInfo.firstname.split(' ')[0]);
-        }
-        $('.nologin').hide();
-        $('.login').show();
-      } else {
-        $('.login').hide();
-        $('.nologin').show();
-      }
-    } catch (error) {
-      $('.login').hide();
-      $('.nologin').show();
-    }
-  }
-
   static checkWebpFeature(feature:any, callback:any) {
     const kTestImages:any = {
       lossy: 'UklGRiIAAABXRUJQVlA4IBYAAAAwAQCdASoBAAEADsD+JaQAA3AAAAAA',

@@ -13,7 +13,7 @@ declare const L: any;
 export class Cart {
   stores!: StoresInterface;
 
-  getApi: GetApi = new GetApi('');
+  getApi: GetApi = new GetApi();
 
   cartCount: CartCount = new CartCount();
 
@@ -242,6 +242,7 @@ export class Cart {
     }
     if (address.address) {
       $('.user-address').html(address.address);
+      $('.data-address .address').html(address.address.split(',')[0]);
     } else {
       $('.user-address').html('<div class="msg error">Proporcione una dirección para continuar</div>');
     }

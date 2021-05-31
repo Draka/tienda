@@ -20,8 +20,7 @@ block list
           th.b.tc A
           th.b.tc P
           th.b.tc S
-          th.b Nombre
-          th.b Slug
+          th.b Nombre/Slug
       tbody
         each item of items
           tr
@@ -40,8 +39,7 @@ block list
               +boolean(item.auth)
             td
               a.b(href=`/administracion/super/paginas/editar/${item._id}`) #{item.title}
-            td
-              | #{item.slug}
+              .mt-0-5 #{item.slug}
 
       tfoot
         tr

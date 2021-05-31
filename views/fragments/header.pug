@@ -1,27 +1,32 @@
 header
   .hide-xs
-    nav.navbar.sh.fixed.top(class=
+    nav.navbar.navbar-5.relative.sh.z1(class=
       (_.get(req,'site.style.header')||'primary')
       + ' '
       + (_.get(req,'site.style.headerFontClass')||'') )
       .container-fluid
         a.logo(href='/')
           img(src=_.get(req, 'site.images.logoTop.svg') alt=`${_.get(req, 'site.name')} logo`)
-        .relative
-          a.dropdown(aria-controls='menu-categories')
-            span
-              i.fas.fa-list-ul.fa-fw
-              | #{' '}
-              | Categorías
-            span.icon.ml-0-25
-              i.fas.fa-chevron-down.fa-fw
-          #menu-categories.dropdown-list.sh
-            ul(role='menu')
-              each category in req.categories
-                li(role='menuitem')
-                  a.item(href='/categorias/'+category.slugLong)
-                    | #{category.name}
-        | !{getFragment(req, 'menu')}
+        //- .relative
+        //-   a.dropdown(aria-controls='menu-categories')
+        //-     span
+        //-       i.fas.fa-list-ul.fa-fw
+        //-       | #{' '}
+        //-       | Categorías
+        //-     span.icon.ml-0-25
+        //-       i.fas.fa-chevron-down.fa-fw
+        //-   #menu-categories.dropdown-list.sh
+        //-     ul(role='menu')
+        //-       each category in req.categories
+        //-         li(role='menuitem')
+        //-           a.item(href='/categorias/'+category.slugLong)
+        //-             | #{category.name}
+        a.data-address.flex
+          .pr-0-25
+            i.fas.fa-map-marker-alt.big
+          .small
+            b.small.t-gray-500.name Enviar a
+            .mt-0-25.address Colombia
 
         .expand.pw-1
           form.flex(class="search" action=`${req.urlSite}buscar`)
@@ -84,6 +89,31 @@ header
                 .very-small Mi Carrito
               span.badge.inside.num-shopping-cart.m-1.secondary.start-hide
               span.out-screen Mi Carrito
+    nav.navbar.navbar-2-5.white.pw-1.small
+      ul.menu.ml-1
+        li.relative
+          a.ph-0-5.dropdown(aria-controls='menu-categories')
+            span
+              i.fas.fa-list-ul.fa-fw
+              | #{' '}
+              | Categorías
+            span.icon.ml-0-25
+              i.fas.fa-chevron-down.fa-fw
+          #menu-categories.dropdown-list.sh
+            ul(role='menu')
+              each category in req.categories
+                li(role='menuitem')
+                  a.item(href='/categorias/'+category.slugLong)
+                    | #{category.name}
+        li
+          a.pw-0-5(href='/grupos/ofertas') Ofertas
+        li
+          a.pw-0-5(href='/paginas/ayuda-y-atencion-al-cliente') Servicio al cliente
+        li
+          a.pw-0-5(href='/usuario/historial') Historial
+        li
+          a.pw-0-5(href='/paginas/vender') Vender
+
     if store && _.get(req, 'site.modules.categories') && !notMenu
       nav.navbar.white.sh.mt-4
         .container
@@ -110,7 +140,7 @@ header
                     a.item(href='/'+store.slug+'/categorias/'+category.slugLong) #{category.name}
 
   .show-xs
-    nav.navbar.sh.fixed.top(class=_.get(req,'site.style.header')||'primary')
+    nav.navbar.navbar-4.sh.fixed.top(class=_.get(req,'site.style.header')||'primary')
       ul.menu.w-100
         li
           a.logo.justify-content-center.pr-0(href='/')
@@ -125,7 +155,7 @@ header
                 i.fas.fa-search
                 span.out-screen #{__('Bucar productos')}
   .show-xs
-    nav.navbar.sh.fixed.bottom(class=_.get(req,'site.style.header')||'primary')
+    nav.navbar.navbar-4.sh.fixed.bottom(class=_.get(req,'site.style.header')||'primary')
       ul.justify-content-center.menu.w-100
         li.flex-grow
           a.sidenav-action.justify-content-center(href='#' data-target='#mobile-menu')

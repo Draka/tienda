@@ -9,16 +9,6 @@ import { Vars } from './vars';
 export class GetApi {
   h = {}
 
-  constructor(
-    token: string,
-  ) {
-    if (token) {
-      this.h = {
-        Authorization: `bearer ${token}`,
-      };
-    }
-  }
-
   /**
    * GET: api la ruta de la tienda
    * @param path ruta del api

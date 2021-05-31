@@ -41,7 +41,7 @@ module.exports = (req, res, next) => {
         .exec(cb);
     }],
     postFind: ['item', (results, cb) => {
-      putS3Path(req, [results.item], results.store);
+      putS3Path(req, [results.item]);
       cb();
     }],
     tree: ['check', (results, cb) => {

@@ -16,6 +16,9 @@ $var: null;
 .show {
   @extend %show;
 }
+.z1 {
+  z-index: 1;
+}
 
 
 @each $key, $val in $breakpoints {

@@ -11,8 +11,9 @@ export class Util {
 
   constructor() {
     this.session = new Session();
-    this.getApi = new GetApi(this.session.token);
+    this.getApi = new GetApi();
     this.lazy();
+    this.address();
     this.showDetailOrder();
     this.scrollClick();
     this.figure();
@@ -65,6 +66,17 @@ export class Util {
     $('.carousel-arrow-right').on('click', () => {
       $(window).trigger('scroll');
     });
+  }
+
+  address() {
+    let address:any;
+    try {
+      address = JSON.parse(localStorage.getItem('address') || '{}');
+      $('.data-address .address').html(address.address.split(',')[0]);
+    } catch (error) {
+      localStorage.removeItem('address');
+      address = {};
+    }
   }
 
   showDetailOrder() {
