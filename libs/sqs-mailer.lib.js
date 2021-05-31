@@ -41,6 +41,7 @@ module.exports = (req, data, user, cb) => {
     try: ['sqs', (results, cb) => {
       cb();
       if (!data.noNow && process.env.NODE_ENV === 'production') {
+        console.log('EMAIL', appCnf.s3.urlExSQS);
         https.get(appCnf.s3.urlExSQS, () => {});
       }
     }],

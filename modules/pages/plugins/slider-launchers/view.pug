@@ -1,5 +1,5 @@
 mixin img(name, image, size = ['196x196_jpg', '392x392_jpg'], cssClass)
-  .relative.rd-0-5.oh
+  .relative.rd-0-5.oh.lh-0
     if (image)
       img.w-100.lazy(data-src=image[size[0]] data-retina=image[size[1]] alt=_.truncate(name, {'length': 30,'separator': ' '}) class=cssClass?cssClass:'')
     else
