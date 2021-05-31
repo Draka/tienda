@@ -7,7 +7,7 @@ global.AWS = require('aws-sdk');
 
 global.listErrors = require('./libs/list_errors.lib');
 global.checkAuth = require('./libs/check_auth.lib');
-global.checkAuthAdmin = require('./libs/check_auth_store.lib');
+global.checkAuthAdmin = require('./libs/check_auth_admin.lib');
 global.checkAuthAdminStore = require('./libs/check_auth_store.lib');
 
 const vars = {
