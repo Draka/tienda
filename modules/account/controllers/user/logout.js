@@ -6,7 +6,7 @@ module.exports = (req, res, next) => {
       return next(err);
     }
     const item = {
-      seo: 'Tu cuenta',
+      seo: 'Cerrar Sesión',
     };
     const breadcrumbs = [
       {
@@ -14,16 +14,16 @@ module.exports = (req, res, next) => {
         text: 'Inicio',
       },
       {
-        link: '/usuario',
-        text: 'Cuenta',
+        link: '/cerrar-sesion',
+        text: 'Cerrar Sesión',
         active: true,
       },
     ];
 
-    res.render('../modules/account/view/user/menu.pug', {
+    res.render('../modules/account/view/user/logout.pug', {
       req,
       item,
-      title: 'Tu cuenta',
+      title: 'Cerrar Sesión',
       breadcrumbs,
       js: 'store',
     });

@@ -101,27 +101,4 @@ module.exports = (app) => {
       js: 'page',
     });
   });
-
-  app.get('/cerrar-sesion', (req, res) => {
-    // elimina la cookie
-    res.clearCookie('token');
-    delete req.user;
-    const breadcrumbs = [
-      {
-        link: '/',
-        text: 'Inicio',
-      },
-      {
-        link: '/cerrar-sesion',
-        text: 'Cerrar Sesión',
-        active: true,
-      },
-    ];
-    res.render('pages/common/logout', {
-      req,
-      title: 'Sesión finalizada',
-      breadcrumbs,
-      js: 'page',
-    });
-  });
 };

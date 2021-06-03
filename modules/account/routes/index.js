@@ -6,6 +6,7 @@ const passwordEditSuccessful = require('../controllers/user/password-edit-succes
 const emailEdit = require('../controllers/user/email-edit');
 const emailEditSuccessful = require('../controllers/user/email-edit-successful');
 const history = require('../controllers/user/history');
+const logout = require('../controllers/user/logout');
 
 const apiUpdate = require('../api/user/update');
 const updatePersonalInfo = require('../api/user/update-personal-info');
@@ -25,6 +26,8 @@ module.exports = (app) => {
   app.get('/usuario/informacion-personal/correo-cambiado', checkAuth, emailEditSuccessful);
 
   app.get('/usuario/historial', checkAuth, history);
+
+  app.get('/cerrar-sesion', checkAuth, logout);
 
   app.put('/v1/users', checkAuth, apiUpdate);
   app.put('/v1/users/personal-info', checkAuth, updatePersonalInfo);

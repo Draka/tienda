@@ -1,0 +1,20 @@
+extends /modules/common/views/layout-index
+
+block view
+  .container
+    .row.pb-2
+      .col-xs-12
+        h1.tc #{title}
+  .container
+    .row.justify-content-center
+      .col-xs-12.col-md-6
+        .oh.white.br-1.rd-0-2.mh-2
+          .p-1
+            .row
+              .col-xs-12
+                .msg.action
+                  | Tu sesión se ha cerrado con exito.
+          .p-1.white-500
+            .row
+              .col-xs-12
+                a(href="/iniciar-sesion") Iniciar Sesión
