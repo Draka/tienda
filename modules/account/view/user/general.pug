@@ -1,12 +1,10 @@
-extends ../../layout_account
+extends /modules/common/views/layout-index
 
-block content
-  .container(class=account?'':'mt-4')
-    include ../../fragments/breadcrumb
-
-    .row
+block view
+  .container
+    .row.pb-2
       .col-xs-12
-        h1 #{title}
+        h1.tc #{title}
 
     .row.justify-content-center
       .col-md-8

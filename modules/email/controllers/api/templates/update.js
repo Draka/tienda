@@ -43,7 +43,7 @@ module.exports = (req, res, next) => {
         return cb(listErrors(400, null, errors));
       }
       const options = {
-        url: req.urlSite,
+        url: req.site.url,
         applyTableAttributes: true,
         removeHtmlSelectors: true,
       };

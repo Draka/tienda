@@ -61,6 +61,42 @@ module.exports = (req, res, next) => {
       });
       cb();
     }],
+    putHistory: ['postFindProduct', (results, cb) => {
+      if (!_.get(req, 'user._id')) {
+        return cb();
+      }
+      models.History
+        .findOne({
+          tenancy: req.tenancy,
+          userID: req.user._id,
+        })
+        .exec((err, doc) => {
+          if (err) {
+            return cb(err);
+          }
+          if (doc) {
+            const index = _.findIndex(doc.productIDs, { productID: results.product._id });
+            if (index === -1) {
+              doc.productIDs.unshift({ productID: results.product._id });
+              doc.save(cb);
+            } else {
+              const productID = doc.productIDs.splice(index, 1)[0];
+              productID.updatedAt = Date.now();
+
+              doc.productIDs.unshift(productID);
+              doc.productIDs.slice(0, 24);
+              doc.save(cb);
+            }
+          } else {
+            const history = new models.History({
+              tenancy: req.tenancy,
+              userID: req.user._id,
+              productIDs: [{ productID: results.product._id }],
+            });
+            history.save(cb);
+          }
+        });
+    }],
   }, (err, results) => {
     if (err) {
       return next(err);

@@ -4,8 +4,20 @@ const breadcrumbs = [
     text: 'Inicio',
   },
   {
-    link: '/usuario/contrasena',
+    link: '/usuario',
+    text: 'Cuenta',
+  },
+  {
+    link: '/usuario/informacion-personal',
+    text: 'Datos personales y seguridad',
+  },
+  {
+    link: '/usuario/informacion-personal/contrasena',
     text: 'Contraseña',
+  },
+  {
+    link: '/usuario/informacion-personal/contrasena/contrasena-cambiada',
+    text: 'Mensaje',
     active: true,
   },
 ];
@@ -17,7 +29,7 @@ const msg = {
 };
 
 module.exports = (req, res) => {
-  res.render('pages/messages/general.pug', {
+  res.render('../modules/account/view/user/general.pug', {
     req,
     breadcrumbs,
     account: true,

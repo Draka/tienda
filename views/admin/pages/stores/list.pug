@@ -138,7 +138,7 @@ block list
               td
                 | #{item.primaryActivity}
               td
-                a(href=`${req.urlSite}tiendas/${item.slug}` target='_blank') #{`${req.urlSite}tiendas/${item.slug}`}
+                a(href=`${req.site.url}tiendas/${item.slug}` target='_blank') #{`${req.site.url}tiendas/${item.slug}`}
                 div.b #{item.primaryActivity} - #{item.secondaryActivity}
               td.tc
                 a.btn-flat.p-0-5.rd-0-2(href=`/administracion/tiendas/${item._id}/editar` title='Editar')

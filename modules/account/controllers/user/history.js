@@ -1,6 +1,6 @@
-const query = require('../../../libs/query.lib');
-const { putS3Path } = require('../../../libs/put_s3_path.lib');
-const { isAvailable } = require('../../../libs/util.lib');
+const query = require('../../libs/query.lib');
+const { putS3Path } = require('../../../../libs/put_s3_path.lib');
+const { isAvailable } = require('../../../../libs/util.lib');
 
 module.exports = (req, res, next) => {
   async.auto({
@@ -11,11 +11,12 @@ module.exports = (req, res, next) => {
       if (!results.history) {
         return cb();
       }
-      putS3Path(req, results.history.productIDs);
-      _.each(results.history.productIDs, (product) => {
+      const products = results.history.productIDs.map((i) => i.productID);
+      putS3Path(req, products);
+      _.each(products, (product) => {
         product.isAvailable = isAvailable(product);
       });
-      cb();
+      cb(null, products);
     }],
   }, (err, results) => {
     if (err) {
@@ -30,15 +31,20 @@ module.exports = (req, res, next) => {
         text: 'Inicio',
       },
       {
-        link: '/categorias',
-        text: 'Categorías',
+        link: '/usuario',
+        text: 'Cuenta',
+      },
+      {
+        link: '/usuario/historial',
+        text: 'Historial',
+        active: true,
       },
     ];
 
-    res.render('pages/stores/product.pug', {
+    res.render('../modules/account/view/user/history.pug', {
       req,
       breadcrumbs,
-      products: results.products,
+      products: _.get(results, 'postFindProducts') || [],
       item,
       title: 'Tus artículos vistos recientemente',
       menu: 'index',

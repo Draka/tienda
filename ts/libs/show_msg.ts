@@ -10,8 +10,8 @@ export class ShowMsg {
       $('body').append(em);
     }
     em.show();
-    if (errors.responseJSON && errors.responseJSON.values) {
-      errors = errors.responseJSON.values;
+    if (errors.data?.values) {
+      errors = errors.data.values;
     }
 
     $.each(errors, (_i, error) => {

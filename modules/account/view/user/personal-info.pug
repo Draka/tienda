@@ -1,0 +1,38 @@
+extends /modules/common/views/layout-index
+
+block view
+  .container
+    .row.pb-2
+      .col-xs-12
+        h1.tc #{title}
+  .container
+    .row.justify-content-center
+      .col-md-8
+        table.small.table.table--lines
+          tbody
+            tr
+              td.w-100
+                .b Nombres
+                | #{_.get(req,'user.personalInfo.firstname')}
+              td(rowspan=3)
+                a.btn.btn--primary.small(href='/usuario/informacion-personal/editar') Editar
+            tr
+              td.w-100
+                .b Apellidos
+                | #{_.get(req,'user.personalInfo.lastname')}
+            tr
+              td.w-100
+                .b Célular
+                | (#{_.get(req,'user.personalInfo.callsign')}) #{_.get(req,'user.personalInfo.cellphone')}
+            tr
+              td.w-100
+                .b Correo electrónico
+                | #{_.get(req,'user.email')}
+              td
+                a.btn.btn--primary.small(href='/usuario/informacion-personal/correo') Editar
+            tr
+              td.w-100
+                .b Contraseña
+                | ******
+              td
+                a.btn.btn--primary.small(href='/usuario/informacion-personal/contrasena') Editar

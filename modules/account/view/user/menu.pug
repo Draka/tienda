@@ -1,0 +1,65 @@
+extends /modules/common/views/layout-index
+
+block view
+  .container
+    .row.pb-2
+      .col-xs-12
+        h1.tc #{title}
+  .container
+    .row
+      .col-md-4.pb-1
+        a.nh(href='/usuario/pedidos')
+          .white.br-1.rd-0-5.ph-1.pw-2.flex.h-100
+            .pr-1
+              i.fas.fa-box.bigx2
+            div
+              div Tus pedidos
+              .mt-0-25.t-black-300 Cancelar o pagar pedidos
+
+      .col-md-4.pb-1
+        a.nh(href='/usuario/pedidos')
+          .white.br-1.rd-0-5.ph-1.pw-2.flex.h-100
+            .pr-1
+              i.fas.fa-retweet.bigx2
+            div
+              div Devoluciones y reembolsos
+              .mt-0-25.t-black-300 Cambia o devuelve art&iacute;culos comprados
+
+      .col-md-4.pb-1
+        a.nh(href='/usuario/informacion-personal')
+          .white.br-1.rd-0-5.ph-1.pw-2.flex.h-100
+            .pr-1
+              i.far.fa-user-circle.bigx2
+            div
+              div Tu cuenta
+              .mt-0-25.t-black-300 Gestiona tus datos personales
+
+      .col-md-4.pb-1
+        a.nh(href='/usuario/historial')
+          .white.br-1.rd-0-5.ph-1.pw-2.flex.h-100
+            .pr-1
+              i.fas.fa-history.bigx2
+            div
+              div Tu historial
+              .mt-0-25.t-black-300 Tus artículos vistos recientemente
+
+      if req.user.adminStore
+        .col-md-4.pb-1
+          a.nh(href='/administracion/tiendas')
+            .white.br-1.rd-0-5.ph-1.pw-2.flex.h-100
+              .pr-1
+                i.fas.fa-store.bigx2
+              div
+                div Tu tienda
+                .mt-0-25.t-black-300 Administra los artículos y sus ventas
+
+
+      if req.user.admin
+        .col-md-4.pb-1
+          a.nh(href='/administracion/super/configuracion')
+            .white.br-1.rd-0-5.ph-1.pw-2.flex.h-100
+              .pr-1
+                i.fas.fa-cogs
+              div
+                div El portal
+                .mt-0-25.t-black-300 Administra los aspectos del sitio

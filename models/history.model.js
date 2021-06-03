@@ -13,8 +13,18 @@ const schema = new mongoose.Schema({
     index: true,
   },
   productIDs: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: `${appCnf.dbPrefix}products`,
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
+    updatedAt: {
+      type: Date,
+      default: Date.now,
+    },
+    productID: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: `${appCnf.dbPrefix}products`,
+    },
   }],
 }, { timestamps: true });
 
@@ -25,7 +35,6 @@ function preUpdate(result, next) {
 schema.post('validate', preUpdate);
 
 schema.index({ tenancy: 1, userID: 1 }, { unique: true });
-schema.index({ productIDs: 1, userID: 1 }, { unique: true });
 
 const Model = mongoose.model(`${appCnf.dbPrefix}histories`, schema);
 

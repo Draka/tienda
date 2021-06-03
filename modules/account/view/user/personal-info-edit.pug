@@ -1,18 +1,17 @@
-extends ../../layout_account
+extends /modules/common/views/layout-index
 
-block content
+block view
   .container
-    include ../../fragments/breadcrumb
-
-    .row
+    .row.pb-2
       .col-xs-12
-        h1 Información Personal
+        h1.tc #{title}
+  .container
 
     .row.justify-content-center
       .col-md-8
         .white.br-1.rd-0-2.p-1.mb-2
           .msg.error#form-results
-          form.validate-rest(id="updateProfileForm" action=`${appCnf.url.api}users/personal-info` method="put" data-page=`/usuario` data-error="#form-results")
+          form.validate-rest(id="updateProfileForm" action=`${appCnf.url.api}users/personal-info` method="put" data-page=`/usuario/informacion-personal` data-error="#form-results")
             .row
               .col-xs-12
                 .form-group
@@ -35,6 +34,6 @@ block content
                     label(for='cellphone') Número de célular
             .row
               .col-xs-12.tr
-                a.btn.btn--secondary.w-100-xs(href='/usuario') Cancelar
+                a.btn.btn--secondary.w-100-xs(href='/usuario/informacion-personal') Cancelar
                 | #{' '}
                 button.btn.btn--primary.w-100-xs.mt-1-xs(type="submit") Guardar perfil

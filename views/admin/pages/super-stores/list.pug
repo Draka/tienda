@@ -155,7 +155,7 @@ block list
                 a.b(href=`/administracion/super/tiendas/${item._id}`) #{item.name}
                 .small #{item.slogan}
               td
-                a(href=`${req.urlSite}${item.slug}` target='_blank') #{`${req.urlSite}${item.slug}`}
+                a(href=`${req.site.url}${item.slug}` target='_blank') #{`${req.site.url}${item.slug}`}
                 div.b #{item.primaryActivity} - #{item.secondaryActivity}
               td
                 a.b(href=`/administracion/super/usuarios/${item.userID._id}`) #{item.userID.personalInfo.name}

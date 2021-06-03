@@ -29,7 +29,7 @@ header
             .mt-0-25.address Colombia
 
         .expand.pw-1
-          form.flex(class="search" action=`${req.urlSite}buscar`)
+          form.flex(class="search" action=`${req.site.url}buscar`)
             .flex.w-100.rdtl-50.rdbl-50.oh.white.h-40p
               label.out-screen(for='query-d') Buscar productos
               input#query-d.input--simple.h-100.w-100.ph-0-25.pl-2(type="text" name="q" placeholder='Buscar productos' required value=q)
@@ -65,16 +65,16 @@ header
                   li(role='menuitem')
                     a.item(href='/administracion/tiendas')
                       i.fas.fa-store
-                      | #{' '}Administar Tiendas
+                      | #{' '}Tu tienda
                   li.hr
                 li(role='menuitem')
                   a.item(href='/usuario')
                     i.far.fa-address-card
-                    | #{' '}Ver Cuenta
+                    | #{' '}Tu cuenta
                 li(role='menuitem')
                   a.item(href='/usuario/pedidos')
                     i.fas.fa-shopping-bag
-                    | #{' '}Pedidos
+                    | #{' '}Tus pedidos
                 li.hr
                 li(role='menuitem')
                   a.item(href='/cerrar-sesion')
@@ -146,7 +146,7 @@ header
           a.logo.justify-content-center.pr-0(href='/')
             img(src=_.get(req, 'site.images.logoTop.svg') alt=`${_.get(req, 'site.name')} logo`)
         li.expand.pw-0-5
-          form.flex(class="search" action=`${req.urlSite}buscar`)
+          form.flex(class="search" action=`${req.site.url}buscar`)
             .flex.w-100.rdtl-50.rdbl-50.oh.white.h-32p
               label.out-screen(for='query-m') Buscar productos
               input#query-m.input--simple.h-100.w-100.ph-0-25.pl-1(type="text" name="q" placeholder='Buscar productos' required value=q)
@@ -220,16 +220,16 @@ header
             li(role='menuitem')
               a.item.pl-1(href='/administracion/tiendas')
                 i.fas.fa-store
-                | #{' '}Administar Tienda
+                | #{' '}Tu tienda
             li.hr
           li(role='menuitem')
             a.item.pl-1(href='/usuario')
               i.far.fa-address-card
-              | #{' '}Ver Cuenta
+              | #{' '}Tu cuenta
           li(role='menuitem')
             a.item.pl-1(href='/usuario/pedidos')
               i.fas.fa-shopping-bag
-              | #{' '}Pedidos
+              | #{' '}Tus pedidos
           li.hr
           li(role='menuitem')
             a.item.pl-1(href='/cerrar-sesion')

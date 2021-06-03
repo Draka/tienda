@@ -4,7 +4,7 @@
   "files": [
     "jquery.slim.min.js",
     "jquery.lazy.min.js",
-    "loadCSS.js",
+    "axios.min.js",
     "main.js"
   ]
 }
