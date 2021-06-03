@@ -27,7 +27,12 @@ mixin simpleProduct(product, xdelete)
         else
           .b.t-primary #{formatMoney(product.price || 0)}
         if xdelete
-          a(href=`/usuario/historial/${product._id}`) Borrar
+          form.validate-rest(
+            action=`${appCnf.url.api}users/history/${product._id}`
+            method="delete"
+            data-page='/usuario/historial'
+          )
+            button.btn-flat.p-0-5(type='submit') Borrar
 
 
 

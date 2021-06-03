@@ -19,6 +19,9 @@ $var: null;
 .z1 {
   z-index: 1;
 }
+.z100 {
+  z-index: 100;
+}
 
 
 @each $key, $val in $breakpoints {
