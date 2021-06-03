@@ -1,0 +1,43 @@
+extends ../../layout
+
+block content
+  .container
+    include ../../fragments/breadcrumb
+
+  .container
+    h1 Iniciar Sesión
+    .row.justify-content-center
+      .col-xs-12.col-md-6
+        if returnPage
+          .oh.white.br-1.rd-0-2.mb-2
+            .p-1.tc
+              .bigx2
+                  i.fas.fa-shopping-cart
+              h2 Para continuar necesitas iniciar sesión.
+
+        .oh.white.br-1.rd-0-2.mh-2
+          .p-1
+            .msg.error#form-results
+            .row
+              form.col-xs-12.validate-rest(id="loginForm" action=`${appCnf.url.api}users/login?cookie=1` method="post" data-page=returnPage || '/' data-error="#form-results")
+                .row
+                  .col-xs-12
+                    .form-group
+                      .form-control
+                        input.input#email(type="email" name="email" placeholder=' ' autocomplete="username" required)
+                        label(for='email') Correo Electrónico
+                  .col-xs-12
+                    .form-group
+                      .form-control.form-control--right
+                        input.input#password(type="password" name="password" placeholder=' ' autocomplete="current-password" required)
+                        label(for='password') Contraseña
+                        .form-control__eye
+                .row
+                  .col-xs-12.tr
+                    button.btn.btn--primary.w-100-xs(type="submit") Ingresar
+          .p-1.white-500
+            .row
+              .col-xs-12
+                  a(href="/registro") Registrarse
+              .col-xs-12
+                  a(href="/recuperar-contrasena") ¿Olvidaste tu contraseña?

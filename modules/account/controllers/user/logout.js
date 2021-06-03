@@ -1,6 +1,10 @@
 module.exports = (req, res, next) => {
   async.auto({
-    validate: (cb) => cb(),
+    validate: (cb) => {
+      res.clearCookie('token');
+      delete req.user;
+      cb();
+    },
   }, (err, _results) => {
     if (err) {
       return next(err);
