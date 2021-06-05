@@ -24,17 +24,20 @@ module.exports = (req, res, next) => {
     if (!results.site) {
       results.site = {};
     }
-    const breadcrumbs = [
-      {
-        link: '/',
-        text: 'Inicio',
-      },
-      {
-        link: `/paginas/${req.params.slug}`,
-        text: `${results.item.title}`,
-        active: true,
-      },
-    ];
+    let breadcrumbs;
+    if (results.item.breadcrumbs) {
+      breadcrumbs = [
+        {
+          link: '/',
+          text: 'Inicio',
+        },
+        {
+          link: `/paginas/${req.params.slug}`,
+          text: `${results.item.title}`,
+          active: true,
+        },
+      ];
+    }
     results.item.html = results.meta;
 
     res.render('../modules/pages/views/common/view.pug', {

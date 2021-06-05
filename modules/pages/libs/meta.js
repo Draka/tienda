@@ -73,7 +73,7 @@ const _meta = (req, text, html, cb) => {
     re = new RegExp(`\\[(${key})-(\\w*)-(\\w*)( .*?)?\\]`, 'igm');
     const matchAll = obj.text.matchAll(re);
     for (const match of matchAll) {
-      if (match[4] && /class="/.test(match[2])) {
+      if (match[4] && /class="/.test(match[4])) {
         match[4] = match[4].replace('class="', `class="${key}-${match[2]}-${match[3]} `);
       } else {
         match[4] = `class="${key}-${match[2]}-${match[3]}" ${match[4] || ''} `;

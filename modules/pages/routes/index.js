@@ -1,5 +1,6 @@
 const commonView = require('../controllers/common/view');
 const commonIndex = require('../controllers/common/index');
+const register = require('../controllers/user/register');
 
 // super admin
 const superList = require('../controllers/super/list');
@@ -16,6 +17,7 @@ const systemCheck = require('../controllers/system/check');
 global.getFragment = require('../libs/fragment');
 
 module.exports = (app) => {
+  app.get('/paginas/vender/registro', checkAuth, register);
   app.get('/paginas/:slug', commonView);
   app.get('/', commonIndex);
 

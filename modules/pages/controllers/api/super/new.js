@@ -8,6 +8,7 @@ module.exports = (req, res, next) => {
     'active',
     'publish',
     'auth',
+    'breadcrumbs',
     'title',
     'slug',
     'seo',

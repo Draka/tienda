@@ -31,6 +31,12 @@ block edit
                 span.caption Sesión
           .form-group
             .form-control
+              label.switch
+                input#breadcrumbs(type="hidden" name="breadcrumbs" value='0')
+                span.check
+                span.caption Barra  de navegación
+          .form-group
+            .form-control
               input.input#title(type="text" name="title" placeholder=' ' required)
               label(for='title') Título
           .form-group

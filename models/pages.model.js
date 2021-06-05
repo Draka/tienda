@@ -27,6 +27,11 @@ const schema = new mongoose.Schema({
     index: true,
     default: false,
   },
+  breadcrumbs: {
+    type: Boolean,
+    index: true,
+    default: true,
+  },
   title: {
     type: String,
     trim: true,
