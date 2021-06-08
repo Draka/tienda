@@ -11,7 +11,7 @@ block list
     .row
       .col-md-8
         label.out-screen(for='query-d') Buscar
-        input#query-d.input--simple.w-100.h-100.ph-0-25.pw-1(type="text" name="q" placeholder='Buscar' value=q)
+        input#query-d.input.w-100.h-100.white(type="text" name="q" placeholder='Buscar' value=q)
       .col-md-4
         button.btn.btn--secondary.w-100
           i.fas.fa-search
@@ -26,9 +26,6 @@ block list
       b A
       | #{' '} = Aprobada,
       | #{' '}
-      b C
-      | #{' '} = Confiable
-      | #{' '}
 
     .oa
       table.small.table.table--lines.table--striped
@@ -41,13 +38,12 @@ block list
             th.b Logo
             th.b.tc P
             th.b.tc A
-            th.b.tc C
             th.b Nombre
             th.b URL
             th.b Usuario
         tbody
           each item of items
-            tr
+            tr(class=item.approveSend?"alert":"")
               td.tc
                 if (_.map(item.problems, key=>key.alert)).indexOf(true) >= 0
                   .t-alert.open-modal-msg.hand.mh-0-5(
@@ -140,8 +136,8 @@ block list
                   )
                   i.fas.fa-trash-alt
               td.tc
-                a.btn.btn--secondary.small(href=`/administracion/tiendas/${item._id}/seleccionar` title='Seleccionar')
-                  | Seleccionar
+                a(href=`/administracion/tiendas/${item._id}/seleccionar` title='Editar')
+                  i.fas.fa-edit
               td.tc
                 if _.get(item, 'imageSizes.logo.48x48_jpg')
                   img.m-0-25(src=_.get(item, 'imageSizes.logo.48x48_jpg'))
@@ -149,13 +145,11 @@ block list
                 +boolean(item.publish)
               td.tc
                 +boolean(item.approve)
-              td.tc
-                +boolean(item.trust)
               td
                 a.b(href=`/administracion/super/tiendas/${item._id}`) #{item.name}
                 .small #{item.slogan}
               td
-                a(href=`${req.site.url}${item.slug}` target='_blank') #{`${req.site.url}${item.slug}`}
+                a(href=`${req.site.url}tiendas/${item.slug}` target='_blank') #{`${req.site.url}tiendas/${item.slug}`}
                 div.b #{item.primaryActivity} - #{item.secondaryActivity}
               td
                 a.b(href=`/administracion/super/usuarios/${item.userID._id}`) #{item.userID.personalInfo.name}

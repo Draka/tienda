@@ -12,14 +12,13 @@ module.exports = (req, res, next) => {
       if (!results.store) {
         return cb(listErrors(404, null, [{ field: 'storeID', msg: 'El registro no existe.' }]));
       }
-      results.store.approve = true;
-      results.store.approveSend = false;
+      results.store.publish = true;
       results.store.save(cb);
     }],
   }, (err, _results) => {
     if (err) {
       return next(err);
     }
-    return res.redirect('/administracion/super/tiendas');
+    return res.redirect('/administracion/tiendas');
   });
 };

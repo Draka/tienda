@@ -61,6 +61,10 @@ const schema = new mongoose.Schema({
     default: false,
     index: true,
   },
+  approveSend: {
+    type: Boolean,
+    default: false,
+  },
   // meenú para productos de amazon
   amz: {
     type: Boolean,

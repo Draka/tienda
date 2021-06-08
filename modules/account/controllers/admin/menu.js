@@ -5,27 +5,29 @@ module.exports = (req, res, next) => {
     if (err) {
       return next(err);
     }
+
+    // Si tiene tienda, lo envia a la vista
+    if (!_.get(req, 'user.options.storeSelect')) {
+      return res.redirect('/administracion/tiendas/nuevo');
+    }
+
     const item = {
       seo: 'Mi cuenta',
     };
     const breadcrumbs = [
       {
-        link: '/',
-        text: 'Inicio',
-      },
-      {
-        link: '/usuario',
-        text: 'Cuenta',
+        link: '/administracion',
+        text: 'Administracion',
         active: true,
       },
     ];
 
-    res.render('../modules/account/view/user/menu.pug', {
+    res.render('../modules/account/view/admin/menu.pug', {
       req,
       item,
       title: 'Mi cuenta',
       breadcrumbs,
-      js: 'store',
+      js: 'admin',
     });
   });
 };

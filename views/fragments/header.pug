@@ -65,16 +65,16 @@ header.relative.z100
                   li(role='menuitem')
                     a.item(href='/administracion/tiendas')
                       i.fas.fa-store
-                      | #{' '}Tu tienda
+                      | #{' '}Mi tienda
                   li.hr
                 li(role='menuitem')
                   a.item(href='/usuario')
                     i.far.fa-address-card
-                    | #{' '}Tu cuenta
+                    | #{' '}Mi cuenta
                 li(role='menuitem')
                   a.item(href='/usuario/pedidos')
                     i.fas.fa-shopping-bag
-                    | #{' '}Tus pedidos
+                    | #{' '}Mis pedidos
                 li.hr
                 li(role='menuitem')
                   a.item(href='/cerrar-sesion')
@@ -112,7 +112,10 @@ header.relative.z100
         li
           a.pw-0-5(href='/usuario/historial') Historial
         li
-          a.pw-0-5(href='/paginas/vender') Vender
+          if req.user && req.user.adminStore
+            a.pw-0-5(href='/administracion') Administrar tu tienda
+          else
+            a.pw-0-5(href='/paginas/vender') Vender productos
 
     if store && _.get(req, 'site.modules.categories') && !notMenu
       nav.navbar.white.sh.mt-4
@@ -220,16 +223,16 @@ header.relative.z100
             li(role='menuitem')
               a.item.pl-1(href='/administracion/tiendas')
                 i.fas.fa-store
-                | #{' '}Tu tienda
+                | #{' '}Mi tienda
             li.hr
           li(role='menuitem')
             a.item.pl-1(href='/usuario')
               i.far.fa-address-card
-              | #{' '}Tu cuenta
+              | #{' '}Mi cuenta
           li(role='menuitem')
             a.item.pl-1(href='/usuario/pedidos')
               i.fas.fa-shopping-bag
-              | #{' '}Tus pedidos
+              | #{' '}Mis pedidos
           li.hr
           li(role='menuitem')
             a.item.pl-1(href='/cerrar-sesion')

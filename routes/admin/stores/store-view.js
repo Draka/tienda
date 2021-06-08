@@ -48,7 +48,7 @@ module.exports = (req, res, next) => {
       req,
       user: results.user,
       store: results.store,
-      title: 'Tienda',
+      title: results.store.name,
       menu: 'tienda',
       edit: `/administracion/tiendas/${req.params.storeID}/editar`,
       breadcrumbs,

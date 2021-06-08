@@ -14,20 +14,32 @@ header
             span
               i.fas.fa-user-circle.fa-fw
               | #{' '}
-              span Hola, #{req.user.personalInfo.firstname}
+              span Hola, #{_.get(req, 'user.personalInfo.firstname')}
             span.icon.ml-1
               i.fas.fa-arrow-down.fa-fw
           #menu-login.dropdown-list.right.sh
-            ul.list-categories(role='menu')
+            ul(role='menu')
               if req.user && req.user.admin
                 li(role='menuitem')
                   a.item(href='/administracion/super/configuracion')
-                    i.fas.fa-user-cog
+                    i.fas.fa-store
                     | #{' '}Configuración General
+                li.hr
+              if req.user && (req.user.admin || req.user.adminStore)
+                li(role='menuitem')
+                  a.item(href='/administracion/tiendas')
+                    i.fas.fa-store
+                    | #{' '}Mi tienda
+                li.hr
               li(role='menuitem')
-                a.item(href='/administracion/tiendas')
-                  i.fas.fa-store
-                  | #{' '}Administrar Tienda
+                a.item(href='/usuario')
+                  i.far.fa-address-card
+                  | #{' '}Mi cuenta
+              li(role='menuitem')
+                a.item(href='/usuario/pedidos')
+                  i.fas.fa-shopping-bag
+                  | #{' '}Mis pedidos
+              li.hr
               li(role='menuitem')
                 a.item(href='/cerrar-sesion')
                   i.fas.fa-sign-out-alt

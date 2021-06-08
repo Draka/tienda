@@ -1,0 +1,40 @@
+extends /modules/admin/views/layout-view-cmp
+
+block view
+  .container
+    .row
+      .col-md-4.pb-1
+        a.nh(href=`/administracion/tiendas/${req.user.options.storeSelect}`)
+          .white.br-1.rd-0-5.ph-1.pw-2.flex.h-100
+            .pr-1
+              i.fas.fa-store.bigx2
+            div
+              div Mi tienda
+              .mt-0-25.t-black-300 Administra nombre, imágenes y publicación de tu tienda
+      .col-md-4.pb-1
+        a.nh(href=`/administracion/tiendas/${req.user.options.storeSelect}/productos/nuevo`)
+          .white.br-1.rd-0-5.ph-1.pw-2.flex.h-100
+            .pr-1
+              i.fas.fa-boxes.bigx2
+            div
+              div Mis productos
+              .mt-0-25.t-black-300 Administra los artículos, precios y disponibilidad
+      .col-md-4.pb-1
+        a.nh(href=`/administracion/tiendas/pedidos`)
+          .white.br-1.rd-0-5.ph-1.pw-2.flex.h-100
+            .pr-1
+              i.fas.fa-cash-register.bigx2
+            div
+              div Mis pedidos
+              .mt-0-25.t-black-300 Administra y ordenas pedidos y ventas
+
+
+      if req.user.admin
+        .col-md-4.pb-1
+          a.nh(href='/administracion/super/configuracion')
+            .white.br-1.rd-0-5.ph-1.pw-2.flex.h-100
+              .pr-1
+                i.fas.fa-cogs
+              div
+                div El portal
+                .mt-0-25.t-black-300 Administra los aspectos del sitio

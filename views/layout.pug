@@ -21,6 +21,11 @@ mixin simpleProduct(product, xdelete)
         a.mb-1(href=`/tiendas/${_.get(product, 'storeID.slug')}/productos/${product.sku}` title=product.name)
           .small.oh.ellipsis.lines-2.mb-0-5
             | #{product.name}
+        a.mb-1(href=`/tiendas/${_.get(product, 'storeID.slug')}` title=_.get(product, 'storeID.name'))
+          .small.oh.ellipsis.mb-0-5
+            | vendido por:
+            | #{' '}
+            span.b #{_.get(product, 'storeID.name')}
         if _.get(product, 'offer.percentage') && ( (_.get(product, 'offer.available.start') && moment().isAfter(moment(product.offer.available.start)) ) || !_.get(product, 'offer.available.start') )  && ( (_.get(product, 'offer.available.end') && moment().isBefore(moment(product.offer.available.end)) ) || !_.get(product, 'offer.available.end') )
           .b.t.t-gray-2 #{formatMoney(product.price || 0)}
           .b.t-primary #{formatMoney(product.offer.price || 0)}

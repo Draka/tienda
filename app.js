@@ -147,7 +147,7 @@ app.use((err, req, res, next) => {
     err.stack = '';
   } else {
     // console.log('-------------------------------------------------');
-    // console.trace();
+    console.trace();
   }
   if (req.originalUrl.split('/')[1] === 'v1') {
     res.status(err.status || 500).send(err);

@@ -4,46 +4,38 @@ block view
   table.small.table.table--lines
     tbody
       tr
-        th.nowrap.ellipsis Aprobado
         td.w-100
-          +boolean(store.approve)
+          .b Estado
+          if store.approve
+            | Aprobado
+          else
+            | Pendiente de revisión
+        td.tc
+          if !store.approveSend
+            a.btn.btn--primary.small(href=`/administracion/tiendas/${req.params.storeID}/pedir-revision`) Solicitud de revisión
       tr
-        th.nowrap.ellipsis Publicado
         td.w-100
-          +boolean(store.publish)
+          .b Publicación
+          if store.publish && store.approveSend
+            | Esta tienda aun no es visible, esta en proceso de revisión
+          else if store.publish && !store.approve
+            | Esta tienda aun no es visible, necesita ser enviada a revisión
+          else if store.publish
+            | Esta tienda es visible para todos
+          else
+            | Esta tienda es visible solo para ti
+        td.tc
+          if store.publish
+            a.btn.btn--primary.small(href=`/administracion/tiendas/${req.params.storeID}/esconder`) Esconder tienda y productos
+          else
+            a.btn.btn--primary.small(href=`/administracion/tiendas/${req.params.storeID}/publicar`) Publicar
       tr
-        th.nowrap.ellipsis Vitrina
         td.w-100
-          +boolean(store.showcase)
+          .b Nombre
+          | #{store.name}
+        td.tc(rowspan=2)
+          a.btn.btn--primary.small(href=`/administracion/tiendas/${req.params.storeID}/editar`) Editar
       tr
-        th.nowrap.ellipsis Modo
-        td.w-100 #{store.mode=='restaurant'?'Restaurante':'Tienda'}
-      tr
-        th.nowrap.ellipsis Nombre
-        td.w-100 #{store.name}
-      tr
-        th.nowrap.ellipsis URL
-        td.w-100 #{req.site.url}#{store.slug}
-      tr
-        th.nowrap.ellipsis Slogan
-        td.w-100 #{store.slogan}
-      tr
-        th.nowrap.ellipsis Descripción
-        td.w-100 #{store.seo}
-      tr
-        th.nowrap.ellipsis Descripción Larga
         td.w-100
-          .h-230p.oa !{store.descriptionLong}
-      tr
-        th.nowrap.ellipsis Pie de página
-        td.w-100
-          .h-230p.oa.sh.p-1 !{store.vision}
-      tr
-        th.nowrap.ellipsis Departamento
-        td.w-100 #{store.department}
-      tr
-        th.nowrap.ellipsis Municipio
-        td.w-100 #{store.town}
-      tr
-        th.nowrap.ellipsis Actividad primaria
-        td.w-100 #{store.primaryActivity}
+          .b URL
+          | #{req.site.url}tiendas/#{store.slug}

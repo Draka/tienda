@@ -22,7 +22,8 @@ module.exports = (req, res, next) => {
         text: 'Administración',
       },
       {
-        text: 'Tienda',
+        link: '/administracion/tiendas',
+        text: 'Tiendas',
       },
       {
         link: '/administracion/tiendas/nuevo',

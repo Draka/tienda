@@ -8,6 +8,8 @@ const emailEditSuccessful = require('../controllers/user/email-edit-successful')
 const history = require('../controllers/user/history');
 const logout = require('../controllers/user/logout');
 
+const admin = require('../controllers/admin/menu');
+
 const apiUpdate = require('../api/user/update');
 const updatePersonalInfo = require('../api/user/update-personal-info');
 const updateEmail = require('../api/user/update-email');
@@ -26,6 +28,8 @@ module.exports = (app) => {
   app.get('/usuario/informacion-personal/correo-cambiado', checkAuth, emailEditSuccessful);
 
   app.get('/usuario/historial', checkAuth, history);
+
+  app.get('/administracion', checkAuthAdminStore, admin);
 
   app.get('/cerrar-sesion', checkAuth, logout);
 

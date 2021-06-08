@@ -48,6 +48,14 @@ module.exports = (req, res, next) => {
       return next(err);
     }
 
+    // Si tiene tienda, lo envia a la vista
+    if (results.items.length === 0) {
+      return res.redirect('/administracion/tiendas/nuevo');
+    }
+    if (results.items.length === 1) {
+      return res.redirect(`/administracion/tiendas/${req.user.options.storeSelect}`);
+    }
+
     const breadcrumbs = [
       {
         link: '/administracion',
