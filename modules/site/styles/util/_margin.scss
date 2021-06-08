@@ -24,6 +24,29 @@
   .mb-#{$key}{
     margin-bottom: $val;
   }
+  .m-n-#{$key}{
+    margin: -$val;
+  }
+  .mw-n-#{$key}{
+    margin-left: -$val;
+    margin-right: -$val;
+  }
+  .mh-n-#{$key}{
+    margin-top: -$val;
+    margin-bottom: -$val;
+  }
+  .ml-n-#{$key}{
+    margin-left: -$val;
+  }
+  .mr-n-#{$key}{
+    margin-right: -$val;
+  }
+  .mt-n-#{$key}{
+    margin-top: -$val;
+  }
+  .mb-n-#{$key}{
+    margin-bottom: -$val;
+  }
   $ant: null;
   //colores en breakpoints
   @each $ckey, $cval in $breakpoints {
@@ -54,6 +77,30 @@
         .mb-#{$key}-#{$ant} {
           margin-bottom: $val;
         }
+
+        .m-n-#{$key}-#{$ant} {
+          margin: -$val;
+        }
+        .mw-n-#{$key}-#{$ant} {
+          margin-left: -$val;
+          margin-right: -$val;
+        }
+        .mh-n-#{$key}-#{$ant} {
+          margin-top: -$val;
+          margin-bottom: -$val;
+        }
+        .ml-n-#{$key}-#{$ant} {
+          margin-left: -$val;
+        }
+        .mr-n-#{$key}-#{$ant} {
+          margin-right: -$val;
+        }
+        .mt-n-#{$key}-#{$ant} {
+          margin-top: -$val;
+        }
+        .mb-n-#{$key}-#{$ant} {
+          margin-bottom: -$val;
+        }
       }
     }
     $ant: $ckey;
@@ -81,6 +128,30 @@
     }
     .mb-#{$key}-#{$ant} {
       margin-bottom: $val;
+    }
+
+    .m-n-#{$key}-#{$ant} {
+      margin: -$val;
+    }
+    .mw-n-#{$key}-#{$ant} {
+      margin-left: -$val;
+      margin-right: -$val;
+    }
+    .mh-n-#{$key}-#{$ant} {
+      margin-top: -$val;
+      margin-bottom: -$val;
+    }
+    .ml-n-#{$key}-#{$ant} {
+      margin-left: -$val;
+    }
+    .mr-n-#{$key}-#{$ant} {
+      margin-right: -$val;
+    }
+    .mt-n-#{$key}-#{$ant} {
+      margin-top: -$val;
+    }
+    .mb-n-#{$key}-#{$ant} {
+      margin-bottom: -$val;
     }
   }
 }
