@@ -6,7 +6,7 @@
   //alpha
   @each $ckey, $cval in $colors-alpha {
     $background-color: $val;
-    &.a-#{$key}-#{$ckey}:not(.form-group):not(.msg):not(button):not(.btn):not(.remark):not(.carousel) {
+    .a-#{$key}-#{$ckey}:not(.form-group):not(.msg):not(button):not(.btn):not(.remark):not(.carousel) {
       background-color: set-alpha-color($val, $cval) !important;
       color: set-text-color($val);
     }

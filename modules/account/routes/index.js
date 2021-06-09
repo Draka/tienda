@@ -15,6 +15,8 @@ const updatePersonalInfo = require('../api/user/update-personal-info');
 const updateEmail = require('../api/user/update-email');
 const updatePassword = require('../api/user/update-password');
 const delHistory = require('../api/user/delete-history');
+const listHistory = require('../api/user/list-history');
+const me = require('../api/user/me');
 
 module.exports = (app) => {
   app.get('/usuario', checkAuth, menu);
@@ -37,6 +39,8 @@ module.exports = (app) => {
   app.put('/v1/users/personal-info', checkAuth, updatePersonalInfo);
   app.put('/v1/users/email', checkAuth, updateEmail);
   app.put('/v1/users/password', checkAuth, updatePassword);
+  app.get('/v1/users/me', checkAuth, me);
+  app.get('/v1/users/history', checkAuth, listHistory);
 
   app.delete('/v1/users/history/:productID', checkAuth, delHistory);
 };

@@ -11,7 +11,7 @@ block view
           else
             | Pendiente de revisión
         td.tc
-          if !store.approveSend
+          if !store.approveSend && !store.approve
             a.btn.btn--primary.small(href=`/administracion/tiendas/${req.params.storeID}/pedir-revision`) Solicitud de revisión
       tr
         td.w-100

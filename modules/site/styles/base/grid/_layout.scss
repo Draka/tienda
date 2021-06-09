@@ -36,6 +36,7 @@
   flex-grow: 1;
   min-width: 0;
   max-width: 100%;
+  @extend %grid;
 }
 
 @each $key, $val in $breakpoints {

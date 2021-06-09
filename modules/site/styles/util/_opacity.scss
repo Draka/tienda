@@ -1,6 +1,6 @@
 //alpha
 @each $key, $val in $opacity {
-  &.op-#{$key} {
+  .op-#{$key} {
     opacity: $val
   }
 }
