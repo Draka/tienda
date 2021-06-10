@@ -34,6 +34,11 @@ module.exports = (req, res, next) => {
     if (err) {
       return next(err);
     }
+
+    if (!results.store.images) {
+      return res.redirect(`/administracion/tiendas/${req.user.options.storeSelect}/imagenes/editar`);
+    }
+
     const breadcrumbs = [
       {
         link: '/administracion',

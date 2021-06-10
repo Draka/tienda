@@ -64,7 +64,7 @@ module.exports = (req, res, next) => {
         errors.push({ field: 'name', msg: 'Escribe un nombre de Producto válido.' });
       }
       if (!_.trim(body.sku)) {
-        errors.push({ field: 'sku', msg: 'Escribe un SKU de Producto válido.' });
+        body.sku = Math.random().toString(36).substring(6);
       }
       if (errors.length) {
         return cb(listErrors(400, null, errors));
@@ -113,6 +113,27 @@ module.exports = (req, res, next) => {
       } else {
         product.save(cb);
       }
+    }],
+    uploadFile: ['create', (results, cb) => {
+      if (!req.files) {
+        return cb();
+      }
+      if (!_.isArray(req.files.images)) {
+        req.files.images = [req.files.images];
+      }
+
+      async.eachLimit(req.files.images, 10, (image, cb) => {
+        let cimg;
+        do {
+          cimg = _.random(10000, 99999);
+        } while (results.create.images.indexOf(cimg) !== -1);
+        results.create.images.push(cimg);
+        const pathImg = `${req.params.storeID}/products/${results.create._id}/${cimg}`;
+        imageToS3(req, pathImg, null, image, global.imagesSizes, true, 'contain', cb);
+      }, (err) => {
+        if (err) return cb(err);
+        results.create.save(cb);
+      });
     }],
     urlFile: ['create', (results, cb) => {
       if (!req.body.urlFiles) {

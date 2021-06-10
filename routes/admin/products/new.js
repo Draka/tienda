@@ -57,7 +57,7 @@ module.exports = (req, res, next) => {
       },
       {
         link: `/administracion/tiendas/${req.params.storeID}/productos/nuevo`,
-        text: 'Nuevo',
+        text: 'Crear',
         active: true,
       },
     ];
@@ -67,7 +67,7 @@ module.exports = (req, res, next) => {
       user: results.user,
       store: results.store,
       items: results.items,
-      title: 'Nuevo Producto',
+      title: 'Crear Producto',
       menu: 'tienda-productos-nuevo',
       breadcrumbs,
       cke: true,

@@ -27,6 +27,7 @@ block edit
     id="updateProfileForm"
     action=`${appCnf.url.api}admin/stores/${store._id}/products`
     method="post"
+    enctype="multipart/form-data"
     data-page=`/administracion/tiendas/${store._id}/productos`
     data-gotoid="editar"
     data-error="#form-results2")
@@ -112,8 +113,8 @@ block edit
               label(for='price') Precio
           .form-group
             .form-control
-              input.input#sku(type="text" name="sku" placeholder=' ' required)
-              label(for='sku') SKU
+              input.input#sku(type="text" name="sku" placeholder=' ')
+              label(for='sku') SKU (Opcional)
           .form-group
             .form-control
               input.input#brandText(type="text" name="brandText" placeholder=' ')
@@ -136,6 +137,14 @@ block edit
             .subtitle.mb-0-5 Descripción larga
             .form-control
               textarea.cke-user#longDescription(name="longDescription" placeholder=' ' rows=10)
+          .form-group
+            .form-control
+              input.input#images(type='file' name='images' placeholder=' ' accept='image/png, image/jpeg' multiple)
+              label(for='images') Imágenes del producto
+            .remark.action.flex.mb-0-5
+              .h4.mr-1.t-action
+                i.far.fa-file-image
+              | Suba varias imágenes en formato png o jpg de máximo 10 megas de tamaño.
 
       .row
         .col-xs-12.tr

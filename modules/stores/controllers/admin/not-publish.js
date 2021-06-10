@@ -12,8 +12,7 @@ module.exports = (req, res, next) => {
       if (!results.store) {
         return cb(listErrors(404, null, [{ field: 'storeID', msg: 'El registro no existe.' }]));
       }
-      results.store.approveSend = true;
-      results.store.publish = true;
+      results.store.publish = false;
       results.store.save(cb);
     }],
   }, (err, _results) => {

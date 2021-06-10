@@ -10,7 +10,7 @@ nav
         li.navigation__item(class=menu=='tienda'?'navigation--active':'')
           a.item(href=`/administracion/tiendas/${req.user.options.storeSelect}`) Configuración
         li.navigation__item(class=menu=='tienda-imagenes'?'navigation--active':'')
-          a.item(href=`/administracion/tiendas/${req.user.options.storeSelect}/imagenes`) Imágenes
+          a.item(href=`/administracion/tiendas/${req.user.options.storeSelect}/imagenes`) Diseño de tienda
         if _.get(req, 'site.modules.socialMedia')
           li.navigation__item(class=menu=='tienda-redes-sociales'?'navigation--active':'')
             a.item(href=`/administracion/tiendas/${req.user.options.storeSelect}/redes-sociales`) Redes Sociales
@@ -50,16 +50,16 @@ nav
         .expandable__title Productos
       ul.expandable__body.navigation
         li.navigation__item(class=menu=='tienda-productos-nuevo'?'navigation--active':'')
-          a.item(href=`/administracion/tiendas/${req.user.options.storeSelect}/productos/nuevo`) Nuevo
+          a.item(href=`/administracion/tiendas/${req.user.options.storeSelect}/productos/nuevo`) Crear productos
         li.navigation__item(class=menu=='tienda-productos'?'navigation--active':'')
-          a.item(href=`/administracion/tiendas/${req.user.options.storeSelect}/productos`) Lista
+          a.item(href=`/administracion/tiendas/${req.user.options.storeSelect}/productos`) Mis productos
 
     .expandable
       .expandable__header
         .expandable__title Pedidos
       ul.expandable__body.navigation
         li.navigation__item(class=menu=='pedidos-lista'?'navigation--active':'')
-          a.item(href=`/administracion/tiendas/pedidos`) Lista
+          a.item(href=`/administracion/tiendas/pedidos`) Mis pedidos
         //- li.navigation__item(class=menu=='tienda-sedes'?'navigation--active':'')
         //-   a.item(href=`/administracion/tiendas/${req.user.options.storeSelect}/reclamos`) Reclamos
         //- li.navigation__item(class=menu=='tienda-sedes'?'navigation--active':'')

@@ -68,9 +68,9 @@ mixin product(product)
             button.btn.btn--primary.small.mr-0-5.plus
               i.fas.fa-plus
               span.out-screen Aumentar cantidad
-          button.btn.btn--primary.small.add AÑADIR AL CARRITO
+          button.btn.btn--primary.small.add ¡Lo quiero!
         else
-          button.btn.btn--primary.small.add(data-value=1) AÑADIR AL CARRITO
+          button.btn.btn--primary.small.add(data-value=1) ¡Lo quiero!
     if (_.get(product, 'digital.is'))
       .remark.info.mh-1 Producto de transmisión por internet
   if product.groups
@@ -221,6 +221,19 @@ block content
             if _.get(store,'messages.warranty')
               li !{_.get(store,'messages.warranty')}
 
+      .col-md-6.hide-xs.hide-sm
+        .white.br-1.rd-0-2.p-1.place-product(
+          data-product=JSON.stringify({
+            sku: product.sku,
+            name: product.name,
+            categoryText: product.categoryText,
+            brandText: product.brandText,
+            price: product.price,
+            store: store.slug
+          })
+          style='top: 100px')
+          +product(product)
+
         .white.br-1.rd-0-2.p-1.mt-1
           .t-primary.title
             | Pago y Seguridad
@@ -244,19 +257,6 @@ block content
             div
               .t-primary COMPRA SEGURA
               .t-secondary GARANTIZADO
-
-      .col-md-6.hide-xs.hide-sm
-        .white.br-1.rd-0-2.p-1.place-product.sticky(
-          data-product=JSON.stringify({
-            sku: product.sku,
-            name: product.name,
-            categoryText: product.categoryText,
-            brandText: product.brandText,
-            price: product.price,
-            store: store.slug
-          })
-          style='top: 100px')
-          +product(product)
 
       .col-xs-12
         .flex.mt-2.mb-0-5

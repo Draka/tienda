@@ -7,20 +7,22 @@ header.relative.z100
       .container-fluid
         a.logo(href='/')
           img(src=_.get(req, 'site.images.logoTop.svg') alt=`${_.get(req, 'site.name')} logo`)
-        //- .relative
-        //-   a.dropdown(aria-controls='menu-categories')
-        //-     span
-        //-       i.fas.fa-list-ul.fa-fw
-        //-       | #{' '}
-        //-       | Categorías
-        //-     span.icon.ml-0-25
-        //-       i.fas.fa-chevron-down.fa-fw
-        //-   #menu-categories.dropdown-list.sh
-        //-     ul(role='menu')
-        //-       each category in req.categories
-        //-         li(role='menuitem')
-        //-           a.item(href='/categorias/'+category.slugLong)
-        //-             | #{category.name}
+        .relative
+          a.dropdown(aria-controls='menu-categories')
+            span
+              i.fas.fa-list-ul.fa-fw
+              | #{' '}
+              | Categorías
+            span.icon.ml-0-25
+              i.fas.fa-chevron-down.fa-fw
+          #menu-categories.dropdown-list.sh
+            ul(role='menu')
+              each category in req.categories
+                li(role='menuitem')
+                  a.item(href='/categorias/'+category.slugLong)
+                    | #{category.name}
+        a(href='/grupos/ofertas')
+          | Ofertas
         a.data-address.flex
           .pr-0-25
             i.fas.fa-map-marker-alt.big
@@ -90,27 +92,29 @@ header.relative.z100
               span.badge.inside.num-shopping-cart.m-1.secondary.start-hide
               span.out-screen Mi Carrito
     nav.navbar.navbar-2-5.white.pw-1.small.sh
+      .expand
       ul.menu.ml-1
-        li.relative
-          a.ph-0-5.dropdown(aria-controls='menu-categories')
-            span
-              i.fas.fa-list-ul.fa-fw
-              | #{' '}
-              | Categorías
-            span.icon.ml-0-25
-              i.fas.fa-chevron-down.fa-fw
-          #menu-categories.dropdown-list.sh
-            ul(role='menu')
-              each category in req.categories
-                li(role='menuitem')
-                  a.item(href='/categorias/'+category.slugLong)
-                    | #{category.name}
-        li
-          a.pw-0-5(href='/grupos/ofertas') Ofertas
+        //- li.relative
+        //-   a.ph-0-5.dropdown(aria-controls='menu-categories')
+        //-     span
+        //-       i.fas.fa-list-ul.fa-fw
+        //-       | #{' '}
+        //-       | Categorías
+        //-     span.icon.ml-0-25
+        //-       i.fas.fa-chevron-down.fa-fw
+        //-   #menu-categories.dropdown-list.sh
+        //-     ul(role='menu')
+        //-       each category in req.categories
+        //-         li(role='menuitem')
+        //-           a.item(href='/categorias/'+category.slugLong)
+        //-             | #{category.name}
+        //- li
+        //-   a.pw-0-5(href='/grupos/ofertas') Ofertas
+        if req.user
+          li
+            a.pw-0-5(href='/usuario/historial') Historial
         li
           a.pw-0-5(href='/paginas/ayuda-y-atencion-al-cliente') Servicio al cliente
-        li
-          a.pw-0-5(href='/usuario/historial') Historial
         li
           if req.user && req.user.adminStore
             a.pw-0-5(href='/administracion') Administrar tu tienda

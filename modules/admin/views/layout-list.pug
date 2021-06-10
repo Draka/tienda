@@ -20,14 +20,24 @@ mixin boolean(b)
   else
     span.error.ph-0-25.pw-0-5.rd-0-2.tc
       i.fas.fa-times
+
 mixin paginator
+  - var query = _.map(req.query,(q,k)=>{if (k!='page') `${k}=${q}`}).join('&')
+    if query
+      - query = '?'+query+'&'
+    else
+      - query = '?'
   .pagination.justify-content-right
-    a.item(href=`?page=0`)
+    a.item(href=`${query}page=0`)
       i.fas.fa-chevron-left
-      - var n = 0;
-      while n < Math.ceil(count/limit)
-        a.item(href=`?page=${n++}`)= n
-    a.item(href=`?page=${Math.ceil(count/limit) - (count % limit == 0 ? 0 : 1)}`)
+      - var n = Math.max(0,page - 4);
+      if n > 0
+        a.item(href=`${query}page=${n-1}`) ...
+      while n < Math.ceil(count/limit) && n < page + 5
+        a.item(href=`${query}page=${n++}` class=page==n?'primary':'')= n
+      if n < Math.ceil(count/limit)
+        a.item(href=`${query}page=${n++}`) ...
+    a.item(href=`${query}page=${Math.ceil(count/limit) - (count % limit == 0 ? 0 : 1)}`)
       i.fas.fa-chevron-right
 
 mixin noItems(msg)

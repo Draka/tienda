@@ -94,6 +94,9 @@ module.exports = (req, res, next) => {
       if (req.user.admin) {
         delete adminQuery.userID;
       }
+      if (body.publish) {
+        body.approveSend = true;
+      }
       cb();
     },
     query: ['validate', (_results, cb) => {

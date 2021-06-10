@@ -1,14 +1,6 @@
 extends ../../layout-list
 
 block list
-  .msg.info.mb-0-5
-    .flex
-      i.fas.fa-exclamation.h2.mr-0-25.w-2.tc
-      ul
-        li Solo los productos Publicados serán visibles a los usuarios.
-        li Si ya ha publicado un producto y no quiere venderlo más, es mejor no eliminarlo, marque como no publicado.
-        li Solo puede subir imágenes cuando un producto ya ha sido creado o usando el método de cargar archivo.
-
   .white.br-1.rd-0-2.pw-2.pt-1.pb-2.mb-1
     form.validate.mh-2(action=``)
       .row
@@ -179,7 +171,16 @@ block list
                 a.item(href=`?page=${Math.ceil(count/limit) - (count % limit == 0 ? 0 : 1)}`)
                   i.fas.fa-chevron-right
   else
-    .white.br-1.rd-0-2.p-3
+    .white.br-1.rd-0-2.p-3.mb-1
       .remark.info.flex.mb-0-5
         i.fas.fa-info-circle.h4.mr-1.t-info
         | No hay productos creados.
+
+  .msg.info.mb-0-5
+    .flex
+      i.fas.fa-exclamation.h2.mr-0-25.w-2.tc
+      ul
+        li Solo los productos Publicados serán visibles a los usuarios.
+        li Si ya ha publicado un producto y no quiere venderlo más, es mejor no eliminarlo, marque como no publicado.
+        li Solo puede subir imágenes cuando un producto ya ha sido creado o usando el método de cargar archivo.
+

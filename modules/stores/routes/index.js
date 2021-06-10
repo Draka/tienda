@@ -2,6 +2,7 @@ const list = require('../controllers/common/list');
 const search = require('../controllers/common/search');
 
 const publishSend = require('../controllers/admin/publish');
+const notPublishSend = require('../controllers/admin/not-publish');
 const approveSend = require('../controllers/admin/approve');
 
 module.exports = (app) => {
@@ -10,4 +11,5 @@ module.exports = (app) => {
 
   app.get('/administracion/tiendas/:storeID/pedir-revision', approveSend);
   app.get('/administracion/tiendas/:storeID/publicar', publishSend);
+  app.get('/administracion/tiendas/:storeID/desactivar', notPublishSend);
 };

@@ -104,7 +104,7 @@ module.exports = (req, res, next) => {
       q: req.query,
       title: 'Productos',
       menu: 'tienda-productos',
-      xnew: `/administracion/tiendas/${req.params.storeID}/productos/nuevo`,
+      xnewProduct: `/administracion/tiendas/${req.params.storeID}/productos/nuevo`,
       breadcrumbs,
       js: 'admin',
     });
