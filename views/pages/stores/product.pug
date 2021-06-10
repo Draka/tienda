@@ -166,7 +166,6 @@ block content
           each category,index in product.categoryIDs
             li.breadcrumb__item
               a.item(href=`/categorias/${category.slugLong}`) #{category.name}
-          li.breadcrumb__item.breadcrumb--active #{product.name}
 
       .col-md-6
         h1.invisible #{product.name}

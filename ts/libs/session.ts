@@ -1,5 +1,7 @@
 import { GetApi } from './get_api';
 
+declare const moment: any;
+
 export class Session {
   static session:any = null
 
@@ -26,37 +28,51 @@ export class Session {
     if (!product) {
       return '<div class="col"></div>';
     }
-    return `${'<div class="col">'
-    + '<div class="h-100 white-sm white-md white-lg white-xl p-1-sm p-1-md p-1-lg p-1-xl sh-hover-sm sh-hover-md sh-hover-lg sh-hover-xl rd-0-2 oh">'
-    + '<div class="h-100 relative mb-0-5">'
-    + '<a class="mb-1" href="/tiendas/test-1/productos/udfji-249">'
-    + '<div class="relative rd-0-5 oh lh-0">'
-    + '<img class="w-100" alt="'}${product.truncate}" src="${product.imagesSizes[0]['392x392_jpg']}" />`
-    + '<div class="absolute top black op-0-05 w-100 h-100"></div>'
+    let html = '<div class="col"><div class="h-100 white-sm white-md white-lg white-xl p-1-sm p-1-md p-1-lg p-1-xl sh-hover-sm sh-hover-md sh-hover-lg sh-hover-xl rd-0-2 oh">'
+            + '<div class="h-100 relative mb-0-5">'
+                + `<a class="mb-1" href="/tiendas/${product.storeID.slug}/productos/${product.sku}">`
+                    + '<div class="relative rd-0-5 oh lh-0">'
+                        + `<img class="w-100 lazy" alt="${product.truncate}" src="${product.imagesSizes[0]['392x392_jpg']}" style="" />`
+                        + '<div class="absolute top black op-0-05 w-100 h-100"></div>'
+                    + '</div>'
+                + '</a>'
+                + '<div class="w-100 mt-1-sm mt-1-md mt-1-lg mt-1-xl">'
+                    + `<a class="mb-0-25 small eb t-gray-2-500" href="/tiendas/${product.storeID.slug}" title="${product.storeID.name}">`
+                    + `<div class="oh ellipsis nowrap">${product.storeID.name}</div></a>`
+                    + `<div class="mb-0-25 small eb" title="${product.name}">`
+                        + `<div class="oh ellipsis lines-2">${product.name}</div>`
+                    + '</div>';
+    if (product?.offer?.percentage
+      && ((product.offer.available.start && moment().isAfter(moment(product.offer.available.start)))
+       || !product.offer.available.start)
+       && ((product.offer.available.end && moment().isBefore(moment(product.offer.available.end))) || !product.offer.available.end)) {
+      html += `<div class="eb t-primary">$${product.offer.price} <span class="very-small">(Precio Final)</span></div>`
+                      + `<div class="b t t-gray-2-500 mb-2">$${product.price} <span class="very-small">(Precio original)</span></div>`
+                      + `<div class="absolute at-0 ar-0"><div class="m-0-5 info very-small ph-0-25 pw-0-5 rd-0-5">${product.offer.percentage}%</div></div>`;
+    } else {
+      html += `<div class="eb mb-2">$${product.price} <span class="very-small">(Precio Final)</span></div>`;
+    }
+
+    html += `<a class="btn btn--primary mt-0-25 small ph-0-25 rd-50 w-100 absolute ab-0" href="/tiendas/${product.storeID.slug}/productos/${product.sku}">Lo quiero</a>`
                 + '</div>'
-            + '</a>'
-            + '<div class="w-100 mt-1-sm mt-1-md mt-1-lg mt-1-xl">'
-            + `<a class="mb-1" href="/tiendas/test-1/productos/udfji-249" title="${product.name}">`
-            + `<div class="small oh ellipsis lines-2 mb-0-5">${product.name}</div>`
-            + '<div class="b t t-gray-2">$120,000</div>'
-            + '<div class="b t-primary">$90,000</div>'
-            + '</a>'
             + '</div>'
-            + '</div>'
-            + '</div>'
-            + '</div>';
+        + '</div></div>';
+    console.log(html);
+
+    return html;
   }
 
   launcher(type: string) {
     if ($('.products-line-history').length) {
       this.getApi.g(`users/${type}`)
         .done((data) => {
+          $('.products-line-history').show();
           let html = '';
           if (data.length) {
             for (let index = 0; index < data.length && index < 5; index++) {
               html += Session.product(data[index]);
             }
-            $('.products-line-history').html(html);
+            $('.products-line-history .data').html(html);
           }
         });
     }

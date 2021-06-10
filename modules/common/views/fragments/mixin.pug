@@ -1,0 +1,33 @@
+mixin simpleProduct(product, xdelete)
+  .h-100.white-sm.white-md.white-lg.white-xl.p-1-sm.p-1-md.p-1-lg.p-1-xl.sh-hover-sm.sh-hover-md.sh-hover-lg.sh-hover-xl.rd-0-2.oh
+    .h-100.relative.mb-0-5
+      a.mb-1(href=`/tiendas/${_.get(product, 'storeID.slug')}/productos/${product.sku}`)
+        +img(product.name, _.first(product.imagesSizes), ['196x196_jpg', '392x392_jpg'])
+      .w-100.mt-1-sm.mt-1-md.mt-1-lg.mt-1-xl
+        a.mb-0-25.small.eb.t-gray-2-500(href=`/tiendas/${_.get(product, 'storeID.slug')}` title=_.get(product, 'storeID.name'))
+          .oh.ellipsis.nowrap
+            | #{_.get(product, 'storeID.name')}
+        .mb-0-25.small.eb(title=product.name)
+          .oh.ellipsis.lines-2
+            | #{product.name}
+        if _.get(product, 'offer.percentage') && ( (_.get(product, 'offer.available.start') && moment().isAfter(moment(product.offer.available.start)) ) || !_.get(product, 'offer.available.start') )  && ( (_.get(product, 'offer.available.end') && moment().isBefore(moment(product.offer.available.end)) ) || !_.get(product, 'offer.available.end') )
+          .eb.t-primary #{formatMoney(product.offer.price || 0)}
+            | #{' '}
+            span.very-small (Precio Final)
+          .b.t.t-gray-2-500.mb-2 #{formatMoney(product.price || 0)}
+            | #{' '}
+            span.very-small (Precio original)
+          .absolute.at-0.ar-0
+            .m-0-5.info.very-small.ph-0-25.pw-0-5.rd-0-5 #{product.offer.percentage}%
+        else
+          .eb.mb-2 #{formatMoney(product.price || 0)}
+            | #{' '}
+            span.very-small (Precio Final)
+        a.btn.btn--primary.mt-0-25.small.ph-0-25.rd-50.w-100.absolute.ab-0(href=`/tiendas/${_.get(product, 'storeID.slug')}/productos/${product.sku}`) Lo quiero
+        if xdelete
+          form.validate-rest.absolute.at-0.a-black-20(
+            action=`${appCnf.url.api}users/history/${product._id}`
+            method="delete"
+            data-page='/usuario/historial'
+          )
+            button.btn-flat.p-0-5(type='submit') Borrar

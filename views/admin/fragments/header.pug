@@ -1,6 +1,6 @@
 header
   .hide-xs
-    nav.navbar.primary-500.fixed.sh
+    nav.navbar.navbar-4.primary-500.fixed.sh
       .container.left
         a.logo(href='/')
           img(src=_.get(req, 'site.images.logoTop.svg') alt=`${_.get(req, 'site.name')} logo`)
@@ -46,7 +46,7 @@ header
                   | #{' '}Cerrar Sesión
 
   .show-xs
-    nav.navbar.primary.sh.fixed.top
+    nav.navbar.navbar-4.primary.sh.fixed.top
       ul.flex.menu.w-100
         li
           a.sidenav-action.w-4.justify-content-center(href='#' data-target='#mobile-menu')

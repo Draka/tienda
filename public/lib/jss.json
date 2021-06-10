@@ -5,6 +5,8 @@
     "jquery.slim.min.js",
     "jquery.lazy.min.js",
     "axios.min.js",
+    "moment.min.js",
+    "moment.es.js",
     "main.js"
   ]
 }
