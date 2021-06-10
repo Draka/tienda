@@ -24,7 +24,7 @@ block view
             | Esta tienda es visible solo para ti
         td.tc
           if store.publish
-            a.btn.btn--primary.small(href=`/administracion/tiendas/${req.params.storeID}/desactivar`) Desactivar tienda y productos
+            a.btn.btn--primary.small(href=`/administracion/tiendas/${req.params.storeID}/desactivar`) Desactivar tienda
           else
             a.btn.btn--primary.small(href=`/administracion/tiendas/${req.params.storeID}/publicar`) Publicar
       tr
