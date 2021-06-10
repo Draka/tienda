@@ -53,7 +53,7 @@ export class Session {
         .done((data) => {
           let html = '';
           if (data.length) {
-            for (let index = 0; index < data.length || index < 5; index++) {
+            for (let index = 0; index < data.length && index < 5; index++) {
               html += Session.product(data[index]);
             }
             $('.products-line-history').html(html);
