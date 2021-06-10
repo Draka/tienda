@@ -23,6 +23,9 @@ export class Session {
   }
 
   static product(product: any) {
+    if (!product) {
+      return '<div class="col"></div>';
+    }
     return `${'<div class="col">'
     + '<div class="h-100 white-sm white-md white-lg white-xl p-1-sm p-1-md p-1-lg p-1-xl sh-hover-sm sh-hover-md sh-hover-lg sh-hover-xl rd-0-2 oh">'
     + '<div class="h-100 relative mb-0-5">'
@@ -49,10 +52,12 @@ export class Session {
       this.getApi.g(`users/${type}`)
         .done((data) => {
           let html = '';
-          for (let index = 0; index < data.length || index < 5; index++) {
-            html += Session.product(data[index]);
+          if (data.length) {
+            for (let index = 0; index < data.length || index < 5; index++) {
+              html += Session.product(data[index]);
+            }
+            $('.products-line-history').html(html);
           }
-          $('.products-line-history').html(html);
         });
     }
   }
