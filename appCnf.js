@@ -4,7 +4,7 @@
  */
 
 const enviroment = {
-  v: '2.0.39',
+  v: '2.0.41',
   db: process.env.MONGO_URL || 'mongodb://localhost/santrato',
   redis: {
     url: process.env.REDIS_URL || 'redis://localhost/',

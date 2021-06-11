@@ -12,13 +12,16 @@
     margin-right: 0;
   }
 }
-
-@each $key, $val in $breakpoints {
-  @if strip-unit($val) >= $container-max-h {
-    @include media-breakpoint-up(map-get($breakpoints, $key)) {
-      .container {
-        max-width: calc(#{$val} - #{($gutter * 2)});
-      }
-    }
-  }
+.container {
+  max-width: calc(#{$container-max-h} - #{($gutter * 2)});
 }
+
+// @each $key, $val in $breakpoints {
+//   @if strip-unit($val) >= $container-max-h {
+//     @include media-breakpoint-up(map-get($breakpoints, $key)) {
+//       .container {
+//         max-width: calc(#{$val} - #{($gutter * 2)});
+//       }
+//     }
+//   }
+// }

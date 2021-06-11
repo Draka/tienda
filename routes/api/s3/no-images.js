@@ -21,24 +21,22 @@ async function getFiles(dir) {
 }
 
 module.exports = (req, res, next) => {
+  let cont = 0;
   getFiles('./public')
     .then((files) => {
       async.mapLimit(files, 2, (file, cb) => {
+        if (file.search('tenancy') >= 0) {
+          return cb();
+        }
         const ext = path.extname(file);
         if ([
-          '.css',
           '.js',
-          '.map',
-          '.txt',
-          '.xml',
-          '.csv',
         ].indexOf(ext) === -1) {
           return cb();
         }
         if (ext === '.js') {
           execSync(`sed -i.bak 's/pub_test_Utcl6o6rEhg8FHIhmI37vLFI16EjGSCc/pub_prod_f82cASvPOJW8bTjSZrFMYGKmyBqluj4I/g ' ${file}`);
         }
-
         fs.readFile(file, (err, fileContent) => {
           const pathKey = file.split('/public/')[1];
           const params = {
@@ -53,12 +51,13 @@ module.exports = (req, res, next) => {
           };
 
           s3.upload(params, cb);
+          cont++;
         });
       }, (err) => {
         if (err) {
           return next(err);
         }
-        res.send({ num: files.length });
+        res.send({ num: cont });
       });
     })
     .catch((e) => next(e));

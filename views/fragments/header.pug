@@ -195,23 +195,18 @@ header.relative.z100
     .sidenav-body
       .white-500.w-100.flex.h-3
         .w-100.title.tc.b Inicio
-      | !{getFragment(req, 'menu-mob')}
-      if account
-        .white-500.w-100.flex.h-3
-          .w-100.title.tc.b Cuenta
-        ul.list(role='menu')
-          li(role='menuitem')
-            a.item.pl-1(href='/usuario') Ver mis datos
-          li(role='menuitem')
-            a.item.pl-1(href='/usuario/correo') Cambiar correo electrónico
-          li(role='menuitem')
-            a.item.pl-1(href='/usuario/contrasena') Cambiar mi contraseña
+      .p-1
+        if req.user && req.user.adminStore
+          a.item.small.btn.btn--primary.w-100(href='/administracion') Administrar tu tienda
+        else
+          a.item.small.btn.btn--primary.w-100(href='/paginas/vender') Crea tu tienda
+
       if !req.user
         ul.list(role='menu')
           li(role='menuitem')
-            a.pl-1(href='/iniciar-sesion') Iniciar Sesión
+            a.pl-1.lh-3(href='/iniciar-sesion') Iniciar Sesión
           li(role='menuitem')
-            a.pl-1(href='/registro') Registro
+            a.pl-1.lh-3(href='/registro') Registro
       else
         .white-500.w-100.flex.h-3
           .w-100.title.tc.b Usuario
@@ -219,27 +214,21 @@ header.relative.z100
         ul.list(role='menu')
           if req.user && req.user.admin
             li(role='menuitem')
-              a.item.pl-1(href='/administracion/super/configuracion')
+              a.item.pl-1.lh-3(href='/administracion/super/configuracion')
                 i.fas.fa-user-cog
                 | #{' '}Configuración General
             li.hr
-          if req.user && (req.user.admin || req.user.adminStore)
-            li(role='menuitem')
-              a.item.pl-1(href='/administracion/tiendas')
-                i.fas.fa-store
-                | #{' '}Mi tienda
-            li.hr
           li(role='menuitem')
-            a.item.pl-1(href='/usuario')
+            a.item.pl-1.lh-3(href='/usuario')
               i.far.fa-address-card
               | #{' '}Mi cuenta
           li(role='menuitem')
-            a.item.pl-1(href='/usuario/pedidos')
+            a.item.pl-1.lh-3(href='/usuario/pedidos')
               i.fas.fa-shopping-bag
               | #{' '}Mis pedidos
           li.hr
           li(role='menuitem')
-            a.item.pl-1(href='/cerrar-sesion')
+            a.item.pl-1.lh-3(href='/cerrar-sesion')
               i.fas.fa-sign-out-alt
               | #{' '}Cerrar Sesión
 
