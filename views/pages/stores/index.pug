@@ -2,51 +2,60 @@ extends ../../layout
 
 block content
   include ../../fragments/header_store.pug
-  .stub
-    .stub__left.white.brr-1.hide-xs
-      include ../../fragments/menu_store.pug
-    .stub__right.w-100-xs
-      if store.descriptionLong
-        .container
-          .row
-            .col-xs-12
-              .white.br-1.rd-0-2.p-1.mt-2.big
-                  .row
-                    .col-xs-12
-                      | !{store.descriptionLong}
-      .container-fluid
-        .row.pb-2
-          .col-xs-12
-            if store.featuredCategories
-              each featured in store.featuredCategories
-                if products[featured.category._id].length
-                  .flex.mt-2.mb-0-5
-                    .title.b.t-primary.w-100
-                      | #{featured.category.name}
-                    .small.nowrap
-                      a(href=`/tiendas/${store.slug}/categorias/${featured.category.slugLong}`)
-                        | Ver más
-                        | #{' '}
-                        i.fas.fa-arrow-right
-                  .white.br-1.rd-0-2.p-1
-                      .row
-                        .col-xs-12
-                          .list-products-inline.carousel.primary
-                            .carousel-arrow.carousel-arrow-left
-                              .carousel-icon-left
-                                .out-screen Mover a la izquierda
-                                i.fas.fa-chevron-left
 
-                            .carousel-list
-                              ul
-                                each product,pos in products[featured.category._id]
-                                  li
-                                    .w-230p.w-170p-xs.w-170p-sm.br-1.white.h-100
-                                      +simpleProduct(store, product)
+  if xofferts.length
+    .container.ph-1.white-xs
+      .row
+        .col-xs-12
+          .title.b OFERTAS
+      .row.mb-2
+        each item,i in xofferts
+          if i==2
+            .col.hide-xs
+              +simpleProduct(item)
+          else if i==3
+            .col.hide-xs.hide-sm
+              +simpleProduct(item)
+          else if i==4
+            .col.hide-xs.hide-sm.hide-md
+              +simpleProduct(item)
+          else if i==5
+            .col.hide-xs.hide-sm.hide-md.hide-lg
+              +simpleProduct(item)
+          else
+            .col
+              +simpleProduct(item)
 
-                            .carousel-arrow.carousel-arrow-right
-                              .carousel-icon-right
-                                .out-screen Mover a la derecha
-                                i.fas.fa-chevron-right
+  if xnew.length
+    .container.ph-1.white-xs
+      .row
+        .col-xs-12
+          .title.b NUEVOS PRODUCTOS
+      .row.mb-2
+        each item,i in xnew
+          if i==2
+            .col.hide-xs
+              +simpleProduct(item)
+          else if i==3
+            .col.hide-xs.hide-sm
+              +simpleProduct(item)
+          else if i==4
+            .col.hide-xs.hide-sm.hide-md
+              +simpleProduct(item)
+          else if i==5
+            .col.hide-xs.hide-sm.hide-md.hide-lg
+              +simpleProduct(item)
+          else
+            .col
+              +simpleProduct(item)
 
-  include ../../fragments/footer_store.pug
+  .container
+    .row
+      .col-xs-12
+        .title.b PRODUCTOS
+    .row
+      each item in products
+        .col-xs-6.col-md-4.col-lg-3.pb-1
+          +simpleProduct(item)
+
+

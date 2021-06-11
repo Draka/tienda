@@ -1,60 +1,13 @@
 if _.get(store, 'imageSizes.header')
-  .container-fluid.h-460p.h-230p-xs.bg.s-cover.lazy(data-src=_.get(store, 'imageSizes.header.2048x460_jpg') alt=`Imagen de cabecera de ${store.name}` style='background-position: center center')
+  .container-fluid.h-230p.h-230p-xs.bg.s-cover.lazy(data-src=_.get(store, 'imageSizes.header.2048x460_jpg') alt=`Imagen de cabecera de ${store.name}` style='background-position: center center')
 else
-  .container-fluid.h-460p.h-230p-xs.bg.s-cover.lazy(data-src=appCnf.url.cdn+'tenancy/'+req.tenancy+'/images/store_pattern.jpg' alt=`Imagen de cabecera de ${store.name}` style='background-position: center center')
+  .container-fluid.h-230p.h-230p-xs.bg.s-cover.lazy(data-src=appCnf.url.cdn+'tenancy/'+req.tenancy+'/images/store_pattern.jpg' alt=`Imagen de cabecera de ${store.name}` style='background-position: center center')
 
-.container-fluid.black-300.ph-1
+.container-fluid.ph-1
   .container
     .row
       .col-md-3.tc
         if _.get(store, 'imageSizes.logo')
-          img.h-170p.lazy.rd-50.br-10.oh.mt-n50(data-src=_.get(store, 'imageSizes.logo.196x196_jpg') data-retina=_.get(store, 'imageSizes.logo.392x392_jpg') alt=store.name)
+          img.h-170p.lazy.br-10.oh.mt-n-5(data-src=_.get(store, 'imageSizes.logo.196x196_jpg') data-retina=_.get(store, 'imageSizes.logo.392x392_jpg') alt=store.name)
       .col-md-6
         h1 #{store.name}
-        h2.mb-0-5 !{store.slogan}
-        if places
-          each place in places
-            .flex.small
-              .icon.big
-                i.fas.fa-map-marker-alt
-              .b.ml-1 #{place.address}
-          .mb-0-5
-
-        .flex.small
-          if _.find(store.contacts, {slug: 'whatsapp'})
-            .icon.big
-              i.fab.fa-whatsapp
-            .b.ml-1
-              a(href=`tel:${_.find(store.contacts, {slug: 'whatsapp'}).value}` title='Número de Teléfonico' target='_blank') #{_.find(store.contacts, {slug: 'whatsapp'}).value}
-          .pw-1
-          if _.find(store.contacts, {slug: 'email'})
-            .icon.big
-              i.far.fa-envelope
-            .b.ml-1
-              a(href=`mailto:${_.find(store.contacts, {slug: 'email'}).value}` title='Email' target='_blank') #{_.find(store.contacts, {slug: 'email'}).value}
-
-      .col-md-3.tc
-        if store.contacts
-          .flex.justify-content-center.mt-0-5-xs
-            each contact in store.contacts
-              if contact.value
-                if contact.slug == 'facebook'
-                  .icon.bigx2.ml-0-5
-                    a(href=contact.value title='Facebook' target='_blank')
-                      i.fab.fa-facebook-square
-                else if contact.slug == 'twitter'
-                  .icon.bigx2.ml-0-5
-                    a(href=contact.value title='Twitter' target='_blank')
-                      i.fab.fa-twitter-square
-                else if contact.slug == 'instagram'
-                  .icon.bigx2.ml-0-5
-                    a(href=contact.value title='Instagram' target='_blank')
-                      i.fab.fa-instagram-square
-                else if contact.slug == 'whatsapp'
-                  .icon.bigx2.ml-0-5
-                    a(href=`https://wa.me/${contact.value}?text=Hola, ${store.name} quisiera saber más de tus productos.` title='Whatsapp' target='_blank')
-                      i.fab.fa-whatsapp-square
-                else if contact.slug == 'web'
-                  .icon.bigx2.ml-0-5
-                    a(href=contact.value title='Página web' target='_blank')
-                      i.fas.fa-link

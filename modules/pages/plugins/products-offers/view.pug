@@ -1,0 +1,24 @@
+include ../../../common/views/fragments/mixin
+
+if xofferts.length
+  .container.ph-1.white-xs
+    .row
+      .col-xs-12
+        .title.b OFERTAS
+    .row.mb-2
+      each item,i in xofferts
+        if i==2
+          .col.hide-xs
+            +simpleProduct(item)
+        else if i==3
+          .col.hide-xs.hide-sm
+            +simpleProduct(item)
+        else if i==4
+          .col.hide-xs.hide-sm.hide-md
+            +simpleProduct(item)
+        else if i==5
+          .col.hide-xs.hide-sm.hide-md.hide-lg
+            +simpleProduct(item)
+        else
+          .col
+            +simpleProduct(item)
