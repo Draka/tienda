@@ -1,5 +1,5 @@
 exports.xxxxstores = (req, cb) => {
-  const key = '__stores__';
+  const key = '__store__';
   client.get(key, (_err, reply) => {
     if (reply && process.env.NODE_ENV === 'production') {
       cb(null, JSON.parse(reply));
