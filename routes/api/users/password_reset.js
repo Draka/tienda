@@ -22,6 +22,7 @@ function hash(obj, key) {
 }
 
 module.exports = (req, res, next) => {
+  const errors = [];
   const passwordTemp = Math.random().toString(36).slice(-8);
   req.body.passwordTemp = passwordTemp;
   Promise.all(['passwordTemp'].map((field) => hash(req.body, field))).then(() => {
@@ -40,7 +41,10 @@ module.exports = (req, res, next) => {
       },
       check: ['query', (results, cb) => {
         if (!results.query) {
-          return cb(listErrors(400));
+          errors.push({ field: 'email', msg: 'Correo no registrado.' });
+        }
+        if (errors.length) {
+          return cb(listErrors(400, null, errors));
         }
         cb();
       }],
