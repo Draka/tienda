@@ -23,6 +23,7 @@ module.exports = (app) => {
       server: req.get('X-Tenancy'),
       store: req.get('X-Store'),
       host: req.site.url,
+      ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
     });
   });
   app.get('/flush', (req, res) => {
