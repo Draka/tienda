@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const { detect } = require('detect-browser');
 
 function comparePassword(password, field) {
+  console.log(password, field);
   return new Promise((resolve, reject) => {
     if (!password) resolve(false);
     bcrypt.compare(password, field, (err, isMatch) => {
