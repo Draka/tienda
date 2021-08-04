@@ -1,0 +1,28 @@
+extends ../../layout_account
+
+block content
+  .container
+    include ../../fragments/breadcrumb
+
+    .row
+      .col-xs-12.col-md-6
+        h1 Información Personal
+      .col-xs-12.col-md-6.tr
+        a.btn.btn--secondary(href='/usuario/editar') Editar
+
+    .row.justify-content-center
+      .col-md-8
+        table.small.table.table--lines
+          tbody
+            tr
+              th.nowrap.ellipsis.b Nombres
+              td.w-100 #{_.get(req,'user.personalInfo.firstname')}
+            tr
+              th.nowrap.ellipsis.b Apellidos
+              td.w-100 #{_.get(req,'user.personalInfo.lastname')}
+            tr
+              th.nowrap.ellipsis.b Célular
+              td.w-100 (#{_.get(req,'user.personalInfo.callsign')}) #{_.get(req,'user.personalInfo.cellphone')}
+            tr
+              th.nowrap.ellipsis.b Correo electrónico
+              td.w-100 #{_.get(req,'user.email')}

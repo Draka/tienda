@@ -4,6 +4,7 @@ const { detect } = require('detect-browser');
 
 function comparePassword(password, field) {
   return new Promise((resolve, reject) => {
+    if (!password) resolve(false);
     bcrypt.compare(password, field, (err, isMatch) => {
       if (err) {
         return reject(err);
