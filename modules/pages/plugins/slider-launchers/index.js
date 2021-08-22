@@ -22,7 +22,7 @@ module.exports = (req, obj, cb) => {
               last: true,
             })
             .sort({
-              order: 1,
+              createdAt: -1,
             })
             .limit(limit)
             .populate({

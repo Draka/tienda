@@ -39,7 +39,7 @@ export class Session {
               + '<div class="w-100 mt-1-sm mt-1-md mt-1-lg mt-1-xl">'
               + `<a class="mb-0-25 small b t-gray-2-500" href="/tiendas/${product.storeID.slug}" title="${product.storeID.name}">`
               + `<div class="oh ellipsis nowrap">${product.storeID.name}</div></a>`
-              + `<div class="mb-0-25 small eb" title="${product.name}">`
+              + `<div class="mb-0-25 small eb" style="color: #000000c9" title="${product.name}">`
               + `<div class="oh ellipsis lines-2">${product.name}</div>`
               + '</div>';
     if (product?.offer?.percentage
@@ -47,10 +47,10 @@ export class Session {
        || !product.offer.available.start)
        && ((product.offer.available.end && moment().isBefore(moment(product.offer.available.end))) || !product.offer.available.end)) {
       html += `<div class="b t-primary">$${product.offer.price} <span class="very-small">(Precio Final)</span></div>`
-            + `<div class="b t t-gray-2-500 mb-2">$${product.price} <span class="very-small">(Precio original)</span></div>`
+            + `<div class="b t t-gray-2-500 mb-3">$${product.price} <span class="very-small">(Precio original)</span></div>`
             + `<div class="absolute at-0 ar-0"><div class="m-0-5 info very-small ph-0-25 pw-0-5 rd-0-5">${product.offer.percentage}%</div></div>`;
     } else {
-      html += `<div class="b mb-2">$${product.price} <span class="very-small">(Precio Final)</span></div>`;
+      html += `<div class="b mb-3">$${product.price} <span class="very-small">(Precio Final)</span></div>`;
     }
 
     html += `<a class="btn btn--primary mt-0-25 small ph-0-25 rd-50 w-100 absolute ab-0" href="/tiendas/${product.storeID.slug}/productos/${product.sku}">¡Lo quiero!</a>`
