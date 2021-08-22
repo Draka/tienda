@@ -30,7 +30,7 @@ module.exports = (req, res, next) => {
               ],
             },
           },
-          { $sort: { crreatedAt: -1 } },
+          { $sort: { createdAt: -1 } },
           {
             $group: {
               _id: { $first: '$categoryIDs' },
