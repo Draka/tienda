@@ -1,6 +1,3 @@
-const needle = require('needle');
-const reference = require('../../../../libs/reference.lib');
-
 module.exports = (req, res, next) => {
   const errors = [];
   async.auto({
@@ -36,8 +33,8 @@ module.exports = (req, res, next) => {
         })
         .exec(cb);
     }],
-    update: ['goPayment', (results, cb) => {
-      results.reference.transaction = req.body;
+    update: ['reference', (results, cb) => {
+      results.reference.transaction = { body: req.body, query: req.query, params: req.params };
       results.reference.save(cb);
     }],
   }, (err, results) => {
