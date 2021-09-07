@@ -1,12 +1,12 @@
 @each $key, $val in $colors-sections {
-  .#{$key}:not(.form-group):not(.msg):not(button):not(.btn):not(.remark):not(.carousel) {
+  .#{$key}:not(.msg):not(button):not(.btn):not(.remark):not(.carousel) {
     background-color: $val !important;
     color: set-text-color($val);
   }
   //alpha
   @each $ckey, $cval in $colors-alpha {
     $background-color: $val;
-    .a-#{$key}-#{$ckey}:not(.form-group):not(.msg):not(button):not(.btn):not(.remark):not(.carousel) {
+    .a-#{$key}-#{$ckey}:not(.msg):not(button):not(.btn):not(.remark):not(.carousel) {
       background-color: set-alpha-color($val, $cval) !important;
       color: set-text-color($val);
     }
@@ -18,7 +18,7 @@
   //variantes
   @each $ckey, $cval in $colors-variants {
     $background-color: $val;
-    .#{$key}-#{$ckey}:not(.form-group):not(.msg):not(button):not(.btn):not(.remark):not(.carousel) {
+    .#{$key}-#{$ckey}:not(.msg):not(button):not(.btn):not(.remark):not(.carousel) {
       @if ($cval < 0) {
         $background-color: lighten(
           $color: $val,
@@ -45,7 +45,7 @@
 
     @if $var !=1 {
       @include media-breakpoint(map-get($breakpoints, $ant), map-get($breakpoints, $ckey) - 0.1) {
-        .#{$key}-#{$ant}:not(.form-group):not(.msg):not(button):not(.btn):not(.remark):not(.carousel) {
+        .#{$key}-#{$ant}:not(.msg):not(button):not(.btn):not(.remark):not(.carousel) {
           background-color: $val !important;
           color: set-text-color($val);
         }
@@ -54,9 +54,18 @@
     $ant: $ckey;
   }
   @include media-breakpoint(map-get($breakpoints, $ant)) {
-    .#{$key}-#{$ant}:not(.form-group):not(.msg):not(button):not(.btn):not(.remark):not(.carousel) {
+    .#{$key}-#{$ant}:not(.msg):not(button):not(.btn):not(.remark):not(.carousel) {
       background-color: $val !important;
       color: set-text-color($val);
+    }
+  }
+}
+:root {
+  @each $key, $val in $colors-sections {
+    --sc-#{$key}: #{$val};
+    //variantes
+    @each $ckey, $cval in $colors-variants {
+      --sc-#{$key}-#{$ckey}: #{$val};
     }
   }
 }

@@ -1,5 +1,15 @@
 @each $key, $val in $sizes-text {
   .#{$key} {
     font-size: 1em * $val;
+    font-weight: map-get($weight-text, $key);
+    //breakpoints
+    @each $vkey, $vval in $breakpoints {
+      $fbp: map-get($sizes-text-bp, $vkey);
+      @if $fbp {
+        @include media-breakpoint-up(map-get($breakpoints, $vkey)) {
+          font-size: 1em * map-get($fbp, $key);
+        }
+      }
+    }
   }
 }

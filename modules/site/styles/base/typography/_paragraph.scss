@@ -2,15 +2,32 @@
 p {
   font-size: 1em;
 }
+
+.l{
+  font-weight: 300 !important;
+}
+.r{
+  font-weight: 400 !important;
+}
+.m{
+  font-weight: 500 !important;
+}
+.sb{
+  font-weight: 600 !important;
+}
 .b,
 b {
-  font-weight: bold;
+  font-weight: 700 !important;
 }
 .eb{
-  font-weight: 600;
+  font-weight: 800 !important;
 }
+
 .i {
-  font-style: italic;
+  font-style: italic !important;
+}
+.n {
+  font-style: normal !important;
 }
 
 

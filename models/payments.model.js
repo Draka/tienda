@@ -19,6 +19,10 @@ const schema = new mongoose.Schema({
     type: String,
     unique: true,
   },
+  urlPayment: {
+    type: String,
+    unique: true,
+  },
   amount: {
     type: Number,
   },

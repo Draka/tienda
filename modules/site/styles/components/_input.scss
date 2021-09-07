@@ -2,11 +2,13 @@ form {
   margin: 0;
 }
 
+.form-group {
+  margin-bottom: 1em;
+}
+
 .form-control {
   display: flex;
   flex-flow: column-reverse;
-  margin-bottom: 1em;
-  background-color: $color-white;
   position: relative;
 
   &--right {
@@ -30,7 +32,8 @@ label,
 input,
 textarea,
 select {
-  transition: all 0.2s;
+  -webkit-transition: transform 200ms,-webkit-transform 200ms,color 200ms;
+  transition: transform 200ms, color 200ms;
   touch-action: manipulation;
 }
 
@@ -38,7 +41,6 @@ input,
 textarea,
 select {
   &.input {
-    font-size: 1.1em;
     border: 0;
     border-bottom: 2px solid $color-default;
     font-family: inherit;
@@ -47,9 +49,11 @@ select {
     border-top-right-radius: 0.2em;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
-    padding: $gutter.75em;
+    padding: $gutter 0;
     cursor: text;
-    background-color: darken($color-white, 2);
+    @if $input-bg {
+      background-color: darken($color-white, 2);
+    }
     outline: 0;
 
     &--simple {
@@ -68,14 +72,16 @@ select {
 
     &:placeholder-shown ~ label,
     &:-webkit-autofill ~ label {
-      font-size: 1rem;
       cursor: text;
       max-width: 66.66%;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
       transform-origin: left bottom;
-      transform: translate(0.75em, 2.1em) scale(1.1);
+      transform: translate(0, 2.0em) scale(1.1);
+      @if $input-label-color {
+        color: $input-label-color;
+      }
     }
 
     &:not(:placeholder-shown) + label,
@@ -101,15 +107,21 @@ input.input:focus::-webkit-input-placeholder {
   opacity: 1;
 }
 
-select.input {
+select.input,
+select.input--simple {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
   cursor: pointer;
-
+}
+select.input {
   background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e")
-      no-repeat right 0.75rem center/8px 10px,
-    darken($color-white, 2);
+      no-repeat right 0.75rem center/8px 10px;
+}
+
+select.input--simple {
+  background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e")
+      no-repeat right 0 center/8px 10px;
 }
 
 label {

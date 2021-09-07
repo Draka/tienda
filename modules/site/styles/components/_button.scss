@@ -1,18 +1,18 @@
 .btn {
   border-radius: $border-radius-base;
   min-height: 2.25em;
-  padding: .5em .75em;
-  line-height: 1.5;
+  padding: 0 0.75em;
+  line-height: 3em;
   user-select: none;
   white-space: nowrap;
   cursor: pointer;
-  transition: background-color 0.3s linear, color 0.3s linear;
+  transition: background-color 0.3s linear, color 0.3s linear, box-shadow 0.3s linear;
   outline: none;
   position: relative;
   text-align: center;
-  font-weight: 700;
+  font-weight: $btn-font-weight;
   font-style: normal;
-  font-size: 1rem;
+  font-size: $btn-font-size;
   vertical-align: middle;
   display: inline-block;
   text-decoration: none;
@@ -20,41 +20,65 @@
 }
 
 .btn {
-
-  @include box-shadow();
+  @if $btn-shadow {
+    @include box-shadow();
+  }
   @include btn($color-default);
   @include btn-hov($color-default);
 
   // Colores
-  @each $key,
-  $val in $colors-sections {
+  @each $key, $val in $colors-sections {
     &--#{$key} {
       @include btn($val);
       @include btn-hov($val);
     }
 
-    @each $ckey,
-    $cval in $colors-variants {
+    @each $ckey, $cval in $colors-variants {
       &--#{$key}-#{$ckey} {
         @if ($cval < 0) {
           @include btn(lighten($color: $val, $amount: $cval * -1));
           @include btn-hov(lighten($color: $val, $amount: $cval * -1));
-        }
-
-        @else {
+        } @else {
           @include btn(darken($color: $val, $amount: $cval));
           @include btn-hov(darken($color: $val, $amount: $cval));
         }
       }
     }
   }
+  &.btn--focus,
+  &:focus,
+  &.btn--hover,
+  &:hover {
+    @include box-shadow();
+  }
+  &:focus {
+    outline: none;
+  }
+  &.btn--active,
+  &:active {
+    box-shadow: none;
+  }
 
   &--disabled,
   &:disabled {
-    background-color: $color-disabled;
+    background-color: $color-disabled !important;
 
-    color: lighten(invert($color-disabled), $amount: 40);
+    color: lighten(invert($color-disabled), $amount: 40) !important;
     cursor: not-allowed;
+
+    &.btn--focus,
+    &:focus,
+    &.btn--hover,
+    &:hover,
+    &.btn--active,
+    &:active {
+      background-color: $color-disabled !important;
+      color: lighten(invert($color-disabled), $amount: 40) !important;
+      box-shadow: none;
+    }
+    &:focus {
+      outline: none;
+    }
   }
 }
 
@@ -63,6 +87,7 @@
   background-color: transparent;
   $color: $color-default;
   cursor: pointer;
+  padding: 0;
 
   &--focus,
   &:focus,

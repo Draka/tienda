@@ -1,1 +1,29 @@
 $navar: '4em' !default;
+$font-weight: 400 !default;
+$font-size-base-bp: ();
+$h-sizes-text-bp: ();
+$h-sizes-text: (
+  "h1": 2.2,
+  "h2": 1.9,
+  "h3": 1.7,
+  "h4": 1.5,
+  "h5": 1.3,
+  "h6": 1.1,
+);
+$h-weight-text: (
+  "h1": 400,
+  "h2": 400,
+  "h3": 400,
+  "h4": 400,
+  "h5": 400,
+  "h6": 400,
+);
+$weight-text: ();
+$sizes-text-bp: ();
+
+$btn-shadow: false !default;
+$btn-font-weight: 500 !default;
+$btn-font-size: 1em !default;
+$input-bg: false !default;
+$input-label-color: #7A8C98 !default;
+$progress-border-radius: .2em !default;

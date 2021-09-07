@@ -1,51 +1,49 @@
-
-
 @each $key, $val in $sizes-borders {
-  .br-#{$key}{
+  .br-#{$key} {
     border: $val solid $color-default;
   }
-  .brh-#{$key}{
+  .brh-#{$key} {
     border-left: $val solid $color-default;
     border-right: $val solid $color-default;
   }
-  .brv-#{$key}{
+  .brv-#{$key} {
     border-top: $val solid $color-default;
     border-bottom: $val solid $color-default;
   }
-  .brl-#{$key}{
+  .brl-#{$key} {
     border-left: $val solid $color-default;
   }
-  .brr-#{$key}{
+  .brr-#{$key} {
     border-right: $val solid $color-default;
   }
-  .brt-#{$key}{
+  .brt-#{$key} {
     border-top: $val solid $color-default;
   }
-  .brb-#{$key}{
+  .brb-#{$key} {
     border-bottom: $val solid $color-default;
   }
   @each $cskey, $csval in $colors-sections {
-    .br-#{$key}-#{$cskey}{
+    .br-#{$key}-#{$cskey} {
       border: $val solid $csval;
     }
-    .brh-#{$key}-#{$cskey}{
+    .brh-#{$key}-#{$cskey} {
       border-left: $val solid $csval;
       border-right: $val solid $csval;
     }
-    .brv-#{$key}-#{$cskey}{
+    .brv-#{$key}-#{$cskey} {
       border-top: $val solid $csval;
       border-bottom: $val solid $csval;
     }
-    .brl-#{$key}-#{$cskey}{
+    .brl-#{$key}-#{$cskey} {
       border-left: $val solid $csval;
     }
-    .brr-#{$key}-#{$cskey}{
+    .brr-#{$key}-#{$cskey} {
       border-right: $val solid $csval;
     }
-    .brt-#{$key}-#{$cskey}{
+    .brt-#{$key}-#{$cskey} {
       border-top: $val solid $csval;
     }
-    .brb-#{$key}-#{$cskey}{
+    .brb-#{$key}-#{$cskey} {
       border-bottom: $val solid $csval;
     }
     //variantes
@@ -62,27 +60,27 @@
           $amount: $cval,
         );
       }
-      .br-#{$key}-#{$cskey}-#{$ckey}{
+      .br-#{$key}-#{$cskey}-#{$ckey} {
         border: $val solid $border-color;
       }
-      .brh-#{$key}-#{$cskey}-#{$ckey}{
+      .brh-#{$key}-#{$cskey}-#{$ckey} {
         border-left: $val solid $border-color;
         border-right: $val solid $border-color;
       }
-      .brv-#{$key}-#{$cskey}-#{$ckey}{
+      .brv-#{$key}-#{$cskey}-#{$ckey} {
         border-top: $val solid $border-color;
         border-bottom: $val solid $border-color;
       }
-      .brl-#{$key}-#{$cskey}-#{$ckey}{
+      .brl-#{$key}-#{$cskey}-#{$ckey} {
         border-left: $val solid $border-color;
       }
-      .brr-#{$key}-#{$cskey}-#{$ckey}{
+      .brr-#{$key}-#{$cskey}-#{$ckey} {
         border-right: $val solid $border-color;
       }
-      .brt-#{$key}-#{$cskey}-#{$ckey}{
+      .brt-#{$key}-#{$cskey}-#{$ckey} {
         border-top: $val solid $border-color;
       }
-      .brb-#{$key}-#{$cskey}-#{$ckey}{
+      .brb-#{$key}-#{$cskey}-#{$ckey} {
         border-bottom: $val solid $border-color;
       }
     }
@@ -90,52 +88,232 @@
 }
 
 @each $key, $val in $radius-borders {
-  .rd-#{$key}{
+  .rd-#{$key} {
     border-radius: $val;
   }
-  .rdt-#{$key}{
+  .rdt-#{$key} {
     border-top-left-radius: $val;
     border-top-right-radius: $val;
   }
-  .rdb-#{$key}{
+  .rdb-#{$key} {
     border-bottom-left-radius: $val;
     border-bottom-right-radius: $val;
   }
-  .rdtl-#{$key}{
+  .rdl-#{$key} {
+    border-top-left-radius: $val;
+    border-bottom-left-radius: $val;
+  }
+  .rdr-#{$key} {
+    border-top-right-radius: $val;
+    border-bottom-right-radius: $val;
+  }
+  .rdtl-#{$key} {
     border-top-left-radius: $val;
   }
-  .rdtr-#{$key}{
+  .rdtr-#{$key} {
     border-top-right-radius: $val;
   }
-  .rdbl-#{$key}{
+  .rdbl-#{$key} {
     border-bottom-left-radius: $val;
   }
-  .rdbr-#{$key}{
+  .rdbr-#{$key} {
     border-bottom-right-radius: $val;
   }
+}
+$ant: null;
+$var: null;
+
+@each $key, $val in $breakpoints {
+  $var: index(($breakpoints), ($key $val));
+  @debug ($val, $var);
+
+  @if $var !=1 {
+    @include media-breakpoint(map-get($breakpoints, $ant), map-get($breakpoints, $key) - 0.1) {
+      @each $key, $val in $radius-borders {
+        .rd-#{$key}-#{$ant} {
+          border-radius: $val;
+        }
+        .rdt-#{$key}-#{$ant} {
+          border-top-left-radius: $val;
+          border-top-right-radius: $val;
+        }
+        .rdb-#{$key}-#{$ant} {
+          border-bottom-left-radius: $val;
+          border-bottom-right-radius: $val;
+        }
+        .rdl-#{$key}-#{$ant} {
+          border-top-left-radius: $val;
+          border-bottom-left-radius: $val;
+        }
+        .rdr-#{$key}-#{$ant} {
+          border-top-right-radius: $val;
+          border-bottom-right-radius: $val;
+        }
+        .rdtl-#{$key}-#{$ant} {
+          border-top-left-radius: $val;
+        }
+        .rdtr-#{$key}-#{$ant} {
+          border-top-right-radius: $val;
+        }
+        .rdbl-#{$key}-#{$ant} {
+          border-bottom-left-radius: $val;
+        }
+        .rdbr-#{$key}-#{$ant} {
+          border-bottom-right-radius: $val;
+        }
+      }
+    }
+  }
+  @if $var==5 {
+    @include media-breakpoint-up(map-get($breakpoints, $key)) {
+      @each $ckey, $val in $radius-borders {
+        .rd-#{$ckey}-#{$key} {
+          border-radius: $val;
+        }
+        .rdt-#{$ckey}-#{$key} {
+          border-top-left-radius: $val;
+          border-top-right-radius: $val;
+        }
+        .rdb-#{$ckey}-#{$key} {
+          border-bottom-left-radius: $val;
+          border-bottom-right-radius: $val;
+        }
+        .rdl-#{$ckey}-#{$key} {
+          border-top-left-radius: $val;
+          border-bottom-left-radius: $val;
+        }
+        .rdr-#{$ckey}-#{$key} {
+          border-top-right-radius: $val;
+          border-bottom-right-radius: $val;
+        }
+        .rdtl-#{$ckey}-#{$key} {
+          border-top-left-radius: $val;
+        }
+        .rdtr-#{$ckey}-#{$key} {
+          border-top-right-radius: $val;
+        }
+        .rdbl-#{$ckey}-#{$key} {
+          border-bottom-left-radius: $val;
+        }
+        .rdbr-#{$ckey}-#{$key} {
+          border-bottom-right-radius: $val;
+        }
+      }
+    }
+  }
+  $ant: $key;
 }
 
 //radio para generar bordes redondos
-.rd-50{
+.rd-50 {
   border-radius: 5000px;
 }
-.rdt-50{
+.rdt-50 {
   border-top-left-radius: 5000px;
   border-top-right-radius: 5000px;
 }
-.rdb-50{
+.rdb-50 {
   border-bottom-left-radius: 5000px;
   border-bottom-right-radius: 5000px;
 }
-.rdtl-50{
+.rdl-50 {
+  border-top-left-radius: 5000px;
+  border-bottom-left-radius: 5000px;
+}
+.rdr-50 {
+  border-top-right-radius: 5000px;
+  border-bottom-right-radius: 5000px;
+}
+.rdtl-50 {
   border-top-left-radius: 5000px;
 }
-.rdtr-50{
+.rdtr-50 {
   border-top-right-radius: 5000px;
 }
-.rdbl-50{
+.rdbl-50 {
   border-bottom-left-radius: 5000px;
 }
-.rdbr-50{
+.rdbr-50 {
   border-bottom-right-radius: 5000px;
+}
+$ant: null;
+$var: null;
+
+@each $key, $val in $breakpoints {
+  $var: index(($breakpoints), ($key $val));
+
+  @if $var !=1 {
+    @include media-breakpoint(map-get($breakpoints, $ant), map-get($breakpoints, $key) - 0.1) {
+      .rd-50-#{$ant} {
+        border-radius: 5000px;
+      }
+      .rdt-50-#{$ant} {
+        border-top-left-radius: 5000px;
+        border-top-right-radius: 5000px;
+      }
+      .rdb-50-#{$ant} {
+        border-bottom-left-radius: 5000px;
+        border-bottom-right-radius: 5000px;
+      }
+      .rdl-50-#{$ant} {
+        border-top-left-radius: 5000px;
+        border-bottom-left-radius: 5000px;
+      }
+      .rdr-50-#{$ant} {
+        border-top-right-radius: 5000px;
+        border-bottom-right-radius: 5000px;
+      }
+      .rdtl-50-#{$ant} {
+        border-top-left-radius: 5000px;
+      }
+      .rdtr-50-#{$ant} {
+        border-top-right-radius: 5000px;
+      }
+      .rdbl-50-#{$ant} {
+        border-bottom-left-radius: 5000px;
+      }
+      .rdbr-50-#{$ant} {
+        border-bottom-right-radius: 5000px;
+      }
+    }
+  }
+
+  @if $var==5 {
+    @include media-breakpoint-up(map-get($breakpoints, $key)) {
+      @each $ckey, $val in $radius-borders {
+        .rd-50-#{$key} {
+          border-radius: $val;
+        }
+        .rdt-50-#{$key} {
+          border-top-left-radius: $val;
+          border-top-right-radius: $val;
+        }
+        .rdb-50-#{$key} {
+          border-bottom-left-radius: $val;
+          border-bottom-right-radius: $val;
+        }
+        .rdl-50-#{$key} {
+          border-top-left-radius: $val;
+          border-bottom-left-radius: $val;
+        }
+        .rdr-50-#{$key} {
+          border-top-right-radius: $val;
+          border-bottom-right-radius: $val;
+        }
+        .rdtl-50-#{$key} {
+          border-top-left-radius: $val;
+        }
+        .rdtr-50-#{$key} {
+          border-top-right-radius: $val;
+        }
+        .rdbl-50-#{$key} {
+          border-bottom-left-radius: $val;
+        }
+        .rdbr-50-#{$key} {
+          border-bottom-right-radius: $val;
+        }
+      }
+    }
+  }
+  $ant: $key;
 }

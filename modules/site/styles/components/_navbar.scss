@@ -20,7 +20,6 @@
     flex: 0 1 100%;
   }
   a:not(button):not(.btn):not(.item):not(.nh) {
-    padding: 0 $gutter;
     display: flex;
     align-items: center;
     color: $color-default;

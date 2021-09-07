@@ -9,7 +9,7 @@
     white-space: nowrap;
   }
   a:not(.btn) {
-    padding: 0 (1em / 2);
+    padding: 0 math.div(1em, 2);
     &:hover,
     &:focus {
       background-color: darken($color: map-get($colors-sections, "primary"), $amount: 20);

@@ -23,13 +23,13 @@ mixin simpleProduct(product, xdelete)
             .b.t-primary #{formatMoney(product.offer.price || 0)}
               | #{' '}
               span.very-small (Precio Final)
-            .b.t.t-gray-2-500.mb-3 #{formatMoney(product.price || 0)}
+            .b.t.t-gray-2-500.mb-4 #{formatMoney(product.price || 0)}
               | #{' '}
               span.very-small (Precio original)
             .absolute.at-0.ar-0
               .m-0-5.info.very-small.ph-0-25.pw-0-5.rd-0-5 #{product.offer.percentage}%
           else
-            .b.mb-3 #{formatMoney(product.price || 0)}
+            .b.mb-4 #{formatMoney(product.price || 0)}
               | #{' '}
               span.very-small (Precio Final)
           a.btn.btn--primary.mt-0-25.small.ph-0-25.rd-50.w-100.absolute.ab-0(href=`/tiendas/${_.get(product, 'storeID.slug')}/productos/${product.sku}`) ¡Lo quiero!

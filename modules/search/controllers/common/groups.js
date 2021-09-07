@@ -227,7 +227,7 @@ module.exports = (req, res, next) => {
       categoryIDs: results.categoryIDs,
       categoriesHeader: results.categoriesHeader,
       item,
-      title: `Resultado de búsqueda de ${req.query.q}`,
+      title: `${breadcrumbs[1].text.toUpperCase()} de ${_.last(breadcrumbs).text}`,
       q: req.query.q,
       count: results.count,
       breadcrumbs,

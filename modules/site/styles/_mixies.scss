@@ -8,21 +8,18 @@
   &:focus,
   &.btn--hover,
   &:hover {
-    background-color: lighten($color: $color, $amount: 10) !important;
-    color: set-text-color(lighten($color: $color, $amount: 10)) !important;
-  }
-  &.btn--active,
-  &:active {
     background-color: darken($color: $color, $amount: 10) !important;
     color: set-text-color(darken($color: $color, $amount: 10)) !important;
   }
-  &:focus {
-    outline: none;
+  &.btn--active,
+  &:active {
+    background-color: lighten($color: $color, $amount: 10) !important;
+    color: set-text-color(lighten($color: $color, $amount: 10)) !important;
   }
 }
 
 @mixin box-shadow() {
-  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 2px 10px 2px rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
 }
 
 @mixin media-breakpoint-up($min) {
@@ -58,6 +55,7 @@
   @return $number;
 }
 @function set-text-color($color) {
+  @return light-or-dark($color);
   @if (saturation( $color ) < 40 and lightness( $color ) > 80 and hue( $color ) > 200) {
     @return $color-black;
   }
@@ -101,4 +99,14 @@
 
 @function set-alpha-color($color, $amount) {
   @return adjust-color($color, $alpha: $amount - 1);
+}
+
+@mixin debug-map($map) {
+  @at-root {
+      __properties__ {
+          @each $key, $value in $map {
+              #{$key}: inspect($value);
+          }
+      }
+  }
 }

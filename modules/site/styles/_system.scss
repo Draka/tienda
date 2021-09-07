@@ -1,0 +1,191 @@
+$colors-sections: (
+  "primary": #123348,
+  "secondary": #ED7768,
+  "complementary1": #BFD5F3,
+  "complementary2": #2ADFC1,
+  "action": #157215,
+  "info": #1d64b3,
+  "error": #9f3a38,
+  "alert": #e1cb00,
+  "white": #fff,
+  "black": #333333,
+  "gray": #f2f3f7,
+  "transparent": transparent,
+);
+$colors-alpha: (
+  "20": 0.2,
+);
+$opacity: (
+  "0": 0,
+  "1": 1,
+  "0-3": 0.3,
+);
+$transition: (
+  "3": all .3s,
+);
+$colors-variants: (
+  "100": -30,
+  "200": -20,
+  "300": -10,
+  "500": 10,
+);
+$breakpoints: (
+  "xs": 0px,
+  "sm": 576px,
+  "md": 768px,
+  "lg": 992px,
+  "xl": 1200px,
+);
+$layout-steps: 12;
+$sizes: (
+  "small": 0.85,
+  "big": 1.25,
+);
+$sizes-text: (
+  "title": 3,
+  "sm-ttl": 4.78,
+  "logo-font": 1.3,
+  "subtitle": 1.42,
+  "accent": 1.71,
+  "subtitle-link": 1,
+  "form": 1,
+  "main-menu-inactive": 1,
+  "main-menu-active": 1,
+  "caption": 0.92,
+);
+$sizes-text-bp: (
+"md": (
+  "title": 3,
+  "sm-ttl": 6.25,
+  "logo-font": 1.5,
+  "subtitle": 2.5,
+  "accent": 1.71,
+  "subtitle-link": 1,
+  "form": 1,
+  "main-menu-inactive": 0.875,
+  "main-menu-active": 0.875,
+  "caption": 0.8125,
+)
+);
+$weight-text: (
+  "title": 800,
+  "sm-ttl": 300,
+  "logo-font": 300,
+  "subtitle": 300,
+  "accent": 800,
+  "subtitle-link": 700,
+  "form": 300,
+  "main-menu-inactive": 400,
+  "main-menu-active": 600,
+  "caption": 400,
+);
+$h-sizes-text: (
+  "h1": 2.14,
+  "h2": 1.42,
+  "h3": 1.14,
+  "h4": 1,
+  "h5": 1,
+  "h6": 1,
+);
+$h-sizes-text-bp: (
+"md": (
+  "h1": 3.75,
+  "h2": 2.5,
+  "h3": 1.5,
+  "h4": 1,
+  "h5": 1,
+  "h6": 1,
+)
+);
+$h-weight-text: (
+  "h1": 600,
+  "h2": 300,
+  "h3": 600,
+  "h4": 400,
+  "h5": 300,
+  "h6": 300,
+);
+$spaces: (
+  "0": 0,
+  "1": 1em,
+  "2": 2em,
+  "3": 3em,
+  "4": 4em,
+  "5": 5em,
+  "0-25": 0.25em,
+  "0-5": 0.5em,
+  "1-5": 1.5em,
+  "1p": 1px,
+);
+$sizes-objects: (
+  "0": 0,
+  "1": 1em,
+  "2": 2em,
+  "3": 3em,
+  "4": 4em,
+  "5": 5em,
+  "50": 50%,
+  "100": 100%,
+  "1p": 1px,
+  "190p": 190px,
+);
+$sizes-borders: (
+  "1": 1px,
+  "10": 10px,
+);
+$radius-borders: (
+  "0-2": .2em,
+  "0-5": .5em,
+);
+$edge-alignment: (
+  "0": 0,
+  "1": 1em,
+  "2": 2em,
+  "4": 4em,
+  "5": 5em,
+  "0-5": 0.5em,
+);
+$modal-size: (
+  "xs": 320px,
+  "sm": 500px,
+  "md": 500px,
+  "lg": 500px,
+  "xl": 500px,
+);
+$modal-margin: (
+  "xs": 0px,
+  "sm": 10px,
+  "md": 20px,
+  "lg": 30px,
+  "xl": 40px,
+);
+$navar: (
+  "xs": 64px,
+  "sm": 80px,
+  "md": 80px,
+  "lg": 80px,
+  "xl": 80px,
+);
+$navar-font: 20px;
+$stub-width: 350px;
+$font-size-base: 14px;
+$font-size-base-bp: (
+  "md": 16px,
+);
+$font-line-height: 1.4;
+$font-weight: 300;
+$font-family: Be Vietnam, sans-serif;
+$color-default: #ebebeb !default;
+$color-background: #FFFFFF !default;
+$color-foreground: #123348 !default;
+$color-white: #FFF;
+$color-black: #123348;
+$color-default-inv: $color-foreground;
+$color-disabled: #F0F2F3 !default;
+$border-radius-base: .85em;
+$btn-shadow: false;
+$btn-font-weight: 500;
+$btn-font-size: 1em;
+$input-bg: false;
+$input-label-color: #7A8C98;
+$progress-border-radius: .2em;

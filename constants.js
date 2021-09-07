@@ -11,7 +11,7 @@ global.checkAuthAdmin = require('./libs/check_auth_admin.lib');
 global.checkAuthAdminStore = require('./libs/check_auth_store.lib');
 
 const vars = {
-  ts: true,
+  ts: false,
   tz: 'America/Bogota',
   minPassword: 6,
   langDefault: 'es',
@@ -55,6 +55,18 @@ const vars = {
     'status',
   ],
   payments: [
+    {
+      slug: '2transfair',
+      name: '2Transfair',
+      description: 'Paga seguro con 2Transfair',
+      fields: [{
+        type: 'text',
+        label: 'Key de Producción',
+        slug: '2transfairKey',
+        hide: true,
+      }],
+      file: false,
+    },
     {
       slug: 'wompi',
       name: 'Wompi',
@@ -135,7 +147,7 @@ const vars = {
       name: 'Encomienda Nacional',
       slug: 'encomienda-nacional',
       description: 'Se usa una empresa de encomiendas a nivel nacional',
-      payments: ['wompi', 'nequi', 'daviplata', 'banco'],
+      payments: ['2transfair', 'wompi', 'nequi', 'daviplata', 'banco'],
       virtualDelivery: false,
       personalDelivery: false,
     },
@@ -143,7 +155,7 @@ const vars = {
       name: 'Encomienda Local',
       slug: 'encomienda-local',
       description: 'Se usa una empresa de encomiendas local',
-      payments: ['wompi', 'nequi', 'daviplata', 'banco'],
+      payments: ['2transfair', 'wompi', 'nequi', 'daviplata', 'banco'],
       virtualDelivery: false,
       personalDelivery: false,
     },
@@ -151,7 +163,7 @@ const vars = {
       name: 'Transporte Local',
       slug: 'transporte-local',
       description: 'El dueño de la tienda se encarga de llevar el producto',
-      payments: ['wompi', 'nequi', 'daviplata', 'banco', 'contra-entrega'],
+      payments: ['2transfair', 'wompi', 'nequi', 'daviplata', 'banco', 'contra-entrega'],
       virtualDelivery: false,
       personalDelivery: true,
     },
@@ -159,7 +171,7 @@ const vars = {
       name: 'Producto Virtual',
       slug: 'virtual-product',
       description: 'No se necesita un envío físico, los detalles de la compra se enviarán por correo',
-      payments: ['wompi', 'nequi', 'daviplata', 'banco'],
+      payments: ['2transfair', 'wompi', 'nequi', 'daviplata', 'banco'],
       virtualDelivery: true,
       personalDelivery: false,
     },
@@ -209,39 +221,23 @@ const vars = {
       slug: 'encomienda-nacional',
       description: 'Se usa una empresa de encomiendas a nivel nacional',
       price: 0,
-      payments: ['banco'],
+      payments: ['2transfair'],
       virtualDelivery: false,
       personalDelivery: false,
     },
   ],
   paymentsMaster: [
     {
-      slug: 'banco',
-      name: 'Transferencia Bancaria',
-      description: 'Transferencia cuenta a cuenta',
-      trust: true,
-      fields: [
-        {
-          type: 'text',
-          label: 'Banco',
-          slug: 'banco',
-        },
-        {
-          type: 'text',
-          label: 'Número de Cuenta',
-          slug: 'number',
-        },
-        {
-          type: 'select',
-          label: 'Tipo de Cuenta',
-          options: {
-            ahorros: 'Ahorros',
-            corriente: 'Corriente',
-          },
-          slug: 'type',
-        }],
-      instructions: 'Transfiera el monto de la orden a la cuenta bancaria y luego envíe el comprobante por medio de este formulario.',
-      file: true,
+      slug: '2transfair',
+      name: '2Transfair',
+      description: 'Paga seguro con 2Transfair',
+      fields: [{
+        type: 'text',
+        label: 'Key de Producción',
+        slug: '2transfairKey',
+        hide: true,
+      }],
+      file: false,
     },
   ],
 };

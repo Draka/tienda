@@ -59,13 +59,13 @@
 
     @while $i <=$layout-steps {
       .col-#{$key}-#{$i} {
-        $width: unquote((100 / ($layout-steps / $i)) + "%");
+        $width: unquote(math.div(100, math.div($layout-steps, $i)) + "%");
         width: $width;
         flex: 0 0 $width;
         max-width: $width;
       }
       .offset-#{$key}-#{$i} {
-        margin-left: unquote((100 / ($layout-steps / $i)) + "%");
+        margin-left: unquote(math.div(100, math.div($layout-steps, $i)) + "%");
       }
 
       $i: $i + 1;

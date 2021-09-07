@@ -1,3 +1,9 @@
+@each $key, $val in $sizes {
+  .#{$key} {
+    font-size: #{$val*100}#{'%'};
+  }
+}
+
 @each $key, $val in $sizes-objects {
   .h-#{$key} {
     height: $val;
@@ -12,6 +18,13 @@
 
   .maxw-#{$key} {
     max-width: $val;
+  }
+  .minh-#{$key} {
+    min-height: $val;
+  }
+
+  .minw-#{$key} {
+    min-width: $val;
   }
 }
 
@@ -40,6 +53,13 @@ $var: null;
 
         .maxw-#{$key}-#{$ant} {
           max-width: $val;
+        }
+        .minh-#{$key}-#{$ant} {
+          min-height: $val;
+        }
+
+        .minw-#{$key}-#{$ant} {
+          min-width: $val;
         }
       }
     }
