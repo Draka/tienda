@@ -1,11 +1,11 @@
 module.exports = (req, res, next) => {
   const errors = [];
 
-  let body;
+  const { body } = req;
   try {
-    body = JSON.parse(req.body);
+    body.response = JSON.parse(body.response);
   } catch (error) {
-    body = req.body;
+    body.response = req.body.response;
   }
 
   async.auto({
@@ -42,14 +42,14 @@ module.exports = (req, res, next) => {
     }],
     updatePayment: ['reference', (results, cb) => {
       console.log(body);
-      if (body.status === 'PAID') {
+      if (body.response.status === 'PAID') {
         results.reference.status = 'approved';
       }
       results.reference.transaction = { body, query: req.query, params: req.params };
       results.reference.save(cb);
     }],
     updateOrder: ['updatePayment', (results, cb) => {
-      if (body.status === 'PAID') {
+      if (body.response.status === 'PAID') {
         results.order.status = 'paid';
         results.order.statuses.push({
           status: 'paid',
