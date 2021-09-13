@@ -21,6 +21,14 @@ module.exports = (req, res, next) => {
           tenancy: req.tenancy,
           _id: req.params.orderID,
         })
+        .populate({
+          path: 'storeID',
+          select: 'name slug approve publish',
+          populate: {
+            path: 'userID',
+            select: 'email personalInfo',
+          },
+        })
         .exec(cb);
     }],
     check: ['order', (results, cb) => {
@@ -64,7 +72,6 @@ module.exports = (req, res, next) => {
         return cb();
       }
       const admin = _.get(results.order, 'storeID.userID');
-      console.log('ADMIN', admin);
       if (admin) {
         if (body.response.status === 'PAID') {
           const orderFormat = orderToMail(results.order);
