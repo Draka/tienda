@@ -79,14 +79,12 @@ module.exports = (req, res, next) => {
             const index = _.findIndex(doc.productIDs, (p) => `${p.productID}` === `${results.product._id}`);
             console.log('ENC', index);
             if (index === -1) {
-              console.log('ENC XX', doc.productIDs);
               doc.productIDs.unshift({ productID: results.product._id });
-              console.log('ENC XX', doc.productIDs);
               doc.save(cb);
             } else {
               const productID = doc.productIDs.splice(index, 1)[0];
               // saca los otros parecidos
-              doc.productIDs = _.uniqBy(doc.productIDs, 'productID');
+              doc.productIDs = _.filter(doc.productIDs, (p) => `${p.productID}` !== `${results.product._id}`);
               console.log('ENC YY', doc.productIDs);
               console.log('ENC YY', productID);
               productID.updatedAt = Date.now();
