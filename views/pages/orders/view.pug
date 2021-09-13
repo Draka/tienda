@@ -111,7 +111,11 @@ block content
                         td.mt-1-xs.paymentFile
                           if order.status === 'created'
                             | Esperando comprobante de pago
-                          else
+                          else if order.payment.slug === '2transfair'
+                            a(href=_.get(payment, `urlPayment`) target="_blank") Ver
+                              | #{' '}
+                              i.fas.fa-external-link-alt
+                          else if !order.payment.pse
                             a(href=_.get(order, `payment.file`) target="_blank") Ver
                               | #{' '}
                               i.fas.fa-external-link-alt

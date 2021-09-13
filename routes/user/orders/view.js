@@ -45,6 +45,7 @@ module.exports = (req, res, next) => {
     res.render('pages/orders/view.pug', {
       req,
       order: results.order,
+      payment: results.payment,
       title: 'Ver pedido',
       breadcrumbs,
       wompi: true,
