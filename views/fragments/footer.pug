@@ -9,9 +9,9 @@ footer.mt-8
           | !{getFragment(req, 'footer-logo')}
         .col-md-8
           .row.justify-content-center
-            .col-md-4.vertical-align-center.mb-3-xs.mb-3-sm.mb-3-md
+            .col-md-6.mb-3-xs.mb-3-sm.mb-3-md
               | !{getFragment(req, 'footer-l-1-c-1')}
-            .col-md-4.vertical-align-center
+            .col-md-4
               | !{getFragment(req, 'footer-l-1-c-2')}
   .container-fluid(class=(_.get(req,'site.style.footer')||'primary')+'-500')
     .container.tc.ph-1

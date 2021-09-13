@@ -13,6 +13,14 @@ mixin btnPayment(order)
         data-order=order._id)
           b Wompi
           .title Pagar #{formatMoney(order.order.total)}
+    else if order.payment.slug == '2transfair'
+      a.lh-2.btn.btn--alert.small.w-100.ph-0-5.rd-50.mt-0-5-sm.mt-0-5-xs.mb-1.payment--2transfair(
+        style="height: auto;"
+        id='id_'+order.orderID
+        data-order=order._id,
+        href=`${appCnf.url.api}orders/2transfair/${order._id}`)
+          b 2Transfair
+          .title Pagar #{formatMoney(order.order.total)}
     else
       button.btn.btn--alert.small.w-100.ph-0-5.rd-50.mt-0-5-sm.mt-0-5-xs.mb-1.payment--file(
         style="height: auto;"

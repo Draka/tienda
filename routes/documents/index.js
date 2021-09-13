@@ -30,7 +30,7 @@ module.exports = (app) => {
       ];
 
       res.render('pages/documents/view.pug', {
-        session: req.user,
+        req,
         item: results.item,
         title: results.item.title,
         breadcrumbs,

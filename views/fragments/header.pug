@@ -8,7 +8,7 @@ header.relative.z100
         a.logo(href='/')
           img(src=_.get(req, 'site.images.logoTop.svg') alt=`${_.get(req, 'site.name')} logo`)
         .relative
-          a.dropdown(aria-controls='menu-categories')
+          a.pw-1.dropdown(aria-controls='menu-categories')
             span
               i.fas.fa-list-ul.fa-fw
               | #{' '}
@@ -21,9 +21,9 @@ header.relative.z100
                 li(role='menuitem')
                   a.item(href='/categorias/'+category.slugLong)
                     | #{category.name}
-        a(href='/grupos/ofertas')
+        a.pw-1(href='/grupos/ofertas')
           | Ofertas
-        a.data-address.flex
+        a.data-address.flex.pw-1
           .pr-0-25
             i.fas.fa-map-marker-alt.big
           .small
@@ -48,7 +48,7 @@ header.relative.z100
               a(href='/iniciar-sesion') Iniciar Sesión
         else
           .relative
-            a.dropdown.flex(aria-controls='menu-login')
+            a.dropdown.flex.pw-1(aria-controls='menu-login')
               span
                 .tc.social.mb-0-25
                   i.fas.fa-user-circle.fa-fw
