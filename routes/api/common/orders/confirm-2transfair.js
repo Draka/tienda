@@ -1,5 +1,13 @@
 module.exports = (req, res, next) => {
   const errors = [];
+
+  let body;
+  try {
+    body = JSON.parse(req.body);
+  } catch (error) {
+    body = req.body;
+  }
+
   async.auto({
     validate: (cb) => {
       cb();
@@ -32,9 +40,22 @@ module.exports = (req, res, next) => {
         })
         .exec(cb);
     }],
-    update: ['reference', (results, cb) => {
-      results.reference.transaction = { body: req.body, query: req.query, params: req.params };
+    updatePayment: ['reference', (results, cb) => {
+      console.log(body);
+      if (body.status === 'PAID') {
+        results.reference.status = 'approved';
+      }
+      results.reference.transaction = { body, query: req.query, params: req.params };
       results.reference.save(cb);
+    }],
+    updateOrder: ['updatePayment', (results, cb) => {
+      if (body.status === 'PAID') {
+        results.order.status = 'paid';
+        results.order.statuses.push({
+          status: 'paid',
+        });
+        results.order.save(cb);
+      } else { cb(); }
     }],
   }, (err, results) => {
     if (err) {
