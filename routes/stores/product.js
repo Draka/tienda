@@ -84,9 +84,12 @@ module.exports = (req, res, next) => {
               doc.save(cb);
             } else {
               const productID = doc.productIDs.splice(index, 1)[0];
+              console.log('ENC YY', doc.productIDs);
+              console.log('ENC YY', productID);
               productID.updatedAt = Date.now();
 
               doc.productIDs.unshift(productID);
+              console.log('ENC YY', doc.productIDs);
               doc.productIDs.slice(0, 24);
               doc.save(cb);
             }
