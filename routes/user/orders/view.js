@@ -12,7 +12,7 @@ module.exports = (req, res, next) => {
         .lean()
         .exec(cb);
     },
-    payment: ['order', (results, cb) => {
+    reference: ['order', (results, cb) => {
       if (!results.order) {
         return next(listErrors(404, null, [{ field: 'order', msg: 'El registro no existe.' }]));
       }
@@ -21,6 +21,15 @@ module.exports = (req, res, next) => {
       results.order.payment.info = _.find(global.payments, { slug: results.order.payment.slug });
       results.order.payment.file = `${appCnf.url.cdn}tenancy/${req.tenancy}/files/${appCnf.s3.folder}/orders/${results.order._id}/${results.order.payment.file}`;
       reference(req, results.order, req.user._id, cb);
+    }],
+    payment: ['order', (results, cb) => {
+      models.Payment
+        .findOne({
+          tenancy: req.tenancy,
+          orderID: req.params.orderID,
+          status: { $in: ['paid'] },
+        })
+        .exec(cb);
     }],
   }, (err, results) => {
     if (err) {

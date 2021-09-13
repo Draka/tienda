@@ -1,3 +1,6 @@
+const sqsMailer = require('../../../../libs/sqs-mailer.lib');
+const { orderToMail } = require('../../../../libs/util.lib');
+
 module.exports = (req, res, next) => {
   const errors = [];
 
@@ -41,7 +44,6 @@ module.exports = (req, res, next) => {
         .exec(cb);
     }],
     updatePayment: ['reference', (results, cb) => {
-      console.log(body);
       if (body.response.status === 'PAID') {
         results.reference.status = 'approved';
       }
@@ -56,6 +58,52 @@ module.exports = (req, res, next) => {
         });
         results.order.save(cb);
       } else { cb(); }
+    }],
+    mailerAdmin: ['order', (results, cb) => {
+      if (!results.order) {
+        return cb();
+      }
+      const admin = _.get(results.order, 'storeID.userID');
+      if (admin) {
+        if (body.response.status === 'PAID') {
+          const orderFormat = orderToMail(results.order);
+
+          sqsMailer(req, {
+            to: { email: admin.email, name: admin.personalInfo.name },
+            template: 'seller-new-order',
+            order: orderFormat,
+          },
+          admin,
+          cb);
+        } else {
+          cb();
+        }
+      } else {
+        cb();
+      }
+    }],
+    mailerClient: ['order', (results, cb) => {
+      if (!results.order) {
+        return cb();
+      }
+      const orderFormat = orderToMail(results.order);
+      if (body.response.status === 'PAID') {
+        sqsMailer(req, {
+          to: { email: results.order.userData.email, name: results.order.userData.name },
+          template: 'client-new-order',
+          order: orderFormat,
+        },
+        { _id: results.order.userID },
+        cb);
+      } else {
+        sqsMailer(req, {
+          to: { email: results.order.userData.email, name: results.order.userData.name },
+          template: 'client-voided-order',
+          order: orderFormat,
+        },
+        { _id: results.order.userID },
+        cb);
+      }
     }],
   }, (err, results) => {
     if (err) {
