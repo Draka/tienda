@@ -27,7 +27,7 @@ module.exports = (req, res, next) => {
         .findOne({
           tenancy: req.tenancy,
           orderID: results.order._id,
-          status: { $in: ['paid'] },
+          status: { $in: ['approved'] },
         })
         .exec(cb);
     }],
