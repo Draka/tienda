@@ -64,6 +64,7 @@ module.exports = (req, res, next) => {
         return cb();
       }
       const admin = _.get(results.order, 'storeID.userID');
+      console.log('ADMIN', admin);
       if (admin) {
         if (body.response.status === 'PAID') {
           const orderFormat = orderToMail(results.order);
