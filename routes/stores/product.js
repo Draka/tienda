@@ -1,3 +1,4 @@
+const { product } = require('puppeteer');
 const { putS3LogoPath } = require('../../libs/put_s3_path.lib');
 const queryStore = require('../../libs/query_store.lib');
 const queryProduct = require('../../libs/query_product.lib');
@@ -84,6 +85,8 @@ module.exports = (req, res, next) => {
               doc.save(cb);
             } else {
               const productID = doc.productIDs.splice(index, 1)[0];
+              // saca los otros parecidos
+              doc.productIDs = _.map(doc.productIDs, (product) => product.productID === productID.productID);
               console.log('ENC YY', doc.productIDs);
               console.log('ENC YY', productID);
               productID.updatedAt = Date.now();
