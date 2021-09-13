@@ -26,7 +26,7 @@ module.exports = (req, res, next) => {
       models.Payment
         .findOne({
           tenancy: req.tenancy,
-          orderID: req.params.orderID,
+          orderID: results.order._id,
           status: { $in: ['paid'] },
         })
         .exec(cb);
