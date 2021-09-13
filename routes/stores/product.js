@@ -86,7 +86,7 @@ module.exports = (req, res, next) => {
             } else {
               const productID = doc.productIDs.splice(index, 1)[0];
               // saca los otros parecidos
-              doc.productIDs = _.map(doc.productIDs, (product) => product.productID === productID.productID);
+              doc.productIDs = _.uniqBy(doc.productIDs, 'productID');
               console.log('ENC YY', doc.productIDs);
               console.log('ENC YY', productID);
               productID.updatedAt = Date.now();
