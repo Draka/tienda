@@ -76,8 +76,11 @@ module.exports = (req, res, next) => {
           }
           if (doc) {
             const index = _.findIndex(doc.productIDs, { productID: results.product._id });
+            console.log('ENC', index);
             if (index === -1) {
+              console.log('ENC XX', doc.productIDs);
               doc.productIDs.unshift({ productID: results.product._id });
+              console.log('ENC XX', doc.productIDs);
               doc.save(cb);
             } else {
               const productID = doc.productIDs.splice(index, 1)[0];
