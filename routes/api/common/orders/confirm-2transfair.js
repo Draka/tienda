@@ -9,7 +9,6 @@ module.exports = (req, res, next) => {
         .findOne({
           tenancy: req.tenancy,
           _id: req.params.orderID,
-          userID: req.user._id,
         })
         .exec(cb);
     }],
