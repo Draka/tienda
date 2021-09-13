@@ -77,7 +77,6 @@ module.exports = (req, res, next) => {
           }
           if (doc) {
             const index = _.findIndex(doc.productIDs, (p) => `${p.productID}` === `${results.product._id}`);
-            console.log('ENC', index);
             if (index === -1) {
               doc.productIDs.unshift({ productID: results.product._id });
               doc.save(cb);
@@ -85,12 +84,9 @@ module.exports = (req, res, next) => {
               const productID = doc.productIDs.splice(index, 1)[0];
               // saca los otros parecidos
               doc.productIDs = _.filter(doc.productIDs, (p) => `${p.productID}` !== `${results.product._id}`);
-              console.log('ENC YY', doc.productIDs);
-              console.log('ENC YY', productID);
               productID.updatedAt = Date.now();
 
               doc.productIDs.unshift(productID);
-              console.log('ENC YY', doc.productIDs);
               doc.productIDs.slice(0, 24);
               doc.save(cb);
             }
