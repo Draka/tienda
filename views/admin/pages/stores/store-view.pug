@@ -37,3 +37,20 @@ block view
         td.w-100
           .b URL
           | #{req.site.url}tiendas/#{store.slug}
+  .hr.mh-4
+  table.small.table.table--lines
+    tbody
+      tr
+        td.w-100.tc.title.t-error.b Zona de Peligro
+      tr
+        td.w-100.tc
+          button.btn.btn--error.p-0-5.open-modal-action(
+                    title='Eliminar'
+                    data-title='¿Desea eliminar la tienda?'
+                    data-cancel='Cancelar'
+                    data-action='Si, Eliminar'
+                    data-method='DELETE'
+                    data-confirm='eliminar'
+                    data-url=`${appCnf.url.api}admin/stores/${req.params.storeID}`
+                    data-page='/administracion/tiendas'
+                  ) ELIMINAR TIENDA

@@ -145,6 +145,7 @@ module.exports = (req, res, next) => {
                 }],
             },
           },
+          { $sort: { createdAt: -1 } },
           {
             $group: {
               _id: { $first: '$categoryIDs' },
@@ -205,6 +206,7 @@ module.exports = (req, res, next) => {
               ],
             },
           },
+          { $sort: { createdAt: -1 } },
           {
             $group: {
               _id: { $first: '$categoryIDs' },
@@ -266,6 +268,7 @@ module.exports = (req, res, next) => {
               ],
             },
           },
+          { $sort: { createdAt: -1 } },
           {
             $group: {
               _id: { $first: '$categoryIDs' },

@@ -34,6 +34,7 @@ module.exports = (req, res, next) => {
       { shortDescription: { $regex: q, $options: 'i' } },
       { categoryText: { $regex: q, $options: 'i' } },
       { brandText: { $regex: q, $options: 'i' } },
+      { storeText: { $regex: q, $options: 'i' } },
     ];
   }
   async.auto({

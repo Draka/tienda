@@ -107,6 +107,7 @@ module.exports = (req, res, next) => {
         body.categoryText = _.map(results.category, (o) => o.name);
       }
       body.storeID = req.params.storeID;
+      body.storeText = results.store.name;
       const product = new models.Product(body);
       if (product.publish) {
         checkProduct(results.store, product, cb);

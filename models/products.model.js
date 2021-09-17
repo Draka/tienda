@@ -75,6 +75,10 @@ const schema = new mongoose.Schema({
     type: String,
     trim: true,
   },
+  storeText: {
+    type: String,
+    trim: true,
+  },
   shortDescription: {
     type: String,
     trim: true,
@@ -225,7 +229,7 @@ function preUpdate(result, next) {
     client.del(`__tenancy:${result.tenancy}__product__${result.storeID}__${result.sku}`);
   }
   if (result.name) {
-    result.slug = _.kebabCase(_.deburr(_.get(result, 'name')));
+    result.slug = `${result.sku}-${_.kebabCase(_.deburr(_.get(result, 'name')))}`;
   }
   if (result.sku) {
     result.sku = _.kebabCase(_.deburr(_.get(result, 'sku')));

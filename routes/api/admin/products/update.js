@@ -227,6 +227,7 @@ module.exports = (req, res, next) => {
         body.categoryIDs = _.map(results.category, (o) => o._id);
         body.categoryText = _.map(results.category, (o) => o.name);
       }
+      body.storeText = results.store.name;
       results.query.set(body);
       if (results.query.publish) {
         checkProduct(results.store, results.query, cb);

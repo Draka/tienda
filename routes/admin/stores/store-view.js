@@ -52,6 +52,7 @@ module.exports = (req, res, next) => {
       menu: 'tienda',
       edit: `/administracion/tiendas/${req.params.storeID}/editar`,
       breadcrumbs,
+      js: 'admin',
     });
   });
 };
