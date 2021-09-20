@@ -4,13 +4,13 @@ mixin multimedia(name, image, cssClass)
   else
     img.lazy(data-src=`${appCnf.url.cdn}images/imagen_no_disponible.svg` alt=_.truncate(name, {'length': 30,'separator': ' '}) class=cssClass?cssClass:'maxw-100')
 
-mixin img(name, image, size = ['196x196_jpg', '392x392_jpg'], cssClass)
+mixin img(name, image, size = ['196x196_jpg', '392x392_jpg'], cssClass, title)
   if (image)
-    img.lazy(data-src=image[size[0]] data-retina=image[size[1]] alt=_.truncate(name, {'length': 30,'separator': ' '}) class=cssClass?cssClass:'maxw-100')
+    img.lazy(data-src=image[size[0]] data-retina=image[size[1]] alt=_.truncate(name, {'length': 30,'separator': ' '}) title=title?title:'' class=cssClass?cssClass:'maxw-100')
   else
-    img(src=`${appCnf.url.cdn}images/imagen_no_disponible.svg` alt=_.truncate(name, {'length': 30,'separator': ' '}) class=cssClass?cssClass:'maxw-100')
+    img(src=`${appCnf.url.cdn}images/imagen_no_disponible.svg` alt=_.truncate(name, {'length': 30,'separator': ' '}) title=title?title:'' class=cssClass?cssClass:'maxw-100')
 
 if item.urlSize
-  +img(item.title, _.get(item, `urlSize.${item.files[0]}`), sizes)
+  +img(item.alt?item.alt:item.title, _.get(item, `urlSize.${item.files[0]}`), sizes,item.title)
 else if item.url
   +multimedia(item.title, _.get(item, `url.${item.files[0]}`))
