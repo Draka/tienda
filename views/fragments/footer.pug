@@ -8,10 +8,30 @@ footer.mt-8
         .col-md-4
           | !{getFragment(req, 'footer-logo')}
           .flex.justify-content-center.w-100
-            .mt-2.tc
-              a(href="https://www.youtube.com/channel/UCiRAdEv6xnwu_tXJZq8VPcg" rel="nofollow")
-                i.fab.fa-youtube.bigx2
-              .mt-0-5 Youtube
+
+            each contact in _.get(req, 'site.contacts')
+              if contact.value
+                if contact.slug == 'facebook'
+                  .mt-2.tc.pw-1
+                    a(href=contact.value title='Facebook' target='_blank' rel="nofollow")
+                      i.fab.fa-facebook-square.bigx2
+                    .mt-0-5 Facebook
+                else if contact.slug == 'twitter'
+                  .mt-2.tc.pw-1
+                    a(href=contact.value title='Twitter' target='_blank' rel="nofollow")
+                      i.fab.fa-twitter-square.bigx2
+                    .mt-0-5 Twitter
+                else if contact.slug == 'instagram'
+                  .mt-2.tc.pw-1
+                    a(href=contact.value title='Instagram' target='_blank' rel="nofollow")
+                      i.fab.fa-instagram-square.bigx2
+                    .mt-0-5 Instagram
+                else if contact.slug == 'youtube'
+                  .mt-2.tc.pw-1
+                    a(href=contact.value title='Youtube' target='_blank' rel="nofollow")
+                      i.fab.fa-youtube-square.bigx2
+                    .mt-0-5 Youtube
+
         .col-md-8
           .row.justify-content-center
             .col-md-6.mb-3-xs.mb-3-sm.mb-3-md

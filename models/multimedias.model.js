@@ -10,6 +10,10 @@ const schema = new mongoose.Schema({
     type: String,
     trim: true,
   },
+  alt: {
+    type: String,
+    trim: true,
+  },
   key: {
     type: String,
     index: {
