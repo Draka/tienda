@@ -2,6 +2,14 @@ extends /modules/admin/views/layout-view-cmp
 
 block view
   .container
+    if !store.publish
+      .row
+        .col-md-12.ph-1
+          .alert.tc.p-2 TIENDA NO PUBLICADA: Soló tú la puedes ver.
+    if !store.approve
+      .row
+        .col-md-12.ph-1
+          .alert.tc.p-2 TIENDA NO APROBADA: debes publicar la tienda y un administrador la revisará
     .row
       .col-md-4.pb-1
         a.nh(href=`/administracion/tiendas/${req.user.options.storeSelect}`)

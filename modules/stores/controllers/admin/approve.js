@@ -1,3 +1,5 @@
+const sqsMailer = require('../../../../libs/sqs-mailer.lib');
+
 module.exports = (req, res, next) => {
   async.auto({
     store: (cb) => {
@@ -14,6 +16,22 @@ module.exports = (req, res, next) => {
       }
       results.store.approveSend = true;
       results.store.save(cb);
+    }],
+    user: ['check', (results, cb) => {
+      models.User
+        .findOne({
+          tenancy: req.tenancy,
+          _id: results.store.userID,
+        })
+        .exec(cb);
+    }],
+    mailer: ['user', (results, cb) => {
+      sqsMailer(req, {
+        to: { email: results.user.email, name: results.user.personalInfo.name },
+        template: 'client-approved-store',
+      },
+      results.create,
+      cb);
     }],
   }, (err, _results) => {
     if (err) {

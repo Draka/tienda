@@ -1,7 +1,15 @@
 module.exports = (req, res, next) => {
   async.auto({
     validate: (cb) => cb(),
-  }, (err, _results) => {
+    store: (cb) => {
+      models.Store
+        .findOne({
+          tenancy: req.tenancy,
+          _id: req.user.options.storeSelect,
+        })
+        .exec(cb);
+    },
+  }, (err, results) => {
     if (err) {
       return next(err);
     }
@@ -24,6 +32,7 @@ module.exports = (req, res, next) => {
 
     res.render('../modules/account/view/admin/menu.pug', {
       req,
+      store: results.store,
       item,
       title: 'Mi cuenta',
       breadcrumbs,

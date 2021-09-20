@@ -1,6 +1,14 @@
 extends ../../layout-view
 
 block view
+  if !store.publish
+    .row
+      .col-md-12.ph-1
+        .alert.tc.p-2 TIENDA NO PUBLICADA: Soló tú la puedes ver.
+  if !store.approve
+    .row
+      .col-md-12.ph-1
+        .alert.tc.p-2 TIENDA NO APROBADA: debes publicar la tienda y un administrador la revisará
   table.small.table.table--lines
     tbody
       tr
@@ -15,13 +23,13 @@ block view
         td.w-100
           .b Publicación
           if store.publish && store.approveSend
-            | Esta tienda aun no es visible, esta en proceso de revisión
+            | Un administrador esta revisando la tienda para publicarla
           else if store.publish && !store.approve
             | Esta tienda aun no es visible, necesita ser enviada a revisión
           else if store.publish
             | Esta tienda es visible para todos
           else
-            | Esta tienda es visible solo para ti
+            | Soló tú la puedes ver la tienda
         td.tc
           if store.publish
             a.btn.btn--primary.small(href=`/administracion/tiendas/${req.params.storeID}/desactivar`) Desactivar tienda

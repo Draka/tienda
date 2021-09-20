@@ -1,6 +1,14 @@
 extends /modules/admin/views/layout-edit-cmp
 
 block edit
+  if !store.publish
+    .row
+      .col-md-12.ph-1
+        .alert.tc.p-2 TIENDA NO PUBLICADA: Soló tú la puedes ver.
+  if !store.approve
+    .row
+      .col-md-12.ph-1
+        .alert.tc.p-2 TIENDA NO APROBADA: debes publicar la tienda y un administrador la revisará
 
   .msg.error#form-results
 
