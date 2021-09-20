@@ -1,13 +1,13 @@
 if _.get(store, 'imageSizes.header')
-  .container-fluid.h-230p.h-230p-xs.bg.s-cover.lazy(data-src=_.get(store, 'imageSizes.header.2048x460_jpg') alt=`Imagen de cabecera de ${store.name}` style='background-position: center center')
+  .container-fluid.bg.s-cover.lazy(data-src=_.get(store, 'imageSizes.header.2048x460_jpg') alt=`Imagen de cabecera de ${store.name}` style='background-position: center center;height: 490px;')
 else
-  .container-fluid.h-230p.h-230p-xs.bg.s-cover.lazy(data-src=appCnf.url.cdn+'tenancy/'+req.tenancy+'/images/store_pattern.jpg' alt=`Imagen de cabecera de ${store.name}` style='background-position: center center')
+  .container-fluid.bg.s-cover.lazy(data-src=appCnf.url.cdn+'tenancy/'+req.tenancy+'/images/store_pattern.jpg' alt=`Imagen de cabecera de ${store.name}` style='background-position: center center;height: 490px;')
 
 .container-fluid.ph-1
   .container
     .row
       .col-md-3.tc
         if _.get(store, 'imageSizes.logo')
-          imgp.lazy.br-10.oh.mt-n-5(data-src=_.get(store, 'imageSizes.logo.196x196_jpg') data-retina=_.get(store, 'imageSizes.logo.392x392_jpg') style="height: 490px;" alt=store.name)
+          img.h-170p.lazy.br-10.oh.mt-n-5(data-src=_.get(store, 'imageSizes.logo.196x196_jpg') data-retina=_.get(store, 'imageSizes.logo.392x392_jpg') alt=store.name)
       .col-md-6
         h1.b #{store.name}
