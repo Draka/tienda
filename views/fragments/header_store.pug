@@ -8,6 +8,6 @@ else
     .row
       .col-md-3.tc
         if _.get(store, 'imageSizes.logo')
-          img.h-170p.lazy.br-10.oh.mt-n-5(data-src=_.get(store, 'imageSizes.logo.196x196_jpg') data-retina=_.get(store, 'imageSizes.logo.392x392_jpg') alt=store.name)
+          imgp.lazy.br-10.oh.mt-n-5(data-src=_.get(store, 'imageSizes.logo.196x196_jpg') data-retina=_.get(store, 'imageSizes.logo.392x392_jpg') style="height: 490px;" alt=store.name)
       .col-md-6
         h1.b #{store.name}
