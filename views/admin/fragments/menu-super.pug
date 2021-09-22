@@ -10,6 +10,8 @@ nav
           a.item(href=`/administracion/super/usuarios`) Usuarios
         li.navigation__item(class=menu=='super-pedidos-lista'?'navigation--active':'')
           a.item(href=`/administracion/super/tiendas/pedidos`) Pedidos
+        li.navigation__item(class=menu=='super-reportes'?'navigation--active':'')
+          a.item(href=`/administracion/super/reportes`) Reportes
     .expandable
       .expandable__header
         .expandable__title #{_.get(req, 'site.name')}

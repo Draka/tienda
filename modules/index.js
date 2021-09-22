@@ -9,6 +9,7 @@ const stores = require('./stores/routes');
 const categories = require('./categories/routes');
 const search = require('./search/routes');
 const account = require('./account/routes');
+const reports = require('./reports/routes');
 
 module.exports = (app) => {
   site(app);
@@ -21,6 +22,7 @@ module.exports = (app) => {
   categories(app);
   search(app);
   account(app);
+  reports(app);
   if (process.env.NODE_ENV !== 'production') {
     amz(app);
   }

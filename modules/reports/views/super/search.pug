@@ -1,0 +1,49 @@
+extends /modules/admin/views/super/layout-list
+
+block list
+  .msg.info.mb-0-5
+    .flex
+      i.fas.fa-exclamation.h2.mr-0-25.w-2.tc
+      ul
+        li Seleccione una Tienda para editar.
+
+  form.validate.mh-2(action=``)
+    .row
+      .col-md-4
+        label(for='dateStart') Inicio
+        input#dateStart.input.w-100.h-100.white(type="date" name="dateStart" placeholder='Fecha de inicio' value=req.query.dateStart)
+      .col-md-4
+        label(for='dateEnd') Fin
+        input#dateEnd.input.w-100.h-100.white(type="date" name="dateEnd" placeholder='Fecha de fin' value=req.query.dateEnd)
+      .col-md-4
+        label &nbsp;
+        button.btn.btn--secondary.w-100
+          i.fas.fa-search
+          | #{' '}
+          | Buscar
+
+  .oa
+    table.small.table.table--lines.table--striped
+      thead
+        tr
+          th.b Nombre
+          th.b Cantidad
+      tbody
+        tr
+          td Usuarios
+          td #{results.countUsers}
+        tr
+          td Tiendas
+          td #{results.countStores}
+        tr
+          td Tiendas publicadas
+          td #{results.countStoresPublish}
+        tr
+          td Productos
+          td #{results.countProducts}
+        tr
+          td Productos publicadas
+          td #{results.countProductsPublish}
+        tr
+          td Pedidos
+          td #{results.countOrders}
