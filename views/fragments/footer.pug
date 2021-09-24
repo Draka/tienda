@@ -46,7 +46,12 @@ footer.mt-8
 
                 | !{getFragment(req, 'footer-l-1-c-1')}
             .col-md-4
-              | !{getFragment(req, 'footer-l-1-c-2')}
+              .mt-2
+                if req.user
+                  div
+                    a.t-white(href='/usuario/pedidos') Mis compras
+
+                | !{getFragment(req, 'footer-l-1-c-2')}
   .container-fluid(class=(_.get(req,'site.style.footer')||'primary')+'-500')
     .container.tc.ph-1
       .row
