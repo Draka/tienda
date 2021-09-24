@@ -1,16 +1,23 @@
 .list {
-  > * {
-
-    &:first-child a {
-      border-top: 1px solid $color-default;
+  &--line {
+    > * {
+      &:first-child a {
+        border-top: 1px solid $color-default;
+      }
+      a {
+        border-bottom: 1px solid $color-default;
+      }
     }
+  }
+}
 
+.list {
+  > * {
     a {
       font-size: 90%;
       margin: 0;
       display: block;
       text-decoration: none;
-      border-bottom: 1px solid $color-default;
       background-color: set-lightness-color($color-default, 95) !important;
       color: $color-foreground;
 
@@ -22,11 +29,13 @@
 
       @each $key, $val in $colors-sections {
         &.#{$key} {
-          background-color: set-lightness-color($val, 95) !important;
+          background-color: $val !important;
+          color: set-text-color($val);
 
           &:hover,
           &:focus {
-            background-color: set-lightness-color($val, 90) !important;
+            background-color: set-lightness-color($val, 10) !important;
+            color: set-text-color(set-lightness-color($val, 10));
           }
         }
       }
@@ -67,7 +76,7 @@
         > * {
           a {
             background-color: $background-color !important;
-        color: set-text-color($background-color) !important;
+            color: set-text-color($background-color) !important;
           }
         }
       }

@@ -15,12 +15,13 @@ header.relative.z100
               | Categorías
             span.icon.ml-0-25
               i.fas.fa-chevron-down.fa-fw
-          #menu-categories.dropdown-list.sh
+          #menu-categories.dropdown-list.sh.oa
             ul(role='menu')
               each category in req.categories
-                li(role='menuitem')
-                  a.item(href='/categorias/'+category.slugLong)
-                    | #{category.name}
+                if category.products
+                  li(role='menuitem')
+                    a.item(href='/categorias/'+category.slugLong)
+                      | #{category.name}
         a.pw-1(href='/grupos/ofertas')
           | Ofertas
         a.data-address.flex.pw-1
@@ -143,8 +144,9 @@ header.relative.z100
             #menu-categories.dropdown-list.right.sh
               ul.list-categories(role='menu')
                 each category in categories
-                  li(role='menuitem')
-                    a.item(href='/'+store.slug+'/categorias/'+category.slugLong) #{category.name}
+                  if category.products
+                    li(role='menuitem')
+                      a.item(href='/'+store.slug+'/categorias/'+category.slugLong) #{category.name}
 
   .show-xs
     nav.navbar.navbar-4.sh.fixed.top(class=_.get(req,'site.style.header')||'primary')

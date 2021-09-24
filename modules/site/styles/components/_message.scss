@@ -6,8 +6,8 @@
   background-color: set-lightness-color($color-default, 97) !important;
   color: $color-foreground;
   // border: 1px solid $color-default;
-  box-shadow: 0 0 0 1px $color-default inset, 0 0 0 0 transparent;
-  border-radius: .2em;
+  // box-shadow: 0 0 0 1px $color-default inset, 0 0 0 0 transparent;
+  border-radius: .5rem;
   display: none;
 
   @each $key,
@@ -16,7 +16,7 @@
       // border-color: $val;
       background-color: set-lightness-color($val, 97) !important;
       color: $val !important;
-      box-shadow: 0 0 0 1px $val inset, 0 0 0 0 transparent;
+      // box-shadow: 0 0 0 1px $val inset, 0 0 0 0 transparent;
 
       a:not(.btn):not(.item) {
         color: darken($val, 10);

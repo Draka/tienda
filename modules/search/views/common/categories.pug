@@ -18,7 +18,8 @@ block view
           h1.tc Categorías
         .justify-content-center.spacer.t-primary
           each category in categoriesHeader
-            a.item(href=`/categorias/${category.slugLong}`) #{category.name}
+            if category.products
+              a.item(href=`/categorias/${category.slugLong}`) #{category.name}
 
   .container.ph-1.white-xs
     .row.justify-content-center

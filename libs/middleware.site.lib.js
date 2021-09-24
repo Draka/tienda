@@ -1,29 +1,84 @@
 function categoryTree(tenancy, categoryID, cb) {
-  models.Category
-    .find({
-      tenancy,
-      storeID: null,
-      categoryID,
-    })
-    .select('_id name slugLong')
-    .sort({
-      name: 1,
-    })
-    .lean()
-    .exec((err, docs) => {
-      if (err) {
-        cb(err);
-      } else {
-        async.mapLimit(docs, 20, (i, cb) => {
-          categoryTree(tenancy, i._id, (_err, r) => {
-            i.categories = r;
-            cb(null, i);
-          });
-        }, (_err, docs) => {
-          cb(null, docs);
-        });
+  async.auto({
+    categoriesHeader: (cb) => {
+      models.Category
+        .find({
+          tenancy,
+          storeID: null,
+          categoryID,
+        })
+        .select('name slugLong')
+        .sort({
+          name: 1,
+        })
+        .lean()
+        .exec(cb);
+    },
+    categoriesHeaderCount: ['categoriesHeader', (results, cb) => {
+      if (!results.categoriesHeader.length) {
+        return cb(null, []);
       }
-    });
+      models.Product
+        .find({
+          tenancy,
+          categoryIDs: { $in: _.map(results.categoriesHeader, (c) => c._id) },
+        })
+        .select('categoryIDs')
+        .lean()
+        .exec(cb);
+    }],
+    categoriesHeaderAssign: ['categoriesHeaderCount', (results, cb) => {
+      if (!results.categoriesHeader.length) {
+        return cb();
+      }
+      const f = _.map(results.categoriesHeaderCount, (ch) => _.map(ch.categoryIDs, (chi) => chi.toString()));
+      _.each(results.categoriesHeader, (c) => {
+        const m = _.find(f, (fc) => fc.indexOf(c._id.toString()) >= 0);
+        c.products = m ? m.length : 0;
+      });
+      cb();
+    }],
+  }, (err, results) => {
+    const docs = results.categoriesHeader;
+    if (err) {
+      cb(err);
+    } else {
+      async.mapLimit(docs, 20, (i, cb) => {
+        categoryTree(tenancy, i._id, (_err, r) => {
+          i.categories = r;
+          cb(null, i);
+        });
+      }, (_err, docs) => {
+        cb(null, docs);
+      });
+    }
+  });
+
+  // models.Category
+  //   .find({
+  //     tenancy,
+  //     storeID: null,
+  //     categoryID,
+  //   })
+  //   .select('_id name slugLong')
+  //   .sort({
+  //     name: 1,
+  //   })
+  //   .lean()
+  //   .exec((err, docs) => {
+  //     if (err) {
+  //       cb(err);
+  //     } else {
+  //       async.mapLimit(docs, 20, (i, cb) => {
+  //         categoryTree(tenancy, i._id, (_err, r) => {
+  //           i.categories = r;
+  //           cb(null, i);
+  //         });
+  //       }, (_err, docs) => {
+  //         cb(null, docs);
+  //       });
+  //     }
+  //   });
 }
 
 /**

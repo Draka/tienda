@@ -30,6 +30,9 @@ module.exports = (req, res, next) => {
         .exec(cb);
     }],
     postFindProducts: ['products', (results, cb) => {
+      _.each(results.products, (product) => {
+        product.storeID = results.store;
+      });
       putS3Path(req, results.products);
       _.each(results.products, (product) => {
         product.isAvailable = isAvailable(product);

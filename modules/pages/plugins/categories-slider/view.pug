@@ -2,5 +2,6 @@
   .col-xm-12.oh
     .oa.flex.h-3
         a.show.b.pw-1.t-primary(href=`/categorias/`) Todo
-        each item in req.categories
-          a.show.b.pw-1.nowrap(href=`/categorias/${item.slugLong}`) #{item.name}
+        each category in req.categories
+          if category.products
+            a.show.b.pw-1.nowrap(href=`/categorias/${category.slugLong}`) #{category.name}

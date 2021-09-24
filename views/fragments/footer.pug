@@ -35,7 +35,16 @@ footer.mt-8
         .col-md-8
           .row.justify-content-center
             .col-md-6.mb-3-xs.mb-3-sm.mb-3-md
-              | !{getFragment(req, 'footer-l-1-c-1')}
+              .mt-2
+                if req.user
+                  div
+                    a.t-white(href='/usuario') Mi cuenta
+                  div
+                    a.t-white(href='/usuario/historial') Historial
+                  div
+                    a.t-white(href='/usuario/favoritos') Favoritos
+
+                | !{getFragment(req, 'footer-l-1-c-1')}
             .col-md-4
               | !{getFragment(req, 'footer-l-1-c-2')}
   .container-fluid(class=(_.get(req,'site.style.footer')||'primary')+'-500')

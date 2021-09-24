@@ -125,7 +125,6 @@ $var: null;
 
 @each $key, $val in $breakpoints {
   $var: index(($breakpoints), ($key $val));
-  @debug ($val, $var);
 
   @if $var !=1 {
     @include media-breakpoint(map-get($breakpoints, $ant), map-get($breakpoints, $key) - 0.1) {
@@ -164,7 +163,8 @@ $var: null;
       }
     }
   }
-  @if $var==5 {
+
+  @if $var==length($breakpoints) {
     @include media-breakpoint-up(map-get($breakpoints, $key)) {
       @each $ckey, $val in $radius-borders {
         .rd-#{$ckey}-#{$key} {
@@ -278,7 +278,7 @@ $var: null;
     }
   }
 
-  @if $var==5 {
+  @if $var==length($breakpoints) {
     @include media-breakpoint-up(map-get($breakpoints, $key)) {
       @each $ckey, $val in $radius-borders {
         .rd-50-#{$key} {

@@ -34,15 +34,15 @@
   }
   @each $key, $val in $colors-sections {
     &.#{$key} {
-      color: set-text-color(map-get($colors-sections, $key));
-      background-color: map-get($colors-sections, $key);
+      color: set-text-color($val);
+      background-color: $val;
       *:not(.dropdown-list) a:not(button):not(.btn):not(.item) {
-        color: set-text-color(map-get($colors-sections, $key));
+        color: set-text-color($val);
 
         &:hover,
         &:focus {
-          background-color: set-change-color(map-get($colors-sections, $key), 8);
-          color: set-text-color(map-get($colors-sections, $key));
+          background-color: set-change-color($val, 8);
+          color: set-text-color($val);
         }
       }
     }
@@ -65,15 +65,15 @@
             $amount: $cval,
           );
         }
-        color: set-text-color(map-get($colors-sections, $key));
+        color: set-text-color($background-color);
         background-color: $background-color;
         *:not(.dropdown-list) a:not(button):not(.btn):not(.item) {
-          color: set-text-color(map-get($colors-sections, $key));
+          color: set-text-color($background-color);
 
           &:hover,
           &:focus {
             background-color: set-change-color($background-color, 8);
-            color: set-text-color(map-get($colors-sections, $key));
+            color: set-text-color($background-color);
           }
         }
       }
