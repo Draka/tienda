@@ -10,14 +10,16 @@ block list
   form.validate.mh-2(action=``)
     .row
       .col-md-4
-        label(for='dateStart') Inicio
-        input#dateStart.input.w-100.h-100.white(type="date" name="dateStart" placeholder='Fecha de inicio' value=req.query.dateStart)
+        .form-control
+          input#dateStart.input.w-100.h-100.white(type="date" name="dateStart" placeholder='Fecha de inicio' value=req.query.dateStart)
+          label(for='dateStart') Inicio
       .col-md-4
-        label(for='dateEnd') Fin
-        input#dateEnd.input.w-100.h-100.white(type="date" name="dateEnd" placeholder='Fecha de fin' value=req.query.dateEnd)
+        .form-control
+          input#dateEnd.input.w-100.h-100.white(type="date" name="dateEnd" placeholder='Fecha de fin' value=req.query.dateEnd)
+          label(for='dateEnd') Fin
       .col-md-4
         label &nbsp;
-        button.btn.btn--secondary.w-100
+        button.btn.btn--secondary.w-100.pb-0
           i.fas.fa-search
           | #{' '}
           | Buscar

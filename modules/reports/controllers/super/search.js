@@ -2,10 +2,10 @@ module.exports = (req, res, next) => {
   // Salta a otra url
   const query = {};
   if (req.query.dateStart) {
-    _.set(req.query.dateStart, 'createdAt.$gte', moment.tz(req.query.dateStart, global.tz).startOf('day').toDate());
+    _.set(query, 'createdAt.$gte', moment.tz(req.query.dateStart, global.tz).startOf('day').toDate());
   }
   if (req.query.dateEnd) {
-    _.set(req.query.dateEnd, 'createdAt.$lte', moment.tz(req.query.dateEnd, global.tz).endOf('day').toDate());
+    _.set(query, 'createdAt.$lte', moment.tz(req.query.dateEnd, global.tz).endOf('day').toDate());
   }
   async.auto({
     countUsers: (cb) => {
