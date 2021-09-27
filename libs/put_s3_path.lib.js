@@ -1,5 +1,6 @@
 exports.putS3Path = (req, items) => {
   _.each(items, (o) => {
+    if (!o) return;
     o.imagesSizes = _.map(_.get(o, 'images'), (i) => {
       const sizes = {};
       const pathImg = `tenancy/${req.tenancy}/ecommerce/${appCnf.s3.folder}/${o.storeID._id}/products/${o._id}/${i}`;
