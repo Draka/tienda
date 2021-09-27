@@ -145,7 +145,7 @@ app.use((err, req, res, next) => {
   if (process.env.NODE_ENV === 'production' && err.status !== 404) {
     res.locals.error = {};
     err.stack = '';
-  } else if (err.status !== 401 && err.status !== 404) {
+  } else if (process.env.NODE_ENV !== 'production' && err.status !== 401 && err.status !== 404) {
     // console.log('-------------------------------------------------');
     console.trace();
   }

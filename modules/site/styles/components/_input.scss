@@ -134,7 +134,7 @@ label {
 
 [type="checkbox"].checkbox+span:before,
 [type="radio"].radio+span:before {
-  font-family: "funky-font";
+  font-family: "Font Awesome 5 Free";
   visibility: visible;
   font-size: 1.5em;
   vertical-align: middle;
@@ -150,11 +150,11 @@ label {
 }
 
 [type="checkbox"].checkbox+span:before {
-  content: "\f10b";
+  content: "\f0c8";
 }
 
 [type="checkbox"].checkbox:checked+span:before {
-  content: "\f10a";
+  content: "\f14a";
 }
 
 [type="radio"].radio+span:before {

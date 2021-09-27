@@ -5,6 +5,7 @@ interface ProducPreInterface {
 interface ProducInterface {
   store: string,
   sku: string,
+  slug?: string,
   name: string,
   categoryText: Array<string>,
   brandText: string,

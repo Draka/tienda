@@ -6,7 +6,7 @@ mixin img(name, image, size = ['196x196_jpg', '392x392_jpg'], cssClass)
 
 mixin simpleProduct(store, product)
   .h-100.relative.p-1.pb-3.product(
-    data-list='tiendas/'+store.slug+'/productos/'+product.sku
+    data-list='tiendas/'+store.slug+'/productos/'+product.slug
     data-product=JSON.stringify({
       sku: product.sku,
       name: product.name,
@@ -16,7 +16,7 @@ mixin simpleProduct(store, product)
       store: store.slug
     })
     data-pos=pos+1)
-    a(href='/tiendas/'+store.slug+'/productos/'+product.sku)
+    a(href='/tiendas/'+store.slug+'/productos/'+product.slug)
       +img(product.name, _.first(product.imagesSizes), ['196x196_jpg', '392x392_jpg'])
     if product.brandText
       .t-white-700.small.mb-1 #{product.brandText}
@@ -42,11 +42,11 @@ mixin simpleProduct(store, product)
               | #{' '}
               | Agregar
           else
-            a.btn.btn--secondary-500.w-100.ab-0(href='/'+store.slug+'/productos/'+product.sku) Ver
+            a.btn.btn--secondary-500.w-100.ab-0(href='/'+store.slug+'/productos/'+product.slug) Ver
       else
         .mb-4
         .absolute.w-100c2.ab-1
-          a.btn.btn--secondary.w-100.ab-0(href='/'+store.slug+'/productos/'+product.sku) Ver
+          a.btn.btn--secondary.w-100.ab-0(href='/'+store.slug+'/productos/'+product.slug) Ver
 
 doctype html
 html(lang='es')

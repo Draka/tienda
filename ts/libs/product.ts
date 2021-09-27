@@ -47,7 +47,7 @@ export class Product {
     const productHTML = $('<div class="w-230p w-170p-xs w-170p-sm br-1 white h-100">');
 
     productHTML.html(`${`<div class="h-100 relative p-3 pb-7 product" data-sku="${product.sku}">`
-    + `<a href="/tiendas/${Vars.store}/productos/${product.sku}">${Product.img(product)}</a>`}${
+    + `<a href="/tiendas/${Vars.store}/productos/${product.slug}">${Product.img(product)}</a>`}${
       product.brandText ? `<div class="t-white-700 small mb-1">${product.brandText}</div>` : ''
     }<div class="t-primary tc b small">${product.name}</div>`
     + `<div class="t-secondary b big">${Vars.formatMoney(product.price)}</div>`

@@ -6,14 +6,14 @@ exports.productBySKU = (req, storeID, sku, cb) => {
       cb(null, JSON.parse(reply));
     } else {
       models.Product
-        .findOne({ storeID, sku, delete: false })
+        .findOne({ storeID, $or: [{ sku }, { slug: sku }], delete: false })
         .populate({
           path: 'categoryIDs',
           select: 'name slugLong',
         })
         .populate({
           path: 'groups.productIDs',
-          select: 'name sku features',
+          select: 'name sku features slug',
         })
         .populate({
           path: 'storeID',

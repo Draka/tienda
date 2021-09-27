@@ -1,4 +1,3 @@
-const { product } = require('puppeteer');
 const { putS3LogoPath } = require('../../libs/put_s3_path.lib');
 const queryStore = require('../../libs/query_store.lib');
 const queryProduct = require('../../libs/query_product.lib');
@@ -103,6 +102,9 @@ module.exports = (req, res, next) => {
   }, (err, results) => {
     if (err) {
       return next(err);
+    }
+    if (results.product.sku === req.params.sku) {
+      return res.redirect(301, `/tiendas/${req.params.storeSlug}/productos/${results.product.slug}`);
     }
 
     results.product.name = capitalized(_.get(results, 'product.name'));

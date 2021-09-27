@@ -19,6 +19,7 @@ module.exports = (req, res, next) => {
         'storeID',
         'sku',
         'offer',
+        'slug',
       ]));
       putS3Path(req, products);
       _.each(products, (product) => {
