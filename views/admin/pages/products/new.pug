@@ -31,17 +31,15 @@ block edit
     data-page=`/administracion/tiendas/${store._id}/productos`
     data-gotoid="editar"
     data-error="#form-results2")
-    .white.br-1.rd-0-2.p-3
-      .msg.error#form-results2
 
-      if store.amz
+    if store.amz
+      .white.br-1.rd-0-2.p-3
         .row
           .col-xs-12
             input.input#amzUrl(type="hidden" name="amz.url")
 
             input.input#inventory(type="hidden" name="inventory" value="0")
             input.input#stock(type="hidden" name="stock")
-
 
         .row
           .col-xs-12
@@ -95,6 +93,9 @@ block edit
           .col-xs-12
             .hr.mh-2
 
+
+    .white.br-1.rd-0-2.p-3.mb-2
+      .msg.error#form-results2
       .row
         .col-xs-12
           .form-group
@@ -115,6 +116,23 @@ block edit
             .form-control
               input.input#sku(type="text" name="sku" placeholder=' ')
               label(for='sku') SKU (Opcional)
+
+    .white.br-1.rd-0-2.p-3.mb-2
+      .row
+        .col-xs-12
+          .subtitle.b.mt-2 Talla, color, modelo, forma
+          .hr.mt-0-5.mb-1
+          .msg.info.mb-0-5.mt-1
+            .flex
+              i.fas.fa-exclamation.h2.mr-0-25.w-2.tc
+              div Escriba una lista como S,M,L,XL separados por comas ","
+          button.btn.btn--secondary.add-pick-list(type="button") Agregar lista
+          .hr.mh-1
+          .list-pick-list(data-btn=".add-pick-list" data-pick-list=JSON.stringify([]))
+
+    .white.br-1.rd-0-2.p-3.mb-2
+      .row
+        .col-xs-12
           .form-group
             .form-control
               input.input#brandText(type="text" name="brandText" placeholder=' ')

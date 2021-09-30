@@ -162,6 +162,17 @@ const schema = new mongoose.Schema({
       ref: `${appCnf.dbPrefix}products`,
     }],
   }],
+  pickList: [{
+    name: {
+      type: String,
+      trim: true,
+    },
+    list: {
+      type: String,
+      trim: true,
+    },
+  },
+  ],
   fix: {
     type: Number,
     default: 1,

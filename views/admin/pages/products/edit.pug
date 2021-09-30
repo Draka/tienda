@@ -109,6 +109,17 @@ block edit
                   .form-control.pl-1
                     input.input#offerAvailable-1(type="date" name="offer.available.end" placeholder='dd/mm/aaaa' value=_.get(item, 'offer.available.end')?moment(item.offer.available.end).format('YYYY-MM-DD'):null)
                     label(for='offerAvailable-1') Hasta
+              .mh-1.br-1.p-1
+                .subtitle.b.mt-2 Talla, color, modelo, forma
+                .hr.mt-0-5.mb-1
+                .msg.info.mb-0-5.mt-1
+                  .flex
+                    i.fas.fa-exclamation.h2.mr-0-25.w-2.tc
+                    div Escriba una lista como S,M,L,XL separados por comas ","
+                button.btn.btn--secondary.add-pick-list(type="button") Agregar lista
+                .hr.mh-1
+                .list-pick-list(data-btn=".add-pick-list" data-pick-list=JSON.stringify(item.pickList || []))
+
               .form-group
                 .form-control
                   input.input#brandText(type="text" name="brandText" placeholder=' ' value=item.brandText)

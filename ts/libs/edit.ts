@@ -284,6 +284,7 @@ export class Edit {
     this.mapMarkers();
     this.addFeature();
     this.addGroups();
+    this.addPicks();
   }
 
   cke() {
@@ -562,6 +563,46 @@ export class Edit {
 
         $($el.data('btn')).on('click', () => {
           fl.push({ sku: '', feature: '' });
+          fc();
+        });
+      });
+    }
+  }
+
+  addPicks() {
+    const list = $('.list-pick-list');
+    if (list.length) {
+      list.each((_i, el) => {
+        const $el = $(el);
+        const fl:Array<any> = $el.data('pick-list');
+
+        const fc = () => {
+          let html = '';
+          fl.forEach((e, i) => {
+            html += '<div class="form-group flex">';
+            html += '<div class="form-control">';
+            html += `<input type="text" id="g_${i}" class="input" placeholder="Talla" name="pickList[${i}][name]" value="${e.name}" data-index="${i}" data-name="name">`;
+            html += `<label for="g_${i}">Característica</label>`;
+            html += '</div>';
+            html += '<div class="form-control pl-1 w-100">';
+            html += `<input type="text" id="s_${i}" class="input" placeholder="S,M,X,XL" name="pickList[${i}][list]" value="${e.list}" data-index="${i}" data-name="list">`;
+            html += `<label for="s_${i}">Opciones</label>`;
+            html += '</div>';
+            html += '</div>';
+          });
+
+          $el.html(html);
+          $el.find('input').each((_i, el) => {
+            const $el = $(el);
+            $el.on('input', () => {
+              fl[$el.data('index')][$el.data('name')] = $el.val();
+            });
+          });
+        };
+        fc();
+
+        $($el.data('btn')).on('click', () => {
+          fl.push({ name: '', list: '' });
           fc();
         });
       });

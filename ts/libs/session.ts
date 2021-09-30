@@ -79,6 +79,20 @@ export class Session {
               }
               html += Session.product(data[index], xclass);
             }
+            const comp = 5 - data.length;
+            if (comp > 0) {
+              for (let index = 5 - comp; index < 5; index++) {
+                let xclass = '';
+                if (index === 2) {
+                  xclass = 'hide-xs hide-sm ';
+                } else if (index === 3) {
+                  xclass = 'hide-xs hide-sm hide-md';
+                } else if (index === 4) {
+                  xclass = 'hide-xs hide-sm hide-md hide-lg';
+                }
+                html += Session.product(data[0], xclass);
+              }
+            }
             $('.products-line-history .data').html(html);
           }
         });

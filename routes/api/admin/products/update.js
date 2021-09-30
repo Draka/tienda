@@ -33,6 +33,7 @@ module.exports = (req, res, next) => {
     'amz',
     'images',
     'offer',
+    'pickList',
   ]);
   body.tenancy = req.tenancy;
 

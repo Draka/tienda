@@ -56,6 +56,15 @@ mixin product(product)
           | En stock
       else
         | En stock
+    each pickList in product.pickList
+      .flex.w-100
+        label.nowrap.b.title(for='pickList') #{pickList.name}
+        .form-group.ml-1.w-100
+          .form-control
+            select.w-100#pickList.input(name='pickList')
+              each item of pickList.list.split(',')
+                option(value=item) #{item}
+
     if (product.publish && product.isAvailable) && ((product.inventory && product.stock) > 0 || !product.inventory)
       .quantity.flex.mt-1
         if _.get(req, 'site.cartValues')

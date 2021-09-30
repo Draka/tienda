@@ -30,6 +30,7 @@ module.exports = (req, res, next) => {
     'width',
     'amz',
     'offer',
+    'pickList',
   ]);
   body.tenancy = req.tenancy;
 
