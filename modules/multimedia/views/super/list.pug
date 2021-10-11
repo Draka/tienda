@@ -16,12 +16,12 @@ block list
           .white.br-1.rd-0-2.p-1.mb-2.h-100
             .flex
               .pr-1
-                a(href=`/administracion/super/multimedia/${item._id}/editar` title='Editar')
+                a(href=`/administracion/super/multimedia/editar/${item._id}` title='Editar')
                   i.fas.fa-pencil-alt
               .w-100.b
-                a(href=`/administracion/super/multimedia/${item._id}/editar`)
+                a(href=`/administracion/super/multimedia/editar/${item._id}`)
                   if item.title
-                    #{item.title}
+                    | #{item.title}
                   else
                     i -- Sin título --
               .pl-1
@@ -36,7 +36,7 @@ block list
                   )
                   i.fas.fa-trash-alt
             .hr.mt-1
-            a.show(href=`/administracion/super/multimedia/${item._id}/editar` title='Editar' class="bg")
+            a.show(href=`/administracion/super/multimedia/editar/${item._id}` title='Editar' class="bg")
               if item.urlSize
                 +img(item.title, _.get(item, `urlSize.${item.files[0]}`), ['392','392'])
               else if item.url

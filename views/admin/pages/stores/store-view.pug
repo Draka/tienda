@@ -44,7 +44,7 @@ block view
       tr
         td.w-100
           .b URL
-          | #{req.site.url}tiendas/#{store.slug}
+          | #{_.get(req,'site.url')}tiendas/#{store.slug}
   .hr.mh-4
   table.small.table.table--lines
     tbody

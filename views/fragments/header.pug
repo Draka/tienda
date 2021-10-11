@@ -32,7 +32,7 @@ header.relative.z100
             .mt-0-25.address
 
         .expand.pw-1
-          form.flex(class="search" action=`${req.site.url}buscar`)
+          form.flex(class="search" action=`${_.get(req,'site.url')}buscar`)
             .flex.w-100.rdtl-50.rdbl-50.oh.white.h-40p
               label.out-screen(for='query-d') Buscar productos
               input#query-d.input--simple.h-100.w-100.ph-0-25.pl-2(type="text" name="q" placeholder='Buscar productos' required value=q)
@@ -155,7 +155,7 @@ header.relative.z100
           a.logo.justify-content-center.pr-0(href='/')
             img(src=_.get(req, 'site.images.logoTop.svg') alt=`${_.get(req, 'site.name')} logo`)
         li.expand.pw-0-5
-          form.flex(class="search" action=`${req.site.url}buscar`)
+          form.flex(class="search" action=`${_.get(req,'site.url')}buscar`)
             .flex.w-100.rdtl-50.rdbl-50.oh.white.h-32p
               label.out-screen(for='query-m') Buscar productos
               input#query-m.input--simple.h-100.w-100.ph-0-25.pl-1(type="text" name="q" placeholder='Buscar productos' required value=q)

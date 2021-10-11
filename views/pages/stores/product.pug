@@ -29,9 +29,9 @@ mixin product(product)
       b SKU:
       | &nbsp;#{product.sku}
   .tr.social
-    a.mr-1(href=`https://www.facebook.com/sharer.php?u=${req.site.url}${originalUrl}` _target='_blank' title='Compartir en facebook' rel="noopener")
+    a.mr-1(href=`https://www.facebook.com/sharer.php?u=${_.get(req,'site.url')}${originalUrl}` _target='_blank' title='Compartir en facebook' rel="noopener")
       i.fab.fa-facebook
-    a(href=`https://twitter.com/share?text=${product.name}&amp;url=${req.site.url}${originalUrl}` _target='_blank' title='Compartir en twitter' rel="noopener")
+    a(href=`https://twitter.com/share?text=${product.name}&amp;url=${_.get(req,'site.url')}${originalUrl}` _target='_blank' title='Compartir en twitter' rel="noopener")
       i.fab.fa-twitter
   .hr.mh-1
   //- remover en vitrina
@@ -129,7 +129,7 @@ block content
       },
       "offers": {
         "@type": "Offer",
-        "url": "#{req.site.url}#{originalUrl}",
+        "url": "#{_.get(req,'site.url')}#{originalUrl}",
         "priceCurrency": "COP",
         "price": "#{product.price}",
         "priceValidUntil": "#{(new Date()).getFullYear()}-#{(new Date()).getMonth() + 1}-#{(new Date()).getDate()+1}T23:59:59-05:00",
@@ -162,7 +162,7 @@ block content
     {
       "@context": "https://schema.org/",
       "@type": "BreadcrumbList",
-      "itemListElement": !{JSON.stringify(_.map(product.categoryIDs, (category, i)=>{return {"@type": "ListItem","position": i+1,"name": category.name,"item": `${req.site.url}tiendas/${store.slug}/categorias/${category.slugLong}`}}))}
+      "itemListElement": !{JSON.stringify(_.map(product.categoryIDs, (category, i)=>{return {"@type": "ListItem","position": i+1,"name": category.name,"item": `${_.get(req,'site.url')}tiendas/${store.slug}/categorias/${category.slugLong}`}}))}
     }
 
   .container

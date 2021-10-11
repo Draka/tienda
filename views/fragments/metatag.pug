@@ -24,7 +24,7 @@ meta(name='keywords' content='compra online, mercado, tienda, domicilios, p4s, q
 meta(name='language' content='ES')
 +imgSocial
 
-link(href=`${req.site.url}${originalUrl}` rel='canonical')
+link(href=`${_.get(req,'site.url')}${originalUrl}` rel='canonical')
 
 meta(name='geo.placename' content='Colombia')
 meta(name='geo.position' content='4.667311,-74.0587037')
@@ -41,7 +41,7 @@ meta(name='twitter:description' content=_.get(item, 'seo') || _.get(store, 'seo'
 meta(property='og:type' content='website')
 meta(property='og:title' content=`${title} | ${_.get(req, 'site.name')}`)
 meta(property='og:description' content=_.get(item, 'seo') || _.get(store, 'seo') || _.get(req, 'site.description'))
-meta(property='og:url' content=`${req.site.url}${originalUrl}`)
+meta(property='og:url' content=`${_.get(req,'site.url')}${originalUrl}`)
 meta(property='og:site_name' content=`${title} | ${_.get(req, 'site.name')}`)
 meta(property='og:locale' content='es_CO')
 meta(property='og:locale:alternate' content='es_CO')

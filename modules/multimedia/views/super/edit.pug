@@ -1,0 +1,26 @@
+extends /modules/admin/views/super/layout-edit-cmp
+
+block edit
+  form.validate-rest(
+    action=`${appCnf.url.api}admin/super/multimedia/${item._id}`
+    method="put"
+    data-ok='Cambios guardados'
+    data-ok-color='action'
+    data-error="#form-results")
+    .white.br-1.rd-0-2.p-3
+      .msg.error#form-results
+      .row
+        .col-xs-12
+          .form-group
+            .form-control
+              input.input#title(type="text" name="title" placeholder=' ' required value=item.title)
+              label(for='title') Título
+          .form-group
+            .form-control
+              input.input#seo(type="text" name="alt" data-count="180" data-target="#count-short-description" placeholder=' ' value=item.alt)
+              label(for='alt') Alt
+      .row
+        .col-xs-12.tr
+          a.btn.btn--secondary.w-100-xs.mt-1-xs(href="/administracion/super/multimedia") Salir
+          | #{' '}
+          button.btn.btn--primary.w-100-xs.mt-1-xs(type="submit") Guardar Multimedia

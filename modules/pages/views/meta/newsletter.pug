@@ -1,4 +1,4 @@
-form.mt-3.mb-2(class="search" action=`${req.site.url}/tiendas/buscar`)
+form.mt-3.mb-2(class="search" action=`${_.get(req,'site.url')}/tiendas/buscar`)
   .row.justify-content-center
     .col-md-12.col-lg-8.col-xl-6
       .row

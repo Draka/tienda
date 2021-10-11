@@ -4,7 +4,7 @@ const faq = require('./faq/routes');
 const multimedia = require('./multimedia/routes');
 const help = require('./help/routes');
 const email = require('./email/routes');
-const amz = require('./amz/routes');
+// const amz = require('./amz/routes');
 const stores = require('./stores/routes');
 const categories = require('./categories/routes');
 const search = require('./search/routes');
@@ -23,7 +23,7 @@ module.exports = (app) => {
   search(app);
   account(app);
   reports(app);
-  if (process.env.NODE_ENV !== 'production') {
-    amz(app);
-  }
+  // if (process.env.NODE_ENV !== 'production') {
+  //   amz(app);
+  // }
 };

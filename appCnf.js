@@ -22,8 +22,8 @@ const enviroment = {
   },
   log: process.env.LOG || 'dev',
   url: {
-    api: process.env.URL_API || 'http://localhost:3000/v1/', // url del sitio
-    cdn: process.env.URL_CDN || 'http://localhost:3001/', // url de css, js, iconos, deberia ser un s3 pero en local puede ser la misma maquina
+    api: process.env.URL_API || 'http://192.168.50.134:3000/v1/', // url del sitio
+    cdn: process.env.URL_CDN || 'http://192.168.50.134:3001/', // url de css, js, iconos, deberia ser un s3 pero en local puede ser la misma maquina
   },
   files: process.env.FILES || 'local',
   site: {},

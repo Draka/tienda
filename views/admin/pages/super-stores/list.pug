@@ -149,7 +149,7 @@ block list
                 a.b(href=`/administracion/super/tiendas/${item._id}`) #{item.name}
                 .small #{item.slogan}
               td
-                a(href=`${req.site.url}tiendas/${item.slug}` target='_blank') #{`${req.site.url}tiendas/${item.slug}`}
+                a(href=`${_.get(req,'site.url')}tiendas/${item.slug}` target='_blank') #{`${_.get(req,'site.url')}tiendas/${item.slug}`}
                 div.b #{item.primaryActivity} - #{item.secondaryActivity}
               td
                 a.b(href=`/administracion/super/usuarios/${item.userID._id}`) #{item.userID.personalInfo.name}

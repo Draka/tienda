@@ -12,9 +12,9 @@ module.exports = (req, res, next) => {
           tenancy: req.tenancy,
           active: true,
           publish: true,
-          title: req.site.title,
+          title: _.get(req, 'site.title'),
           slug: 'index',
-          seo: req.site.description,
+          seo: _.get(req, 'site.description'),
           html: '',
         });
         page.save(cb);

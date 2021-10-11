@@ -41,7 +41,7 @@ module.exports = (req, res, next) => {
     }],
     toHTML: ['check', (results, cb) => {
       const options = {
-        url: req.site.url,
+        url: _.get(req,'site.url'),
         applyTableAttributes: true,
         removeHtmlSelectors: true,
       };

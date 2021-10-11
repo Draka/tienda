@@ -6,7 +6,7 @@ block view
       "@context": "http://www.schema.org",
       "@type": "LocalBusiness",
       "name": "#{_.get(req, 'site.name')}",
-      "url": "#{req.site.url}",
+      "url": "#{_.get(req,'site.url')}",
       "sameAs": !{JSON.stringify(_.get(req, 'site.sameAs'))},
       "logo": "#{appCnf.url.cdn}tenancy/#{req.tenancy}/images/logo-01.png",
       "image": "#{appCnf.url.cdn}tenancy/#{req.tenancy}/images/logo-02.png",

@@ -22,7 +22,7 @@ module.exports = (app) => {
       heapUsed: memory.heapUsed / 1048576,
       server: req.get('X-Tenancy'),
       store: req.get('X-Store'),
-      host: req.site.url,
+      host: _.get(req,'site.url'),
       realip: req.headers['X-Real-IP'] || req.connection.remoteAddress,
       ip: req.headers['X-Forwarder-For'] || req.connection.remoteAddress,
     });
