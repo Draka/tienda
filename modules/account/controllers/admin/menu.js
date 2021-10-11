@@ -1,4 +1,7 @@
 module.exports = (req, res, next) => {
+  if (!_.get(req, 'user.options.storeSelect')) {
+    return res.redirect('/administracion/tiendas/nuevo');
+  }
   async.auto({
     validate: (cb) => cb(),
     store: (cb) => {
