@@ -17,6 +17,10 @@ module.exports = (req, res, next) => {
       return next(err);
     }
 
+    if (!results.store) {
+      return res.redirect('/administracion/tiendas/nuevo');
+    }
+
     // Si tiene tienda, lo envia a la vista
     if (!_.get(req, 'user.options.storeSelect')) {
       return res.redirect('/administracion/tiendas/nuevo');
