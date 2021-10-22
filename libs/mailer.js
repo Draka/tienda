@@ -74,7 +74,7 @@ module.exports = (data, userID, html, cb) => {
         s3: err,
         error: true,
       });
-      mail.save(cb);
+      return mail.save(cb);
     }
     cb(null, results);
   });

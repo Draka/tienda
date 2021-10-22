@@ -5,7 +5,7 @@ const vendelomejor = require('./vendelomejor/routes');
 const multimedia = require('./multimedia/routes');
 const help = require('./help/routes');
 const email = require('./email/routes');
-const amz = require('./amz/routes');
+// const amz = require('./amz/routes');
 const stores = require('./stores/routes');
 
 module.exports = (app) => {
@@ -16,6 +16,6 @@ module.exports = (app) => {
   multimedia(app);
   help(app);
   email(app);
-  amz(app);
+  // amz(app);
   stores(app);
 };
