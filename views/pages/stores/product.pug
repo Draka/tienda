@@ -88,7 +88,7 @@ mixin product(product)
       each group in product.groups
         .b.mb-0-5 #{group.feature}:
         each productID in group.productIDs
-          a.btn.btn--white.mr-0-5.mb-0-5.br-1(href=`/tiendas/${store.slug}/productos/${productID.slug}`) #{_.find(productID.features, 'slug', group.featureSlug).value}
+          a.btn.btn--white.mr-0-5.mb-0-5.br-1(href=`/tiendas/${store.slug}/productos/${productID.slug}`) #{_.get(_.find(productID.features, 'slug', group.featureSlug),'value')}
   .product-description.mt-2.mb-2
     | !{product.shortDescription.replace("\n",'<br>')}
 
