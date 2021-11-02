@@ -27,7 +27,7 @@ module.exports = (options) => {
           fs.mkdirSync(`${d}/${options.tmp}`, { recursive: true });
         }
         const newFiles = _.map(conf1.files, (filename) => `${d}/${conf1.folder}/${filename}`);
-        console.log('comprime');
+        console.log('comprime', newFiles, `npx uglifyjs ${d}/${options.tmp}/tmp -o ${d}/${conf1.dst} --compress --mangle -- `);
         execSync(`cat ${newFiles.join(' ')} > ${d}/${options.tmp}/tmp`);
         execSync(`npx uglifyjs ${d}/${options.tmp}/tmp -o ${d}/${conf1.dst} --compress --mangle -- `);
       }

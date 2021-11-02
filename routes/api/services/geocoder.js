@@ -27,6 +27,7 @@ module.exports = (req, res, next) => {
         return cb(null, results.historial);
       }
       let body = '';
+      console.log(`https://geo-api.miaguila.com/v4/search-addresses-places?keyword=${address}&city=${city}`);
       https.get(`https://geo-api.miaguila.com/v4/search-addresses-places?keyword=${address}&city=${city}`, {
         headers: {
           // eslint-disable-next-line max-len
@@ -42,11 +43,19 @@ module.exports = (req, res, next) => {
           body += chunk;
         }).on('end', () => {
           const addresses = _.get(JSON.parse(body), 'results.0');
-          cb(null, {
-            input: _.lowerCase(`${country} ${city} ${address}`),
-            address: addresses.formatted_address,
-            location: addresses.geometry.location,
-          });
+          if (addresses) {
+            cb(null, {
+              input: _.lowerCase(`${country} ${city} ${address}`),
+              address: addresses.formatted_address,
+              location: addresses.geometry.location,
+            });
+          } else {
+            cb(null, {
+              input: _.lowerCase(`${country} ${city} ${address}`),
+              address: `${address}`,
+              location: { geometry: { location: { lat: 4.624335, lng: -74.063644 } } },
+            });
+          }
         });
       }).on('error', (err) => cb(err.message));
     }],

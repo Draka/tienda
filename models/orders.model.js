@@ -1,5 +1,3 @@
-mongoose.set('useFindAndModify', false);
-
 const schema = new mongoose.Schema({
   tenancy: {
     type: String,

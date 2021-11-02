@@ -270,6 +270,7 @@ export class Cart {
       extra: $('#extra').val(),
       form: $('#addressForm').serializeArray(),
     };
+    console.log('xxxx', address);
 
     $('#addressJSON').val(JSON.stringify(address));
     // this.setAddressJSON(address);

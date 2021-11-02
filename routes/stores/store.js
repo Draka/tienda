@@ -12,8 +12,17 @@ module.exports = (req, res, next) => {
       if (!results.store) {
         return cb(listErrors(404, null, [{ field: 'storeID', msg: 'El registro no existe.' }]));
       }
-      putS3LogoPath(req, [results.store]);
-      cb();
+
+      if (req.user.admin || (`${req.user._id}` === `${results.store.userID}`)) {
+        putS3LogoPath(req, [results.store]);
+        cb();
+      } else {
+        if (!results.store.publish || !results.store.approve) {
+          return cb(listErrors(404, null, [{ field: 'storeID', msg: 'El registro no existe.' }]));
+        }
+        putS3LogoPath(req, [results.store]);
+        cb();
+      }
     }],
     products: ['postFind', (results, cb) => {
       models.Product
