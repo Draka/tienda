@@ -13,7 +13,7 @@ module.exports = (req, res, next) => {
         return cb(listErrors(404, null, [{ field: 'storeID', msg: 'El registro no existe.' }]));
       }
 
-      if (req.user.admin || (`${req.user._id}` === `${results.store.userID}`)) {
+      if (_.get(req, 'user.admin') || (`${req.user._id}` === `${results.store.userID}`)) {
         putS3LogoPath(req, [results.store]);
         cb();
       } else {
