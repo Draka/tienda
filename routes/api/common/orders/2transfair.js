@@ -60,7 +60,9 @@ module.exports = (req, res, next) => {
           'Content-Type': 'application/json',
         },
       };
+      console.log('XXXX', postData);
       const rcv2 = await needle('post', 'https://gateway2.2transfair.com/create_transaction', postData, options);
+      console.log({ body: rcv2.body, statusCode: rcv2.statusCode });
       return { body: rcv2.body, statusCode: rcv2.statusCode };
     }],
     update: ['goPayment', (results, cb) => {
