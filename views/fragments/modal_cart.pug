@@ -1,6 +1,6 @@
 #address.modal.start-hide(tabindex='-1' role='dialog')
   .modal-dialog(role='document')
-    form#addressForm.col-xs-12.validate-rest(action=`${appCnf.url.api}services/geocoder` method="get" data-fnc-error="ca.errorAddress")
+    form#addressForm.col-xs-12.validate-rest(action=`${appCnf.url.api}users/addresses` method="post")
       .modal-content
         .modal-header
           .title.b Seleccionar dirección
@@ -69,26 +69,27 @@
                   input.input#extra(type="text" placeholder=" " name="extra")
                   label(for='extra') Casa, apt., torre
         .modal-footer.tr
+          input.input#addressJSON(type="hidden" name="addressJSON")
           button.btn.btn--secondary.small.close-modal(type='button') Cancelar
           | #{' '}
-          button.btn.btn--primary.small(type='submit') Buscar
-
-    form#mapForm.col-xs-12.validate-rest.start-hide(action=`${appCnf.url.api}users/addresses` method="post" data-fnc-error="ca.errorAddress")
-      .modal-content
-        .modal-header
-          .title.b Confirmar punto
-          button.close.close-modal(type='button' data-dismiss='modal' aria-label='Cerrar')
-            span(aria-hidden='true') &times;
-        .modal-body
-          .remark.alert.mb-2
-            | Por favor confirme el punto de su dirección en el mapa
-          input.input#addressJSON(type="hidden" name="addressJSON")
-          #map-container.w-100.h-460p
-
-        .modal-footer.tr
-          button.btn.btn--secondary.small.back(type='button') Volver
-          | #{' '}
           button.btn.btn--primary.small(type='submit') Confirmar
+
+    //- form#mapForm.col-xs-12.validate-rest.start-hide(action=`${appCnf.url.api}users/addresses` method="post" data-fnc-error="ca.errorAddress")
+    //-   .modal-content
+    //-     .modal-header
+    //-       .title.b Confirmar punto
+    //-       button.close.close-modal(type='button' data-dismiss='modal' aria-label='Cerrar')
+    //-         span(aria-hidden='true') &times;
+    //-     .modal-body
+    //-       .remark.alert.mb-2
+    //-         | Por favor confirme el punto de su dirección en el mapa
+    //-       input.input#addressJSON(type="hidden" name="addressJSON")
+    //-       #map-container.w-100.h-460p
+
+    //-     .modal-footer.tr
+    //-       button.btn.btn--secondary.small.back(type='button') Volver
+    //-       | #{' '}
+    //-       button.btn.btn--primary.small(type='submit') Confirmar
 
 #change-cart.modal.start-hide(tabindex='-1' role='dialog')
   .modal-dialog(role='document')

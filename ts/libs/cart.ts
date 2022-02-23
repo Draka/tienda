@@ -262,54 +262,60 @@ export class Cart {
   }
 
   static checkAddress(data: any) {
+    console.log('yyyy', data);
     $('#map-container').html('<div id="map" class="w-100 h-460p"></div>');
     const address = {
       city: $('#addressForm input[name="city"]').val(),
-      address: data.address,
-      location: data.location,
+      address: `${$('#addressForm select[name="streetType"]').val()} `
+      + `${$('#addressForm input[name="street"]').val()} #${$('#addressForm input[name="corner"]').val()} - ${$('#addressForm input[name="number"]').val()}, `
+      + `${$('#addressForm input[name="neighborhood"]').val()} ${$('#addressForm input[name="extra"]').val()}, `
+      + `${$('#addressForm input[name="city"]').val()}, ${$('#addressForm select[name="country"]').val()} `,
+      location: '',
       extra: $('#extra').val(),
       form: $('#addressForm').serializeArray(),
     };
     console.log('xxxx', address);
+    localStorage.setItem('address', JSON.stringify(address));
+    console.log('fin', address);
 
-    $('#addressJSON').val(JSON.stringify(address));
+    // $('#addressJSON').val(JSON.stringify(address));
     // this.setAddressJSON(address);
 
-    $('#addressForm').hide();
-    $('#mapForm').show();
+    sclib.modalHide('#address');
+    // $('#mapForm').show();
 
-    const coords = [data.location.lat || 4.646876, data.location.lng || -74.087547];
-    const map = L.map('map').setView(coords, 16);
-    L.control.locate({
-      initialZoomLevel: 16,
-      locateOptions: {
-        enableHighAccuracy: true,
-        maxZoom: 16,
-      },
-      strings: {
-        title: 'Localizar mi posición',
-      },
-    }).addTo(map);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    }).addTo(map);
+    // const coords = [data.location.lat || 4.646876, data.location.lng || -74.087547];
+    // const map = L.map('map').setView(coords, 16);
+    // L.control.locate({
+    //   initialZoomLevel: 16,
+    //   locateOptions: {
+    //     enableHighAccuracy: true,
+    //     maxZoom: 16,
+    //   },
+    //   strings: {
+    //     title: 'Localizar mi posición',
+    //   },
+    // }).addTo(map);
+    // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    //   attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    // }).addTo(map);
 
-    const marker = L.marker(coords, {
-      draggable: true,
-    }).addTo(map);
+    // const marker = L.marker(coords, {
+    //   draggable: true,
+    // }).addTo(map);
 
-    marker.on('dragend', () => {
-      address.location = marker.getLatLng();
-      $('#addressJSON').val(JSON.stringify(address));
-    });
+    // marker.on('dragend', () => {
+    //   address.location = marker.getLatLng();
+    //   $('#addressJSON').val(JSON.stringify(address));
+    // });
 
-    function onLocationFound(e) {
-      address.location = e.latlng;
-      $('#addressJSON').val(JSON.stringify(address));
-      marker.setLatLng(e.latlng)
-        .bindPopup('Mueva el marcador si es necesario').openPopup();
-    }
+    // function onLocationFound(e) {
+    //   address.location = e.latlng;
+    //   $('#addressJSON').val(JSON.stringify(address));
+    //   marker.setLatLng(e.latlng)
+    //     .bindPopup('Mueva el marcador si es necesario').openPopup();
+    // }
 
-    map.on('locationfound', onLocationFound);
+    // map.on('locationfound', onLocationFound);
   }
 }

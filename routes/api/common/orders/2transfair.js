@@ -47,7 +47,7 @@ module.exports = (req, res, next) => {
         buyer_identification_type: 'CC',
         buyer_identification_number: 88000000,
         buyer_phone: results.order.userData.cellphone,
-        // test: true,
+        test: false,
         confirmation_url: `https://santrato.com/v1/orders/confirm/${req.params.orderID}`,
         response_url: `https://santrato.com/usuario/pedidos/${results.order.orderID}`,
         shipping_address: results.order.address.address,
